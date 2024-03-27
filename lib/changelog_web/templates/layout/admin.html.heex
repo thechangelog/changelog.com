@@ -7,17 +7,17 @@
     <meta name="csrf-token" content={Plug.CSRFProtection.get_csrf_token()} />
 
     <title><%= Meta.AdminTitle.get(@conn) %></title>
-    <link rel="stylesheet" href="<%= url(~p"/css/admin.css") %>">
+    <link rel="stylesheet" href={url(~p"/css/admin.css")}>
   </head>
 
   <body
-    data-module="<%= Phoenix.Controller.view_module(@conn) %>"
-    data-template="<%= Phoenix.Controller.view_template(@conn) %>"
+    data-module={Phoenix.Controller.view_module(@conn)}
+    data-template={Phoenix.Controller.view_template(@conn)}
   >
-    <div class="ui fixed menu <%= Phoenix.Flash.get(@flash, :result) %>">
+    <div class={"ui fixed menu #{Phoenix.Flash.get(@flash, :result)}"}>
       <a href="/" class="icon item"><i class="eject icon"></i></a>
     <%= if Policies.AdminsOnly.index(@current_user) do %>
-      <%= link(to: Routes.admin_page_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "page", "active")}") do %>
+      <%= link(to: ~p"/admin", class: "item #{SharedHelpers.active_class(@conn, "page", "active")}") do %>
         Admin
       <% end %>
     <% end %>
@@ -29,31 +29,37 @@
     <% end %>
 
     <%= if Policies.Admin.Post.index(@current_user) do %>
-      <%= link(to: Routes.admin_post_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "post", "active")}") do %>
+      <%= link(to: ~p"/admin/posts", class: "item #{SharedHelpers.active_class(@conn, "post", "active")}") do %>
         <i class="pencil alternate icon"></i>Posts
       <% end %>
     <% end %>
 
     <%= if Policies.Admin.Person.index(@current_user) do %>
-      <%= link(to: Routes.admin_person_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "person", "active")}") do %>
+      <%= link(to: ~p"/admin/people", class: "item #{SharedHelpers.active_class(@conn, "person", "active")}") do %>
         <i class="user icon"></i>People
       <% end %>
     <% end %>
 
     <%= if Policies.AdminsOnly.index(@current_user) do %>
-      <%= link(to: Routes.admin_topic_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "topic", "active")}") do %>
+      <%= link(to: ~p"/admin/topics", class: "item #{SharedHelpers.active_class(@conn, "topic", "active")}") do %>
         <i class="hashtag icon"></i>Topics
       <% end %>
     <% end %>
 
     <%= if Policies.AdminsOnly.index(@current_user) do %>
-      <%= link(to: Routes.admin_sponsor_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "sponsor", "active")}") do %>
+      <%= link(to: ~p"/admin/sponsors", class: "item #{SharedHelpers.active_class(@conn, "sponsor", "active")}") do %>
         <i class="dollar icon"></i>Sponsors
       <% end %>
     <% end %>
 
     <%= if Policies.AdminsOnly.index(@current_user) do %>
-      <%= link(to: Routes.admin_mailer_preview_path(@conn, :index), class: "item #{SharedHelpers.active_class(@conn, "mailer", "active")}") do %>
+      <%= link(to: ~p"/admin/feeds", class: "item #{SharedHelpers.active_class(@conn, "feed", "active")}") do %>
+        <i class="feed icon"></i>Feeds
+      <% end %>
+    <% end %>
+
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: ~p"/admin/mailers", class: "item #{SharedHelpers.active_class(@conn, "mailer", "active")}") do %>
         <i class="mail icon"></i>Mailers
       <% end %>
     <% end %>
@@ -85,6 +91,6 @@
       <%= @inner_content %>
     </div>
 
-    <script src="<%= url(~p"/js/admin.js") %>"></script>
+    <script src={url(~p"/js/admin.js")}></script>
   </body>
 </html>
