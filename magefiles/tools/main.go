@@ -24,7 +24,7 @@ func CurrentVersions() *Versions {
 		toolVersions: toolVersions(),
 		Ubuntu: Ubuntu{
 			// https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-jammy
-			Short: "jammy-20231004",
+			Short: "jammy-20240125",
 			Long:  "22.04 LTS (Jammy Jellyfish)",
 		},
 	}

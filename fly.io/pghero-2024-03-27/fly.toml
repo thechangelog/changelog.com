@@ -1,0 +1,23 @@
+# https://fly.io/docs/reference/configuration/
+
+app = "pghero-2024-03-27"
+primary_region = "iad"
+
+[build]
+  # https://hub.docker.com/r/ankane/pghero/tags
+  image = "ankane/pghero:v3.4.1@sha256:bbf82670a228c3df4a3198a1aa2db4e0a66e110d08d7b12e4de49cabcf451052"
+
+[env]
+  BIND = 'tcp://[::]:8080'
+
+[[services]]
+internal_port = 8080
+protocol = "tcp"
+
+[[services.http_checks]]
+grace_period = "10s"
+interval = "15s"
+method = "get"
+path = "/health"
+protocol = "http"
+timeout = "10s"
