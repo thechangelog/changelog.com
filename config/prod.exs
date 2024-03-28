@@ -38,9 +38,8 @@ config :changelog, Changelog.Repo,
   hostname: System.get_env("DB_HOST", "db"),
   username: System.get_env("DB_USER", "postgres"),
   ssl: true,
-
   ssl_opts: [
-    # The cacertfile values implies Ubuntu,
+    # The cacertfile value implies Ubuntu,
     # which is what we use when building the prod container image
     cacertfile: "/etc/ssl/certs/ca-certificates.crt",
     verify: :verify_peer,
