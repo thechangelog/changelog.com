@@ -70,3 +70,19 @@ config :changelog, Changelog.Repo,
   password: System.get_env("DB_PASS", "postgres"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
+if String.contains?(System.get_env("DB_HOST", "localhost"), "neon.tech") do
+  config :changelog, Changelog.Repo,
+      ssl: true,
+      ssl_opts: [
+        # The cacertfile value implies macOS - tested on macOS 12.7.3 by @gerhard - March 28, 2024
+        cacertfile: "/etc/ssl/cert.pem",
+        # The followin also works on macOS ARM + brew install openssl@3
+        # cacertfile: "/opt/homebrew/etc/openssl@3/cert.pem",
+        verify: :verify_peer,
+        server_name_indication: String.to_charlist(System.get_env("DB_HOST", "db")),
+        customize_hostname_check: [
+          match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+        ]
+      ]
+end
