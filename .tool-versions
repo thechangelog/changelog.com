@@ -1,6 +1,6 @@
 direnv 2.34.0
 elixir 1.14.5
-erlang 26.2.3
+erlang 26.2.2
 golang 1.22.1
 nodejs 20.11.1
 yarn 1.22.19

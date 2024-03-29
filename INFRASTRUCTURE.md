@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Mar.%2027%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Mar.%2028%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -33,9 +33,10 @@ graph TD
     repo -.- |fly.io/changelog-2024-01-12| app
     
     registry --> |ghcr.io/changelog/changelog-prod| app
-    dagger --> |flyctl deploy| app
+    dagger06 --> |flyctl deploy| app
         
-    repo -.- |fly.io/dagger-engine-2023-05-20| dagger
+    repo -.- |fly.io/dagger-engine-2023-05-20| dagger06
+    repo -.- |fly.io/dagger-engine-2024-03-28| dagger010
 
     repo -.- |fly.io/pghero-2024-03-27| pghero
 
@@ -44,8 +45,11 @@ graph TD
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
 
-        dagger([ fa:fa-project-diagram Dagger Engine 2023-05-20 ]):::link
-        click dagger "https://fly.io/apps/dagger-engine-2023-05-20"
+        dagger06([ fa:fa-project-diagram Dagger Engine v0.6 2023-05-20 ]):::link
+        click dagger06 "https://fly.io/apps/dagger-engine-2023-05-20"
+
+        dagger010([ fa:fa-project-diagram Dagger Engine v0.10 2024-03-28 ]):::link
+        click dagger010 "https://fly.io/apps/dagger-engine-2024-03-28"
             
         app(( fab:fa-phoenix-framework App changelog-2024-01-12.fly.dev )):::link
         style app fill:#488969;
@@ -54,14 +58,15 @@ graph TD
         pghero([ fa:fa-gem PgHero 2024-03-27 ]):::link
         click pghero "https://fly.io/apps/pghero-2024-03-27"
 
-        automation --> |wireguard| dagger
-        dagger --> |ghcr.io/changelog/changelog-runtime| registry
-        dagger --> |ghcr.io/changelog/changelog-prod| registry
+        automation --> |wireguard| dagger06
+        dagger06 --> |ghcr.io/changelog/changelog-runtime| registry
+        dagger06 --> |ghcr.io/changelog/changelog-prod| registry
 
         grafana[ fa:fa-columns Grafana fly-metrics.net ]:::link
         click grafana "https://fly-metrics.net"
         grafana -.- |metrics| app
-        grafana -.- |metrics| dagger
+        grafana -.- |metrics| dagger06
+        grafana -.- |metrics| dagger010
         grafana -.- |metrics| pghero
     end
 
@@ -135,7 +140,7 @@ graph TD
 ```
 
 > [!TIP]
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWHlv2zYU_yqEihYtEEk-4iPusiFrurQI2gVzuwGLi4GSaJmLRGok1cSN8933SOqgHLlH_nBk6t3v9w763ot5QryF9_Qp2ihVyEUYrjlT-JZInpMg5nkoCRbxZsVSgYsN-nC-Ygj-4gxLeU7WKKPsBkkl-A1ZPJmcRKP57Mh-9W9pojaLcXH30vLYT1D1CpSiZwgkECXtqSwjq-CCqjdlZA_1nyAFv79Haxwt1thPqdqUEVIbEm8wS0nG07B50uaih4fFYqGNakXEGY1vjCC08mo3rSTj4WFpK2_FHDk0Tq5DMEVbElMRZ8SPgfemMhqdxYpyhny03NACvVVotfp0wBot60etCbGRL8NbLm7WGb-VoQRF_1AVbPNM21rraJ9wqXiONdv1atVEkWcgFp3jNCUCXXC0PL9E4SFTWxE_bHCU8SjMsVREwL-UrGlGZPsUpLwbYUFSCuDZPn--l_B0E4uAcvTixcHsWs5-E7lIZdfOAsc3YIbcy_AGq1a3zIAILc3nQcWaxVHa-m-4bdqgfuhncPzVYLw8m__5erTvNSDTD_yf0S6wRvdneGdQ08Uj8jVbf2x3Tur6sNHyyzKOiZToSUI-74xLloqwxC3d2lC0W2dbSEfrrT8ajI79wdAfjkBrUXS5qtQYVVUmwx7I-IXgicOeWHwaNlAYqwwlpMj41qH5inGW3ScspYxoA8f-YAL_d5XgOgWPGIt0QwSvXBr7o9kO2aOaA1rYFcZLKPSmadYq5SbiWCStU3vt7TdD2NoOLt9t721LSaFaCLrSJw97FOj0FIJgtFXOtwTWm-fXVWMC-n9JrPyEYlCZ11X-2oQBtWFAnw5Buop7C-rKO9ArD0bVbT97Lago2poqNpwweuevwTSiUY7OigL14SjQWgGPfaUn1TYjWjACrGeLJ8fz-cn05OWjzgUE_V70KewWpc14E9WU5OgqfQNHqMXF4RBa7gPKH-Grq9nptwb6txQqqARQtcDtpv7bhSVKpmhOdk0t_rgIW5stfysBULbGDNeRinlW5kyiC3uMwHM_J0rQWAaMKHRozFRiujFzOV2E1cSmbCuava7QT7IfwX6qutybHmgfNZ5-OjWleMWlSgXREiNxa19XSdehtId7tf-ecBYoopepJvpA12AswQpHWBKUY8pQJDCLN1D-NMfQPA9XK4hwBxAsCDwjELBKmcZcWDUFCZNQJ9SXvGSJP59OB8cn82lodcH4iIR_i1lCBGWpL3O9xc3mx9P5cHLSBSlo5cOvWw59FQzEYHnX32rUVa8V2Vlhj6INXXZJYtGuiPaL6SVa6Q3ZouEVLJHQRpL9LmFjU7H0zudhUbGaGV2Dq-awNlbfHGQdeK9nSMduuzNbDv3cWA0DmtH1Vsc31Ts0-rAtiCQMgvfiRQszP6gUaOYdqpfwRsPru5gUZhus4tZ8bzTFWPixgIkE5jA9f3tD1DI6UZKGQbcC2Jwwo1-wXTzbdpATmC8hlbIE1PxSwet0Mp1CIx7VwXQcadXsHJWOQ6_O3zvzNIeaTEmwhtURGqdOEOB6TdNSEDBOfKawroSz9DKKL5eXF-fb_z7O3pbn4nhMLvYHrhHhTiNyd426d4aDmy_Q9mKnuho8nnWN2jNYBErBujMxTti1_gj21LdUzcLl1EEr869lsBy3xMAvr-vBim-lM0b1q1puI9O480wbYNGriXZGipOH3yMdXxzRjKoqbNw9auAVlSl6wxnZggtRP7Y6jE4gSxpsas7uvNGNRF8K26N_eAFgJBnRzXkbbuBa2oWX9kQJHOtezB8bbyLh-ttD4zivYQzrBbTJlDhRc9cvs5DtpeZVxstknWFBgj9GDtjMDbfJUdxQOamyNA4iC7g4EBcUa0KSbwgxJJYwOCCpgQHkv7tOWgOeWXYHCu84oxAJaFV73v5KFNzolgouOO5OhlUp64mQ4S1siangZVG9Cb6v5iyx24t6uLuzKG_sbMAJ4wgu54owRiX6WOjl5_AVruV3MWqYgsi4KlV9l1ME5-FwPB4PRmHFJ91W4MiCzmd7X023M1g6QNslhBx9F52DxW9Q2jA6UPCOvJwIGNiJt_Du9YuVB1dkXV4LeEywuNGOPQCd3kiXWxZ7CyVKcuSVBdQpObcXDA_inUk4LTDzFvfenbfwZ-NpMJ0NBifz49FkNhnOj7yttzgZBsPjyWw8mg3geDKePBx5XzgHCcNgNp6MT44Hg-FgMBsAOYwXsPud_XXK_EhlFPxtyI3Ch_8BRPIPhw)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEihYtEEk-4iPuuqFrurQo2gVzuwGLi4KSaImLRGok1cSN8933SOqgHDtNlz8cmXr38XuPvvFinhBv4T1-jDKlSrkIwzVnCl8RyQsSxLwIJcEizlYsFbjM0MfTFUPwF-dYylOyRjlll0gqwS_J4tHkJBrNZ0f2q39FE5UtxuX1c8tjP0HVK1CKniCQQJS0p7KKrIIzqt5UkT3Uf4KU_OYGrXG0WGM_pSqrIqQyEmeYpSTnadg-aXPR7e1isdBGdSLinMaXRhBaeY2bVpLx8LC0lbdijhwaJxchmKItiamIc-LHwHtZG41exopyhny0zGiJ3iq0Wn0-YI2W9aPWhNjIl-EVF5frnF_JUIKiL1QFmyLXtjY6uidcKV5gzXaxWrVR5DmIRac4TYlAZxwtT9-h8JCpnYgfNjjKeRQWWCoi4F9K1jQnsnsKUt6PsCApheLZPH26k_A0i0VAOXr27GB2Led-E7lIZd_OEseXYIbcyXCGVadb5kCElubzoGLN4ijt_DfcNm3QP_QrOP5qMF6-nP_5erTrNVSmH_g_o21gjd6f4a2pmn49Il-z7Y_t1kndvtro-GUVx0RK9CghX7fGJUtFWOK2bmMo2q7zDaSj89YfDUbH_mDoD0egtSz7XHVqjKo6k-GekvFLwROHPTH1OZhaRlAZqxwlpMz5xqG6xzwrwCcspYxoE8f-YAL_t63ohzKCb2N_NG8Zh4MmgXd4yzQjgndMsy2yRw0HAOA5xkuAiRZyG60yizgWSReSHXD8zRB2fkPArjc3FpBS6DWCzvXJ7Q4FevECAmi01YHrCJpIPL2ogQ04_iGx8hOKQWnRoMRrEwv0dRBMURdJ9PlQX7TJ63qjdhMMkAdT0--MNtoPt244QF2-vmseUD_Qvlqii7I7SFuWHXSUGSeMXvtrsJHoZkYvyxLta5dAa4W224cwUm1yogUjaOl88eh4Pj-Znjy_A9BAsN-LfQr7Ebal2YY3JQU6T9_AURfF2eEoWu4Dyu80Ql-zM1ZMf19RAIoKqn-3O-9CwX0YIiqmaEG2Lez8HyEWiDoJnQwoujVmuIlXzPOqYBKd2WME_vsFUYLGMmBEoUMztRbTj5zL6dZZQ2xQpqbZAcD9JHfjeC-dBrX7CRsga2eDfdQF-NMLAzLnXKpUEC00Elf2dV0lOur2cAfVPhDOAkX0ktmmCujaokywwhGWBBWYMhQJzOIMgI0WGIbK4Q4HEe5ghsWJ5wRiWyvTRRrWcCJhQ9C59yWvWOLPp9PB8cl8GlpdMFYj4V9hlhBBWerLQm-3s_nxdD6cnOwgViT48H7LYWKAgRgs7_tbrwD1a0W2VtidaMP8WJJYdKuz_WLARyu9JBs0PIflGnAn2YUVG5uaZe_eMixrVrO7NHXYcFgb629OER54r6djz257l7Ac-rm1GhYXRtcbHd9U3y3Qx01JJGEQvGfPujLzg1qBZt6i5nLSanh9HZPSbMl13NrvraYYCz8WMGvBHKb3kr0h6hidKEnDoFEDNkrM6DdsF_IOOQoCkymkUlZQNb_U5fViMp0Cco-aYDqOdGq2jkrHoVenH5xNoYCeTEmwhpUakFYnCOp6TdNKEDBOfKWwxoWz9F0Uv1u-Ozvd_Ptp9rY6Fcdjcra7ShgR7vgi1xeof5c6eCMA2r21U1-Z7g7HVu1LWHEqwfpDNE7Yhf4IdtR3VO0i6vRBJ_OvZbAcd8TALy-aSYyvpDN39atGbivTuPNEG2CrVxNtjRQnD79HOr44ojlVddi4e9SWV1Sl6A1nZAMuRPtrq8foBLKiQdZw9keTBhJ9We6OvvASipHkRIPzJszgut4vL-2JEjjWWMzvGm8i4fq7h8ZxXpcx7CMAkylxouYulmbV3EnNq5xXyTrHggR_jJxiMzf_NkdxS-WkytI4FVnChYq4RbEmJPmOEENiCYMDktoygPz3F2VrwBPL7pTCe84oRAKgasfbX4mCm-5SwcXPXeKwqmQzEXK8gbUyFbwq6zfBw3rOErtYtIe7P4uK1s62OGEc5cRXhDEq0adSb0qHr7Ydv1ujhimIjKtSNXdcRXARDsfj8WAU1nzShQJHFiCfxb6Gbmtq6QBtnxBy9CA6pxa_Q2nD6JSCd-QVRMDATryFd6NfrDyVEd1eC3hMsLjUjt0CnV5hlxsWewslKnLkVSX0KTm1VxMP4p1LOC0x8xY33rW38GfjaTCdDQYn8-PRZDYZzo-8jbc4GQbD48lsPJoN4Hgyntweed84BwnDYDaejE-OB7CbDWYDIIfxAna_t7_amR_vjIK_DblRePsfsqFhlQ)
 
 Let's dig into how all the above pieces fit together.
 
@@ -180,9 +185,9 @@ Fly.io Proxy
 Application (changelog-2024-01-12.fly.dev)
 ```
 
-The production database - PostgreSQL - is running on Neon.tech. It is a
+The production database - PostgreSQL - is running on Neon.tech. It is
 replicated setup, with one leader (RW) & one replica (RO). We are currently not
-using the replica, and since Neon.tech scales down to 0, this isn't costing
+using the replica, and since Neon.tech scales down to 0, this doesn't cost
 anything.
 
 ```
@@ -204,9 +209,9 @@ workflow jobs perspective, it is fairly standard:
 - **1/2. CI/CD**
   - Uses Dagger Go SDK so that it works exactly the same locally as it does in
     GitHub Actions
-  - [Spins up a Dagger Engine as a Fly.io machine on-demand, then connects to
+  - [Starts a Dagger Engine as a Fly.io machine on-demand, then connects to
     it](https://github.com/thechangelog/changelog.com/pull/471) so that caching
-    is reliable & persistent between workflow runs
+    is reliable & persistent across workflow runs
   - A successful run publishes a container image to
     https://ghcr.io/thechangelog/changelog-runtime &
     https://ghcr.io/thechangelog/changelog-prod
@@ -224,7 +229,10 @@ of app boot via `op` & `env.op`.
 
 In [GitHub Actions
 secrets](https://github.com/thechangelog/changelog.com/settings/secrets/actions),
-we are still pasting them manually. That is something that should use `op` too.
+we are still pasting them manually.
+
+> [!NOTE]
+> We should use `op` here too.
 
 
 ## Metrics & observability
@@ -253,10 +261,11 @@ We use Typesense for search. It's near-instant & it just works.
 The above is what we have so far. While we like to keep things simple, our
 setup is a constant work in progress. We keep making small improvements all the
 time, and we talk about them every few months in the context of our [Ship It!
-Kaizen episodes](https://changelog.com/topic/kaizen). For example, this diagram
-and document were created in the context of [🎧 Kaizen 8: 24 improvements & a
-lot more](https://shipit.show/80). If you would prefer to stay in reading mode,
-check out [GitHub discussion
+Kaizen episodes](https://changelog.com/topic/kaizen).
+
+For example, this diagram and document were created in the context of [🎧
+Kaizen 8: 24 improvements & a lot more](https://shipit.show/80). If you would
+prefer to stay in reading mode, check out [GitHub discussion
 #433](https://github.com/thechangelog/changelog.com/discussions/433).
 
 If anything on this page is missing, or could be clearer, please [open an
@@ -283,41 +292,6 @@ you very much!
         flyctl deploy --vm-size performance-4x --image <LATEST_IMAGE_SHA>
 
 
-## How to load data into a Neon.tech from a Fly.io Postgres instance?
+## How to branch the production db instance?
 
-The assumption is that a Neon.tech instance has already been provisioned.
-
-### Pre-requisites
-
-- Credentials for the Fly.io Postgres:
-```console
-op read op://changelog/changelog-postgres-2023-07-31/url --account changelog.1password.com --cache
-```
-- Credentials for the Neon.tech Postgres:
-```console
-op read op://changelog/neon/url --account changelog.1password.com --cache
-```
-- ensure there are no app instances connected to the db being restored
-- ensure the db is clean before restore
-
-### Step-by-step guide
-
-1. Connect to the **replica** instance:
-```console
-flyctl ssh console --select --app changelog-postgres-2023-07-31
-```
-
-2. Backup db to local file, then restore to remote host:
-```console
-time pg_dump --dbname="<FLY_POSTGRES_URL>" --format=c --verbose > /data/changelog.sql
-# Expected to take ~40s
-
-time pg_restore --dbname="<NEON_POSTGRES_URL>" --format=c --exit-on-error --no-owner --no-privileges < /data/changelog.sql
-# Expected to take ~1m
-```
-
-3. [Warm-up the query planner](https://www.postgresql.org/docs/current/sql-analyze.html):
-```console
-time psql "<NEON_POSTGRES_URL>" --command "ANALYZE VERBOSE;"
-# Expected to take ~3s
-```
+See [`changelog/README.md`](changelog/README.md).
