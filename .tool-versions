@@ -1,10 +1,10 @@
-direnv 2.32.3
+direnv 2.34.0
 elixir 1.14.5
-erlang 26.2
-golang 1.20.12
-nodejs 20.10.0
+erlang 26.2.3
+golang 1.22.1
+nodejs 20.11.1
 yarn 1.22.19
-postgres 16.1
-flyctl 0.1.135
-1password-cli 2.24.0
+postgres 16.2
+flyctl 0.2.25
+1password-cli 2.26.1
 dagger 0.6.4

@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Jan.%2012%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Mar.%2027%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -33,35 +33,40 @@ graph TD
     repo -.- |fly.io/changelog-2024-01-12| app
     
     registry --> |ghcr.io/changelog/changelog-prod| app
-    container --> |flyctl deploy| app
+    dagger --> |flyctl deploy| app
         
-    repo -.- |fly.io/dagger-engine-2023-05-20| container
+    repo -.- |fly.io/dagger-engine-2023-05-20| dagger
+
+    repo -.- |fly.io/pghero-2024-03-27| pghero
 
     %% PaaS - https://fly.io/dashboard/changelog
     subgraph Fly.io
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
 
-        container([ fa:fa-project-diagram Dagger Engine 2023-05-20 ]):::link
-        click container "https://fly.io/apps/dagger-engine-2023-05-20"
+        dagger([ fa:fa-project-diagram Dagger Engine 2023-05-20 ]):::link
+        click dagger "https://fly.io/apps/dagger-engine-2023-05-20"
             
         app(( fab:fa-phoenix-framework App changelog-2024-01-12.fly.dev )):::link
         style app fill:#488969;
         click app "https://fly.io/apps/changelog-2024-01-12"
 
-        automation --> |wireguard| container
-        container --> |ghcr.io/changelog/changelog-runtime| registry
-        container --> |ghcr.io/changelog/changelog-prod| registry
+        pghero([ fa:fa-gem PgHero 2024-03-27 ]):::link
+        click pghero "https://fly.io/apps/pghero-2024-03-27"
 
-        metricsdb([ fa:fa-chart-line Prometheus ])
-        metrics[ fa:fa-columns Grafana fly-metrics.net ]:::link
-        click metrics "https://fly-metrics.net"
-        metrics --- |promql| metricsdb
-        metricsdb -.- |metrics| app
-        metricsdb -.- |metrics| container
+        automation --> |wireguard| dagger
+        dagger --> |ghcr.io/changelog/changelog-runtime| registry
+        dagger --> |ghcr.io/changelog/changelog-prod| registry
+
+        grafana[ fa:fa-columns Grafana fly-metrics.net ]:::link
+        click grafana "https://fly-metrics.net"
+        grafana -.- |metrics| app
+        grafana -.- |metrics| dagger
+        grafana -.- |metrics| pghero
     end
 
-    app <==> |Postgres| dbrw
+    app <===> |Postgres| dbrw
+    pghero --> dbrw
 
     subgraph Neon.tech
         dbrw([ fa:fa-database main branch primary ]):::link
@@ -79,12 +84,12 @@ graph TD
 
     %% Search
     search(( fa:fa-magnifying-glass Typesense ))
-    app -...-> |search| search
+    app -..-> |search| search
 
     %% Exceptions
     exceptions(( fa:fa-car-crash Sentry )):::link
     click exceptions "https://sentry.io/organizations/changelog-media/issues/?project=5668962"
-    app -...-> |exceptions| exceptions
+    app -..-> |exceptions| exceptions
 
     %% CDN - https://manage.fastly.com/configure/services/7gKbcKSKGDyqU7IuDr43eG
     subgraph Fastly
@@ -104,15 +109,16 @@ graph TD
     %% Observability
     observability(( fa:fa-bug Honeycomb )):::link
     click observability "https://ui.honeycomb.io/changelog/datasets/changelog_opentelemetry/home"
-    app -....-> |traces| observability
+    app -.-> |traces| observability
     logs -.-> |logs| observability
     
     %% Object storage
     apex ==> |https| proxy
     subgraph Cloudflare.R2
         assets[ fab:fa-cloudflare changelog-assets changelog.place ]
+        feeds[ fab:fa-cloudflare changelog-feeds feeds.changelog.place ]
     end
-    cdn ==> |https| assets
+    cdn ==> |https| assets & feeds
 
     %% Monitoring
     subgraph BetterStack
@@ -128,8 +134,8 @@ graph TD
     end
 ```
 
-> **Note**
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEihYNEEk-4rPrhizu0iJoF8ztBiwuBkqiZS4SqZJUHTfOd98jdVGO3GP-w9bx7vd7B33vhDwiztx5-hRtlMrk3PfXnCm8JZKnxAt56kuCRbhZsVjgbIPeL1YMwSdMsJQLskYJZbdIKsFvyfzJaBYMppPT4tbd0kht5sPs7kXBU3yDqgtQip4hkECULJ7KPCgUXFL1Og-Kh_ojSMbv79EaB_M1dmOqNnmA1IaEG8xikvDYr6-0uejhYT6fa6MaEWFCw1sjCK2cys1CkvHwuLSVs2KWHBpGNz6Yoi0JqQgT4obAe1sajc5DRTlDLlpuaIbeKLRafTxijZb1o9b42MiX_paL23XCt9KXoOgfqrxdmmhbKx3NFc4VT7Fmu1mt6ijyBMSiBY5jItAlR8vFFfKPmdqI-GGDg4QHfoqlIgJ-YrKmCZHNlRfzdoQFiSmAZ_f8-UHC400oPMrRycnR7Bac3SZyEcu2nRkOb8EMeZDhDVaNbpkAEVqa76OKNYultPHfcBdpg_qhn8Hxi95weT7989Xg0GtApuu5P6O9VxjdneG9QU0bj8jVbN2x3Vup68JGwy_zMCRSoicR-bw3LhVUhEV26VaGov062UE6Gm_dQW8wdPsDtz8BrVnW5ipTY1SVmfQ7IONmgkcWe6g7EWUAUcMJOkOVoIhkCd9ZZF-xLzIIdwmLQUxhY28Ev_tGdpUIaEvXGC-heOtGWMmQm4BjETWGHrSs3wxhYwy4cbe7L9pEDBVA0LV-8nBAgV6-BK-MttIbKzWVec9vyn4DLP-SULkRxaA1rYr3lXENNa6hj0eRWoezgWvpI2iXR4NlN5aD5pJlTbVkG04YvXPXYB3R-EXnWYa6EOJprYC0rqKSapcQLRgBipP5k7PpdDaevXjUk4Cg24suhe1ys_qZwdWWAkJzSHALFY8y8W34ipwpmpJ9jfj_JaUogkZEIyQlStBQRkENCuASyk00AgBi8H5DcgkIeMRTM_AkT5lElwKvMcMIIueWJB4jCh2bASVNO-Y2pw2Sith1oRLBnfQTtK7a-A5_ipotbw8q-xjRQapMpyouNTZ-MrV1zaWKBQHqKBDb6n1dt-8IZ54iermptGm6OroRVjjAkqAUFKFAYBZuoHRpiqGZHS0zLcIeCDCweUIgRqUyDVO_rGYJk0nn3ZU8Z5E7HY97Z7Pp2C90QTsPhLvFLCKCstiVqd6qJtOz8bQ_mrVBDVp5_-uWQ3cEA3ELHsbYYvSUrxXZF8IexRU65JKEolnZihvTAbTSW7JD_WtY6qD4o8PaLmJTsnTOy35WspqZWeGp4ihsLO8siBx5rydBy-5ihy049HVtNQxMRtc7Hd9Y77To_S4jkjAI3slJAyjX80oNmnuPqq24VvHqLiSZWc_KwNX3taoQCzcUME7AHqYHYmeMGkYrTNIw6JYBqwxm9AsuNsGmbaQEJoNPpcwBNr-U-Ho5Go-hfw6qaNqeNHr2lk7Lo4vFO2saptAuYuKtYZmDbqtTBMhe0zgXBKwTnyksEP4kvgrCq-XV5WL36cPkTb4QZ0NyeTgujQh7ipC7G9Te4o_uokDbiZ5yWX88o2q15zDGc8HasyyM2I3-8g7UN1T1CmRVQiPzr6W3HDbEwG9arRmIeCut8adfVXJrmcadZ9qAAr-aaG-kWHn4PdDxxQFNqCrDxu1HNb6CPEavOSM7cCHoBleL0QpkTr1NxdkeTLqV6GNa8-gfngEaSUJ0L975G5g7h_gyziiBQ917-WP7TTBslztoLP81lGEzgF4ZEytw9v5kNqqD7FwkPI_WCRbE-2Ng4c0cO-s0hTWVla2CxgJlBts8eZQ_SFx7iytPtLXtbzmjYDd0lwPbfiUKDkVLBWcEe_nBKq9ndYJ3sI7FgudZ-cb7viIpiO3u0cHdHh9pbWeNJpggcL5VhDEq0YdMbzbHT0ENvw0qw-QFxlWpquOQIjj1-8PhsDfwSz7ZWh8aWTWWKrq9yfwR2jYh5Oa76CzkfIOyCKMFAefUSYmAGRs5c-dev1g5sILpepjDZYTFrXbsAej00rncsdCZK5GTUyfPoLDIoljmHYh3IuFphtnfnLfunfm9c-fM3clw7I0nvd5sejYYTUb96amzc-azvtc_G02Gg0kPHo-Go4dT54uR0Pcmw9Fwdtbr9Xu9SQ_IYUCAH2-LP3zM_z4P_wG9QNng)
+> [!TIP]
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWHlv2zYU_yqEihYtEEk-4iPusiFrurQI2gVzuwGLi4GSaJmLRGok1cSN8933SOqgHLlH_nBk6t3v9w763ot5QryF9_Qp2ihVyEUYrjlT-JZInpMg5nkoCRbxZsVSgYsN-nC-Ygj-4gxLeU7WKKPsBkkl-A1ZPJmcRKP57Mh-9W9pojaLcXH30vLYT1D1CpSiZwgkECXtqSwjq-CCqjdlZA_1nyAFv79Haxwt1thPqdqUEVIbEm8wS0nG07B50uaih4fFYqGNakXEGY1vjCC08mo3rSTj4WFpK2_FHDk0Tq5DMEVbElMRZ8SPgfemMhqdxYpyhny03NACvVVotfp0wBot60etCbGRL8NbLm7WGb-VoQRF_1AVbPNM21rraJ9wqXiONdv1atVEkWcgFp3jNCUCXXC0PL9E4SFTWxE_bHCU8SjMsVREwL-UrGlGZPsUpLwbYUFSCuDZPn--l_B0E4uAcvTixcHsWs5-E7lIZdfOAsc3YIbcy_AGq1a3zIAILc3nQcWaxVHa-m-4bdqgfuhncPzVYLw8m__5erTvNSDTD_yf0S6wRvdneGdQ08Uj8jVbf2x3Tur6sNHyyzKOiZToSUI-74xLloqwxC3d2lC0W2dbSEfrrT8ajI79wdAfjkBrUXS5qtQYVVUmwx7I-IXgicOeWHwaNlAYqwwlpMj41qH5inGW3ScspYxoA8f-YAL_d5XgOgWPGIt0QwSvXBr7o9kO2aOaA1rYFcZLKPSmadYq5SbiWCStU3vt7TdD2NoOLt9t721LSaFaCLrSJw97FOj0FIJgtFXOtwTWm-fXVWMC-n9JrPyEYlCZ11X-2oQBtWFAnw5Buop7C-rKO9ArD0bVbT97Lago2poqNpwweuevwTSiUY7OigL14SjQWgGPfaUn1TYjWjACrGeLJ8fz-cn05OWjzgUE_V70KewWpc14E9WU5OgqfQNHqMXF4RBa7gPKH-Grq9nptwb6txQqqARQtcDtpv7bhSVKpmhOdk0t_rgIW5stfysBULbGDNeRinlW5kyiC3uMwHM_J0rQWAaMKHRozFRiujFzOV2E1cSmbCuava7QT7IfwX6qutybHmgfNZ5-OjWleMWlSgXREiNxa19XSdehtId7tf-ecBYoopepJvpA12AswQpHWBKUY8pQJDCLN1D-NMfQPA9XK4hwBxAsCDwjELBKmcZcWDUFCZNQJ9SXvGSJP59OB8cn82lodcH4iIR_i1lCBGWpL3O9xc3mx9P5cHLSBSlo5cOvWw59FQzEYHnX32rUVa8V2Vlhj6INXXZJYtGuiPaL6SVa6Q3ZouEVLJHQRpL9LmFjU7H0zudhUbGaGV2Dq-awNlbfHGQdeK9nSMduuzNbDv3cWA0DmtH1Vsc31Ts0-rAtiCQMgvfiRQszP6gUaOYdqpfwRsPru5gUZhus4tZ8bzTFWPixgIkE5jA9f3tD1DI6UZKGQbcC2Jwwo1-wXTzbdpATmC8hlbIE1PxSwet0Mp1CIx7VwXQcadXsHJWOQ6_O3zvzNIeaTEmwhtURGqdOEOB6TdNSEDBOfKawroSz9DKKL5eXF-fb_z7O3pbn4nhMLvYHrhHhTiNyd426d4aDmy_Q9mKnuho8nnWN2jNYBErBujMxTti1_gj21LdUzcLl1EEr869lsBy3xMAvr-vBim-lM0b1q1puI9O480wbYNGriXZGipOH3yMdXxzRjKoqbNw9auAVlSl6wxnZggtRP7Y6jE4gSxpsas7uvNGNRF8K26N_eAFgJBnRzXkbbuBa2oWX9kQJHOtezB8bbyLh-ttD4zivYQzrBbTJlDhRc9cvs5DtpeZVxstknWFBgj9GDtjMDbfJUdxQOamyNA4iC7g4EBcUa0KSbwgxJJYwOCCpgQHkv7tOWgOeWXYHCu84oxAJaFV73v5KFNzolgouOO5OhlUp64mQ4S1siangZVG9Cb6v5iyx24t6uLuzKG_sbMAJ4wgu54owRiX6WOjl5_AVruV3MWqYgsi4KlV9l1ME5-FwPB4PRmHFJ91W4MiCzmd7X023M1g6QNslhBx9F52DxW9Q2jA6UPCOvJwIGNiJt_Du9YuVB1dkXV4LeEywuNGOPQCd3kiXWxZ7CyVKcuSVBdQpObcXDA_inUk4LTDzFvfenbfwZ-NpMJ0NBifz49FkNhnOj7yttzgZBsPjyWw8mg3geDKePBx5XzgHCcNgNp6MT44Hg-FgMBsAOYwXsPud_XXK_EhlFPxtyI3Ch_8BRPIPhw)
 
 Let's dig into how all the above pieces fit together.
 
