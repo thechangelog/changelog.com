@@ -50,7 +50,11 @@ defmodule Changelog.Feed do
   def preload_owner(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :owner)
   def preload_owner(feed), do: Repo.preload(feed, :owner)
 
-  defp put_random_slug(changeset, length \\ 16) do
+  defp put_random_slug(changeset, length \\ 16)
+
+  defp put_random_slug(changeset = %{data: %{slug: nil}}, length) do
     put_change(changeset, :slug, :binary.encode_hex(:crypto.strong_rand_bytes(length)))
   end
+
+  defp put_random_slug(changeset, length), do: changeset
 end
