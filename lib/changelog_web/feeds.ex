@@ -1,7 +1,5 @@
 defmodule ChangelogWeb.Feeds do
-  import Ecto.Query, only: [from: 2]
-
-  alias Changelog.{Episode, Fastly, NewsItem, Podcast, PodPing, Post, Repo}
+  alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, PodPing, Post, Repo}
   alias ChangelogWeb.{Endpoint, FeedView}
   alias ChangelogWeb.Router.Helpers, as: Routes
 
@@ -72,40 +70,39 @@ defmodule ChangelogWeb.Feeds do
   # News, Friends & Interviews
   def generate("podcast") do
     podcast = Podcast.changelog()
-
-    episodes =
-      Podcast.changelog_ids()
-        |> Enum.reduce(NewsItem, fn id, query ->
-          from(q in query, or_where: like(q.object_id, ^"#{id}:%"))
-        end)
-        |> Ecto.Query.select([:object_id])
-        |> Repo.all()
-        |> Enum.map(fn i ->
-          i.object_id
-          |> String.split(":")
-          |> List.last()
-        end)
-        |> Episode.with_ids()
-        |> Episode.published()
-        |> Episode.newest_first()
-        |> Episode.exclude_transcript()
-        |> Episode.preload_all()
-        |> Repo.all()
-
-    render("podcast.xml", podcast: podcast, episodes: episodes)
-  end
-
-  # All other podcasts
-  def generate(slug) do
-    podcast = Podcast.get_by_slug!(slug)
     episodes = get_episodes(podcast)
     render("podcast.xml", podcast: podcast, episodes: episodes)
   end
 
-  defp get_episodes(podcast) do
+  def generate(%Feed{} = feed) do
+    episodes = get_episodes(feed)
+    render("feed.xml", feed: feed, episodes: episodes)
+  end
+
+  def generate(%Podcast{} = podcast) do
+    episodes = get_episodes(podcast)
+    render("podcast.xml", podcast: podcast, episodes: episodes)
+  end
+
+  # When we have an unknown slug, look for a podcast followed by a feed
+  def generate(slug) do
+    generate(Podcast.get_by_slug(slug) || Feed.get_by_slug(slug))
+  end
+
+  defp get_episodes(%Feed{} = feed) do
+    Episode
+    |> Episode.with_ids(feed.podcast_ids, :podcast_id)
+    |> Episode.published()
+    |> Episode.newest_first()
+    |> Episode.newer_than(feed.starts_at, :published_at)
+    |> Episode.exclude_transcript()
+    |> Episode.preload_all()
+    |> Repo.all()
+  end
+
+  defp get_episodes(%Podcast{} = podcast) do
     podcast
-    |> Podcast.get_news_item_episode_ids!()
-    |> Episode.with_ids()
+    |> Podcast.get_episodes()
     |> Episode.published()
     |> Episode.newest_first()
     |> Episode.exclude_transcript()
@@ -113,7 +110,6 @@ defmodule ChangelogWeb.Feeds do
     |> Repo.all()
   end
 
-  # defp render(podcast, episodes, template \\ "podcast.xml") do
   defp render(template, assigns) do
     assigns = [conn: Endpoint] ++ assigns
     Phoenix.View.render_to_string(FeedView, template, assigns)

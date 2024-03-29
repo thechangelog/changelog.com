@@ -20,6 +20,8 @@ defmodule Changelog.Feed do
     timestamps()
   end
 
+  def get_by_slug(slug), do: Repo.get_by(__MODULE__, slug: slug)
+
   def file_changeset(feed, attrs \\ %{}),
     do: cast_attachments(feed, attrs, [:cover])
 

@@ -167,14 +167,24 @@ defmodule Changelog.Podcast do
   def with_vanity_domain(query \\ __MODULE__),
     do: from(q in query, where: not is_nil(q.vanity_domain))
 
+  def get_by_slug("interviews"), do: get_by_slug("podcast")
+  def get_by_slug("master"), do: master()
+
+  def get_by_slug(slug) do
+    public()
+    |> preload_active_hosts()
+    |> preload_retired_hosts()
+    |> Repo.get_by(slug: slug)
+  end
+
   def get_by_slug!("interviews"), do: get_by_slug!("podcast")
   def get_by_slug!("master"), do: master()
 
   def get_by_slug!(slug) do
     public()
-    |> Repo.get_by!(slug: slug)
     |> preload_active_hosts()
     |> preload_retired_hosts()
+    |> Repo.get_by!(slug: slug)
   end
 
   def get_episodes(%{slug: "master"}), do: from(e in Episode)
@@ -183,21 +193,6 @@ defmodule Changelog.Podcast do
     do: from(e in Episode, where: e.podcast_id in ^changelog_ids())
 
   def get_episodes(podcast), do: assoc(podcast, :episodes)
-
-  def get_news_items(%{slug: "master"}), do: NewsItem.with_object(NewsItem.audio())
-  def get_news_items(podcast), do: NewsItem.with_object_prefix(NewsItem.audio(), podcast.id)
-
-  def get_news_item_episode_ids!(podcast) do
-    podcast
-    |> get_news_items()
-    |> Ecto.Query.select([:object_id])
-    |> Repo.all()
-    |> Enum.map(fn i ->
-      i.object_id
-      |> String.split(":")
-      |> List.last()
-    end)
-  end
 
   def episode_count(podcast), do: podcast |> assoc(:episodes) |> Repo.count()
 

@@ -24,23 +24,29 @@ defmodule Changelog.Schema do
       def newest_last(query \\ __MODULE__, field \\ unquote(opts[:default_sort])),
         do: from(q in query, order_by: [asc: ^field])
 
-      def newer_than(query \\ __MODULE__, date_or_time)
+      def newer_than(query \\ __MODULE__, date_or_time, field \\ unquote(opts[:default_sort]))
 
-      def newer_than(query, date = %Date{}),
-        do: from(q in query, where: q.inserted_at > ^Timex.to_datetime(date))
+      def newer_than(query, nil, _field), do: query
 
-      def newer_than(query, time = %DateTime{}),
-        do: from(q in query, where: q.inserted_at > ^time)
+      def newer_than(query, date = %Date{}, field),
+        do: from(q in query, where: field(q, ^field) > ^Timex.to_datetime(date))
 
-      def older_than(query \\ __MODULE__, date_or_time)
+      def newer_than(query, time = %DateTime{}, field),
+        do: from(q in query, where: field(q, ^field) > ^time)
 
-      def older_than(query, date = %Date{}),
-        do: from(q in query, where: q.inserted_at < ^Timex.to_datetime(date))
+      def older_than(query \\ __MODULE__, date_or_time, field \\ unquote(opts[:default_sort]))
 
-      def older_than(query, time = %DateTime{}),
-        do: from(q in query, where: q.inserted_at < ^time)
+      def older_than(query, nil, _field), do: query
 
-      def with_ids(query \\ __MODULE__, ids), do: from(q in query, where: q.id in ^ids)
+      def older_than(query, date = %Date{}, field),
+        do: from(q in query, where: field(q, ^field) < ^Timex.to_datetime(date))
+
+      def older_than(query, time = %DateTime{}, field),
+        do: from(q in query, where: field(q, ^field) < ^time)
+
+      def with_ids(query \\ __MODULE__, ids, id_field \\ :id) do
+        from(q in query, where: field(q, ^id_field) in ^ids)
+      end
 
       def decode(hashid) when is_binary(hashid), do: Hashid.decode(hashid)
       # sentinal query value
