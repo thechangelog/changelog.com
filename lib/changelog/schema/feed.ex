@@ -22,6 +22,9 @@ defmodule Changelog.Feed do
 
   def get_by_slug(slug), do: Repo.get_by(__MODULE__, slug: slug)
 
+  def with_podcast_id(query \\ __MODULE__, id),
+    do: from(q in query, where: fragment("? = ANY(?)", ^id, q.podcast_ids))
+
   def file_changeset(feed, attrs \\ %{}),
     do: cast_attachments(feed, attrs, [:cover])
 
@@ -56,5 +59,5 @@ defmodule Changelog.Feed do
     put_change(changeset, :slug, :binary.encode_hex(:crypto.strong_rand_bytes(length)))
   end
 
-  defp put_random_slug(changeset, length), do: changeset
+  defp put_random_slug(changeset, _length), do: changeset
 end

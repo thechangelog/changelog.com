@@ -1,43 +1,56 @@
 defmodule ChangelogWeb.Feeds do
+  use ChangelogWeb, :verified_routes
+
   alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, PodPing, Post, Repo}
   alias ChangelogWeb.{Endpoint, FeedView}
-  alias ChangelogWeb.Router.Helpers, as: Routes
 
   @doc """
   Generates a fresh feed XML and uploads it to R2
   """
+  def refresh(feed = %Feed{slug: slug}) do
+    content = generate(feed)
+    upload(content, slug)
+    notify_services(feed)
+
+    :ok
+  end
+
   def refresh(slug) do
     content = generate(slug)
-    bucket = SecretOrEnv.get("R2_FEEDS_BUCKET", "changelog-feeds-dev")
-    headers = [content_type: "application/xml"]
-    key = "#{slug}.xml"
-
-    ExAws.request!(ExAws.S3.put_object(bucket, key, content, headers))
-
+    upload(content, slug)
     notify_services(slug)
 
     :ok
   end
 
-  defp notify_services("feed") do
-    url = Routes.feed_url(Endpoint, :news)
-    Fastly.purge(url)
+  defp upload(content, key) do
+    bucket = SecretOrEnv.get("R2_FEEDS_BUCKET", "changelog-feeds-dev")
+    headers = [content_type: "application/xml"]
+    file = "#{key}.xml"
+
+    bucket
+    |> ExAws.S3.put_object(file, content, headers)
+    |> ExAws.request!()
   end
 
-  defp notify_services("posts") do
-    url = Routes.feed_url(Endpoint, :posts)
-    Fastly.purge(url)
-  end
+  defp notify_services("feed"), do: Fastly.purge(url(~p"/feed"))
+
+  defp notify_services("posts"), do: Fastly.purge(url(~p"/posts/feed"))
 
   defp notify_services("plusplus") do
-    url = Routes.feed_url(Endpoint, :plusplus, Application.get_env(:changelog, :plusplus_slug))
-    Fastly.purge(url)
+    slug = Application.get_env(:changelog, :plusplus_slug)
+    Fastly.purge(url(~p"/plusplus/#{slug}/feed"))
   end
 
-  defp notify_services(slug) do
-    url = Routes.feed_url(Endpoint, :podcast, slug)
-    Fastly.purge(url)
-    PodPing.overcast(url)
+  defp notify_services(feed_or_slug) do
+    feed_url =
+      case feed_or_slug do
+        %Feed{} -> ~p"/feeds/#{feed_or_slug.slug}"
+        _else -> url(~p"/#{feed_or_slug}/feed")
+      end
+
+    Fastly.purge(feed_url)
+    PodPing.overcast(feed_url)
   end
 
   @doc """

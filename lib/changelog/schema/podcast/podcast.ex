@@ -6,7 +6,6 @@ defmodule Changelog.Podcast do
     EpisodeRequest,
     EpisodeStat,
     Files,
-    NewsItem,
     Person,
     PodcastTopic,
     PodcastHost,
