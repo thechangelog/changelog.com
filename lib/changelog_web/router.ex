@@ -35,6 +35,7 @@ defmodule ChangelogWeb.Router do
 
   pipeline :feed do
     plug :accepts, ["xml"]
+    plug Plug.Redirects
     plug Plug.CacheControl
   end
 

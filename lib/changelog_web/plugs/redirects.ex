@@ -10,7 +10,8 @@ defmodule ChangelogWeb.Plug.Redirects do
   @external %{
     "/sentry" => "https://sentry.io/from/changelog/",
     "/square" => "https://developer.squareup.com/",
-    "/tailscale" => "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog",
+    "/tailscale" =>
+      "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog",
     "/reactpodcast" => "https://reactpodcast.simplecast.com",
     "/store" => "https://merch.changelog.com"
   }
@@ -18,6 +19,8 @@ defmodule ChangelogWeb.Plug.Redirects do
   @internal %{
     "/rss" => "/feed",
     "/podcast/rss" => "/podcast/feed",
+    "/feed.js" => "/feed",
+    "/reactpodcast/feed" => "/jsparty/feed",
     "/team" => "/about",
     "/changeloggers" => "/about",
     "/membership" => "/++",
@@ -56,7 +59,6 @@ defmodule ChangelogWeb.Plug.Redirects do
   end
 
   defp internal_redirect(conn = %{halted: true}), do: conn
-
 
   defp internal_redirect(conn = %{request_path: path}) do
     if destination = Map.get(@internal, path, false) do
