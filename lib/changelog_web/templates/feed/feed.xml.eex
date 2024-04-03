@@ -12,30 +12,34 @@
     <language>en-us</language>
     <description><%= @feed.description %></description>
     <itunes:author>Changelog Media</itunes:author>
-    <itunes:summary><%= @feed.description %></itunes:summary>
+    <itunes:block>yes</itunes:block>
     <itunes:explicit>no</itunes:explicit>
+    <itunes:summary><%= @feed.description %></itunes:summary>
     <itunes:image href="<%= PodcastView.cover_url(@feed) %>"/>
     <itunes:owner>
       <itunes:name>Changelog Media</itunes:name>
       <itunes:email>editors@changelog.com</itunes:email>
     </itunes:owner>
-    <itunes:category text="Technology">
-      <itunes:category text="Software How-To"/>
-      <itunes:category text="Tech News"/>
-    </itunes:category>
   <%= for episode <- @episodes do %>
     <item>
       <title><%= custom_episode_title(@feed, episode) |> escaped() %></title>
       <link><%= url(~p"/#{episode.podcast.slug}/#{episode.slug}") %></link>
       <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
       <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
+    <%= if @feed.plusplus do %>
+      <enclosure url="<%= EpisodeView.plusplus_url(episode) %>" length="<%= episode.plusplus_bytes %>" type="audio/mpeg" />
+    <% else %>
       <enclosure url="<%= EpisodeView.audio_url(episode) %>" length="<%= episode.audio_bytes %>" type="audio/mpeg" />
+    <% end %>
       <description><%= SharedHelpers.md_to_text(episode.summary) %></description>
-      <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: false) %></content:encoded>
-
+      <content:encoded><%= render("_show_notes.xml", episode: episode, plusplus: @feed.plusplus) %></content:encoded>
       <itunes:episodeType><%= episode.type %></itunes:episodeType>
       <itunes:image href="<%= EpisodeView.cover_url(episode) %>"/>
+    <%= if @feed.plusplus do %>
+      <itunes:duration><%= TimeView.duration(episode.plusplus_duration) %></itunes:duration>
+    <% else %>
       <itunes:duration><%= TimeView.duration(episode.audio_duration) %></itunes:duration>
+    <% end %>
       <itunes:explicit>no</itunes:explicit>
       <itunes:subtitle><%= escaped(episode.subtitle) %></itunes:subtitle>
       <itunes:summary><%= SharedHelpers.md_to_text(episode.summary) %></itunes:summary>
@@ -47,7 +51,11 @@
       <podcast:transcript url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/transcript") %>" type="text/html" />
     <% end %>
     <%= if Enum.any?(episode.audio_chapters) do %>
-      <podcast:chapters url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters") %>" type="application/json+chapters" />
+      <%= if @feed.plusplus do %>
+        <podcast:chapters url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters?pp=true") %>" type="application/json+chapters" />
+      <% else %>
+        <podcast:chapters url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters") %>" type="application/json+chapters" />
+      <% end %>
     <% end %>
     <%= if episode.socialize_url do %>
       <podcast:socialInteract uri="<%= episode.socialize_url %>" protocol="activitypub" />
