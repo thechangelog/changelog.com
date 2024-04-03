@@ -25,6 +25,14 @@
     <%= AdminHelpers.error_message(f, :description) %>
   </div>
 
+  <div class={"field #{AdminHelpers.error_class(f, :title_format)}"}>
+    <%= label(f, :title_format) do %>
+      Episode Title Format <%= AdminHelpers.help_icon("Available fields: title, subtitle, podcast, number") %>
+    <% end %>
+    <%= text_input f, :title_format, placeholder: "{title} {subtitle} ({podcast} #\{number\})" %>
+    <%= AdminHelpers.error_message(f, :title_format) %>
+  </div>
+
   <div class={"field #{AdminHelpers.error_class(f, :starts_at)}"}>
     <%= label(f, :starts_at) do %>
       Starts At <%= AdminHelpers.help_icon("Feed will only include episodes published after this time") %>

@@ -9,6 +9,7 @@ defmodule Changelog.Repo.Migrations.CreateFeeds do
       add :plusplus, :boolean, default: false
       add :autosub, :boolean, default: true
       add :cover, :string
+      add :title_format, :string
       add :starts_at, :utc_datetime
       add :owner_id, references(:people, on_delete: :delete_all)
       add :podcast_ids, {:array, :integer}

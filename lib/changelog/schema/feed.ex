@@ -7,6 +7,7 @@ defmodule Changelog.Feed do
     field :name, :string
     field :slug, :string
     field :description, :string
+    field :title_format, :string
     field :plusplus, :boolean, default: false
     field :autosub, :boolean, default: true
     field :starts_at, :utc_datetime
@@ -32,7 +33,7 @@ defmodule Changelog.Feed do
     feed
     |> cast(
       attrs,
-      ~w(name description plusplus autosub starts_at podcast_ids person_ids owner_id)a
+      ~w(name description title_format plusplus autosub starts_at podcast_ids person_ids owner_id)a
     )
     |> put_random_slug()
     |> validate_required([:name, :slug, :owner_id])

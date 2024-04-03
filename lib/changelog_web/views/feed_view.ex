@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Episode, ListKit, NewsItem, Podcast, Post}
+  alias Changelog.{Episode, ListKit, NewsItem, Podcast, Post, StringKit}
 
   alias ChangelogWeb.{
     EpisodeView,
@@ -30,6 +30,33 @@ defmodule ChangelogWeb.FeedView do
     end
     |> safe_to_string()
   end
+
+  def custom_episode_title(%{title_format: format}, episode) do
+    case format do
+      "" ->
+        episode.title
+
+      nil ->
+        episode.title
+
+      string ->
+        episode_title = Map.get(episode, :title, "")
+        episode_subtitle = Map.get(episode, :subtitle, "")
+        episode_number = integer_slug(Map.get(episode, :slug, ""))
+        podcast_name = get_in(episode, [:podcast, :name]) || ""
+
+        title = Regex.replace(~r/{title}/, string, episode_title)
+        title = Regex.replace(~r/{subtitle}/, title, episode_subtitle)
+        title = Regex.replace(~r/{number}/, title, episode_number)
+        title = Regex.replace(~r/{podcast}/, title, podcast_name)
+
+        title
+    end
+  end
+
+  def custom_episode_title(_feed, episode), do: episode.title
+
+  defp integer_slug(slug), do: if(StringKit.is_integer(slug), do: slug, else: "")
 
   def episode_title(%{slug: "master"}, episode), do: EpisodeView.title_with_podcast_aside(episode)
 

@@ -25,7 +25,7 @@
     </itunes:category>
   <%= for episode <- @episodes do %>
     <item>
-      <title><%= episode_title(@podcast, episode) |> escaped() %></title>
+      <title><%= custom_episode_title(@feed, episode) |> escaped() %></title>
       <link><%= url(~p"/#{episode.podcast.slug}/#{episode.slug}") %></link>
       <guid isPermaLink="false"><%= EpisodeView.guid(episode) %></guid>
       <pubDate><%= TimeView.rss(episode.published_at) %></pubDate>
