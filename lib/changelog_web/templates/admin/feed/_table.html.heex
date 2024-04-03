@@ -18,7 +18,9 @@
         <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(feed.owner)}> <%= feed.owner.name %>
       <% end %>
       </td>
-      <td></td>
+      <td>
+        <img src={PodcastView.cover_url(feed, :medium)} class="ui image" width="100" />
+      </td>
       <td>
       <%= feed.name %>
       <%= if feed.plusplus do %>

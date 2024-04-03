@@ -27,7 +27,7 @@ defmodule Changelog.Feed do
     do: from(q in query, where: fragment("? = ANY(?)", ^id, q.podcast_ids))
 
   def file_changeset(feed, attrs \\ %{}),
-    do: cast_attachments(feed, attrs, [:cover])
+    do: cast_attachments(feed, attrs, [:cover], allow_urls: true)
 
   def insert_changeset(feed, attrs \\ %{}) do
     feed

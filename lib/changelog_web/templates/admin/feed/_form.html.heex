@@ -25,6 +25,35 @@
     <%= AdminHelpers.error_message(f, :description) %>
   </div>
 
+  <div class="two fields">
+    <div class="fourteen wide field">
+      <label for="cover">
+        Cover
+        <%= AdminHelpers.help_icon("Ideal size is 3000px by 3000px") %>
+        <%= AdminHelpers.file_toggle_buttons() %>
+      </label>
+      <%= AdminHelpers.error_message(f, :cover) %>
+      <%= file_input(f, :cover) %>
+    </div>
+
+    <div class="two wide field">
+      <img src={PodcastView.cover_url(f.data, :small)} height="66">
+    </div>
+  </div>
+
+  <div class="ui fluid selection dropdown field js-cover-select">
+    <i class="dropdown icon"></i>
+    <div class="default text">Or select existing cover art</div>
+    <div class="menu">
+    <%= for podcast <- [Podcast.changelog(), Podcast.plusplus()] ++ @podcasts do %>
+      <div class="item" data-value={PodcastView.cover_url(podcast, :original)}>
+        <img class="ui image" src={PodcastView.cover_url(podcast, :original)}>
+        <%= podcast.name %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+
   <div class={"field #{AdminHelpers.error_class(f, :title_format)}"}>
     <%= label(f, :title_format) do %>
       Episode Title Format <%= AdminHelpers.help_icon("Available fields: title, subtitle, podcast, number") %>

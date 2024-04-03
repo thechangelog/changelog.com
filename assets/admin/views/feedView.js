@@ -20,6 +20,14 @@ export default class FeedView {
         $clicked.find("input").remove();
       }
     });
+
+    $(".js-cover-select").dropdown({
+      action: "hide",
+      onChange: function (value, text, $selectedItem) {
+        $(".use-url").trigger("click");
+        $("#feed_cover").val(value);
+      }
+    });
   }
 
   edit() {
