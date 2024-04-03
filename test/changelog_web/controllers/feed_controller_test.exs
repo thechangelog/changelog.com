@@ -127,6 +127,25 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ e2.title
   end
 
+  test "a custom feed", %{conn: conn} do
+    p1 = insert(:podcast)
+    e1 = insert(:published_episode, podcast: p1)
+    p2 = insert(:podcast)
+    e2 = insert(:published_episode, podcast: p2)
+    p3 = insert(:podcast)
+    e3 = insert(:published_episode, podcast: p3)
+
+    feed = insert(:feed, podcast_ids: [p1.id, p2.id])
+
+    conn = get(conn, ~p"/feeds/#{feed.slug}")
+
+    assert conn.status == 200
+    assert valid_xml(conn)
+    assert conn.resp_body =~ e1.title
+    assert conn.resp_body =~ e2.title
+    refute conn.resp_body =~ e3.title
+  end
+
   test "the posts feed", %{conn: conn} do
     p1 = insert(:published_post)
     p2 = insert(:post)

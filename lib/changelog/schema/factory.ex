@@ -1,6 +1,14 @@
 defmodule Changelog.Factory do
   use ExMachina.Ecto, repo: Changelog.Repo
 
+  def feed_factory do
+    %Changelog.Feed{
+      name: "My Private Feed",
+      slug: sequence(:slug, &"feed#{&1}"),
+      owner: build(:person)
+    }
+  end
+
   def topic_factory do
     %Changelog.Topic{
       name: sequence(:name, &"Topic #{&1}"),
@@ -248,7 +256,10 @@ defmodule Changelog.Factory do
   end
 
   def live_podcast_factory do
-    %Changelog.Podcast{podcast_factory() | riverside_url: "https://riverside.fm/studio/livepod?t=123"}
+    %Changelog.Podcast{
+      podcast_factory()
+      | riverside_url: "https://riverside.fm/studio/livepod?t=123"
+    }
   end
 
   def post_factory do

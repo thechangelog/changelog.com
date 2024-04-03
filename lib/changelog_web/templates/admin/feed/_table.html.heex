@@ -42,7 +42,7 @@
       </td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= AdminHelpers.icon_link("eye", to: "#") %>
+          <%= AdminHelpers.icon_link("eye", to: ~p"/feeds/#{feed.slug}") %>
           <%= AdminHelpers.icon_link("edit", to: ~p"/admin/feeds/#{feed}/edit") %>
           <%= AdminHelpers.icon_link("trash",
                         to: ~p"/admin/feeds/#{feed}",

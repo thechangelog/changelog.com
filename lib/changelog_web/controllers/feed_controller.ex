@@ -20,6 +20,16 @@ defmodule ChangelogWeb.FeedController do
   plug :log_subscribers, "log podcast subscribers" when action in [:podcast]
   plug ResponseCache
 
+  def custom(conn, %{"slug" => slug}) do
+    feed = ChangelogWeb.Feeds.generate(slug)
+
+    conn
+    |> put_layout(false)
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_content_type("application/xml")
+    |> send_resp(200, feed)
+  end
+
   def news(conn, _params) do
     feed = ChangelogWeb.Feeds.generate("feed")
 
