@@ -42,6 +42,7 @@
       </td>
       <td class="center aligned">
         <div class="ui small basic buttons">
+          <%= AdminHelpers.icon_link("refresh", to: ~p"/admin/feeds/#{feed}/refresh", method: :post, title: "Refresh Feed") %>
           <%= AdminHelpers.icon_link("eye", to: ~p"/feeds/#{feed.slug}") %>
           <%= AdminHelpers.icon_link("edit", to: ~p"/admin/feeds/#{feed}/edit") %>
           <%= AdminHelpers.icon_link("trash",

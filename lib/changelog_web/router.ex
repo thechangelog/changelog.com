@@ -69,6 +69,7 @@ defmodule ChangelogWeb.Router do
     get "/search/:type", SearchController, :one
 
     resources "/feeds", FeedController
+    post "/feeds/:id/refresh", FeedController, :refresh, as: :feed
 
     resources "/topics", TopicController, except: [:show]
 

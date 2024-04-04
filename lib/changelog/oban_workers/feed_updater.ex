@@ -22,14 +22,18 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
     :ok
   end
 
-  def queue(item = %NewsItem{}) do
-    item = NewsItem.load_object(item)
-    queue(item.object)
-  end
-
   def queue(episode = %Episode{}) do
     episode = Episode.preload_podcast(episode)
     queue(episode.podcast)
+  end
+
+  def queue(feed = %Feed{}) do
+    %{"id" => feed.id} |> new() |> Oban.insert()
+  end
+
+  def queue(item = %NewsItem{}) do
+    item = NewsItem.load_object(item)
+    queue(item.object)
   end
 
   def queue(%Podcast{slug: "podcast", is_meta: true}) do
@@ -72,7 +76,7 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
     feeds = id |> Feed.with_podcast_id() |> Repo.all()
 
     for feed <- feeds do
-      %{"id" => feed.id} |> new() |> Oban.insert()
+      queue(feed)
     end
   end
 end

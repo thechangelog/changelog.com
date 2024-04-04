@@ -2,10 +2,11 @@ defmodule ChangelogWeb.Admin.FeedController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Feed, Podcast}
+  alias Changelog.ObanWorkers.FeedUpdater
 
-  plug :assign_feed when action in [:edit, :update, :delete]
+  plug :assign_feed when action in [:edit, :update, :delete, :refresh]
   plug :assign_podcasts when action in [:index, :new, :create, :edit, :update]
-  plug Authorize, [Policies.AdminsOnly, :feed]
+  plug Authorize, [Policies.Admin.Feed, :feed]
   plug :scrub_params, "feed" when action in [:create, :update]
 
   def index(conn, params) do
@@ -68,6 +69,14 @@ defmodule ChangelogWeb.Admin.FeedController do
 
   def delete(conn = %{assigns: %{feed: feed}}, _params) do
     Repo.delete!(feed)
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect(to: ~p"/admin/feeds")
+  end
+
+  def refresh(conn = %{assigns: %{feed: feed}}, _params) do
+    FeedUpdater.queue(feed)
 
     conn
     |> put_flash(:result, "success")
