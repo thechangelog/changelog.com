@@ -40,10 +40,10 @@ defmodule ChangelogWeb.FeedView do
         episode.title
 
       string ->
-        episode_title = Map.get(episode, :title, "")
-        episode_subtitle = Map.get(episode, :subtitle, "")
+        episode_title = Map.get(episode, :title) || ""
+        episode_subtitle = Map.get(episode, :subtitle) || ""
         episode_number = integer_slug(Map.get(episode, :slug, ""))
-        podcast_name = get_in(episode, [:podcast, :name]) || ""
+        podcast_name = get_in(episode, [Access.key!(:podcast), Access.key!(:name)]) || ""
 
         title = Regex.replace(~r/{title}/, string, episode_title)
         title = Regex.replace(~r/{subtitle}/, title, episode_subtitle)
