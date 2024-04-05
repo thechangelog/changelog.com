@@ -45,8 +45,8 @@ defmodule ChangelogWeb.Feeds do
   defp notify_services(feed_or_slug) do
     feed_url =
       case feed_or_slug do
-        %Feed{} -> ~p"/feeds/#{feed_or_slug.slug}"
-        _else -> url(~p"/#{feed_or_slug}/feed")
+        %Feed{slug: slug} -> url(~p"/feeds/#{slug}")
+        slug -> url(~p"/#{slug}/feed")
       end
 
     Fastly.purge(feed_url)
