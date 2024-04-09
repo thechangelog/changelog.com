@@ -77,6 +77,12 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ e.title
   end
 
+  test "a podcast feed that doesn't exist", %{conn: conn} do
+    assert_raise Ecto.NoResultsError, fn ->
+      get(conn, ~p"/comments/feed")
+    end
+  end
+
   test "the plusplus feed with incorrect slug doesn't exist", %{conn: conn} do
     Application.put_env(:changelog, :plusplus_slug, "8675309")
     conn = get(conn, Routes.feed_path(conn, :plusplus, "justguessing"))
@@ -144,6 +150,12 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ e1.title
     assert conn.resp_body =~ e2.title
     refute conn.resp_body =~ e3.title
+  end
+
+  test "a custom feed that does not exist", %{conn: conn} do
+    assert_raise Ecto.NoResultsError, fn ->
+      get(conn, ~p"/feeds/8675309")
+    end
   end
 
   test "the posts feed", %{conn: conn} do

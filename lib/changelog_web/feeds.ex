@@ -81,11 +81,7 @@ defmodule ChangelogWeb.Feeds do
 
   # Special case for "The Changelog" feed which gets its episodes from
   # News, Friends & Interviews
-  def generate("podcast") do
-    podcast = Podcast.changelog()
-    episodes = get_episodes(podcast)
-    render("podcast.xml", podcast: podcast, episodes: episodes)
-  end
+  def generate("podcast"), do: generate(Podcast.changelog())
 
   def generate(%Feed{} = feed) do
     episodes = get_episodes(feed)
@@ -99,7 +95,7 @@ defmodule ChangelogWeb.Feeds do
 
   # When we have an unknown slug, look for a podcast followed by a feed
   def generate(slug) do
-    generate(Podcast.get_by_slug(slug) || Feed.get_by_slug(slug))
+    generate(Podcast.get_by_slug(slug) || Feed.get_by_slug!(slug))
   end
 
   defp get_episodes(%Feed{} = feed) do

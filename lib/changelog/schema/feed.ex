@@ -23,6 +23,8 @@ defmodule Changelog.Feed do
 
   def get_by_slug(slug), do: Repo.get_by(__MODULE__, slug: slug)
 
+  def get_by_slug!(slug), do: Repo.get_by!(__MODULE__, slug: slug)
+
   def with_podcast_id(query \\ __MODULE__, id),
     do: from(q in query, where: fragment("? = ANY(?)", ^id, q.podcast_ids))
 
