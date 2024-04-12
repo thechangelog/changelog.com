@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#59B287">
+    <title><%= ChangelogWeb.Meta.Title.get(@conn) %></title>
+    <link rel="shortcut icon" href={url(~p"/favicon.ico")}>
+    <link rel="stylesheet" href={url(~p"/css/news.css")}>
+  <%= for font <- ~w(roboto-mono-400 SanaSansAlt-Regular SanaSansAlt-Black SanaSansAlt-Italic) |> Enum.map(&("#{&1}.woff2")) do %>
+    <link rel="preload" href={url(~p"/fonts/#{font}")} as="font" type="font/woff2" crossorigin>
+  <% end %>
+    <script>
+      function resizeFrameToFit() {
+        const iframe = document.getElementById('newsletter_iframe');
+        const container = document.getElementById('newsletter_iframe-container');
+        const scrollHeight = iframe.contentWindow.document.body.scrollHeight;
+
+        iframe.style.height = `${scrollHeight}px`;
+        container.style.flex = `1 0 ${scrollHeight}px`;
+      }
+
+      function goToTestimonial(index) {
+        // Get all slides and pagination buttons
+        const testimonials = document.querySelectorAll(".testimonials-item");
+        const paginationButtons = document.querySelectorAll(".testimonials-pagination li button");
+
+        // Hide all slides and remove "is-active" class from pagination buttons
+        testimonials.forEach(function(slide) {
+          slide.classList.remove("is-active");
+        });
+        paginationButtons.forEach(function(button) {
+          button.parentNode.classList.remove("is-active");
+        });
+
+        // Show the selected slide and add "is-active" class to its corresponding pagination button
+        testimonials[index].classList.add("is-active");
+        paginationButtons[index].parentNode.classList.add("is-active");
+      }
+
+      // Autoplay testimonials
+      const testimonialInterval = setInterval(() => {
+          // Make sure we aren't hovering over the parent
+          if (document.querySelector(".testimonials").matches(":hover")) {
+            return;
+          }
+
+          const testimonials = document.querySelectorAll(".testimonials-item");
+          const activeTestimonial = document.querySelector(".testimonials-item.is-active");
+          let nextIndex = Array.from(activeTestimonial.parentNode.children).indexOf(activeTestimonial) + 1;
+
+          // check if were at the last testimonial
+          if (nextIndex == testimonials.length) {
+            nextIndex = 0;
+          }
+          goToTestimonial(nextIndex);
+      }, 5000);
+
+      function togglePlayPause() {
+        const issue = event.target.parentNode;
+
+        if (!issue.audio) {
+          issue.audio = new Audio();
+          issue.audio.type = "audio/mpeg";
+          issue.audio.src = event.target.href;
+          issue.progress = 0;
+
+          issue.audio.addEventListener("canplaythrough", function() {
+            issue.audio.play();
+          });
+
+          issue.audio.addEventListener("timeupdate", function() {
+            if (isFinite(issue.audio.duration)) {
+
+              const progress = issue.audio.currentTime / issue.audio.duration * 100;
+              const rounded = Math.round(progress * 10) / 10;
+
+              if (issue.progress < rounded) {
+                issue.progress = rounded;
+                issue.querySelector(".progress_bar").style = `--progress: ${rounded}%`;
+              }
+            }
+          });
+        }
+
+        if (issue.classList.contains("is-playing")) {
+          issue.audio.pause();
+          issue.classList.add("is-paused");
+          issue.classList.remove("is-playing");
+        } else {
+          issue.classList.remove("is-paused");
+          issue.classList.add("is-playing");
+          issue.audio.play();
+        }
+      }
+
+      function toggleReasons() {
+        const reasons = document.querySelector(".reasons");
+        reasons.classList.toggle("is-visible");
+
+        const isVisible = reasons.classList.contains("is-visible")
+
+        // Ensure we are scrolled to the top
+        if (isVisible) {
+          reasons.scrollTo({
+            top: reasons.offsetTop,
+          });
+        }
+
+        // Don"t allow the body to scroll when modal is open
+        document.body.classList.toggle("no-scroll", isVisible)
+      }
+
+      window.onload = function() {
+        resizeFrameToFit();
+        goToTestimonial(Math.floor(Math.random() * 4));
+      };
+
+      window.onresize = function() {
+        resizeFrameToFit();
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-inner">
+          <div class="header-info">
+            <img src={~p"/images/news/logo.svg"} alt="Changelog News Logo" width="48px">
+            <h1 class="display-xl">Changelog News! The software <span class="flippy">newsletter</span> that's also a <span class="floppy">podcast</span></h1>
+            <p class="sans-md color-grey"><em>The software world moves fast... Keep up the easy way! We track the changes & <%= link("Jerod", to: ~p"/person/jerodsanto") %> lets you know what's up each Monday.</em></p>
+
+            <%= form_tag ~p"/subscribe/news", class: "subscribe_form m-t-sm", method: "get" do %>
+              <label for="email" class="visually-hidden">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="Email address..." required>
+              <button type="submit">Subscribe</button>
+            <% end %>
+
+            <ul class="subscribe_icons">
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-apple.png")})"}><a href={subscribe_on_apple_url(@podcast)}><span>Apple</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-overcast.png")})"}><a href={subscribe_on_overcast_url(@podcast)}><span>Overcast</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-spotify.png")})"}><a href={subscribe_on_spotify_url(@podcast)}><span>Spotify</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a href={subscribe_on_android_url(@podcast)}><span>Android</span></a></li>
+            </ul>
+
+            <div class="reasons">
+              <button class="reasons-close" title="Close" onclick="toggleReasons();"></button>
+              <h2 class="display-xl m-b-lg m-r-lg">34 reasons you should subscribe to&nbsp;Changelog News</h2>
+              <ol class="reasons-list">
+                <li>Every word we publish is 100% human-crafted.</li>
+                <li>We do NOT redirect or track your link clicks.</li>
+                <li>You can hover link to preview where you're headed.</li>
+                <li>It only costs as much as a free cup of coffee.</li>
+                <li>You might actually start looking forward to Mondays.</li>
+                <li>You'll be one of 21k+ intelligent, highly attractive subscribers.</li>
+                <li>We aren't above flattery. More where this came from!</li>
+                <li>We've been in the software game for over 20 years.</li>
+                <li>We try to keep puns & bad jokes to a minimum.</li>
+                <li>But every once in awhile, one slips through...</li>
+                <li>A dev has a problem, decides to use Java, now has a ProblemFactory.</li>
+                <li>Don't deny it, that joke was better than you expected.</li>
+                <li>We feature the best community <%= link("submissions", to: ~p"/news/submit") %>.</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ol>
+
+              <button class="button m-t-lg" onclick="toggleReasons();">Alright, you convinced me!</button>
+            </div>
+          </div>
+
+          <div class="testimonials">
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/mary.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>The only news I look forward to every week. Some weeks, I play it twice. Quick, witty, informative & positive. Rock on, Jerod!</p>
+                <cite class="mono-sm">Mary H.</cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/justin.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>I gotta say the Changelog Newsletter is the best programming journalism I've seen in years.</p>
+                <cite class="mono-sm"><a href="https://justin.searls.co/" title="Justin Searls' website">Justin Searls</a></cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/chris.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>I get lots of information. Changelog News is the one I don't skip, in both podcast and newsletter form.</p>
+                <cite class="mono-sm">Chris Woods</cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/maros.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>Informative, concise, funny. Pick any three 😎</p>
+                <cite class="mono-sm">Maroš Kučera</cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/fraol.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>The newsletter so good I consider it a competitive advantage.</p>
+                <cite class="mono-sm"><a href="https://github.com/frectonz" title="Fraol Lemecha on GitHub">Fraol Lemecha</a></cite>
+              </div>
+            </blockquote>
+            <ul class="testimonials-pagination">
+              <li class="is-active"><button title="Go to 1" onclick="goToTestimonial(0);"></button></li>
+              <li><button title="Go to 2" onclick="goToTestimonial(1);"></button></li>
+              <li><button title="Go to 3" onclick="goToTestimonial(2);"></button></li>
+              <li><button title="Go to 4" onclick="goToTestimonial(3);"></button></li>
+              <li><button title="Go to 5" onclick="goToTestimonial(4);"></button></li>
+            </ul>
+          </div>
+
+          <div class="header-ctas">
+            <button class="text_button m-b-sm" onclick="toggleReasons();">34 more reasons to subscribe</button>
+            <p class="mono-sm color-grey">Browse all of our podcasts at <a href="/">changelog.com</a></p>
+          </div>
+        </div>
+      </header>
+      <main class="main issue_list">
+        <!-- Toggle is-playing when playing or not -->
+        <article class="issue_list-item issue_list-item--sticky">
+          <div>
+            <p class="mono-sm"><em>Issue #<%= @latest.slug %></em> 👉 <%= TimeView.pretty_date(@latest.published_at) %> — <%= TimeView.rounded_minutes(@latest.audio_duration) %> Minutes</p>
+            <h2 class="display-lg"><%= @latest.email_subject %></h2>
+          </div>
+          <a class="play_button" title="Play Audio" href={EpisodeView.audio_url(@latest)} onclick="togglePlayPause(); return false;"></a>
+          <div class="progress_bar" style="--progress: 0%;"></div>
+        </article>
+
+        <div id="newsletter_iframe-container" class="newsletter_content">
+          <!-- We need the iframe not to scroll. Using a deprecated attribute but not sure how reliable it is. -->
+          <iframe id="newsletter_iframe" src={~p"/news/#{@latest.slug}/email"} scrolling="no"></iframe>
+        </div>
+
+        <div class="issue_list-pagination">
+          <article class="issue_list-item issue_list-item--view_all">
+            <div>
+              <h2 class="display-lg"><a href="/news/archive">View All Episodes</a></h2>
+            </div>
+          </article>
+          <article class="issue_list-item">
+            <div>
+              <p class="mono-sm"><em>Issue #<%= @previous.slug %></em> 👉 <%= TimeView.pretty_date(@previous.published_at) %> — <%= TimeView.rounded_minutes(@previous.audio_duration) %> Minutes</p>
+              <h2 class="display-lg"><%= link(@previous.email_subject, to: ~p"/news/#{@previous.slug}") %></h2>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

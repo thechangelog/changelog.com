@@ -1,0 +1,103 @@
+@font-face {
+  font-family: "Roboto Mono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+  src: url("../fonts/roboto-mono-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-weight: 400;
+  font-style: italic;
+  font-display: fallback;
+  src: url("../fonts/roboto-mono-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-weight: 700;
+  font-style: normal;
+  font-display: fallback;
+  src: url("../fonts/roboto-mono-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-Regular.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 400;
+  font-style: italic;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-Italic.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 500;
+  font-style: normal;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-Medium.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 500;
+  font-style: italic;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-MediumItalic.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-MediumItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 700;
+  font-style: normal;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-Bold.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 700;
+  font-style: italic;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-BoldItalic.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-BoldItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 900;
+  font-style: normal;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-Black.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-Black.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Sana Sans";
+  font-weight: 900;
+  font-style: italic;
+  font-display: fallback;
+  src:
+    url("../fonts/SanaSansAlt-BlackItalic.woff2") format("woff2"),
+    url("../fonts/SanaSansAlt-BlackItalic.woff") format("woff");
+}

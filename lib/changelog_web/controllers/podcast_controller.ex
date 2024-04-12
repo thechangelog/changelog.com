@@ -20,6 +20,24 @@ defmodule ChangelogWeb.PodcastController do
     end
   end
 
+  def show(conn, params, podcast = %{slug: "news"}) do
+    [latest, previous] =
+      podcast
+      |> Podcast.get_episodes()
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.newest_first()
+      |> Episode.limit(2)
+      |> Episode.preload_all()
+      |> Repo.all()
+
+    conn
+    |> assign(:podcast, podcast)
+    |> assign(:latest, latest)
+    |> assign(:previous, previous)
+    |> render(:news, layout: false)
+  end
+
   def show(conn, params, podcast) do
     page =
       podcast
