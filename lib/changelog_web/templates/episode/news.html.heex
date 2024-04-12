@@ -1,9 +1,9 @@
 <article class="issue_list-item issue_list-item--sticky">
   <div>
     <p class="mono-sm"><em>Issue #<%= @episode.slug %></em> 👉 <%= TimeView.pretty_date(@episode.published_at) %> — <%= TimeView.rounded_minutes(@episode.audio_duration) %> Minutes</p>
-    <h2 class="display-lg"><%= @episode.email_subject %></h2>
+    <h2 class="display-lg"><%= @episode.email_subject || @episode.title %></h2>
   </div>
-  <a class="play_button" title="Play Audio" href={EpisodeView.audio_url(@episode)} onclick="togglePlayPause(); return false;"></a>
+  <a class="play_button" title="Play Audio" href={audio_url(@episode)} onclick="togglePlayPause(); return false;"></a>
   <div class="progress_bar" style="--progress: 0%;"></div>
 </article>
 
@@ -18,10 +18,12 @@
       <h2 class="display-lg"><a href="/news/archive">View All Episodes</a></h2>
     </div>
   </article>
+<%= if @previous do %>
   <article class="issue_list-item">
     <div>
       <p class="mono-sm"><em>Issue #<%= @previous.slug %></em> 👉 <%= TimeView.pretty_date(@previous.published_at) %> — <%= TimeView.rounded_minutes(@previous.audio_duration) %> Minutes</p>
-      <h2 class="display-lg"><%= link(@previous.email_subject, to: ~p"/news/#{@previous.slug}") %></h2>
+      <h2 class="display-lg"><%= link(@previous.email_subject || @previous.title, to: ~p"/news/#{@previous.slug}") %></h2>
     </div>
   </article>
+<% end %>
 </div>
