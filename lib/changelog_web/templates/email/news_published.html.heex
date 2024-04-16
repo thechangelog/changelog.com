@@ -14,14 +14,14 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content={news_title(@episode)}>
     <meta property="og:site_name" content="Changelog News">
-    <meta property="og:url" content={url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email")}>
+    <meta property="og:url" content={url(~p"/#{@episode.podcast.slug}/#{@episode.slug}")}>
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content={url(~p"/images/share/twitter-news.png")}>
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Changelog">
     <meta name="twitter:description" content={html_escape(@episode.title)}>
-    <meta name="twitter:url" content={url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email")}>
+    <meta name="twitter:url" content={url(~p"/#{@episode.podcast.slug}/#{@episode.slug}")}>
     <meta name="twitter:image" content={url(~p"/images/share/twitter-news.png")}>
 
     <meta name="apple-itunes-app" content={"app-id" <> PodcastView.apple_id(@episode.podcast)}>
@@ -78,16 +78,16 @@
                         <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
                       </tbody>
                     </table>
+                    <%= if @person do %>
                     <table width="700" cellpadding="20" cellspacing="0" border="0">
                       <tbody>
                         <tr>
                           <td class="footer" align="center">
                             <img class="spacer-20" src={url(~p"/images/email/spacer_1.gif")}>
-                          <%= if @person do %>
+
                             <p><%= link("Unsubscribe", to: PersonView.opt_out_url(@person, "podcast", @episode.podcast.slug)) %></p>
                           <%= if String.length(@subscription.context) > 0 do %>
                             <p>(Context: <%= @subscription.context %>)</p>
-                          <% end %>
                           <% end %>
                             <p class="last-of-type">Copyright Changelog Media LLC</p>
                             <img class="spacer-20" src={url(~p"/images/email/spacer_1.gif")}>
@@ -95,6 +95,7 @@
                         </tr>
                       </tbody>
                     </table>
+                    <% end %>
                   </td>
                 </tr>
               </tbody>

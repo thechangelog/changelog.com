@@ -29,8 +29,8 @@ defmodule ChangelogWeb.Meta.Feeds do
 
   defp shared do
     [
-      %{url: ~p"/feed", title: "News Feed (The Proverbial Fire Hose)"},
-      %{url: ~p"/master/feed", title: "Master Feed (All Shows)"}
+      %{url: url(~p"/feed"), title: "Combined Feed (Pods + Posts)"},
+      %{url: url(~p"/master/feed"), title: "Master Feed (All Pods)"}
     ]
   end
 end

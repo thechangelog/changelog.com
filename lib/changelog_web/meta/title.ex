@@ -170,6 +170,16 @@ defmodule ChangelogWeb.Meta.Title do
     EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
   end
 
+  # News episode page
+  defp title(%{
+         view_module: EpisodeView,
+         view_template: "news.html",
+         podcast: _podcast,
+         episode: episode
+       }) do
+    EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
+  end
+
   # Episode request form
   defp title(%{view_module: EpisodeRequestView, view_template: "new.html", podcast: podcast}) do
     "Request an episode of #{podcast.name}"

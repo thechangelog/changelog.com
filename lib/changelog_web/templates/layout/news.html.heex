@@ -2,12 +2,53 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark only">
     <meta name="theme-color" content="#59B287">
-    <title><%= ChangelogWeb.Meta.Title.get(@conn) %></title>
-    <link rel="shortcut icon" href={url(~p"/favicon.ico")}>
+    <meta name="copyright" content="Changelog Media LLC">
+    <title><%= Meta.Title.get(@conn) %></title>
+    <link rel="canonical" href={Meta.Url.get(:canonical, @conn) || current_url(@conn)}>
+    <meta name="description" content={Meta.Description.get(@conn)}>
+  <% twitter_card_type = Meta.Twitter.get(:card_type, @conn) %>
+    <meta name="twitter:card" content={twitter_card_type}
+    <meta name="twitter:site" content="@Changelog">
+    <meta name="twitter:title" content={Meta.Title.get(@conn) |> escaped()}>
+    <meta name="twitter:description" content={Meta.Description.get(@conn) |> escaped()}>
+  <%= if twitter_card_type == "player" do %>
+    <meta name="twitter:player" content={Meta.Twitter.get(:player_url, @conn)}>
+    <meta name="twitter:player:width" content="300">
+    <meta name="twitter:player:height" content="150">
+    <meta name="twitter:player:stream" content={Meta.Twitter.get(:audio_url, @conn)}>
+    <meta name="twitter:player:stream:content_type" content="audio/mpeg">
+    <meta name="og:audio" content={Meta.Twitter.get(:audio_url, @conn)}>
+  <% else %>
+    <meta name="twitter:url" content={current_url(@conn)}>
+  <% end %>
+  <%= if share_image = Meta.Image.get(@conn) do %>
+    <meta name="twitter:image" content={share_image}>
+    <meta property="og:image" content={share_image}>
+  <% end %>
+    <meta property="og:url" content={current_url(@conn)}>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content={Meta.Title.get(@conn) |> escaped()}>
+    <meta property="og:description" content={Meta.Description.get(@conn) |> escaped()}>
+    <meta property="og:site_name" content="Changelog">
+    <meta property="og:locale" content="en_US">
+  <%= if apple_id = Meta.Apple.get(:podcasts_id, @conn) do %>
+    <meta name="apple-itunes-app" content={"app-id=" <> apple_id}>
+  <% end %>
+  <%= for feed <- Meta.Feeds.get(:rss, @conn) do %>
+    <link href={feed.url} rel="alternate" title={feed.title} type="application/rss+xml">
+  <% end %>
+    <link href={~p"/feed.json"} rel="alternate" title="JSON Feed" type="application/json">
     <link rel="stylesheet" href={url(~p"/css/news.css")}>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href={url(~p"/favicon.ico")}>
+  <%= if mastodon_url = Meta.Mastodon.get(@conn) do %>
+    <link rel="me" href={mastodon_url}>
+  <% end %>
   <%= for font <- preloaded_news_fonts() |> Enum.map(&("#{&1}.woff2")) do %>
     <link rel="preload" href={url(~p"/fonts/#{font}")} as="font" type="font/woff2" crossorigin>
   <% end %>
@@ -121,6 +162,7 @@
         resizeFrameToFit();
       };
     </script>
+    <%= render("_head_scripts.html", assigns) %>
   </head>
   <body>
     <div class="container">
