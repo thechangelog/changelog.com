@@ -45,9 +45,9 @@
                         <tr>
                           <td class="header" align="center">
                             <img class="spacer-10" src={url(~p"/images/email/spacer_1.gif")}>
-                            <p class="last-of-type"><%= link("View on Web", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}/email"), title: "View this newsletter in your web browser") %>
+                            <p class="last-of-type"><%= link("View on Web", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}"), title: "View this newsletter in your web browser") %>
                               &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
-                              <%= link("Audio Edition", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}"), title: "View the companion audio edition") %>
+                              <%= link("Audio Edition", to: EpisodeView.audio_url(@episode), title: "Direct link to the audio") %>
                               &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
                               <%= link("Changelog++", to: url(~p"/++"), title: "It's better!") %>
                             </p>
@@ -72,13 +72,13 @@
                         </tr>
                       </tbody>
                     </table>
+                  <%= if @person do %>
                     <img class="spacer-20" src={url(~p"/images/email/spacer_1.gif")}>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e5e5e5">
                       <tbody>
                         <tr><td bgcolor="#e5e5e5" height="1" width="100%"></td></tr>
                       </tbody>
                     </table>
-                    <%= if @person do %>
                     <table width="700" cellpadding="20" cellspacing="0" border="0">
                       <tbody>
                         <tr>
