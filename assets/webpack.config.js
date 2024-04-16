@@ -58,6 +58,7 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
+      __dirname + "/app/fonts.css",
       __dirname + "/app/app.scss",
       __dirname + "/app/app.js"
     ],
@@ -81,9 +82,17 @@ module.exports = [
     plugins: [new MiniCssExtractPlugin({ filename: "css/email.css" })]
   }),
   merge(common, {
-    entry: [__dirname + "/news/fonts.css", __dirname + "/news/news.css"],
+    entry: [
+      __dirname + "/app/fonts.css",
+      __dirname + "/app/news.css",
+      __dirname + "/app/news.js"
+    ],
     output: {
-      path: __dirname + "/../priv/static"
+      path: __dirname + "/../priv/static",
+      filename: "js/news.js"
+    },
+    resolve: {
+      modules: ["node_modules", __dirname + "/app"]
     },
     plugins: [new MiniCssExtractPlugin({ filename: "css/news.css" })]
   }),
