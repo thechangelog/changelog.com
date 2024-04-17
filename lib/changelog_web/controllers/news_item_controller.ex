@@ -50,16 +50,23 @@ defmodule ChangelogWeb.NewsItemController do
       episode =
         assoc(podcast, :episodes)
         |> Episode.published()
-        |> Episode.preload_all()
+        |> Episode.preload_podcast()
         |> Repo.get_by!(slug: slug)
-        |> Episode.load_news_item()
+
+      previous =
+        assoc(podcast, :episodes)
+        |> Episode.previous_to(episode)
+        |> Episode.newest_first(:published_at)
+        |> Episode.preload_podcast()
+        |> Episode.limit(1)
+        |> Repo.one()
 
       conn
       |> assign(:podcast, podcast)
       |> assign(:episode, episode)
-      |> assign(:item, episode.news_item)
+      |> assign(:previous, previous)
       |> put_view(EpisodeView)
-      |> render(:show)
+      |> render(:news, layout: {ChangelogWeb.LayoutView, "news.html"})
     rescue
       _e -> false
     end

@@ -1,0 +1,28 @@
+<article class="issue_list-item issue_list-item--sticky">
+  <div>
+    <p class="mono-sm"><em>Issue #<%= @episode.slug %></em> 👉 <%= TimeView.pretty_date(@episode.published_at) %> — <%= TimeView.rounded_minutes(@episode.audio_duration) %> Minutes</p>
+    <h2 class="display-lg"><%= @episode.email_subject %></h2>
+  </div>
+  <a class="play_button" title="Play Audio" href={EpisodeView.audio_url(@episode)} onclick="news.togglePlayPause(); return false;" data-title={@episode.title}></a>
+  <div class="progress_bar" style="--progress: 0%;"></div>
+</article>
+
+<div id="newsletter_iframe-container" class="newsletter_content">
+  <!-- We need the iframe not to scroll. Using a deprecated attribute but not sure how reliable it is. -->
+  <iframe id="newsletter_iframe" src={~p"/news/#{@episode.slug}/email"} scrolling="no"></iframe>
+</div>
+
+<div class="issue_list-pagination">
+  <article class="issue_list-item issue_list-item--view_all">
+    <div>
+      <p class="mono-sm">🚧 Coming Soon 🚧</p>
+      <h2 class="display-lg"><a href="javascript:void(0);" onclick="alert('Coming Soon!');">View the archive</a></h2>
+    </div>
+  </article>
+  <article class="issue_list-item">
+    <div>
+      <p class="mono-sm"><em>Issue #<%= @previous.slug %></em> 👉 <%= TimeView.pretty_date(@previous.published_at) %> — <%= TimeView.rounded_minutes(@previous.audio_duration) %> Minutes</p>
+      <h2 class="display-lg"><%= link(@previous.email_subject, to: ~p"/news/#{@previous.slug}") %></h2>
+    </div>
+  </article>
+</div>

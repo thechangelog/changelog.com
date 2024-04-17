@@ -40,7 +40,7 @@
   <%= for feed <- Meta.Feeds.get(:rss, @conn) do %>
     <link href={feed.url} rel="alternate" title={feed.title} type="application/rss+xml">
   <% end %>
-    <link href={~p"/feed.json"} rel="alternate" title="JSON News Feed" type="application/json">
+    <link href={~p"/feed.json"} rel="alternate" title="JSON Feed" type="application/json">
     <link rel="stylesheet" href={url(~p"/css/app.css")}>
     <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href={url(~p"/favicon.ico")}>

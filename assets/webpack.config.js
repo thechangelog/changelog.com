@@ -22,11 +22,11 @@ let common = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {publicPath: "/"}
+            options: { publicPath: "/" }
           },
           {
             loader: "css-loader",
-            options: {url: false}
+            options: { url: false }
           },
           "postcss-loader",
           "sass-loader"
@@ -35,7 +35,7 @@ let common = {
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
         exclude: "/fonts/",
-        type: "asset/resource",
+        type: "asset/resource"
       },
       {
         test: /\.(woff|woff2|ttf|eot|otf)$/,
@@ -58,6 +58,7 @@ module.exports = [
   merge(common, {
     entry: [
       "normalize.css",
+      __dirname + "/app/fonts.css",
       __dirname + "/app/app.scss",
       __dirname + "/app/app.js"
     ],
@@ -66,27 +67,34 @@ module.exports = [
       filename: "js/app.js"
     },
     resolve: {
-      modules: [
-        "node_modules",
-        __dirname + "/app"
-      ]
+      modules: ["node_modules", __dirname + "/app"]
     },
     plugins: [
-      new CopyWebpackPlugin({patterns: [{from: __dirname + "/static"}]}),
-      new MiniCssExtractPlugin({filename: "css/app.css"})
+      new CopyWebpackPlugin({ patterns: [{ from: __dirname + "/static" }] }),
+      new MiniCssExtractPlugin({ filename: "css/app.css" })
     ]
   }),
   merge(common, {
-    entry: [
-      __dirname + "/email/email.scss"
-    ],
+    entry: [__dirname + "/email/email.scss"],
     output: {
       path: __dirname + "/../priv/static"
     },
-    plugins: [
-      new CopyWebpackPlugin({patterns: [{from: __dirname + "/static"}]}),
-      new MiniCssExtractPlugin({filename: "css/email.css"})
-    ]
+    plugins: [new MiniCssExtractPlugin({ filename: "css/email.css" })]
+  }),
+  merge(common, {
+    entry: [
+      __dirname + "/app/fonts.css",
+      __dirname + "/app/news.css",
+      __dirname + "/app/news.js"
+    ],
+    output: {
+      path: __dirname + "/../priv/static",
+      filename: "js/news.js"
+    },
+    resolve: {
+      modules: ["node_modules", __dirname + "/app"]
+    },
+    plugins: [new MiniCssExtractPlugin({ filename: "css/news.css" })]
   }),
   merge(common, {
     entry: [
@@ -99,14 +107,9 @@ module.exports = [
       filename: "js/embed.js"
     },
     resolve: {
-      modules: [
-        "node_modules",
-        __dirname + "/app"
-      ]
+      modules: ["node_modules", __dirname + "/app"]
     },
-    plugins: [
-      new MiniCssExtractPlugin({filename: "css/embed.css"})
-    ]
+    plugins: [new MiniCssExtractPlugin({ filename: "css/embed.css" })]
   }),
   merge(common, {
     entry: [
@@ -122,15 +125,14 @@ module.exports = [
       filename: "js/admin.js"
     },
     resolve: {
-      modules: [
-        "node_modules",
-        __dirname + "/admin"
-      ]
+      modules: ["node_modules", __dirname + "/admin"]
     },
     plugins: [
-      new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
-      new CopyWebpackPlugin({ patterns: [{ from: __dirname + "/semantic/themes", to: "css/themes" }]}),
-      new MiniCssExtractPlugin({filename: "css/admin.css"})
+      new webpack.ProvidePlugin({ $: "jquery", jQuery: "jquery" }),
+      new CopyWebpackPlugin({
+        patterns: [{ from: __dirname + "/semantic/themes", to: "css/themes" }]
+      }),
+      new MiniCssExtractPlugin({ filename: "css/admin.css" })
     ]
   }),
   {

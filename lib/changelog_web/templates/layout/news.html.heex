@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark only">
+    <meta name="theme-color" content="#59B287">
+    <meta name="copyright" content="Changelog Media LLC">
+    <title><%= Meta.Title.get(@conn) %></title>
+    <link rel="canonical" href={Meta.Url.get(:canonical, @conn) || current_url(@conn)}>
+    <meta name="description" content={Meta.Description.get(@conn)}>
+  <% twitter_card_type = Meta.Twitter.get(:card_type, @conn) %>
+    <meta name="twitter:card" content={twitter_card_type}
+    <meta name="twitter:site" content="@Changelog">
+    <meta name="twitter:title" content={Meta.Title.get(@conn) |> escaped()}>
+    <meta name="twitter:description" content={Meta.Description.get(@conn) |> escaped()}>
+  <%= if twitter_card_type == "player" do %>
+    <meta name="twitter:player" content={Meta.Twitter.get(:player_url, @conn)}>
+    <meta name="twitter:player:width" content="300">
+    <meta name="twitter:player:height" content="150">
+    <meta name="twitter:player:stream" content={Meta.Twitter.get(:audio_url, @conn)}>
+    <meta name="twitter:player:stream:content_type" content="audio/mpeg">
+    <meta name="og:audio" content={Meta.Twitter.get(:audio_url, @conn)}>
+  <% else %>
+    <meta name="twitter:url" content={current_url(@conn)}>
+  <% end %>
+  <%= if share_image = Meta.Image.get(@conn) do %>
+    <meta name="twitter:image" content={share_image}>
+    <meta property="og:image" content={share_image}>
+  <% end %>
+    <meta property="og:url" content={current_url(@conn)}>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content={Meta.Title.get(@conn) |> escaped()}>
+    <meta property="og:description" content={Meta.Description.get(@conn) |> escaped()}>
+    <meta property="og:site_name" content="Changelog">
+    <meta property="og:locale" content="en_US">
+  <%= if apple_id = Meta.Apple.get(:podcasts_id, @conn) do %>
+    <meta name="apple-itunes-app" content={"app-id=" <> apple_id}>
+  <% end %>
+  <%= for feed <- Meta.Feeds.get(:rss, @conn) do %>
+    <link href={feed.url} rel="alternate" title={feed.title} type="application/rss+xml">
+  <% end %>
+    <link href={~p"/feed.json"} rel="alternate" title="JSON Feed" type="application/json">
+    <link rel="stylesheet" href={url(~p"/css/news.css")}>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href={url(~p"/favicon.ico")}>
+  <%= if mastodon_url = Meta.Mastodon.get(@conn) do %>
+    <link rel="me" href={mastodon_url}>
+  <% end %>
+  <%= for font <- preloaded_news_fonts() |> Enum.map(&("#{&1}.woff2")) do %>
+    <link rel="preload" href={url(~p"/fonts/#{font}")} as="font" type="font/woff2" crossorigin>
+  <% end %>
+    <script defer src={url(~p"/js/news.js")}></script>
+    <%= render("_head_scripts.html", assigns) %>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-inner">
+          <div class="header-info">
+            <img src={~p"/images/news/logo.svg"} alt="Changelog News Logo" width="48px">
+            <h1 class="display-xl">Changelog News! The software <span class="flippy">newsletter</span> that's also a <span class="floppy">podcast</span></h1>
+            <p class="sans-md color-grey"><em>The software world moves fast... keep up the easy way! Let us track changes & <%= link("Jerod", to: ~p"/person/jerodsanto") %> will let you know what's up each Monday.</em></p>
+
+            <%= form_tag ~p"/subscribe/news", class: "subscribe_form m-t-sm", method: "get" do %>
+              <label for="email" class="visually-hidden">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="Email address..." required>
+              <button type="submit">Subscribe</button>
+            <% end %>
+
+            <ul class="subscribe_icons">
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-apple.png")})"}><a href={PodcastView.subscribe_on_apple_url(@podcast)}><span>Apple</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-overcast.png")})"}><a href={PodcastView.subscribe_on_overcast_url(@podcast)}><span>Overcast</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-spotify.png")})"}><a href={PodcastView.subscribe_on_spotify_url(@podcast)}><span>Spotify</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a href={PodcastView.subscribe_on_android_url(@podcast)}><span>Android</span></a></li>
+            </ul>
+
+            <div class="reasons">
+              <button class="reasons-close" title="Close" onclick="news.toggleReasons();"></button>
+              <h2 class="display-xl m-b-lg m-r-lg">27 reasons you should subscribe to&nbsp;Changelog News</h2>
+              <ol class="reasons-list">
+                <li>Every word we publish is 100% human-crafted.</li>
+                <li>We do NOT redirect or track your link clicks.</li>
+                <li>You can hover on a link to preview where you're headed.</li>
+                <li>It costs the same amount as a free cup of coffee.</li>
+                <li>You might actually start looking forward to Mondays.</li>
+                <li>You'll be one of 21k+ intelligent, highly attractive subscribers.</li>
+                <li>We aren't above flattery. More where this came from!</li>
+                <li>We've been in the software game for over 20 years.</li>
+                <li>We try to keep puns & bad jokes to a minimum.</li>
+                <li>But every once in awhile, one slips through...</li>
+                <li>A dev has a problem, decides to use Java, now has a ProblemFactory.</li>
+                <li>Don't deny it, that joke was better than you expected.</li>
+                <li>We feature the best community <%= link("submissions", to: ~p"/news/submit") %>.</li>
+                <li>Each episode is chapter'd for easy navigation.</li>
+                <li>Who else takes the time to list 27 reasons to subscribe?!</li>
+                <li>We hand-pick our partners so even the ads are useful!</li>
+                <li>Specialization is for ants! This is a polyglot operation.</li>
+                <li>You like receiving email, but not the spammy stuff.</li>
+                <li>We like sending email, but not the spammy stuff.</li>
+                <li>Sometimes we take meme breaks, which are on point.</li>
+                <li>Like the one from <%= link("issue #66", to: ~p"/news/66") %> is funny... if you commit to it.</li>
+                <li>Emoji are lovingly sprinkled on. Not too much! Just a pinch 🤌</li>
+                <li>You get to enjoy the freshest Breakmaster Cylinder <%= link("Beats", to: ~p"/beats") %></li>
+                <li>Your colleagues will be <em>so impressed</em> by how plugged in you are.</li>
+                <li>We've been known to <code>ORDER BY LENGTH(title) ASC</code>. <%= link("Seriously", to: ~p"/news/86") %></li>
+                <li>You can reply! We read every message & respond to many.</li>
+                <li>We keep our word. This is the 27th (!) reason to subscribe.</li>
+              </ol>
+
+              <button class="button m-t-lg" onclick="news.toggleReasons();">Alright, you convinced me!</button>
+            </div>
+          </div>
+
+          <div class="testimonials">
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/mary.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>The only news I look forward to every week. Some weeks, I play it twice. Quick, witty, informative & positive. Rock on, Jerod!</p>
+                <cite class="mono-sm">Mary H.</cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/justin.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>I gotta say the Changelog Newsletter is the best programming journalism I've seen in years.</p>
+                <cite class="mono-sm"><a href="https://justin.searls.co/" title="Justin Searls' website">Justin Searls</a></cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/chris.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>I get lots of information. Changelog News is the one I don't skip, in both podcast and newsletter form.</p>
+                <cite class="mono-sm">Chris Woods</cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/maros.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>Informative, concise, funny. Pick any three 😎</p>
+                <cite class="mono-sm">Maroš Kučera</cite>
+              </div>
+            </blockquote>
+            <blockquote class="testimonials-item">
+              <div class="testimonials-item-image">
+                <img src={url(~p"/images/news/fraol.jpg")} width="64px" height="64px" />
+              </div>
+              <div>
+                <p>The newsletter so good I consider it a competitive advantage.</p>
+                <cite class="mono-sm"><a href="https://github.com/frectonz" title="Fraol Lemecha on GitHub">Fraol Lemecha</a></cite>
+              </div>
+            </blockquote>
+            <ul class="testimonials-pagination">
+              <li class="is-active"><button title="Go to 1" onclick="news.goToTestimonial(0);"></button></li>
+              <li><button title="Go to 2" onclick="news.goToTestimonial(1);"></button></li>
+              <li><button title="Go to 3" onclick="news.goToTestimonial(2);"></button></li>
+              <li><button title="Go to 4" onclick="news.goToTestimonial(3);"></button></li>
+              <li><button title="Go to 5" onclick="news.goToTestimonial(4);"></button></li>
+            </ul>
+          </div>
+
+          <div class="header-ctas">
+            <button class="text_button m-b-sm" onclick="news.toggleReasons();">27 more reasons to subscribe</button>
+            <p class="mono-sm color-grey">Don't forget to check out <%= link("our other podcasts", to: ~p"/") %> too</p>
+          </div>
+        </div>
+      </header>
+      <main class="main issue_list">
+        <%= @inner_content %>
+      </main>
+    </div>
+  </body>
+</html>
