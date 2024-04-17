@@ -9,6 +9,7 @@ defmodule ChangelogWeb.EpisodeView do
     ListKit,
     NewsItem,
     Subscription,
+    StringKit,
     UrlKit
   }
 

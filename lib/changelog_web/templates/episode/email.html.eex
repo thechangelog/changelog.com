@@ -1,1 +1,7 @@
+<%= if StringKit.present?(@episode.email_content) do %>
 <%= raw(@email.html_body) %>
+<% else %>
+<div style="width: 50%; margin: 50 auto;">
+  <p style="text-align: center;">Our first 38 episodes were audio only 🎧</p>
+</div>
+<% end %>

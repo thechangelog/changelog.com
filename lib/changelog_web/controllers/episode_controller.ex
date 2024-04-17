@@ -135,6 +135,7 @@ defmodule ChangelogWeb.EpisodeController do
     email = Email.episode_published(%{person: nil, context: ""}, episode)
 
     conn
+    |> assign(:episode, episode)
     |> assign(:email, email)
     |> render(:email, layout: false)
   end
