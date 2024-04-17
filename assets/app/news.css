@@ -690,6 +690,10 @@ body.no-scroll {
       display: flex;
     }
 
+    & .logo a {
+      border-bottom: none;
+    }
+
     & .header-ctas {
       text-align: center;
     }

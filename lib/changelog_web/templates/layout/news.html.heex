@@ -60,7 +60,11 @@
       <header class="header">
         <div class="header-inner">
           <div class="header-info">
-            <img src={url(~p"/images/news/logo.svg")} alt="Changelog News Logo" width="48px">
+            <div class="logo">
+              <a href={~p"/"} title="changelog.com">
+                <img src={url(~p"/images/news/logo.svg")} alt="Changelog Logo" width="48px">
+              </a>
+            </div>
             <h1 class="display-xl">Changelog News! The software <span class="flippy">newsletter</span> that's also a <span class="floppy">podcast</span></h1>
             <p class="sans-md color-grey"><em>The software world moves fast... keep up the easy way! Let us track changes & <%= link("Jerod", to: ~p"/person/jerodsanto") %> will let you know what's up each Monday.</em></p>
 
@@ -171,7 +175,7 @@
 
           <div class="header-ctas">
             <button class="text_button m-b-sm" onclick="news.toggleReasons();">27 more reasons to subscribe</button>
-            <p class="mono-sm color-grey">Don't forget to check out <%= link("our other podcasts", to: ~p"/") %> too</p>
+            <p class="mono-sm color-grey">Don't forget to check out <%= link("our other podcasts", to: ~p"/") %></p>
           </div>
         </div>
       </header>

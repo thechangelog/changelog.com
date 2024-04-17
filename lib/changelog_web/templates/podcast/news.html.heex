@@ -1,8 +1,5 @@
 <article class="issue_list-item issue_list-item--sticky">
-  <div>
-    <p class="mono-sm"><em>Issue #<%= @episode.slug %></em> 👉 <%= TimeView.pretty_date(@episode.published_at) %> — <%= TimeView.rounded_minutes(@episode.audio_duration) %> Minutes</p>
-    <h2 class="display-lg"><%= @episode.email_subject %></h2>
-  </div>
+  <%= render(SharedView, "_news_issue_meta.html", issue: @episode) %>
   <a class="play_button" title="Play Audio" href={EpisodeView.audio_url(@episode)} onclick="news.togglePlayPause(); return false;" data-title={@episode.title}></a>
   <div class="progress_bar" style="--progress: 0%;"></div>
 </article>
@@ -20,9 +17,6 @@
     </div>
   </article>
   <article class="issue_list-item">
-    <div>
-      <p class="mono-sm"><em>Issue #<%= @previous.slug %></em> 👉 <%= TimeView.pretty_date(@previous.published_at) %> — <%= TimeView.rounded_minutes(@previous.audio_duration) %> Minutes</p>
-      <h2 class="display-lg"><%= link(@previous.email_subject, to: ~p"/news/#{@previous.slug}") %></h2>
-    </div>
+    <%= render(SharedView, "_news_issue_meta.html", issue: @previous) %>
   </article>
 </div>

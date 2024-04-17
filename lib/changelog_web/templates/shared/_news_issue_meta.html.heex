@@ -1,0 +1,4 @@
+<div>
+  <p class="mono-sm"><em>Issue #<%= @issue.slug %></em>: <%= TimeView.pretty_date(@issue.published_at) %> — <%= TimeView.rounded_minutes(@issue.audio_duration) %> Minutes</p>
+  <h2 class="display-lg"><%= link(@issue.email_subject || @issue.title, to: ~p"/news/#{@issue.slug}") %></h2>
+</div>

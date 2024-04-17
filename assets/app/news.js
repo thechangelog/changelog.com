@@ -1,6 +1,10 @@
 import Log from "modules/log";
 
 export default class News {
+  constructor() {
+    this.testimonialsPlayed = 0;
+  }
+
   resizeFrameToFit() {
     const iframe = document.getElementById("newsletter_iframe");
     const container = document.getElementById("newsletter_iframe-container");
@@ -8,6 +12,30 @@ export default class News {
 
     iframe.style.height = `${scrollHeight}px`;
     container.style.flex = `1 0 ${scrollHeight}px`;
+  }
+
+  nextTestimonial() {
+    // Make sure we aren't hovering over the parent
+    if (document.querySelector(".testimonials").matches(":hover")) return;
+
+    this.testimonialsPlayed++;
+
+    const testimonials = document.querySelectorAll(".testimonials-item");
+    const activeTestimonial = document.querySelector(
+      ".testimonials-item.is-active"
+    );
+
+    if (this.testimonialsPlayed == testimonials.length) {
+      return;
+    }
+
+    let nextIndex = Array.from(testimonials).indexOf(activeTestimonial) + 1;
+
+    if (nextIndex == testimonials.length) {
+      nextIndex = 0;
+    }
+
+    this.goToTestimonial(nextIndex);
   }
 
   goToTestimonial(index) {
@@ -91,28 +119,9 @@ export default class News {
 
 window.news = new News();
 
-// Autoplay testimonials
-setInterval(() => {
-  // Make sure we aren't hovering over the parent
-  if (document.querySelector(".testimonials").matches(":hover")) {
-    return;
-  }
-
-  const testimonials = document.querySelectorAll(".testimonials-item");
-  const activeTestimonial = document.querySelector(
-    ".testimonials-item.is-active"
-  );
-  let nextIndex =
-    Array.from(activeTestimonial.parentNode.children).indexOf(
-      activeTestimonial
-    ) + 1;
-
-  // check if were at the last testimonial
-  if (nextIndex == testimonials.length) {
-    nextIndex = 0;
-  }
-  news.goToTestimonial(nextIndex);
-}, 5000);
+setInterval(function () {
+  news.nextTestimonial();
+}, 7500);
 
 window.onload = function () {
   news.resizeFrameToFit();
