@@ -4,10 +4,9 @@
 
     <p>Your <%= link("submission", to: @item.url) %> was <strong>accepted</strong>! It is included in Changelog News #<%= @news.slug %>:</p>
 
-    <ul>
-      <li><%= link("Audio here", to: url(~p"/news/#{@news.slug}")) %></li>
-      <li><%= link("Email here", to: url(~p"/news/#{@news.slug}/email")) %></li>
-    </ul>
+    <span class="btn-primary">
+      <%= link("View it here", to: url(~p"/news/#{@news.slug}"), itemprop: "url") %>
+    </span>
 
     <p>In addition, here is a message from the editor:</p>
 

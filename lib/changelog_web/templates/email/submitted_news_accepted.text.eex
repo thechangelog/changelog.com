@@ -3,8 +3,7 @@
 
 Your submission was accepted! It is included in Changelog News #<%= @news.slug %>:
 
-Audio link: url(~p"/news/#{@news.slug}")
-Email link: url(~p"/news/#{@news.slug}/email")
+View it here: url(~p"/news/#{@news.slug}")
 
 In addition, here is a message from the editor:
 
