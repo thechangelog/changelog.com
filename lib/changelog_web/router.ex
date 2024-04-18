@@ -23,7 +23,6 @@ defmodule ChangelogWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html", "js"]
-    plug Plug.FlocOff
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_secure_browser_headers
