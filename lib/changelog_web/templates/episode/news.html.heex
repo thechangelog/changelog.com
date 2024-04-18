@@ -6,7 +6,7 @@
 
 <div id="newsletter_iframe-container" class="newsletter_content">
   <!-- We need the iframe not to scroll. Using a deprecated attribute but not sure how reliable it is. -->
-  <iframe id="newsletter_iframe" src={~p"/news/#{@episode.slug}/email"} scrolling="no"></iframe>
+  <iframe id="newsletter_iframe" title="Newsletter content" src={~p"/news/#{@episode.slug}/email"} scrolling="no" loading="lazy"></iframe>
 </div>
 
 <div class="issue_list-pagination">

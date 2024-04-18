@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.LayoutView do
   use ChangelogWeb, :public_view
 
-  alias ChangelogWeb.{EpisodeView, Meta, PersonView, PodcastView}
+  alias ChangelogWeb.{Meta, PersonView, PodcastView}
 
   def preloaded_fonts, do: ~w(roboto-mono-400 SanaSansAlt-Regular
     SanaSansAlt-Medium SanaSansAlt-Black SanaSansAlt-Bold SanaSansAlt-Italic)

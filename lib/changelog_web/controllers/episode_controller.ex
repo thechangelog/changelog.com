@@ -11,6 +11,7 @@ defmodule ChangelogWeb.EpisodeController do
     apply(__MODULE__, action_name(conn), arg_list)
   end
 
+  # Changelog News episodes are handled in NewsItemController
   def show(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)

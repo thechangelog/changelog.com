@@ -62,7 +62,7 @@
           <div class="header-info">
             <div class="logo">
               <a href={~p"/"} title="changelog.com">
-                <img src={url(~p"/images/news/logo.svg")} alt="Changelog Logo" width="48px">
+                <img src={url(~p"/images/news/logo.svg")} alt="Changelog Logo" width="48" height="48">
               </a>
             </div>
             <h1 class="display-xl">Changelog News! The software <span class="flippy">newsletter</span> that's also a <span class="floppy">podcast</span></h1>
@@ -75,10 +75,10 @@
             <% end %>
 
             <ul class="subscribe_icons">
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-apple.png")})"}><a href={PodcastView.subscribe_on_apple_url(@podcast)}><span>Apple</span></a></li>
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-overcast.png")})"}><a href={PodcastView.subscribe_on_overcast_url(@podcast)}><span>Overcast</span></a></li>
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-spotify.png")})"}><a href={PodcastView.subscribe_on_spotify_url(@podcast)}><span>Spotify</span></a></li>
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a href={PodcastView.subscribe_on_android_url(@podcast)}><span>Android</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-apple.png")})"}><a title="Listen on Apple Podcasts" href={PodcastView.subscribe_on_apple_url(@podcast)}><span>Apple</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-spotify.png")})"}><a title="Listen on Spotify" href={PodcastView.subscribe_on_spotify_url(@podcast)}><span>Spotify</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-overcast.png")})"}><a title="Listen on Overcast" href={PodcastView.subscribe_on_overcast_url(@podcast)}><span>Overcast</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a title="Listen on Android" href={PodcastView.subscribe_on_android_url(@podcast)}><span>Android</span></a></li>
             </ul>
 
             <div class="reasons">
@@ -91,12 +91,12 @@
                 <li>It costs the same amount as a free cup of coffee.</li>
                 <li>You might actually start looking forward to Mondays.</li>
                 <li>You'll be one of 21k+ intelligent, highly attractive subscribers.</li>
-                <li>We aren't above flattery. More where this came from!</li>
+                <li>Who doesn't want to be intelligent & highly attractive?</li>
                 <li>We've been in the software game for over 20 years.</li>
                 <li>We try to keep puns & bad jokes to a minimum.</li>
                 <li>But every once in awhile, one slips through...</li>
                 <li>A dev has a problem, decides to use Java, now has a ProblemFactory.</li>
-                <li>Don't deny it, that joke was better than you expected.</li>
+                <li>Oh nice, that joke was better than you expected.</li>
                 <li>We feature the best community <%= link("submissions", to: ~p"/news/submit") %>.</li>
                 <li>Each episode is chapter'd for easy navigation.</li>
                 <li>Who else takes the time to list 27 reasons to subscribe?!</li>
@@ -121,7 +121,7 @@
           <div class="testimonials">
             <blockquote class="testimonials-item">
               <div class="testimonials-item-image">
-                <img src={url(~p"/images/news/mary.jpg")} width="64px" height="64px" />
+                <img src={url(~p"/images/news/mary.jpg")} width="64" height="64" />
               </div>
               <div>
                 <p>The only news I look forward to every week. Some weeks, I play it twice. Quick, witty, informative & positive. Rock on, Jerod!</p>
@@ -130,7 +130,7 @@
             </blockquote>
             <blockquote class="testimonials-item">
               <div class="testimonials-item-image">
-                <img src={url(~p"/images/news/justin.jpg")} width="64px" height="64px" />
+                <img src={url(~p"/images/news/justin.jpg")} width="64" height="64" />
               </div>
               <div>
                 <p>I gotta say the Changelog Newsletter is the best programming journalism I've seen in years.</p>
@@ -139,7 +139,7 @@
             </blockquote>
             <blockquote class="testimonials-item">
               <div class="testimonials-item-image">
-                <img src={url(~p"/images/news/chris.jpg")} width="64px" height="64px" />
+                <img src={url(~p"/images/news/chris.jpg")} width="64" height="64" />
               </div>
               <div>
                 <p>I get lots of information. Changelog News is the one I don't skip, in both podcast and newsletter form.</p>
@@ -148,7 +148,7 @@
             </blockquote>
             <blockquote class="testimonials-item">
               <div class="testimonials-item-image">
-                <img src={url(~p"/images/news/maros.jpg")} width="64px" height="64px" />
+                <img src={url(~p"/images/news/maros.jpg")} width="64" height="64" />
               </div>
               <div>
                 <p>Informative, concise, funny. Pick any three 😎</p>
@@ -157,7 +157,7 @@
             </blockquote>
             <blockquote class="testimonials-item">
               <div class="testimonials-item-image">
-                <img src={url(~p"/images/news/fraol.jpg")} width="64px" height="64px" />
+                <img src={url(~p"/images/news/fraol.jpg")} width="64" height="64" />
               </div>
               <div>
                 <p>The newsletter so good I consider it a competitive advantage.</p>

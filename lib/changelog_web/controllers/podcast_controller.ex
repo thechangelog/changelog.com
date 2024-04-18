@@ -20,6 +20,7 @@ defmodule ChangelogWeb.PodcastController do
     end
   end
 
+  # Changelog News gets its own special treatment
   def show(conn, _params, podcast = %{slug: "news"}) do
     [latest, previous] =
       podcast

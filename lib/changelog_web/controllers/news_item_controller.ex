@@ -42,8 +42,8 @@ defmodule ChangelogWeb.NewsItemController do
     end
   end
 
-  # if this is a Changelog News episode, render that instead
   def show(conn, %{"id" => slug}) do
+    # Changelog News gets its own special treatment
     try do
       podcast = Podcast.get_by_slug!("news")
 
