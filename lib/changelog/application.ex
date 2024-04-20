@@ -10,8 +10,6 @@ defmodule Changelog.Application do
       ChangelogWeb.Endpoint,
       {Phoenix.PubSub, [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]},
       Changelog.Repo,
-      # UA.Parser doesn't yet support new Supervisor child specification
-      worker(UA.Parser, []),
       con_cache_child_spec(
         :app_cache,
         ttl_check_interval: :timer.seconds(1),

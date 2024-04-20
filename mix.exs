@@ -68,7 +68,6 @@ defmodule Changelog.Mixfile do
       {:ex_aws_s3, "~> 2.3"},
       {:nimble_csv, "~> 1.2.0"},
       {:sweet_xml, "~> 0.6"},
-      {:user_agent_parser, "~> 1.0"},
       {:oauth, github: "tim/erlang-oauth"},
       {:ueberauth, "~> 0.10"},
       {:ueberauth_github, "~> 0.4"},

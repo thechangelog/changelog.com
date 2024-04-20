@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Admin.EpisodeView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.{Episode, EpisodeStat, Person, Podcast, Sponsor, StringKit, Topic}
+  alias Changelog.{Episode, Person, Podcast, Sponsor, StringKit, Topic}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
   alias ChangelogWeb.Admin.{EpisodeRequestView, PodcastView}
 
@@ -82,7 +82,9 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
     if Policies.Admin.Page.downloads(user) do
       if podcast do
-        link(count, to: Routes.admin_page_path(conn, :downloads, range: label, podcast: podcast.slug))
+        link(count,
+          to: Routes.admin_page_path(conn, :downloads, range: label, podcast: podcast.slug)
+        )
       else
         link(count, to: Routes.admin_page_path(conn, :downloads, range: label))
       end
