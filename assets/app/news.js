@@ -2,16 +2,32 @@ import Log from "modules/log";
 
 export default class News {
   constructor() {
+    this.iframe = document.getElementById("newsletter_iframe");
+    this.container = document.getElementById("newsletter_iframe-container");
     this.testimonialsPlayed = 0;
+
+    window.onload = () => {
+      this.goToTestimonial(Math.floor(Math.random() * 4));
+    };
+
+    this.iframe.onload = () => {
+      this.resizeFrameToFit();
+    };
+
+    window.onresize = function () {
+      this.resizeFrameToFit();
+    };
+
+    setInterval(() => {
+      this.nextTestimonial();
+    }, 7500);
   }
 
   resizeFrameToFit() {
-    const iframe = document.getElementById("newsletter_iframe");
-    const container = document.getElementById("newsletter_iframe-container");
-    const scrollHeight = iframe.contentWindow.document.body.scrollHeight;
+    const scrollHeight = this.iframe.contentWindow.document.body.scrollHeight;
 
-    iframe.style.height = `${scrollHeight}px`;
-    container.style.flex = `1 0 ${scrollHeight}px`;
+    this.iframe.style.height = `${scrollHeight}px`;
+    this.container.style.flex = `1 0 ${scrollHeight}px`;
   }
 
   nextTestimonial() {
@@ -118,16 +134,3 @@ export default class News {
 }
 
 window.news = new News();
-
-setInterval(function () {
-  news.nextTestimonial();
-}, 7500);
-
-window.onload = function () {
-  news.resizeFrameToFit();
-  news.goToTestimonial(Math.floor(Math.random() * 4));
-};
-
-window.onresize = function () {
-  news.resizeFrameToFit();
-};
