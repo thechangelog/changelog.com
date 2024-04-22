@@ -101,12 +101,6 @@ defmodule Changelog.Factory do
     %Changelog.Episode{episode_factory() | published: true, published_at: hours_from_now(1)}
   end
 
-  def metacast_factory do
-    %Changelog.Metacast{
-      name: sequence(:name, &"Metacast #{&1}")
-    }
-  end
-
   def news_ad_factory do
     %Changelog.NewsAd{
       url: "https://apple.com",

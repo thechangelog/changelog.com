@@ -6,7 +6,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Episode,
     EpisodeNewsItem,
     EpisodeTopic,
-    EpisodeTracker,
     EpisodeGuest,
     EpisodeHost,
     EpisodeRequest,
@@ -17,6 +16,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     NewsQueue,
     Podcast
   }
+
   alias Changelog.ObanWorkers.{AudioUpdater, FeedUpdater}
 
   plug :assign_podcast
@@ -83,18 +83,19 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   defp assign_submitted(conn, podcast) do
-    {submitted, news_episodes} = if Podcast.is_news(podcast) do
-      {NewsItem.submitted()
-      |> NewsItem.newest_first(:inserted_at)
-      |> NewsItem.preload_all()
-      |> Repo.all(),
-      Episode.with_podcast_slug("news")
-      |> Episode.newest_first(:recorded_at)
-      |> Episode.limit(50)
-      |> Repo.all()}
-    else
-      {[], []}
-    end
+    {submitted, news_episodes} =
+      if Podcast.is_news(podcast) do
+        {NewsItem.submitted()
+         |> NewsItem.newest_first(:inserted_at)
+         |> NewsItem.preload_all()
+         |> Repo.all(),
+         Episode.with_podcast_slug("news")
+         |> Episode.newest_first(:recorded_at)
+         |> Episode.limit(50)
+         |> Repo.all()}
+      else
+        {[], []}
+      end
 
     conn
     |> assign(:submitted, submitted)
@@ -284,7 +285,6 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> Repo.get_by!(slug: slug)
 
     Repo.delete!(episode)
-    EpisodeTracker.untrack(episode.id)
     EpisodeNewsItem.delete(episode)
     handle_feed_updates(episode)
     Cache.delete(episode)

@@ -15,7 +15,6 @@ liveSocket.connect();
 
 import episodeView from "views/episodeView";
 import feedView from "views/feedView";
-import metacastView from "views/metacastView";
 import newsIssueView from "views/newsIssueView";
 import newsItemView from "views/newsItemView";
 import newsItemCommentView from "views/newsItemCommentView";
@@ -32,7 +31,6 @@ import FormUI from "components/formUI";
 let views = {
   EpisodeView: episodeView,
   FeedView: feedView,
-  MetacastView: metacastView,
   NewsItemView: newsItemView,
   NewsItemCommentView: newsItemCommentView,
   NewsIssueView: newsIssueView,

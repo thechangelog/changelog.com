@@ -98,8 +98,6 @@ defmodule ChangelogWeb.Router do
     post "/people/:id/slack", PersonController, :slack, as: :person
     post "/people/:id/masq", PersonController, :masq, as: :person
 
-    resources "/metacasts", MetacastController
-
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
       get "/performance", EpisodeController, :performance, as: :performance
@@ -158,7 +156,6 @@ defmodule ChangelogWeb.Router do
     get "/sitemap.xml", FeedController, :sitemap
     get "/:slug/feed", FeedController, :podcast
     get "/plusplus/:slug/feed", FeedController, :plusplus
-    get "/metacast/:slug/feed", FeedController, :metacast
     get "/feeds/:slug", FeedController, :custom
   end
 

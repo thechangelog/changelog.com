@@ -8,7 +8,6 @@ defmodule Changelog.Fastly do
     Files,
     HTTP,
     Episode,
-    Metacast,
     NewsAd,
     NewsItem,
     NewsSource,
@@ -21,7 +20,6 @@ defmodule Changelog.Fastly do
 
   alias ChangelogWeb.{
     EpisodeView,
-    MetacastView,
     NewsAdView,
     NewsItemView,
     NewsSourceView,
@@ -48,14 +46,6 @@ defmodule Changelog.Fastly do
     if episode.cover do
       for version <- Files.Cover.__versions() do
         episode |> EpisodeView.cover_url(version) |> purge()
-      end
-    end
-  end
-
-  def purge(metacast = %Metacast{}) do
-    if metacast.cover do
-      for version <- Files.Cover.__versions() do
-        metacast |> MetacastView.cover_url(version) |> purge()
       end
     end
   end

@@ -6,7 +6,6 @@ defmodule ChangelogWeb.FeedController do
   alias Changelog.{
     AgentKit,
     Episode,
-    Metacast,
     NewsItem,
     NewsSource,
     Person,
@@ -75,36 +74,6 @@ defmodule ChangelogWeb.FeedController do
     else
       send_resp(conn, :not_found, "")
     end
-  end
-
-  def metacast(conn, %{"slug" => slug}) do
-    metacast = Metacast.get_by_slug!(slug)
-
-    if metacast.is_official do
-      render_feed_for_metacast(conn, metacast)
-    else
-      send_resp(conn, :not_found, "")
-    end
-  end
-
-  defp render_feed_for_metacast(conn, metacast, template \\ "podcast") do
-    episodes =
-      metacast
-      |> Metacast.get_episode_ids!()
-      |> Episode.with_ids()
-      |> Episode.published()
-      |> Episode.newest_first()
-      |> Episode.exclude_transcript()
-      |> Episode.preload_all()
-      |> Repo.all()
-
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> assign(:podcast, metacast)
-    |> assign(:episodes, episodes)
-    |> ResponseCache.cache_public()
-    |> render("#{template}.xml")
   end
 
   defp log_subscribers(conn = %{params: %{"slug" => slug}}, _) do

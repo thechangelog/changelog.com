@@ -15,8 +15,6 @@ defmodule Changelog.Application do
         ttl_check_interval: :timer.seconds(1),
         global_ttl: :timer.seconds(60)
       ),
-      Changelog.EpisodeTracker,
-      Changelog.Metacasts.Filterer.Cache,
       {Oban, oban_config()}
     ]
 

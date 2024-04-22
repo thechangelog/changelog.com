@@ -5,7 +5,6 @@ defmodule Changelog.EpisodeStatTest do
 
   @valid_attrs %{date: Timex.today(), episode_id: 1, podcast_id: 1}
   @invalid_attrs %{}
-  @demo Jason.decode!(File.read!("#{fixtures_path()}/demographics.json"))
 
   test "changeset with valid attributes" do
     changeset = EpisodeStat.changeset(%EpisodeStat{}, @valid_attrs)
