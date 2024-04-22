@@ -1,7 +1,7 @@
 defmodule Changelog.EpisodeGuest do
   use Changelog.Schema
 
-  alias Changelog.{Episode, Merch, Person}
+  alias Changelog.{Episode, Merch, Person, Podcast}
 
   schema "episode_guests" do
     field :position, :integer
@@ -47,13 +47,9 @@ defmodule Changelog.EpisodeGuest do
     podcast = episode_guest.episode.podcast
 
     code =
-      if Changelog.Podcast.gives_free_shirt(podcast) do
-        case Merch.create_discount(thanks_code(episode_guest), "-30.0") do
-          {:ok, dc} -> dc.code
-          {:error, _} -> ""
-        end
-      else
-        ""
+      case Merch.create_discount(thanks_code(episode_guest), discount(podcast)) do
+        {:ok, dc} -> dc.code
+        {:error, _} -> ""
       end
 
     episode_guest
@@ -65,6 +61,10 @@ defmodule Changelog.EpisodeGuest do
     episode_guest
     |> changeset(%{thanks: true})
     |> Repo.update()
+  end
+
+  defp discount(podcast) do
+    if Podcast.is_a_changelog_pod(podcast), do: "-30.0", else: "-10.0"
   end
 
   defp thanks_code(episode_guest) do

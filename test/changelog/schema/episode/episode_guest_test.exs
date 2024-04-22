@@ -30,18 +30,6 @@ defmodule Changelog.EpisodeGuestTest do
       end
     end
 
-    test "doesn't generate a coupon code when podcast doesn't give a free shirt" do
-      with_mock(Merch, create_discount: fn _, _ -> {:ok, %{code: "hai"}} end) do
-        podcast = insert(:podcast, slug: "gotime")
-        episode = insert(:episode, podcast: podcast)
-        eg = insert(:episode_guest, episode: episode)
-        {:ok, eg} = EpisodeGuest.thanks(eg)
-        assert eg.thanks
-        assert eg.discount_code == ""
-        refute called(Changelog.Merch.create_discount(:_, :_))
-      end
-    end
-
     test "doesn't generate a duplicate discount code when already present" do
       with_mock(Merch, create_discount: fn _, _ -> {:ok, %{code: "hai"}} end) do
         eg = insert(:episode_guest, discount_code: "yup")

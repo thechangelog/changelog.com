@@ -106,8 +106,10 @@
     <ul>
       <li>Receive an email when the show is published 📥</li>
       <li>Help share and promote the episode 🗣</li>
-    <%= if Podcast.gives_free_shirt(@podcast) do %>
+    <%= if Podcast.is_a_changelog_pod(@podcast) do %>
       <li>Get an awesome <a href="https://merch.changelog.com" title="Changelog Merch">t-shirt</a> as a thanks from us ✊</li>
+    <% else %>
+      <li>Get an awesome <a href="https://merch.changelog.com/products/changelog-sticker-pack" title="Changelog Sticker Pack">sticker pack</a> as a thanks from us ✊</li>
     <% end %>
     </ul>
 

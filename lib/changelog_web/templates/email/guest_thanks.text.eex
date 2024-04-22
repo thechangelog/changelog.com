@@ -26,18 +26,21 @@ Are you aware of Changelog News? It's our podcast + newsletter combo featuring a
 
 Oh, and get it in your inbox weekly right here (https://changelog.com/news).
 
-<%= if Podcast.gives_free_shirt(@podcast) do %>
+
 #### 4. You get free merch ####
 <%= if Changelog.StringKit.blank?(@discount_code) do %>
 Dratz! Something's wrong with our Shopify integration! Hit reply and let us know</mark> so we can generate a coupon code for you.
 <% else %>
 This is our gift to you as a thanks for your time and all you do for the community.
 
+<%= if Podcast.is_a_changelog_pod(@podcast) do %>
 - Visit our Merch Store (https://merch.changelog.com)
 - Pick a shirt you want (or anything really)
+<% else %>
+- Grab a sticker pack (https://merch.changelog.com/products/changelog-sticker-pack)
+<% end %>
 - Use coupon code <%= @discount_code %> at checkout
 - Keep your order at $0 for free shipping!
-<% end %>
 <% end %>
 ---
 

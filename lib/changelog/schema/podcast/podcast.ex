@@ -205,8 +205,6 @@ defmodule Changelog.Podcast do
     Enum.member?(~w(news podcast friends), podcast.slug)
   end
 
-  def gives_free_shirt(podcast), do: is_a_changelog_pod(podcast)
-
   def is_interviews(podcast), do: podcast.slug == "podcast" && !podcast.is_meta
 
   def is_news(podcast), do: podcast.slug == "news"
