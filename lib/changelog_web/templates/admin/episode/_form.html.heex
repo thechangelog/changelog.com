@@ -1,6 +1,6 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="two fields">
-    <div class="twelve wide field required <%= AdminHelpers.error_class(f, :title) %>">
+    <div class={"twelve wide field required #{AdminHelpers.error_class(f, :title)}"}>
       <label for="title">
         Title
         <span><a href="javascript:void(0);" class="field-action js-title-guide-modal">(style guide)</a></span>
@@ -9,7 +9,7 @@
       <%= AdminHelpers.error_message(f, :title) %>
     </div>
 
-    <div class="four wide field required <%= AdminHelpers.error_class(f, :slug) %>">
+    <div class={"four wide field required #{AdminHelpers.error_class(f, :slug)}"}>
       <%= label(f, :slug) %>
       <%= text_input(f, :slug, placeholder: "183", readonly: f.data.published) %>
       <%= AdminHelpers.error_message(f, :slug) %>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="two fields">
-    <div class="twelve wide field <%= AdminHelpers.error_class(f, :subtitle) %>">
+    <div class={"twelve wide field #{AdminHelpers.error_class(f, :subtitle)}"}>
       <%= label(:f, :subtitle) do %>
         Subtitle <%= AdminHelpers.help_icon("Used underneath title on episode page and combined with title for html <title>") %>
         <span><a href="javascript:void(0);" class="field-action js-subtitle-guide-modal">(style guide)</a></span>
@@ -25,7 +25,7 @@
       <%= text_input(f, :subtitle, placeholder: "with Richard Hipp, creator of SQlite") %>
     </div>
 
-    <div class="four wide field <%= AdminHelpers.error_class(f, :status) %>">
+    <div class={"four wide field #{AdminHelpers.error_class(f, :status)}"}>
       <%= label(:f, :type) do %>
         Type <%= AdminHelpers.help_icon("Full episodes require a numbered slug. Bonus & Trailer episodes are feed-only (no news item)") %>
       <% end %>
@@ -38,7 +38,7 @@
     <label for="socialize_url">
       Socialize URL
     <%= if f.data.socialize_url do %>
-      <a href="<%= f.data.socialize_url %>" class="field-action" rel="external">(go to there)</a>
+      <a href={f.data.socialize_url} class="field-action" rel="external">(go to there)</a>
     <% end %>
     </label>
     <%= text_input(f, :socialize_url, placeholder: "https://changelog.social/@changelog/109926145715676533") %>
@@ -46,7 +46,7 @@
 <% end %>
 
   <div class="fields">
-    <div class="three wide field <%= AdminHelpers.error_class(f, :featured) %>">
+    <div class={"three wide field #{AdminHelpers.error_class(f, :featured)}"}>
       <label>Recommend <%= AdminHelpers.help_icon("Episode will appear in recommended list. Limit to 10% of show's total episodes, max.") %></label>
       <div class="ui fitted toggle checkbox">
         <%= checkbox(f, :featured, class: "hidden") %>
@@ -74,21 +74,17 @@
     <div class="two wide field">
       <%= if AdminHelpers.is_persisted(f.data) do %>
         <img
-          src="<%= EpisodeView.cover_url(f.data, :small) %>"
-          data-popup=true
-          width=66
-          height=66
-        <%= if !f.data.cover do %>
-          data-content="Using the podcast cover"
-        <% else %>
-          data-content="Using the uploaded file"
-        <% end %>
+          src={EpisodeView.cover_url(f.data, :small)}
+          data-popup="true"
+          width="66"
+          height="66"
+          data-content={if f.data.cover, do: "Using the uploaded file", else: "Using the podcast cover"}
         >
       <% end %>
     </div>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :request_id) %> <%= AdminHelpers.hidden_class(!f.data.request_id) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :request_id)} #{AdminHelpers.hidden_class(!f.data.request_id)}"}>
     <%= label(f, :request_id, "Request") %>
     <%= select(f, :request_id, request_options(@episode_requests), prompt: "Select a request", class: "ui fluid dropdown") %>
   </div>
@@ -99,10 +95,10 @@
     <div class="ui middle aligned selection list js-episode_hosts">
       <%= inputs_for f, :episode_hosts, fn i -> %>
         <% host = AdminHelpers.load_from_form(i, Person, :person) %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+      <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <%= hidden_input(i, :person_id) %>
           <%= hidden_input(i, :position, class: "js-position") %>
-          <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(host) %>">
+          <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(host)}>
 
           <div class="content">
             <div class="header"><%= host.name %> (@<%= host.handle %>)</div>
@@ -132,10 +128,10 @@
     <div class="ui middle aligned selection list js-episode_guests">
       <%= inputs_for f, :episode_guests, fn i -> %>
         <% guest = AdminHelpers.load_from_form(i, Person, :person) %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <%= hidden_input(i, :person_id) %>
           <%= hidden_input(i, :position, class: "js-position") %>
-          <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(guest) %>">
+          <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(guest)}>
 
           <div class="content">
             <div class="header"><%= guest.name %> (@<%= guest.handle %>)</div>
@@ -165,7 +161,7 @@
     <div class="ui middle aligned selection list js-episode_sponsors">
       <%= inputs_for f, :episode_sponsors, fn i -> %>
         <% sponsor = AdminHelpers.load_from_form(i, Sponsor, :sponsor) %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <%= hidden_input(i, :sponsor_id) %>
           <%= hidden_input(i, :position, class: "js-position") %>
 
@@ -173,7 +169,7 @@
           <%= if i.data.starts_at do %>
             <div
               class="ui tiny icon clipboard button"
-              data-clipboard-text="<%= url(~p"/#{@podcast.slug}/#{@episode.slug}") %>#t=<%= round(i.data.starts_at) %>"
+              data-clipboard-text={url(~p"/#{@podcast.slug}/#{@episode.slug}") <> "#t=#{round(i.data.starts_at)}"}
               title="Copy URL with timestamp">
               <i class="clipboard icon"></i>
             </div>
@@ -191,13 +187,13 @@
           </h4>
 
           <div class="fields">
-            <div class="required four wide field <%= AdminHelpers.error_class(i, :title) %>">
+            <div class={"required four wide field #{AdminHelpers.error_class(i, :title)}"}>
               <label>Title</label>
               <%= text_input(i, :title) %>
               <%= AdminHelpers.error_message(i, :title) %>
             </div>
 
-            <div class="required twelve wide field <%= AdminHelpers.error_class(i, :link_url) %>">
+            <div class={"required twelve wide field #{AdminHelpers.error_class(i, :link_url)}"}>
               <label>Link</label>
               <%= text_input(i, :link_url) %>
               <%= AdminHelpers.error_message(i, :link_url) %>
@@ -242,7 +238,7 @@
     <div class="ui horizontal selection list js-topics js-episode_topics">
       <%= inputs_for f, :episode_topics, fn i -> %>
         <% topic = AdminHelpers.load_from_form(i, Topic, :topic) %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <%= hidden_input(i, :topic_id) %>
           <%= hidden_input(i, :position, class: "js-position") %>
 
@@ -267,7 +263,7 @@
     </div>
   </div>
 
-  <div class="field required <%= AdminHelpers.error_class(f, :summary) %>">
+  <div class={"field required #{AdminHelpers.error_class(f, :summary)}"}>
     <%= label(f, :summary) %>
     <%= textarea(f, :summary, placeholder: "Keep it brief. Markdown enabled.", rows: 2) %>
     <%= AdminHelpers.error_message(f, :summary) %>
@@ -277,7 +273,7 @@
     <label for="doc_url">
       Collab Doc URL
     <%= if f.data.doc_url do %>
-      <a href="<%= f.data.doc_url %>" class="field-action" rel="external">(go to there)</a>
+        <a href={f.data.doc_url} class="field-action" rel="external">(go to there)</a>
     <% end %>
     </label>
     <%= text_input(f, :doc_url, placeholder: "https://hackmd.io/8675309/edit") %>
@@ -315,14 +311,14 @@
 
   <% has_audio_chapters = Enum.any?(f.data.audio_chapters) %>
   <div class="ui accordion field">
-    <div class="title <%= if !has_audio_chapters, do: "active" %>">
+    <div class={if !has_audio_chapters, do: "title active", else: "title"}>
       <i class="icon dropdown"></i>
       <%= label(f, :audio_chapters) do %>
         Audio Chapters <%= if has_audio_chapters do %>(<%= length(f.data.audio_chapters) %>)<% end %>
       <% end %>
     </div>
 
-    <div class="content field <%= if !has_audio_chapters, do: "active" %>">
+    <div class={if !has_audio_chapters, do: "content field active", else: "content field"}>
       <div class="ui padded segment js-wav-file">
         <div class="ui icon message">
             <i class="file audio icon"></i>
@@ -338,17 +334,17 @@
 
       <div class="ui relaxed small list js-audio_chapters">
       <%= inputs_for f, :audio_chapters, fn i -> %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+          <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <div class="content">
             <div class="fields">
-              <div class="seven wide required field <%= AdminHelpers.error_class(i, :title) %>">
+              <div class={"seven wide required field #{AdminHelpers.error_class(i, :title)}"}>
                 <%= label(i, :title) do %>
                   <%= i.index + 1 %>: Title
                 <% end %>
                 <%= text_input(i, :title) %>
               </div>
 
-              <div class="eight wide field <%= AdminHelpers.error_class(i, :link_url) %>">
+              <div class={"eight wide field #{AdminHelpers.error_class(i, :link_url)}"}>
                 <%= label(i, :link_url, "Link URL") %>
                 <%= text_input(i, :link_url) %>
               </div>
@@ -367,17 +363,17 @@
                 <label>&nbsp;</label>
               </div>
 
-              <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+              <div class={"three wide required field #{AdminHelpers.error_class(i, :starts_at)}"}>
                 <%= label(i, :starts_at) %>
                 <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+              <div class={"three wide field #{AdminHelpers.error_class(i, :ends_at)}"}>
                 <%= label(i, :ends_at) %>
                 <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="eight wide field <%= AdminHelpers.error_class(i, :image_url) %>">
+              <div class={"eight wide field #{AdminHelpers.error_class(i, :image_url)}"}>
                 <%= label(i, :image_url, "Image URL") %>
                 <%= text_input(i, :image_url) %>
               </div>
@@ -385,7 +381,7 @@
               <div class="one wide field">
                 <label>&nbsp;</label>
               <%= if i.data.image_url do %>
-                <a href="<%= i.data.image_url %>" target="_blank"><img src="<%= i.data.image_url %>" width="30" height="30" /></a>
+                <a href={i.data.image_url} target="_blank"><img src={i.data.image_url} width="30" height="30" /></a>
               <% end %>
               </div>
             </div>
@@ -427,14 +423,14 @@
 
   <% has_plusplus_chapters = Enum.any?(f.data.plusplus_chapters) %>
   <div class="ui accordion field">
-    <div class="title <%= if !has_plusplus_chapters, do: "active" %>">
+    <div class={"title #{if !has_plusplus_chapters, do: "active"}"}>
       <i class="icon dropdown"></i>
       <%= label(f, :plusplus_chapters) do %>
         PlusPlus Chapters <%= if has_plusplus_chapters do %>(<%= length(f.data.plusplus_chapters) %>)<% end %>
       <% end %>
     </div>
 
-    <div class="content field <%= if !has_plusplus_chapters, do: "active" %>">
+    <div class={"content field #{if !has_plusplus_chapters, do: "active"}"}>
       <div class="ui padded segment js-wav-file">
         <div class="ui icon message">
             <i class="file audio icon"></i>
@@ -449,17 +445,17 @@
 
       <div class="ui relaxed small list js-plusplus_chapters">
       <%= inputs_for f, :plusplus_chapters, fn i -> %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <div class="content">
             <div class="fields">
-              <div class="seven wide required field <%= AdminHelpers.error_class(i, :title) %>">
+              <div class={"seven wide required field #{AdminHelpers.error_class(i, :title)}"}>
                 <%= label(i, :title) do %>
                 <%= i.index + 1 %>: Title
                 <% end %>
                 <%= text_input(i, :title) %>
               </div>
 
-              <div class="eight wide field <%= AdminHelpers.error_class(i, :link_url) %>">
+              <div class={"eight wide field #{AdminHelpers.error_class(i, :link_url)}"}>
                 <%= label(i, :link_url, "Link URL") %>
                 <%= text_input(i, :link_url) %>
               </div>
@@ -478,17 +474,17 @@
                 <label>&nbsp;</label>
               </div>
 
-              <div class="three wide required field <%= AdminHelpers.error_class(i, :starts_at) %>">
+              <div class={"three wide required field #{AdminHelpers.error_class(i, :starts_at)}"}>
                 <%= label(i, :starts_at) %>
                 <%= text_input(i, :starts_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="three wide field <%= AdminHelpers.error_class(i, :ends_at) %>">
+              <div class={"three wide field #{AdminHelpers.error_class(i, :ends_at)}"}>
                 <%= label(i, :ends_at) %>
                 <%= text_input(i, :ends_at, class: "js-time-in-seconds") %>
               </div>
 
-              <div class="eight wide field <%= AdminHelpers.error_class(i, :image_url) %>">
+              <div class={"eight wide field #{AdminHelpers.error_class(i, :image_url)}"}>
                 <%= label(i, :image_url, "Image URL") %>
                 <%= text_input(i, :image_url) %>
               </div>
@@ -496,7 +492,7 @@
               <div class="one wide field">
                 <label>&nbsp;</label>
               <%= if i.data.image_url do %>
-                <a href="<%= i.data.image_url %>" target="_blank"><img src="<%= i.data.image_url %>" width="30" height="30" /></a>
+                <a href={i.data.image_url} target="_blank"><img src={i.data.image_url} width="30" height="30" /></a>
               <% end %>
               </div>
             </div>
@@ -522,20 +518,20 @@
       </div>
     </div>
 
-    <div class="inline field <%= if !f.data.recorded_live, do: "hidden" %> <%= AdminHelpers.error_class(f, :youtube_id) %>">
+    <div class={"inline field #{if !f.data.recorded_live, do: "hidden"} #{AdminHelpers.error_class(f, :youtube_id)}"}>
       <%= text_input(f, :youtube_id, placeholder: "dQw4w9WgXcQ", mask: "slug") %>
       <%= label(f, :youtube_id, "YouTube ID") %>
     </div>
   </div>
 
   <div class="two fields">
-    <div class="field <%= AdminHelpers.error_class(f, :recorded_at) %>">
+    <div class={"field #{AdminHelpers.error_class(f, :recorded_at)}"}>
       <%= label(f, :recorded_at, "Record Time") %>
       <%= AdminHelpers.semantic_calendar_field(f, :recorded_at) %>
       <%= AdminHelpers.error_message(f, :recorded_at) %>
     </div>
 
-    <div class="field <%= AdminHelpers.error_class(f, :published_at) %>">
+    <div class={"field #{AdminHelpers.error_class(f, :published_at)}"}>
       <%= label(f, :published_at) do %>
         Publish Time <%= AdminHelpers.help_icon("Select a future time and click 'Publish' to schedule") %>
       <% end %>
@@ -545,24 +541,23 @@
   </div>
 
 <%= if Podcast.is_news(@podcast) do %>
-
-  <div class="field <%= AdminHelpers.error_class(f, :email_subject) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :email_subject)}"}>
     <%= label(:f, :email_subject) %>
     <%= text_input(f, :email_subject) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :email_teaser) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :email_teaser)}"}>
     <%= label(:f, :email_teaser) %>
     <%= text_input(f, :email_teaser) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :email_content) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :email_content)}"}>
     <label for="email_content">
       Email content
     <%= if f.data.published do %>
-      <a href="<%= ~p"/#{@podcast.slug}/#{@episode.slug}/email" %>" class="field-action" rel="external">(view)</a>
+      <a href={~p"/#{@podcast.slug}/#{@episode.slug}/email"} class="field-action" rel="external">(view)</a>
     <% else %>
-      <a href="<%= ~p"/admin/mailers/news_published" %>" class="field-action" rel="external">(preview)</a>
+      <a href={~p"/admin/mailers/news_published"} class="field-action" rel="external">(preview)</a>
     <% end %>
     </label>
     <%= textarea(f, :email_content, placeholder: "Markdown enabled.", rows: 5) %>
@@ -580,12 +575,12 @@
     <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", "edit") %></div>
     <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
   <% end %>
-  <% end %>
-  <div class="column">
-  <%= if Policies.Admin.Episode.publish(@current_user, @changeset.data) do %>
-    <%= render("_publish_buttons.html", assigns) %>
-  <% end %>
+    <div class="column">
+    <%= if Policies.Admin.Episode.publish(@current_user, @changeset.data) do %>
+      <%= render("_publish_buttons.html", assigns) %>
+    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <%= render("_style_guide_modal.html", assigns) %>
