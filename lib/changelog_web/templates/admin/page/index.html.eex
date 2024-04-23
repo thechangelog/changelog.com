@@ -85,3 +85,22 @@
   <%= render(EpisodeRequestView, "_table.html", Map.merge(assigns, %{requests: @episode_requests, status: :fresh})) %>
 </div>
 <% end %>
+
+<div class="ui basic segment">
+  <div class="ui centered grid">
+    <div class="ui statistics">
+      <div class="statistic">
+        <div class="label">Elixir</div>
+        <div class="value"><%= Changelog.Vitals.elixir_version() %></div>
+      </div>
+      <div class="statistic">
+        <div class="label">Erlang</div>
+        <div class="value"><%= Changelog.Vitals.erlang_version() %></div>
+      </div>
+      <div class="statistic">
+        <div class="label">Postgres</div>
+        <div class="value"><%= Changelog.Vitals.postgres_version() %></div>
+      </div>
+    </div>
+  </div>
+</div>
