@@ -71,6 +71,7 @@
     <% end %>
     <%= if Enum.any?(episode.audio_chapters) do %>
       <podcast:chapters url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters") %>" type="application/json+chapters" />
+      <atom:link rel="http://podlove.org/simple-chapters" href="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/psc") %>" />
     <% end %>
     <%= if episode.socialize_url do %>
       <podcast:socialInteract uri="<%= episode.socialize_url %>" protocol="activitypub" />

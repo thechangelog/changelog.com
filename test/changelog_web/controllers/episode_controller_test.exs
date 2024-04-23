@@ -4,7 +4,10 @@ defmodule ChangelogWeb.EpisodeControllerTest do
   alias Changelog.{NewsItem, Subscription}
   alias ChangelogWeb.TimeView
 
-  @transcript [%{"title" => "Host", "body" => "Welcome!"}, %{"title" => "Guest", "body" => "Thanks!"}]
+  @transcript [
+    %{"title" => "Host", "body" => "Welcome!"},
+    %{"title" => "Guest", "body" => "Thanks!"}
+  ]
 
   test "getting a published podcast episode page and its embed", %{conn: conn} do
     p = insert(:podcast)
@@ -163,13 +166,30 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug))
 
       assert json_response(conn, 200) == %{
-        "version" => "1.2.0",
-        "chapters" => [
-          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at, "img" => c1.image_url, "number" => 1},
-          %{"title" => c2.title, "startTime" => c2.starts_at, "endTime" => c2.ends_at, "number" => 2},
-          %{"title" => c3.title, "startTime" => c3.starts_at, "endTime" => c3.ends_at, "url" => c3.link_url, "number" => 3}
-        ]
-      }
+               "version" => "1.2.0",
+               "chapters" => [
+                 %{
+                   "title" => c1.title,
+                   "startTime" => c1.starts_at,
+                   "endTime" => c1.ends_at,
+                   "img" => c1.image_url,
+                   "number" => 1
+                 },
+                 %{
+                   "title" => c2.title,
+                   "startTime" => c2.starts_at,
+                   "endTime" => c2.ends_at,
+                   "number" => 2
+                 },
+                 %{
+                   "title" => c3.title,
+                   "startTime" => c3.starts_at,
+                   "endTime" => c3.ends_at,
+                   "url" => c3.link_url,
+                   "number" => 3
+                 }
+               ]
+             }
     end
 
     test "returns empty set when episode has no chapters", %{conn: conn} do
@@ -179,9 +199,9 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug))
 
       assert json_response(conn, 200) == %{
-        "version" => "1.2.0",
-        "chapters" => []
-      }
+               "version" => "1.2.0",
+               "chapters" => []
+             }
     end
 
     test "returns plusplus chapters list as json when specified", %{conn: conn} do
@@ -193,11 +213,16 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug, pp: true))
 
       assert json_response(conn, 200) == %{
-        "version" => "1.2.0",
-        "chapters" => [
-          %{"title" => c1.title, "startTime" => c1.starts_at, "endTime" => c1.ends_at, "number" => 1}
-        ]
-      }
+               "version" => "1.2.0",
+               "chapters" => [
+                 %{
+                   "title" => c1.title,
+                   "startTime" => c1.starts_at,
+                   "endTime" => c1.ends_at,
+                   "number" => 1
+                 }
+               ]
+             }
     end
 
     test "returns empty set when episode has no plusplus chapters", %{conn: conn} do
@@ -207,9 +232,24 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug, pp: true))
 
       assert json_response(conn, 200) == %{
-        "version" => "1.2.0",
-        "chapters" => []
-      }
+               "version" => "1.2.0",
+               "chapters" => []
+             }
+    end
+  end
+
+  describe "psc chapters" do
+    test "returns chapters list as xml", %{conn: conn} do
+      c1 = build(:episode_chapter, starts_at: 0, ends_at: 60, image_url: "img")
+      c2 = build(:episode_chapter, starts_at: 60, ends_at: 600)
+      c3 = build(:episode_chapter, starts_at: 600, ends_at: 6000, link_url: "link")
+
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p, audio_chapters: [c1, c2, c3])
+
+      conn = get(conn, Routes.episode_path(conn, :psc, p.slug, e.slug))
+
+      assert valid_xml(conn)
     end
   end
 

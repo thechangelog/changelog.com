@@ -3,11 +3,6 @@ defmodule ChangelogWeb.FeedControllerTest do
 
   alias Changelog.NewsItem
 
-  def valid_xml(conn) do
-    SweetXml.parse(conn.resp_body)
-    true
-  end
-
   test "the sitemap", %{conn: conn} do
     post = insert(:published_post)
     podcast = insert(:podcast)

@@ -115,15 +115,34 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.published()
       |> Repo.get_by!(slug: slug)
 
-    chapters = if Map.has_key?(params, "pp") do
-      episode.plusplus_chapters
-    else
-      episode.audio_chapters
-    end
+    chapters =
+      if Map.has_key?(params, "pp") do
+        episode.plusplus_chapters
+      else
+        episode.audio_chapters
+      end
 
     conn
     |> assign(:chapters, chapters)
     |> render("chapters.json")
+  end
+
+  def psc(conn, params = %{"slug" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published()
+      |> Repo.get_by!(slug: slug)
+
+    chapters =
+      if Map.has_key?(params, "pp") do
+        episode.plusplus_chapters
+      else
+        episode.audio_chapters
+      end
+
+    conn
+    |> assign(:chapters, chapters)
+    |> render("psc.xml")
   end
 
   def email(conn, %{"slug" => slug}, podcast) do
@@ -160,7 +179,11 @@ defmodule ChangelogWeb.EpisodeController do
     redirect(conn, external: TimeView.time_is_url(episode.recorded_at))
   end
 
-  def subscribe(conn = %{method: "POST", assigns: %{current_user: me}}, %{"slug" => slug}, podcast) do
+  def subscribe(
+        conn = %{method: "POST", assigns: %{current_user: me}},
+        %{"slug" => slug},
+        podcast
+      ) do
     episode =
       podcast
       |> assoc(:episodes)
@@ -175,7 +198,11 @@ defmodule ChangelogWeb.EpisodeController do
     |> redirect(to: ~p"/#{podcast.slug}/#{episode.slug}")
   end
 
-  def unsubscribe(conn = %{method: "POST", assigns: %{current_user: me}}, %{"slug" => slug}, podcast) do
+  def unsubscribe(
+        conn = %{method: "POST", assigns: %{current_user: me}},
+        %{"slug" => slug},
+        podcast
+      ) do
     episode =
       podcast
       |> assoc(:episodes)

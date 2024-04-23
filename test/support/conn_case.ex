@@ -36,6 +36,11 @@ defmodule ChangelogWeb.ConnCase do
 
       defp count(query), do: Repo.count(query)
 
+      defp valid_xml(conn) do
+        SweetXml.parse(conn.resp_body)
+        true
+      end
+
       defp assert_redirected_to(conn, expected_url) do
         actual_uri =
           conn
@@ -51,7 +56,10 @@ defmodule ChangelogWeb.ConnCase do
         assert actual_uri.path == expected_uri.path
 
         if actual_uri.query do
-          assert Map.equal?(URI.decode_query(actual_uri.query), URI.decode_query(expected_uri.query))
+          assert Map.equal?(
+                   URI.decode_query(actual_uri.query),
+                   URI.decode_query(expected_uri.query)
+                 )
         end
       end
     end
