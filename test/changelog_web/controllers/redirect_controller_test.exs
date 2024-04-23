@@ -14,7 +14,7 @@ defmodule ChangelogWeb.RedirectorTest do
 
   test "an exception is raised when `to` or `external` isn't defined" do
     assert_raise Plug.Conn.WrapperError,
-                 ~R[Missing required to: / external: option in redirect],
+                 ~r[Missing required to: / external: option in redirect],
                  fn ->
                    call(Router, :get, "/exceptional")
                  end

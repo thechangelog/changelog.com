@@ -7,7 +7,7 @@ config :changelog, ChangelogWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Configures Bamboo
 config :changelog, Changelog.Mailer, adapter: Bamboo.TestAdapter

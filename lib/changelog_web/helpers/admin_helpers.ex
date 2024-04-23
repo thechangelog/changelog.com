@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Helpers.AdminHelpers do
   use Phoenix.HTML
+  import Phoenix.Component, only: [sigil_H: 2]
 
   alias Changelog.{Repo, StringKit}
   alias ChangelogWeb.TimeView
@@ -51,15 +52,19 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     end
   end
 
-  def help_icon(help_text, classes \\ "") do
-    ~e"""
-    <i class="help circle icon fluid <%= classes %>" data-popup="true" data-variation="wide" data-content="<%= help_text %>"></i>
+  def help_icon(text, classes \\ "") do
+    assigns = %{text: text, classes: classes}
+
+    ~H"""
+    <i class={"help circle icon fluid #{@classes}"} data-popup="true" data-variation="wide" data-content={@text}></i>
     """
   end
 
-  def info_icon(info_text) do
-    ~e"""
-    <i class="info circle icon fluid" data-popup="true" data-variation="wide" data-content="<%= info_text %>"></i>
+  def info_icon(text) do
+    assigns = %{text: text}
+
+    ~H"""
+    <i class="info circle icon fluid" data-popup="true" data-variation="wide" data-content={@text}></i>
     """
   end
 
@@ -79,9 +84,11 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     assigns = Map.merge(assigns, %{modal_id: modal_id, form_id: form_id})
     modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", assigns)
 
-    ~e"""
-    <a href="javascript:void(0);" class="item js-modal" data-modal="#<%= modal_id %>"><%= text %></a>
-    <%= modal %>
+    assigns = %{id: modal_id, text: text, modal: modal}
+
+    ~H"""
+    <a href="javascript:void(0);" class="item js-modal" data-modal={"##{@id}"}><%= @text %></a>
+    <%= @modal %>
     """
   end
 
@@ -91,15 +98,17 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     assigns = Map.merge(assigns, %{modal_id: modal_id, form_id: form_id})
     modal = Phoenix.View.render(view_module, "_#{modal_name}_modal.html", assigns)
 
-    ~e"""
+    assigns = %{id: modal_id, title: title, icon_name: icon_name, modal: modal}
+
+    ~H"""
     <button
       type="button"
-      data-modal="#<%= modal_id %>"
+      data-modal={"##{@id}"}
       class="ui icon button js-modal"
-      title="<%= title %>">
-        <i class="<%= icon_name %> icon"></i>
+      title={@title}>
+        <i class={"#{@icon_name} icon"}></i>
     </button>
-    <%= modal %>
+    <%= @modal %>
     """
   end
 
@@ -139,12 +148,14 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   def next_param(conn, default \\ nil), do: Map.get(conn.params, "next", default)
 
   def semantic_calendar_field(form, field) do
-    ~e"""
+    assigns = %{form: form, field: field}
+
+    ~H"""
     <div class="ui calendar">
       <div class="ui input left icon">
         <i class="calendar icon"></i>
-        <%= text_input(form, field, name: "", id: "") %>
-        <%= hidden_input(form, field) %>
+        <%= text_input(@form, @field, name: "", id: "") %>
+        <%= hidden_input(@form, @field) %>
       </div>
     </div>
     """

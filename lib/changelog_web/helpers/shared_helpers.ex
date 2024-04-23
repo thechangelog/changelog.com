@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
     active_id = controller_action_combo(conn)
 
     if Enum.any?(matchers, fn x ->
-         matcher = if Regex.regex?(x), do: x, else: ~r/#{x}/
+         matcher = if is_struct(x, Regex), do: x, else: ~r/#{x}/
          String.match?(active_id, matcher)
        end) do
       class_name
@@ -113,6 +113,7 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
   def mastodon_url(nil), do: ""
   def mastodon_url(%{mastodon_handle: nil}), do: ""
   def mastodon_url(%{mastodon_handle: handle}), do: mastodon_url(handle)
+
   def mastodon_url(handle) do
     [user, domain] = String.split(handle, "@")
     "https://#{domain}/@#{user}"
