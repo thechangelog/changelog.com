@@ -12,6 +12,7 @@ export default class News {
 
     this.iframe.onload = () => {
       this.resizeFrameToFit();
+      this.makeFrameLinksOpenInNewTab();
     };
 
     window.onresize = function () {
@@ -28,6 +29,14 @@ export default class News {
 
     this.iframe.style.height = `${scrollHeight}px`;
     this.container.style.flex = `1 0 ${scrollHeight}px`;
+  }
+
+  makeFrameLinksOpenInNewTab() {
+    const links = this.iframe.contentDocument.getElementsByTagName("a");
+
+    for (var i = 0; i < links.length; i++) {
+      links[i].target = "_blank";
+    }
   }
 
   nextTestimonial() {
