@@ -5,6 +5,7 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
   xmlns:podcast="https://podcastindex.org/namespace/1.0"
+  xmlns:psc="http://podlove.org/simple-chapters"
 >
   <channel>
     <title><%= @podcast |> podcast_name_with_metadata() |> escaped() %></title>
@@ -71,7 +72,11 @@
     <% end %>
     <%= if Enum.any?(episode.audio_chapters) do %>
       <podcast:chapters url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters") %>" type="application/json+chapters" />
-      <atom:link rel="http://podlove.org/simple-chapters" href="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/psc") %>" />
+      <psc:chapters version="1.1" xmlns="http://podlove.org/simple-chapters">
+      <%= for chapter <- episode.audio_chapters do %>
+        <psc:chapter start="<%= round(chapter.starts_at) %>" title="<%= chapter.title %>" href="<%= chapter.link_url %>" image="<%= chapter.image_url %>" />
+      <% end %>
+      </psc:chapters>
     <% end %>
     <%= if episode.socialize_url do %>
       <podcast:socialInteract uri="<%= episode.socialize_url %>" protocol="activitypub" />
