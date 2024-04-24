@@ -5,6 +5,23 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
   alias Changelog.{Repo, StringKit}
   alias ChangelogWeb.TimeView
 
+  def diff_label(up, down) do
+    diff = up - down
+
+    {sdiff, color} =
+      cond do
+        diff > 0 -> {"+#{diff}", "green"}
+        diff < 0 -> {"#{diff}", "red"}
+        true -> {"#{diff}", "gray"}
+      end
+
+    assigns = %{up: up, down: down, sdiff: sdiff, color: color}
+
+    ~H"""
+    <div class={"ui small basic #{color} label"} data-popup="true" title={"up #{@up} (down #{@down})"}><%= @sdiff %></div>
+    """
+  end
+
   def error_class(form, field), do: if(form.errors[field], do: "error", else: "")
 
   def hidden_class(condition), do: if(condition, do: "hidden", else: "")

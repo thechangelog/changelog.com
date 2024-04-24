@@ -12,7 +12,7 @@
             <th>List</th>
             <th>Today</th>
             <th>This Week</th>
-            <th>This Month <i class="caret up icon"></th>
+            <th>This Month <i class="caret up icon"></i></th>
             <th>Total Email</th>
             <th>Total RSS</th>
           </tr>
@@ -22,7 +22,7 @@
           <tr>
             <td><%= link(podcast.name, to: ~p"/admin/podcasts/#{podcast.slug}/episodes") %></td>
           <%= for {up, down} <- [day, week, month] do %>
-            <td><i class="caret up icon"></i><%= up %>&nbsp;&nbsp;&nbsp;&nbsp;<i class="caret down icon"></i><%= down %></td>
+            <td><%= AdminHelpers.diff_label(up, down) %></td>
           <% end %>
             <td><%= link(SharedHelpers.comma_separated(total), to: Routes.admin_podcast_subscription_path(@conn, :index, podcast.slug)) %></td>
             <td><%= podcast |> PodcastView.subscribers_count() |> SharedHelpers.comma_separated() %></td>
