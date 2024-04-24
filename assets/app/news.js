@@ -15,7 +15,7 @@ export default class News {
       this.makeFrameLinksOpenInNewTab();
     };
 
-    window.onresize = function () {
+    window.onresize = () => {
       this.resizeFrameToFit();
     };
 

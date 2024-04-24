@@ -1,15 +1,16 @@
 <%= if Podcast.has_feed(@podcast) && @podcast.status != :inactive do %>
 <div class="show-header-subscribe">
   <div class="show-header-subscribe-buttons">
+    <%= link("RSS", to: subscribe_via_rss_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss", title: "Subscribe via RSS") %>
   <%= if @podcast.apple_url do %>
     <%= link("Apple", to: subscribe_on_apple_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple", title: "Subscribe on Apple") %>
     <%= link("Overcast", to: subscribe_on_overcast_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--overcast", title: "Subscribe on Overcast") %>
+    <%= link("Pocket Casts", to: subscribe_on_pocket_casts_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--pocket-casts", title: "Subscribe on Pocket Casts") %>
   <% end %>
   <%= if @podcast.spotify_url do %>
     <%= link("Spotify", to: subscribe_on_spotify_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--spotify", title: "Subscribe on Spotify") %>
   <% end %>
     <%= link("Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android") %>
-    <%= link("RSS", to: subscribe_via_rss_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--rss", title: "Subscribe via RSS") %>
   <%= if @podcast.mastodon_handle do %>
     <%= link("Mastodon", to: SharedHelpers.mastodon_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--mastodon", title: "Follow us on Mastodon") %>
   <% end %>

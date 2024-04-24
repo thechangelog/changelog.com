@@ -50,8 +50,8 @@ defmodule ChangelogWeb.Plug.VanityDomains do
      2022-11-28 2022-12-05 2022-12-12 2023-01-02 2023-01-09 2023-01-16 2023-01-23
      2023-01-30 2023-02-06 2023-02-13 2023-02-20 2023-02-27 2023-03-06 2023-03-13
      2023-03-20 2023-03-27 2023-04-03)
-    |> Enum.with_index()
-    |> Enum.each(fn {date, index} ->
+  |> Enum.with_index()
+  |> Enum.each(fn {date, index} ->
     defp determine_destination(%{slug: "podcast"}, ["news-" <> unquote(date)]) do
       changelog_destination(["news", unquote(index + 1)])
     end
@@ -76,6 +76,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["android"] -> PodcastView.subscribe_on_android_url(podcast)
       ["spotify"] -> PodcastView.subscribe_on_spotify_url(podcast)
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
+      ["pcast"] -> PodcastView.subscribe_on_pocket_casts_url(podcast)
       ["rss"] -> changelog_destination([podcast.slug, "feed"])
       ["email"] -> changelog_destination(["subscribe", podcast.slug])
       ["games"] -> changelog_destination(["topic", "games"])

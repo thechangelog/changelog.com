@@ -75,10 +75,12 @@
             <% end %>
 
             <ul class="subscribe_icons">
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-apple.png")})"}><a title="Listen on Apple Podcasts" href={PodcastView.subscribe_on_apple_url(@podcast)}><span>Apple</span></a></li>
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-spotify.png")})"}><a title="Listen on Spotify" href={PodcastView.subscribe_on_spotify_url(@podcast)}><span>Spotify</span></a></li>
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-overcast.png")})"}><a title="Listen on Overcast" href={PodcastView.subscribe_on_overcast_url(@podcast)}><span>Overcast</span></a></li>
-              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a title="Listen on Android" href={PodcastView.subscribe_on_android_url(@podcast)}><span>Android</span></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-rss.png")})"}><a title="Listen via RSS" href={PodcastView.subscribe_via_rss_url(@podcast)}></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-apple.png")})"}><a title="Listen on Apple Podcasts" href={PodcastView.subscribe_on_apple_url(@podcast)}></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-overcast.png")})"}><a title="Listen on Overcast" href={PodcastView.subscribe_on_overcast_url(@podcast)}></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-pocket-casts.png")})"}><a title="Listen on Pocket Casts" href={PodcastView.subscribe_on_pocket_casts_url(@podcast)}></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-spotify.png")})"}><a title="Listen on Spotify" href={PodcastView.subscribe_on_spotify_url(@podcast)}></a></li>
+              <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a title="Listen on Android" href={PodcastView.subscribe_on_android_url(@podcast)}></a></li>
             </ul>
 
             <div class="reasons">

@@ -497,11 +497,16 @@ html {
 
 .subscribe_icons {
   flex-wrap: wrap;
-  gap: clamp(0.5rem, 1.5vw, 2rem);
+  /* gap: clamp(0.5rem, 1.5vw, 2rem); */
   margin: 0;
   padding: 0;
   list-style-type: none;
   display: flex;
+
+  @media (width <= 480px) {
+    justify-content: center;
+    margin-top: 10px;
+  }
 
   & .subscribe_icons-item {
     & a {

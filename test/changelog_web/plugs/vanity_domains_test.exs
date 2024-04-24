@@ -99,6 +99,15 @@ defmodule ChangelogWeb.VanityDomainsTest do
     assert_vanity_redirect(conn, "https://overcast.fm/itunes1209616598/js-party")
   end
 
+  test "vanity redirects for pocket casts URL" do
+    conn =
+      build_conn_with_host_and_path("jsparty.fm", "/pcast")
+      |> assign_podcasts([@gotime, @jsparty])
+      |> VanityDomains.call([])
+
+    assert_vanity_redirect(conn, "https://pca.st/itunes/1209616598")
+  end
+
   test "vanity redirects for RSS URL" do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/rss")
@@ -178,7 +187,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@changelog])
       |> VanityDomains.call([])
 
-    assert_vanity_redirect(conn,  "/news/33")
+    assert_vanity_redirect(conn, "/news/33")
   end
 
   test "vanity redirects for games" do

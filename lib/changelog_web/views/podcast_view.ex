@@ -88,10 +88,22 @@ defmodule ChangelogWeb.PodcastView do
     do: vanity <> "/overcast"
 
   def subscribe_on_overcast_url(podcast) do
-    %{"id" => id, "name" => name} =
-      Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
+    %{"id" => id, "name" => name} = apple_url_parts(podcast)
 
     "https://overcast.fm/itunes#{id}/#{name}"
+  end
+
+  def subscribe_on_pocket_casts_url(%{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/pcast"
+
+  def subscribe_on_pocket_casts_url(podcast) do
+    %{"id" => id, "name" => _name} = apple_url_parts(podcast)
+
+    "https://pca.st/itunes/#{id}"
+  end
+
+  defp apple_url_parts(podcast) do
+    Regex.named_captures(~r/\/podcast\/(?<name>.*)\/id(?<id>.*)/, podcast.apple_url)
   end
 
   def subscribe_on_spotify_url(%{vanity_domain: vanity}) when not is_nil(vanity),

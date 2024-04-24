@@ -124,7 +124,9 @@
       margin-bottom: $base-spacing;
       color: $medium-grey-alt;
 
-      > *:last-child { margin-bottom: 0; }
+      > *:last-child {
+        margin-bottom: 0;
+      }
 
       @include breakpoint(desktop, max) {
         text-align: center;
@@ -196,7 +198,7 @@
     }
 
     &-signup_text {
-      margin-bottom: 0.5em;
+      margin-bottom: 1.2em;
       font-size: 1.125em;
       color: $white;
 
@@ -223,7 +225,6 @@
 
     // Subscribe
     &-subscribe {
-
       &-buttons {
         margin-left: -8px;
         margin-right: -8px;
@@ -237,12 +238,12 @@
           padding: 4px 0 0 30px;
           background-size: 20px 20px;
           background-repeat: no-repeat;
-          font-size: 0.9375em;
+          font-size: 0.74em;
           line-height: 1;
           color: $white;
           transition: color 0.1s $base-easing;
 
-          @include breakpoint(mobile, max) {
+          @include breakpoint(tablet, max) {
             width: 30px;
             height: 30px;
             background-size: 30px 30px;
@@ -257,18 +258,45 @@
             margin-right: 0;
           }
 
-          &--apple { background-image: url('../images/icons/podcast_icon-apple.png'); }
-          &--apple-music { background-image: url('../images/icons/podcast_icon-apple-music.png'); }
-          &--amazon-music { background-image: url('../images/icons/podcast_icon-amazon-music.png'); }
-          &--youtube-music { background-image: url('../images/icons/podcast_icon-youtube-music.png'); }
-          &--bandcamp { background-image: url('../images/icons/podcast_icon-bandcamp.png'); }
-          &--overcast { background-image: url('../images/icons/podcast_icon-overcast.png'); }
-          &--spotify { background-image: url('../images/icons/podcast_icon-spotify.png'); }
-          &--android { background-image: url('../images/icons/podcast_icon-android.png'); }
-          &--rss { background-image: url('../images/icons/podcast_icon-rss.png'); }
-          &--email { background-image: url('../images/icons/podcast_icon-email.png'); }
-          &--mastodon { background-image: url('../images/icons/podcast_icon-mastodon.png'); }
-          &--twitter { background-image: url('../images/icons/podcast_icon-twitter.png'); }
+          &--apple {
+            background-image: url("../images/icons/podcast_icon-apple.png");
+          }
+          &--apple-music {
+            background-image: url("../images/icons/podcast_icon-apple-music.png");
+          }
+          &--amazon-music {
+            background-image: url("../images/icons/podcast_icon-amazon-music.png");
+          }
+          &--youtube-music {
+            background-image: url("../images/icons/podcast_icon-youtube-music.png");
+          }
+          &--bandcamp {
+            background-image: url("../images/icons/podcast_icon-bandcamp.png");
+          }
+          &--overcast {
+            background-image: url("../images/icons/podcast_icon-overcast.png");
+          }
+          &--pocket-casts {
+            background-image: url("../images/icons/podcast_icon-pocket-casts.png");
+          }
+          &--spotify {
+            background-image: url("../images/icons/podcast_icon-spotify.png");
+          }
+          &--android {
+            background-image: url("../images/icons/podcast_icon-android.png");
+          }
+          &--rss {
+            background-image: url("../images/icons/podcast_icon-rss.png");
+          }
+          &--email {
+            background-image: url("../images/icons/podcast_icon-email.png");
+          }
+          &--mastodon {
+            background-image: url("../images/icons/podcast_icon-mastodon.png");
+          }
+          &--twitter {
+            background-image: url("../images/icons/podcast_icon-twitter.png");
+          }
         }
       }
     }
