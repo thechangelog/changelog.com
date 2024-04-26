@@ -74,7 +74,7 @@
       <podcast:chapters url="<%= url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters") %>" type="application/json+chapters" />
       <psc:chapters version="1.1" xmlns="http://podlove.org/simple-chapters">
       <%= for chapter <- episode.audio_chapters do %>
-        <psc:chapter start="<%= round(chapter.starts_at) %>" title="<%= chapter.title %>" href="<%= chapter.link_url %>" image="<%= chapter.image_url %>" />
+        <psc:chapter start="<%= round(chapter.starts_at) %>" title="<%= chapter.title |> html_escape() |> safe_to_string() %>" href="<%= chapter.link_url |> html_escape() |> safe_to_string() %>" image="<%= chapter.image_url |> html_escape() |> safe_to_string() %>" />
       <% end %>
       </psc:chapters>
     <% end %>
