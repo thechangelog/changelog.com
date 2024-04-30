@@ -56,7 +56,6 @@ defmodule ChangelogWeb.FeedController do
     feed = ChangelogWeb.Feeds.generate(slug)
 
     conn
-    |> put_layout(false)
     |> put_resp_header("access-control-allow-origin", "*")
     |> put_resp_content_type("application/xml")
     |> send_resp(200, feed)

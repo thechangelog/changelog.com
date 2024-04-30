@@ -194,7 +194,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
 
     test "returns empty set when episode has no chapters", %{conn: conn} do
       p = insert(:podcast)
-      e = insert(:published_episode, podcast: p)
+      e = insert(:published_episode, podcast: p, audio_chapters: [])
 
       conn = get(conn, Routes.episode_path(conn, :chapters, p.slug, e.slug))
 

@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Feeds do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, PodPing, Post, Repo}
-  alias ChangelogWeb.{Endpoint, FeedView}
+  alias ChangelogWeb.{Endpoint, FeedView, Xml}
 
   @doc """
   Generates a fresh feed XML and uploads it to R2
@@ -90,7 +90,8 @@ defmodule ChangelogWeb.Feeds do
 
   def generate(%Podcast{} = podcast) do
     episodes = get_episodes(podcast)
-    render("podcast.xml", podcast: podcast, episodes: episodes)
+
+    Xml.Podcast.document(podcast, episodes) |> Xml.generate()
   end
 
   # When we have an unknown slug, look for a podcast followed by a feed

@@ -21,6 +21,10 @@ defmodule Changelog.Factory do
       title: sequence(:title, &"Best Show Evar! #{&1}"),
       slug: sequence(:slug, &"best-show-evar-#{&1}"),
       audio_bytes: 42,
+      audio_chapters: [
+        build(:episode_chapter, title: "Intro", starts_at: 0, ends_at: 30),
+        build(:episode_chapter, title: "Oh & my", starts_at: 31, ends_at: 45)
+      ],
       podcast: build(:podcast)
     }
   end
