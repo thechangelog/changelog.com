@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<chapters version="1.1" xmlns="http://podlove.org/simple-chapters">
-<%= for chapter <- @chapters do %>
-  <chapter start="<%= round(chapter.starts_at) %>" title="<%= chapter.title %>" href="<%= chapter.link_url %>" image="<%= chapter.image_url %>" />
-<% end %>
-</chapters>

@@ -3,7 +3,9 @@ defmodule Changelog.StringKit do
 
   def blank?(nil), do: true
 
-  def blank?(string), do: String.trim(string) == ""
+  def blank?(string) when is_binary(string), do: String.trim(string) == ""
+
+  def blank?(_unknown), do: false
 
   def dasherize(string) do
     string

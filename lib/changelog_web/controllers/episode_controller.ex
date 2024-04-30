@@ -2,7 +2,7 @@ defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast, Subscription}
-  alias ChangelogWeb.{Email, LiveView, TimeView}
+  alias ChangelogWeb.{Email, LiveView, TimeView, Xml}
 
   plug :assign_podcast
 
@@ -162,9 +162,15 @@ defmodule ChangelogWeb.EpisodeController do
         episode.audio_chapters
       end
 
+    xml =
+      chapters
+      |> Xml.Chapters.document()
+      |> Xml.generate()
+
     conn
-    |> assign(:chapters, chapters)
-    |> render("psc.xml")
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_content_type("application/xml")
+    |> send_resp(200, xml)
   end
 
   def email(conn, %{"slug" => slug}, podcast) do

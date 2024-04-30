@@ -79,6 +79,7 @@ defmodule Changelog.Mixfile do
       {:shopify, "~> 0.4", github: "ankhers/shopify", branch: "otp24_upgrade"},
       {:stripity_stripe, "~> 3.2"},
       {:id3vx, "~> 0.0.1-rc6"},
+      {:xml_builder, "~> 2.1"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:mock, "~> 0.3.0", only: :test},
       {:opentelemetry_exporter, "~> 1.0"},
