@@ -97,6 +97,13 @@ module.exports = [
     plugins: [new MiniCssExtractPlugin({ filename: "css/news.css" })]
   }),
   merge(common, {
+    entry: [__dirname + "/app/fonts.css", __dirname + "/app/img.css"],
+    output: {
+      path: __dirname + "/../priv/static"
+    },
+    plugins: [new MiniCssExtractPlugin({ filename: "css/img.css" })]
+  }),
+  merge(common, {
     entry: [
       "normalize.css",
       __dirname + "/app/embed.scss",

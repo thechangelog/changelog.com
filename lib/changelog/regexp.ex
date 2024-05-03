@@ -22,4 +22,8 @@ defmodule Changelog.Regexp do
   def slug_message, do: "valid chars: a-z, 0-9, -, _"
 
   def timestamp, do: ~r/(\d\d:)?(\d\d?:)(\d\d)(\.\d\d?)?/
+
+  def top_story, do: ~r/\A###?\s(\X+)\s\[/
+
+  def new_line, do: ~r/\r?\n/
 end

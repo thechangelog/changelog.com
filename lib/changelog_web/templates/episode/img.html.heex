@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title_with_guest_focused_subtitle_and_podcast_aside(@episode) %></title>
+    <link rel="stylesheet" href={url(~p"/css/img.css")}>
+  </head>
+  <body style={"--primary: ##{PodcastView.color_hex_code(@episode.podcast)};"}>
+    <div class="container">
+      <div class="inner">
+        <header class="header">
+          <img src={PodcastView.cover_url(@podcast, :medium)} width="240" height="240" alt="Podcast Artwork">
+          <h1 class="display-3xl"><%= @episode.title %></h1>
+        </header>
+
+        <div class="details">
+          <% participants = participants(@episode) %>
+          <div class="details-face_pile">
+          <%= for participant <- Enum.take(participants, 10) do %>
+            <img src={PersonView.avatar_url(participant)} width="64" height="64" alt="">
+          <% end %>
+          </div>
+
+        <%= if @episode.subtitle do %>
+          <h2 class={"details-subheading #{subtitle_img_class(@episode, participants)} italic"}><%= @episode.subtitle %></h2>
+        <% end %>
+        </div>
+
+      <%= if @episode.audio_duration do %>
+        <div class="audio">
+          <div id="waveform" class="audio-waveform">
+          <% percent_complete = Enum.random(20..80) %>
+          <%= for i <- 1..80 do %>
+              <div style={"height: #{Enum.random(20..60)}%"} class={if i < percent_complete, do: "has-played"}></div>
+          <% end %>
+          </div>
+
+          <div class="audio-timestamps mono-lg">
+            <span><%= TimeView.duration(@episode.audio_duration * (percent_complete / 100)) %></span>
+            <span><%= TimeView.duration(@episode.audio_duration) %></span>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </body>
+</html>

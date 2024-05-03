@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title_with_guest_focused_subtitle_and_podcast_aside(@episode) %></title>
+    <link rel="stylesheet" href={url(~p"/css/img.css")}>
+  </head>
+  <body style={"--primary: ##{PodcastView.color_hex_code(@episode.podcast)};"}>
+    <div class="news-container">
+      <div class="news-inner">
+        <div class="news-header mono-lg uppercase">
+          <span>Changelog News #<%= @episode.slug %></span>
+          <span><%= NewsView.read_duration(@episode) %> Min Read / <%= NewsView.listen_duration(@episode) %> Min Listen</span>
+        </div>
+
+        <h1 class="news-heading display-2xl"><%= NewsView.title(@episode) %></h1>
+
+        <ul class="news-articles sans-xl">
+        <%= for headline <- NewsView.headlines(@episode) do %>
+            <li><%= headline %></li>
+        <% end %>
+        </ul>
+      </div>
+
+      <div class="news-fade"></div>
+    </div>
+  </body>
+</html>

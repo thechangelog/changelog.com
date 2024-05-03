@@ -27,6 +27,30 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:show)
   end
 
+  def img(conn, %{"slug" => slug}, podcast = %{slug: "news"}) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published()
+      |> Episode.preload_all()
+      |> Repo.get_by!(slug: slug)
+
+    conn
+    |> assign(:episode, episode)
+    |> render(:img_news, layout: false)
+  end
+
+  def img(conn, %{"slug" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.published()
+      |> Episode.preload_all()
+      |> Repo.get_by!(slug: slug)
+
+    conn
+    |> assign(:episode, episode)
+    |> render(:img, layout: false)
+  end
+
   def embed(conn, params = %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)

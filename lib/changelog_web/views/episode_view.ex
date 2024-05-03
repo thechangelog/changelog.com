@@ -19,6 +19,7 @@ defmodule ChangelogWeb.EpisodeView do
     Endpoint,
     LayoutView,
     Meta,
+    NewsView,
     PersonView,
     PodcastView,
     SponsorView,
@@ -215,6 +216,47 @@ defmodule ChangelogWeb.EpisodeView do
 
   def show_notes_source_url(episode) do
     Github.Source.new("show-notes", episode).html_url
+  end
+
+  def subtitle_img_class(episode, participants) do
+    subtitle_length = String.length(episode.subtitle)
+
+    case length(participants) do
+      1 ->
+        cond do
+          subtitle_length < 50 -> "sans-xl"
+          subtitle_length < 70 -> "sans-lg"
+          subtitle_length < 80 -> "sans-md"
+          true -> "sans-sm"
+        end
+
+      2 ->
+        cond do
+          subtitle_length < 40 -> "sans-xl"
+          subtitle_length < 60 -> "sans-lg"
+          subtitle_length < 70 -> "sans-md"
+          true -> "sans-sm"
+        end
+
+      3 ->
+        cond do
+          subtitle_length < 30 -> "sans-xl"
+          subtitle_length < 50 -> "sans-lg"
+          subtitle_length < 60 -> "sans-md"
+          true -> "sans-sm"
+        end
+
+      4 ->
+        cond do
+          subtitle_length < 28 -> "sans-xl"
+          subtitle_length < 48 -> "sans-lg"
+          subtitle_length < 58 -> "sans-md"
+          true -> "sans-sm"
+        end
+
+      _else ->
+        "sans-sm"
+    end
   end
 
   def title_with_podcast_aside(episode) do

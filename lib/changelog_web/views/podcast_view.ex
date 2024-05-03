@@ -27,6 +27,31 @@ defmodule ChangelogWeb.PodcastView do
     end
   end
 
+  def color_hex_code(podcast) do
+    case podcast.slug do
+      "brainscience" ->
+        "F9423A"
+
+      "founderstalk" ->
+        "5FC4B4"
+
+      "gotime" ->
+        "58CAF5"
+
+      "jsparty" ->
+        "FDCF0F"
+
+      "practicalai" ->
+        "4A5FAA"
+
+      "shipit" ->
+        "97CC69"
+
+      _else ->
+        "59B287"
+    end
+  end
+
   def cover_url(podcast, version \\ :original)
 
   # Special cases for Master, The Changelog & ++

@@ -1,0 +1,326 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transition: none;
+  }
+}
+
+body,
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Variables */
+:root {
+  --color-black: #000;
+  --color-dark: #101820;
+  --color-white: #fff;
+  --color-green: #59b287;
+  --color-grey: #878b8f;
+  --font-display: "Sana Sans", sans-serif;
+  --font-sans: "Sana Sans", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+  --base-border: 1px solid var(--color-dark);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: normal;
+  text-wrap: balance;
+}
+
+/* Display */
+.display-sm {
+  font-family: var(--font-display);
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 800;
+  line-height: 1.5;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.5;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  font-weight: 800;
+  line-height: 1.5;
+}
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 800;
+  line-height: 1.25;
+}
+.display-2xl {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.display-3xl {
+  font-family: var(--font-display);
+  font-size: 4.25rem;
+  font-weight: 700;
+  line-height: 1.125;
+}
+
+/* Sans */
+.sans-sm {
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  line-height: 1.5;
+}
+.sans-md {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.5;
+}
+.sans-lg {
+  font-family: var(--font-sans);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  lin-height: 1.5;
+}
+.sans-xl {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 5vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Mono */
+.mono-sm {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+.mono-md {
+  font-family: var(--font-mono);
+  font-size: clamp(0.875rem, 2.25vw, 1rem);
+  font-weight: 400;
+}
+.mono-lg {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+/* Misc. */
+
+.italic {
+  font-style: italic;
+}
+
+.color-grey {
+  color: var(--color-grey);
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* Primary Layout */
+html,
+body {
+  background: var(--color-white);
+  font-family: var(--font-sans);
+  color: var(--color-white);
+  font-size: 16px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background: var(--color-dark);
+  background: linear-gradient(
+    to right,
+    var(--color-dark) 40%,
+    var(--primary) 100%
+  );
+  height: 630px;
+  margin: 0 auto 1rem;
+  width: 1200px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 3.5rem 0;
+  width: 800px;
+  height: 100%;
+}
+
+/* Header */
+
+.header {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+}
+
+/* Details */
+
+.details {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.details-face_pile {
+  display: flex;
+  gap: 1rem;
+
+  img {
+    border-radius: 1rem;
+  }
+}
+
+/* Audio */
+
+.audio {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.audio-timestamps {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.audio-waveform {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.audio-waveform div {
+  width: 3px;
+  background-color: white;
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+.audio-waveform div.has-played {
+  opacity: 1;
+}
+
+/*
+
+Changelog News
+
+*/
+
+.news-container {
+  background: var(--color-dark);
+  height: 630px;
+  margin: 0 auto 1rem;
+  position: relative;
+  width: 1200px;
+}
+
+.news-fade {
+  background: linear-gradient(to top, var(--color-dark) 10%, transparent 100%);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 12rem;
+}
+
+.news-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 3.5rem 0;
+  width: 800px;
+  height: 100%;
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.news-heading {
+  text-align: center;
+}
+
+.news-articles {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.news-articles li {
+  display: flex;
+  gap: 1rem;
+}

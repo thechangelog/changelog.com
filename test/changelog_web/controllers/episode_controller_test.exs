@@ -253,13 +253,44 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     end
   end
 
+  describe "img" do
+    test "renders for a regular episode", %{conn: conn} do
+      p = insert(:podcast)
+      e = insert(:published_episode, podcast: p)
+
+      conn = get(conn, ~p"/#{p.slug}/#{e.slug}/img")
+
+      assert conn.status == 200
+    end
+
+    test "renders for a news episode that lacks data", %{conn: conn} do
+      p = insert(:podcast, slug: "news")
+      e = insert(:published_episode, podcast: p)
+
+      conn = get(conn, ~p"/#{p.slug}/#{e.slug}/img")
+
+      assert conn.status == 200
+    end
+
+    test "renders for a news episode that has data", %{conn: conn} do
+      p = insert(:podcast, slug: "news")
+      e = insert(:published_episode, podcast: p, email_content: "## 🙌 [hello]()")
+
+      conn = get(conn, ~p"/#{p.slug}/#{e.slug}/img")
+
+      assert conn.status == 200
+      assert conn.resp_body =~ "hello"
+      assert conn.resp_body =~ e.title
+    end
+  end
+
   describe "live" do
     test "404 when episode is not recorded live", %{conn: conn} do
       p = insert(:podcast)
       e = insert(:episode, podcast: p, recorded_live: false)
 
       assert_raise Ecto.NoResultsError, fn ->
-        get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+        get(conn, ~p"/#{p.slug}/#{e.slug}/live")
       end
     end
 
@@ -268,7 +299,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       e = insert(:episode, podcast: p, recorded_live: true)
 
       assert_raise Ecto.NoResultsError, fn ->
-        get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+        get(conn, ~p"/#{p.slug}/#{e.slug}/live")
       end
     end
 
@@ -276,7 +307,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       p = insert(:podcast)
       e = insert(:episode, podcast: p, recorded_live: true, youtube_id: "8675309")
 
-      conn = get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+      conn = get(conn, ~p"/#{p.slug}/#{e.slug}/live")
 
       assert_redirected_to(conn, "https://youtu.be/8675309")
     end
@@ -297,7 +328,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
       e = insert(:episode, podcast: p, recorded_at: nil)
 
       assert_raise Ecto.NoResultsError, fn ->
-        get(conn, Routes.episode_path(conn, :live, p.slug, e.slug))
+        get(conn, ~p"/#{p.slug}/#{e.slug}/live")
       end
     end
 
