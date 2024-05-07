@@ -30,7 +30,6 @@ defmodule ChangelogWeb.EpisodeController do
   def img(conn, %{"slug" => slug}, podcast = %{slug: "news"}) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published()
       |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
 
@@ -42,7 +41,6 @@ defmodule ChangelogWeb.EpisodeController do
   def img(conn, %{"slug" => slug}, podcast) do
     episode =
       assoc(podcast, :episodes)
-      |> Episode.published()
       |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
 
