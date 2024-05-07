@@ -4,6 +4,7 @@ defmodule ChangelogWeb.Meta.Image do
   alias ChangelogWeb.{
     AlbumView,
     Endpoint,
+    EpisodeView,
     Meta,
     NewsItemView,
     NewsSourceView,
@@ -23,6 +24,10 @@ defmodule ChangelogWeb.Meta.Image do
   defp get_image(%{view_module: PodcastView, view_template: "index.html"}), do: podcasts_image()
   # the main index page
   defp get_image(%{view_module: PageView, view_template: "index.html"}), do: podcasts_image()
+
+  # a specific podcast episode
+  defp get_image(%{view_module: EpisodeView, podcast: podcast, episode: episode}),
+    do: episode_image(podcast, episode)
 
   # a specific podcast
   defp get_image(%{podcast: podcast}), do: podcast_image(podcast)
@@ -79,6 +84,10 @@ defmodule ChangelogWeb.Meta.Image do
   defp person_image(person), do: PersonView.avatar_url(person, :large)
   defp podcast_image(podcast), do: static_image(~w[images share twitter-#{podcast.slug}.png])
   defp podcasts_image, do: static_image(~w[images share all-podcasts.png])
+
+  defp episode_image(podcast, episode),
+    do: "https://snap.fly.dev" <> ~p"/#{podcast.slug}/#{episode.slug}/img"
+
   defp post_image(post), do: PostView.image_url(post, :large)
   defp source_image(source), do: NewsSourceView.icon_url(source, :large)
   defp static_image(parts), do: static_url(Endpoint, ~p"/#{parts}")

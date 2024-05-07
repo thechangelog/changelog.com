@@ -12,7 +12,7 @@
     <link rel="canonical" href={Meta.Url.get(:canonical, @conn) || current_url(@conn)}>
     <meta name="description" content={Meta.Description.get(@conn)}>
   <% twitter_card_type = Meta.Twitter.get(:card_type, @conn) %>
-    <meta name="twitter:card" content={twitter_card_type}
+    <meta name="twitter:card" content={twitter_card_type}>
     <meta name="twitter:site" content="@Changelog">
     <meta name="twitter:title" content={Meta.Title.get(@conn) |> escaped()}>
     <meta name="twitter:description" content={Meta.Description.get(@conn) |> escaped()}>
