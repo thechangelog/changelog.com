@@ -20,8 +20,8 @@ defmodule Changelog.Subscription do
   def subscribed(query \\ __MODULE__, start_time, end_time) do
     from(q in query,
       where: is_nil(q.unsubscribed_at),
-      where: q.inserted_at < ^start_time,
-      where: q.inserted_at >= ^end_time
+      where: q.inserted_at > ^start_time,
+      where: q.inserted_at <= ^end_time
     )
   end
 
@@ -31,8 +31,8 @@ defmodule Changelog.Subscription do
   def unsubscribed(query \\ __MODULE__, start_time, end_time) do
     from(q in query,
       where: not is_nil(q.unsubscribed_at),
-      where: q.unsubscribed_at < ^start_time,
-      where: q.unsubscribed_at >= ^end_time
+      where: q.unsubscribed_at > ^start_time,
+      where: q.unsubscribed_at <= ^end_time
     )
   end
 

@@ -81,9 +81,12 @@ defmodule ChangelogWeb.Admin.PageController do
     Enum.map(Cache.active_podcasts(), fn pod ->
       {
         pod,
-        {Subscription.subscribed_count(pod, now, today_start), Subscription.unsubscribed_count(pod, now, today_start)},
-        {Subscription.subscribed_count(pod, now, week_start), Subscription.unsubscribed_count(pod, now, week_start)},
-        {Subscription.subscribed_count(pod, now, month_start), Subscription.unsubscribed_count(pod, now, month_start)},
+        {Subscription.subscribed_count(pod, today_start, now),
+         Subscription.unsubscribed_count(pod, today_start, now)},
+        {Subscription.subscribed_count(pod, week_start, now),
+         Subscription.unsubscribed_count(pod, week_start, now)},
+        {Subscription.subscribed_count(pod, month_start, now),
+         Subscription.unsubscribed_count(pod, month_start, now)},
         Subscription.subscribed_count(pod)
       }
     end)

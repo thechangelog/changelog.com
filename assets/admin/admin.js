@@ -22,6 +22,7 @@ import newsSponsorshipView from "views/newsSponsorshipView";
 import pageView from "views/pageView";
 import personView from "views/personView";
 import podcastView from "views/podcastView";
+import podcastSubscriptionView from "views/podcastSubscriptionView";
 import postView from "views/postView";
 import sponsorView from "views/sponsorView";
 import topicView from "views/topicView";
@@ -38,6 +39,7 @@ let views = {
   PageView: pageView,
   PersonView: personView,
   PodcastView: podcastView,
+  PodcastSubscriptionView: podcastSubscriptionView,
   PostView: postView,
   SponsorView: sponsorView,
   TopicView: topicView
