@@ -34,8 +34,16 @@ config :changelog,
   typesense_url: SecretOrEnv.get("TYPESENSE_URL"),
   typesense_api_key: SecretOrEnv.get("TYPESENSE_API_KEY"),
   # 60 = one minute, 3600 = one hour, 86,400 = one day, 604,800 = one week, 31,536,000 = one year
-  cdn_cache_control_s3: SecretOrEnv.get("CDN_CACHE_CONTROL_S3", "max-age=31536000, stale-while-revalidate=3600, stale-if-error=86400"),
-  cdn_cache_control_app: SecretOrEnv.get("CDN_CACHE_CONTROL_APP", "max-age=60, stale-while-revalidate=60, stale-if-error=604800"),
+  cdn_cache_control_s3:
+    SecretOrEnv.get(
+      "CDN_CACHE_CONTROL_S3",
+      "max-age=31536000, stale-while-revalidate=3600, stale-if-error=86400"
+    ),
+  cdn_cache_control_app:
+    SecretOrEnv.get(
+      "CDN_CACHE_CONTROL_APP",
+      "max-age=60, stale-while-revalidate=60, stale-if-error=604800"
+    ),
   ecto_repos: [Changelog.Repo]
 
 config :changelog, Oban,
@@ -72,8 +80,7 @@ config :ex_aws,
   access_key_id: SecretOrEnv.get("R2_ACCESS_KEY_ID"),
   secret_access_key: SecretOrEnv.get("R2_SECRET_ACCESS_KEY")
 
-config :ex_aws, :s3,
-  host: SecretOrEnv.get("R2_API_HOST")
+config :ex_aws, :s3, host: SecretOrEnv.get("R2_API_HOST")
 
 config :ex_aws, :hackney_opts, recv_timeout: 300_000
 
@@ -92,25 +99,24 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: SecretOrEnv.get("GITHUB_CLIENT_ID"),
   client_secret: SecretOrEnv.get("GITHUB_CLIENT_SECRET")
 
-config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
-  consumer_key: SecretOrEnv.get("TWITTER_CONSUMER_KEY"),
-  consumer_secret: SecretOrEnv.get("TWITTER_CONSUMER_SECRET")
+config :stripity_stripe, api_key: SecretOrEnv.get("STRIPE_SECRET")
 
 config :opentelemetry,
   resource: [
     service: [
       name: "changelog",
-      namespace: "#{config_env()}",
+      namespace: "#{config_env()}"
     ],
     user: [
-      name: System.get_env("USER"),
-    ],
+      name: System.get_env("USER")
+    ]
   ],
   span_processor: :batch,
   traces_exporter: :none
 
 if System.get_env("HONEYCOMB_API_KEY") do
   config :opentelemetry, traces_exporter: :otlp
+
   config :opentelemetry_exporter,
     otlp_protocol: :http_protobuf,
     otlp_compression: :gzip,
