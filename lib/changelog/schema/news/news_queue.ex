@@ -5,6 +5,7 @@ defmodule Changelog.NewsQueue do
 
   alias Changelog.{
     Cache,
+    EventLog,
     NewsItem,
     NewsQueue,
     Notifier,
@@ -149,10 +150,7 @@ defmodule Changelog.NewsQueue do
     true
   end
 
-  def publish(nil) do
-    Logger.info("News: Published bupkis")
-    false
-  end
+  def publish(nil), do: false
 
   defp publish_item(item = %NewsItem{}) do
     item = NewsItem.publish!(item)
@@ -161,7 +159,7 @@ defmodule Changelog.NewsQueue do
     Task.start_link(fn -> Notifier.notify(item) end)
     Task.start_link(fn -> FeedUpdater.queue(item) end)
     Cache.delete(item)
-    Logger.info("News: Published ##{item.id}")
+    EventLog.insert("Published ##{item.id}", "NewsQueue")
     true
   end
 

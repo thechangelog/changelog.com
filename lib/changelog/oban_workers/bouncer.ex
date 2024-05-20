@@ -5,7 +5,7 @@ defmodule Changelog.ObanWorkers.Bouncer do
   """
   require Logger
 
-  alias Changelog.{ListKit, Person, Repo}
+  alias Changelog.{EventLog, ListKit, Person, Repo}
   alias Craisin.Client
 
   use Oban.Worker, queue: :scheduled
@@ -28,7 +28,7 @@ defmodule Changelog.ObanWorkers.Bouncer do
 
     {deleted_count, _} = Person.with_email(bounced) |> Repo.delete_all()
 
-    Logger.info "Bouncer deleted #{deleted_count} from #{length(bounced)} hard bounced emails."
+    log("Deleted #{deleted_count} people from #{length(bounced)} hard bounced emails.")
   end
 
   def delete_spam do
@@ -40,8 +40,10 @@ defmodule Changelog.ObanWorkers.Bouncer do
 
     {deleted_count, _} = Person.with_email(spam) |> Repo.delete_all()
 
-    Logger.info "Bouncer deleted #{deleted_count} from #{length(spam)} emails marked as spam."
+    log("Deleted #{deleted_count} people from #{length(spam)} emails marked as spam.")
   end
+
+  defp log(message), do: EventLog.insert(message, "Bouncer")
 
   defp is_hard_bounce(bounce) do
     bounce["BounceCategory"] == "Hard"

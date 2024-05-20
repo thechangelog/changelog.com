@@ -15,6 +15,8 @@ defmodule Craisin.Client do
     response = get("/transactional/messages?status=#{status}&count=200&sentBeforeID=#{before_id}")
 
     case handle(response) do
+      %{} ->
+        accumulated
       [] ->
         accumulated
       list ->
