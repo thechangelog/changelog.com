@@ -1,0 +1,25 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>At</th>
+      <th>Message</th>
+      <th>By</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for event <- @events do %>
+    <tr>
+      <td><%= AdminHelpers.ts(event.inserted_at) %></td>
+      <td><%= event.message %></td>
+      <td><%= event.caller %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+        <%= AdminHelpers.icon_link("trash", to: ~p"/admin/events/#{event}", method: :delete, data: [confirm: "Are you sure?"]) %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -71,6 +71,7 @@ defmodule ChangelogWeb.Router do
     post "/feeds/:id/refresh", FeedController, :refresh, as: :feed
 
     resources "/topics", TopicController, except: [:show]
+    resources "/events", EventLogController, only: [:index, :delete]
 
     get "/news", NewsItemController, :index
 

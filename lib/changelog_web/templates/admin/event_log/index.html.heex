@@ -1,0 +1,15 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    Event Log
+    <div class="sub header">Loggin' the logs of the Log</div>
+  </h1>
+
+  <div class="actions">
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@events) do %>
+  <%= render("_table.html", conn: @conn, events: @events) %>
+<% end %>
+</div>

@@ -70,6 +70,12 @@
       <% end %>
     <% end %>
 
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      <%= link(to: ~p"/admin/events", class: "item #{SharedHelpers.active_class(@conn, "event", "active")}") do %>
+        <i class="clock icon"></i>Events
+      <% end %>
+    <% end %>
+
       <div class="right menu">
       <%= if Policies.AdminsOnly.index(@current_user) do %>
         <div class="ui right aligned navigation search item">
