@@ -7,10 +7,10 @@ defmodule Changelog.Stats.S3 do
     ]
   end
 
-  def get_logs(date, slug) do
+  def get_logs(slug, prefix) do
     bucket = "changelog-logs-#{slug}"
 
-    list_logs(bucket, date)
+    list_logs(bucket, prefix)
     |> Task.async_stream(fn %{key: key} -> get_log(bucket, key) end)
     |> Enum.map(fn {:ok, log} -> log end)
   end
@@ -19,6 +19,13 @@ defmodule Changelog.Stats.S3 do
     ExAws.S3.get_object(bucket, key)
     |> ExAws.request!(config())
     |> Map.get(:body)
+  end
+
+  def download_logs(slug, prefix, filename) do
+    {:ok, file} = File.open(filename, [:write])
+    logs = get_logs(slug, prefix)
+    Enum.each(logs, &(IO.write(file, &1 <> "\n")))
+    File.close(file)
   end
 
   @doc """

@@ -15,7 +15,7 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
 
   describe "perform/1" do
     setup_with_mocks([
-      {Stats.S3, [], [get_logs: fn date, _slug -> log_fixtures(date) end]},
+      {Stats.S3, [], [get_logs: fn _slug, date -> log_fixtures(date) end]},
       {Craisin.Client, [], [stats: fn _group -> %{"Delivered" => 10, "Opened" => 5} end]}
     ]) do
       :ok

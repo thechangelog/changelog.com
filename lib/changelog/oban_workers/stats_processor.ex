@@ -18,8 +18,8 @@ defmodule Changelog.ObanWorkers.StatsProcessor do
     podcast = Repo.get!(Podcast, podcast_id)
 
     processed =
-      date
-      |> S3.get_logs(podcast.slug)
+      podcast.slug
+      |> S3.get_logs(date)
       |> Parser.parse()
       |> Enum.group_by(& &1.episode)
       |> Enum.map(fn {slug, entries} -> process_episode(date, podcast, slug, entries) end)
