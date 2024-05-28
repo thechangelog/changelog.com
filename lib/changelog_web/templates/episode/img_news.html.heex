@@ -15,7 +15,7 @@
           <span><%= NewsView.read_duration(@episode) %> Min Read / <%= NewsView.listen_duration(@episode) %> Min Listen</span>
         </div>
 
-        <h1 class="news-heading display-2xl"><%= NewsView.title(@episode) %></h1>
+        <h1 class="news-heading display-3xl"><%= NewsView.title(@episode) %></h1>
 
         <ul class="news-articles sans-xl">
         <%= for headline <- NewsView.headlines(@episode) do %>
