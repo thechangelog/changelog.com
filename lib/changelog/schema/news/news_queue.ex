@@ -159,7 +159,7 @@ defmodule Changelog.NewsQueue do
     Task.start_link(fn -> Notifier.notify(item) end)
     Task.start_link(fn -> FeedUpdater.queue(item) end)
     Cache.delete(item)
-    EventLog.insert("Published ##{item.id}", "NewsQueue")
+    EventLog.insert("Published ##{item.id}: #{item.headline}", "NewsQueue")
     true
   end
 
