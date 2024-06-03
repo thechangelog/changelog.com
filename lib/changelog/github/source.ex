@@ -24,7 +24,7 @@ defmodule Changelog.Github.Source do
 
   defp joined(list), do: Enum.join(list, "/")
 
-  defp name(episode), do: "#{episode.podcast.name} ##{episode.slug}"
+  defp name(episode), do: "#{episode.podcast.name} #{episode.slug}"
 
   defp path(episode) do
     podcast_name = PodcastView.dasherized_name(episode.podcast)
