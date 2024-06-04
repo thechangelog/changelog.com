@@ -431,6 +431,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "br3ndonland",
+      "name": "Brendon Smith",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26674818?v=4",
+      "profile": "http://bws.bio",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",

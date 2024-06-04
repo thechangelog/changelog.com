@@ -100,6 +100,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
       <td align="center" valign="top" width="16.66%"><a href="https://github.com/gorosgobe"><img src="https://avatars.githubusercontent.com/u/26676483?v=4?s=100" width="100px;" alt="Pablo Gorostiaga"/><br /><sub><b>Pablo Gorostiaga</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/issues?q=author%3Agorosgobe" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="16.66%"><a href="http://www.patrickhyatt.com"><img src="https://avatars.githubusercontent.com/u/296125?v=4?s=100" width="100px;" alt="Patrick Hyatt"/><br /><sub><b>Patrick Hyatt</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=patHyatt" title="Code">💻</a></td>
       <td align="center" valign="top" width="16.66%"><a href="http://lentner.io"><img src="https://avatars.githubusercontent.com/u/8965948?v=4?s=100" width="100px;" alt="Geoffrey Lentner"/><br /><sub><b>Geoffrey Lentner</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=glentner" title="Code">💻</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="http://bws.bio"><img src="https://avatars.githubusercontent.com/u/26674818?v=4?s=100" width="100px;" alt="Brendon Smith"/><br /><sub><b>Brendon Smith</b></sub></a><br /><a href="https://github.com/thechangelog/changelog.com/commits?author=br3ndonland" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
