@@ -3,9 +3,7 @@ name: "Trace GitHub Actions Workflows"
 on:
   workflow_run:
     workflows:
-      - "Dagger on K8s"
-      - "Dagger on GitHub"
-      - "Dagger on Fly.io"
+      - "Ship It!"
     types:
       - completed
 
