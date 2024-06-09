@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   devcontainer:
-    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.14.5-erlang-v26.2-nodejs-v20.10.0
+    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.16.3-erlang-v26.2.5-nodejs-v20.14.0
     volumes:
       - ../:/workspace
     network_mode: service:db
