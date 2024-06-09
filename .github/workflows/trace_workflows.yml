@@ -1,0 +1,28 @@
+name: "Trace GitHub Actions Workflows"
+
+on:
+  workflow_run:
+    workflows:
+      - "Dagger on K8s"
+      - "Dagger on GitHub"
+      - "Dagger on Fly.io"
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    name: Export '${{ github.event_name }}' workflow trace
+    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'thechangelog/changelog.com' }}
+    steps:
+      - name: Export Workflow Trace
+        uses: corentinmusard/otel-cicd-action@9d13430746676ba690999657315ec3f162269f49
+        with:
+          otlpEndpoint: grpc://api.honeycomb.io:443/
+          otlpHeaders: ${{ secrets.HONEYCOMB_GITHUB_ACTIONS_WORKFLOWS }}
+          otelServiceName: github-actions
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          runId: ${{ github.event.workflow_run.id }}
