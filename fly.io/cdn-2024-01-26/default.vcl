@@ -2,7 +2,7 @@
 vcl 4.1;
 
 backend default {
-    .host = "changelog-2024-01-12.internal";
+    .host = "top1.nearest.of.changelog-2024-01-12.internal";
     .host_header = "changelog-2024-01-12.fly.dev";
     .port = "4000";
     .first_byte_timeout = 5s;

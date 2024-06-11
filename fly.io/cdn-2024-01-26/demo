@@ -12,10 +12,28 @@ IMAGE="registry.fly.io/$APP:$TS"
 
 main() {
   clear
-  explore_varnish_container_image
+  _deploy
+
+  # Temporarily hijack this script for deploying
+  exit 0
+  _explore_varnish_container_image
 }
 
-explore_varnish_container_image() {
+_deploy() {
+  _run \
+    "1/n. BUILD LOCAL Varnish container image" \
+    "docker build . --tag $IMAGE"
+
+  _run \
+    "2/n. Deploy to Fly.io" \
+    "flyctl auth docker && docker push $IMAGE && flyctl deploy --ha=false --image $IMAGE"
+
+  _run \
+    "3/n. Scale across multiple regions" \
+    "flyctl scale count 4 --max-per-region 1 --region sjc,dfw,iad,lhr"
+}
+
+_explore_varnish_container_image() {
   _run \
     "1/7. EXPLORE Varnish container image" \
     "docker history --no-trunc --format=json $(_varnish_version) | jq .CreatedBy | lvim -"

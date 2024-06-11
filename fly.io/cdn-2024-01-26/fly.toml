@@ -7,6 +7,13 @@ primary_region = "sjc"
 kill_signal = "SIGTERM"
 kill_timeout = 30
 
+[env]
+VARNISH_SIZE="2G"
+
+[[vm]]
+size = "shared-cpu-1x"
+memory = "2GB"
+
 [deploy]
 strategy = "bluegreen"
 
@@ -14,13 +21,13 @@ strategy = "bluegreen"
 internal_port = 9000
 protocol = "tcp"
 
-# [[services.http_checks]]
-# grace_period = "30s"
-# interval = "15s"
-# method = "get"
-# path = "/health"
-# protocol = "http"
-# timeout = "10s"
+[[services.http_checks]]
+grace_period = "30s"
+interval = "10s"
+method = "get"
+path = "/health"
+protocol = "http"
+timeout = "9s"
 
 [[services.ports]]
 handlers = ["tls", "http"]
