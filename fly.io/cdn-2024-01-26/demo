@@ -38,7 +38,7 @@ explore_varnish_container_image() {
 
   _run \
     "6/7. EXPERIMENT with Varnish locally" \
-    "docker run --name $APP --volume $PWD/default.vcl:/etc/varnish/default.vcl --rm -itp 9000:9000 $IMAGE -d"
+    "docker run --name $APP --volume $PWD/default.vcl:/etc/varnish/default.vcl --rm -itp 9000:9000 $IMAGE"
 
   _run \
     "7/7. Deploy to Fly.io" \

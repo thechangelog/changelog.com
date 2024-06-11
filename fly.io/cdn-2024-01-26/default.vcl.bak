@@ -1,22 +1,16 @@
 # specify the VCL syntax version to use
 vcl 4.1;
 
-backend default {
-    .host = "changelog-2024-01-12.fly.dev";
-    .host_header = "changelog-2024-01-12.fly.dev";
-    .port = "443";
-    .ssl = 1;
-    .ssl_sni = 1;
-    .ssl_verify_peer = 1;
-    .ssl_verify_host = 1;
-    .first_byte_timeout = 5s;
-    .probe = {
-        .url = "/health";
-        .timeout = 2s;
-        .interval = 5s;
-        .window = 10;
-        .threshold = 5;
-   }
+# import vmod_dynamic for better backend name resolution
+import dynamic;
+
+# we won't use any static backend, but Varnish still need a default one
+backend default none;
+
+# set up a dynamic director
+# for more info, see https://github.com/nigoroll/libvmod-dynamic/blob/master/src/vmod_dynamic.vcc
+sub vcl_init {
+  new d = dynamic.director(port = "80");
 }
 
 sub vcl_recv {
@@ -24,6 +18,11 @@ sub vcl_recv {
   if (req.method == "PURGE") {
     return (purge);
   }
+	# force the host header to match the backend (not all backends need it,
+	# but example.com does)
+	set req.http.host = "changelog-2024-01-12.fly.dev";
+	# set the backend
+	set req.backend_hint = d.backend("changelog-2024-01-12.fly.dev:443");
 }
 
 # TODOS:
