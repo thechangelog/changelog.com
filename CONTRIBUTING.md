@@ -80,11 +80,11 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 
 You will need to have the following dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v16
-- [Elixir](https://elixir-lang.org/install.html) v1.14
+- [Elixir](https://elixir-lang.org/install.html) v1.16
 - [Erlang/OTP](https://www.erlang.org/downloads) v26 - usually installed as an Elixir dependency
 - [Node.js](https://nodejs.org/en/download/) v20 LTS - [latest-v20.x](https://nodejs.org/download/release/latest-v20.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
-- [Golang](https://go.dev/doc/install) v1.20 - if you want to run CI locally
+- [Golang](https://go.dev/doc/install) v1.22 - if you want to run CI locally
 
 We are using [`asdf`](https://asdf-vm.com/) to install the correct dependency versions in our development environment.
 
@@ -147,7 +147,7 @@ mix test
     - If a new version gets installed, run `asdf local erlang <INSTALLED_VERSION>`
 2. Repeat previous step for Elixir & Node.js
 3. Commit & push to check that image builds successfully in GitHub Actions
-    - _Alternatively_, build the image locally via: `{ cd magefiles && go run main.go -w ../ image:runtime }`
+    - _Alternatively_, build the image locally via: `$(cd magefiles && go run main.go -w ../ image:runtime)`
 
 After you confirm that the image builds successfully:
 1. Update `.devcontainer/docker-compose.yml` with new image tag
@@ -164,7 +164,7 @@ A pre-configured Codespace can be launched for this repo by following the instru
 
 ```console
 # CONFIGURE APP
-mix deps.get
+mix deps.get_dev
 mix ecto.setup
 
 # CONFIGURE STATIC ASSETS

@@ -38,7 +38,7 @@ func (image *Image) PublishRuntime() *Image {
 
 func (image *Image) WithRuntimeLabels() *Image {
 	description := fmt.Sprintf(
-		"💜 Elixir v%s | 🚜 Erlang v%s | ⬢ Node.js v%s | 🐡 Ubuntu %s | %s",
+		"💜 Elixir v%s | 🚜 Erlang v%s | ⬢ Node.js v%s | 🗃️ Ubuntu %s | %s",
 		image.versions.Elixir(),
 		image.versions.Erlang(),
 		image.versions.Nodejs(),
