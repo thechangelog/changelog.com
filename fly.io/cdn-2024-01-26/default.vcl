@@ -2,13 +2,9 @@
 vcl 4.1;
 
 backend default {
-    .host = "changelog-2024-01-12.fly.dev";
+    .host = "changelog-2024-01-12.internal";
     .host_header = "changelog-2024-01-12.fly.dev";
-    .port = "443";
-    .ssl = 1;
-    .ssl_sni = 1;
-    .ssl_verify_peer = 1;
-    .ssl_verify_host = 1;
+    .port = "4000";
     .first_byte_timeout = 5s;
     .probe = {
         .url = "/health";
@@ -28,7 +24,7 @@ sub vcl_recv {
 
 # TODOS:
 # - ✅ Run in debug mode
-# - Configure HTTPS for app backend
+# - Connect directly to app - not Fly.io Proxy 🤦
 # - Store cache on disk: https://varnish-cache.org/docs/trunk/users-guide/storage-backends.html#file
 # - Add Feeds backend: /feed -> https://feeds.changelog.place/feed.xml
 #
