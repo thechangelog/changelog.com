@@ -3,7 +3,7 @@ import Config
 static_url_host = System.get_env("STATIC_URL_HOST", "cdn.changelog.com")
 
 config :changelog, ChangelogWeb.Endpoint,
-  http: [port: System.get_env("HTTP_PORT", "4000")],
+  http: [port: System.get_env("HTTP_PORT", "4000"), ip: {0, 0, 0, 0, 0, 0, 0, 0}],
   url: [
     scheme: System.get_env("URL_SCHEME", "https"),
     host: System.get_env("URL_HOST", "changelog.com"),
