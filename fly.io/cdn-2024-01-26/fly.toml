@@ -8,11 +8,11 @@ kill_signal = "SIGTERM"
 kill_timeout = 30
 
 [env]
-VARNISH_SIZE="2G"
+VARNISH_SIZE="500M"
 
 [[vm]]
 size = "shared-cpu-1x"
-memory = "2GB"
+memory = "512MB"
 
 [deploy]
 strategy = "bluegreen"

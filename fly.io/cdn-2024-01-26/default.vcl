@@ -24,8 +24,12 @@ sub vcl_recv {
 
 # TODOS:
 # - ✅ Run in debug mode
-# - Connect directly to app - not Fly.io Proxy 🤦
-# - Store cache on disk: https://varnish-cache.org/docs/trunk/users-guide/storage-backends.html#file
+# - ✅ Connect directly to app - not Fly.io Proxy 🤦
+# - Serve stale content + background refresh
+#   - We should always serve from Varnish, and only from the backend on Varnish restart
+# - Serve stale content on backend error
+# - Store cache on disk?
+#   - https://varnish-cache.org/docs/trunk/users-guide/storage-backends.html#file
 # - Add Feeds backend: /feed -> https://feeds.changelog.place/feed.xml
 #
 # FOLLOW-UPs:

@@ -30,7 +30,7 @@ _deploy() {
 
   _run \
     "3/n. Scale across multiple regions" \
-    "flyctl scale count 4 --max-per-region 1 --region sjc,dfw,iad,lhr"
+    "flyctl scale count 9 --max-per-region 1 --region sjc,gru,iad,lhr,fra,jnb,bom,nrt,syd"
 }
 
 _explore_varnish_container_image() {
