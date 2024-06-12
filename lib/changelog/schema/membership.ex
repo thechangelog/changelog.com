@@ -1,6 +1,8 @@
 defmodule Changelog.Membership do
   use Changelog.Schema
 
+  alias Changelog.Person
+
   defenum(Status, canceled: 0, active: 1)
 
   schema "memberships" do
@@ -13,8 +15,19 @@ defmodule Changelog.Membership do
     timestamps()
   end
 
+  def active(query \\ __MODULE__), do: from(q in query, where: q.status == ^:active)
+  def canceled(query \\ __MODULE__), do: from(q in query, where: q.status == ^:canceled)
+
   def with_subscription_id(query \\ __MODULE__, id),
     do: from(q in query, where: q.subscription_id == ^id)
+
+  def preload_person(query = %Ecto.Query{}) do
+    Ecto.Query.preload(query, :person)
+  end
+
+  def preload_person(membership) do
+    Repo.preload(membership, :person)
+  end
 
   def changeset(membership, attrs \\ %{}) do
     membership

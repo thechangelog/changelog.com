@@ -1,0 +1,20 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    People++
+    <div class="sub header">It's better!
+    <%= if Policies.AdminsOnly.index(@current_user) do %>
+      (<%= @page.total_entries |> SharedHelpers.comma_separated() %>)
+    <% end %>
+    </div>
+  </h1>
+
+  <div class="actions">
+  </div>
+</div>
+
+<div class="ui basic segment">
+<%= if Enum.any?(@memberships) do %>
+  <%= render("_table.html", assigns) %>
+  <%= pagination_links(@conn, @page, path: &Routes.admin_membership_path/3, filter: @filter) %>
+<% end %>
+</div>

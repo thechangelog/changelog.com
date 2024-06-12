@@ -1,0 +1,35 @@
+<table class="ui celled striped table">
+  <thead>
+    <tr>
+      <th>Person</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", active: "Active", canceled: "Canceled") %>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= for membership <- @memberships do %>
+    <tr>
+      <td>
+        <%= link to: ~p"/admin/people/#{membership.person}", title: membership.person.name, data: [popup: true] do %>
+          <img class="ui avatar image" src={PersonView.avatar_url(membership.person)}>
+        <% end %>
+        <%= membership.person.name %>
+        (<%= membership.person.handle %>)
+      </td>
+      <td><%= status_label(membership) %></td>
+      <td><%= AdminHelpers.ts(membership.inserted_at) %></td>
+      <td class="center aligned">
+        <div class="ui small basic buttons">
+          <%= AdminHelpers.icon_link("eye", to: Routes.admin_membership_path(@conn, :show, membership)) %>
+          <%= AdminHelpers.icon_link("stripe s", to: stripe_url(membership), rel: "external", title: "View in Stripe") %>
+          <%= AdminHelpers.icon_link("edit", to: Routes.admin_membership_path(@conn, :edit, membership)) %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

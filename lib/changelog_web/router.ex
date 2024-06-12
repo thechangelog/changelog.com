@@ -70,6 +70,7 @@ defmodule ChangelogWeb.Router do
     resources "/feeds", FeedController
     post "/feeds/:id/refresh", FeedController, :refresh, as: :feed
 
+    resources "/memberships", MembershipController, except: [:create, :delete]
     resources "/topics", TopicController, except: [:show]
     resources "/events", EventLogController, only: [:index, :delete]
 
