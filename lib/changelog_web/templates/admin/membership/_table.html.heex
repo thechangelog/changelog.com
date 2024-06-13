@@ -3,9 +3,10 @@
     <tr>
       <th>Person</th>
       <th>Status</th>
-      <th>Created</th>
+      <th>Started At</th>
+      <th>Last Changed At</th>
       <th>
-        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", active: "Active", canceled: "Canceled") %>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", active: "Active", inactive: "Inactive", unknown: "Unknown") %>
       </th>
     </tr>
   </thead>
@@ -21,11 +22,15 @@
         (<%= membership.person.handle %>)
       </td>
       <td><%= status_label(membership) %></td>
-      <td><%= AdminHelpers.ts(membership.inserted_at) %></td>
+      <td><%= AdminHelpers.ts(membership.started_at) %></td>
+      <td><%= AdminHelpers.ts(last_changed_at(membership)) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.admin_membership_path(@conn, :show, membership)) %>
           <%= AdminHelpers.icon_link("stripe s", to: stripe_url(membership), rel: "external", title: "View in Stripe") %>
+        <%= if membership.supercast_id do %>
+          <%= AdminHelpers.icon_link("podcast", to: supercast_url(membership), rel: "external", title: "View in Supercast") %>
+        <% end %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_membership_path(@conn, :edit, membership)) %>
         </div>
       </td>

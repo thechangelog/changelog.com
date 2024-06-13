@@ -8,16 +8,17 @@ defmodule ChangelogWeb.Admin.MembershipController do
   plug :scrub_params, "membership" when action in [:create, :update]
 
   def index(conn, params) do
-    filter = Map.get(params, "filter", "all")
-    params = Map.put(params, :page_size, 50)
+    filter = Map.get(params, "filter", "active")
+    params = Map.put(params, :page_size, 1000)
 
     page =
       case filter do
         "active" -> Membership.active()
-        "canceled" -> Membership.canceled()
+        "inactive" -> Membership.inactive()
+        "unknown" -> Membership.unknown()
         _else -> Membership
       end
-      |> Membership.newest_first()
+      |> Membership.newest_first(:started_at)
       |> Membership.preload_person()
       |> Repo.paginate(params)
 
