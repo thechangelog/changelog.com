@@ -68,10 +68,11 @@ config :changelog, Oban,
     {Oban.Plugins.Cron,
      timezone: "US/Central",
      crontab: [
-       {"00 3 * * *", Changelog.ObanWorkers.SlackImporter},
-       {"30 3 * * *", Changelog.ObanWorkers.Bouncer},
-       {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
-       {"* * * * *", Changelog.ObanWorkers.NewsPublisher},
-       {"15 * * * *", Changelog.ObanWorkers.SmokeTester}
+       {"00 3 * * *", Changelog.ObanWorkers.SlackImporter}, # 3am daily
+       {"30 3 * * *", Changelog.ObanWorkers.Bouncer}, # 3:30am daily
+       {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor}, # 4am daily
+       {"0 */3 * * *", Changelog.ObanWorkers.Striper}, # every 3 hours
+       {"15 * * * *", Changelog.ObanWorkers.SmokeTester}, # 15 after every hour
+       {"* * * * *", Changelog.ObanWorkers.NewsPublisher} # every minute
      ]}
   ]
