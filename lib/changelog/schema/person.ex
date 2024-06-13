@@ -1,4 +1,5 @@
 defmodule Changelog.Person do
+  alias Changelog.Membership
   use Changelog.Schema
 
   alias Changelog.{
@@ -8,6 +9,7 @@ defmodule Changelog.Person do
     EpisodeRequest,
     Faker,
     Files,
+    Membership,
     NewsItem,
     NewsItemComment,
     PodcastHost,
@@ -69,6 +71,9 @@ defmodule Changelog.Person do
     field :public_profile, :boolean, default: true
 
     embeds_one :settings, Settings, on_replace: :update
+
+    has_many :memberships, Membership
+    has_one :active_membership, Membership, where: [status: {:in, Membership.active_statuses()}]
 
     has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
 

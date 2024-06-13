@@ -3,6 +3,9 @@ defmodule Changelog.Membership do
 
   alias Changelog.Person
 
+  @active_statuses ~w(active past_due)
+  @inactive_statuses ~w(canceled unpaid incomplete_expired)
+
   schema "memberships" do
     field :status, :string
     field :subscription_id, :string
@@ -15,18 +18,16 @@ defmodule Changelog.Membership do
     timestamps()
   end
 
+  def active_statuses, do: @active_statuses
+
   def active(query \\ __MODULE__),
-    do: from(q in query, where: q.status in [^"active", ^"past_due"])
+    do: from(q in query, where: q.status in ^@active_statuses)
 
   def inactive(query \\ __MODULE__),
-    do: from(q in query, where: q.status in [^"canceled", ^"unpaid", ^"incomplete_expired"])
+    do: from(q in query, where: q.status in ^@inactive_statuses)
 
   def unknown(query \\ __MODULE__),
-    do:
-      from(q in query,
-        where:
-          q.status not in [^"active", ^"past_due", ^"canceled", ^"unpaid", ^"incomplete_expired"]
-      )
+    do: from(q in query, where: q.status not in ^(@active_statuses ++ @inactive_statuses))
 
   def with_subscription_id(query \\ __MODULE__, id),
     do: from(q in query, where: q.subscription_id == ^id)

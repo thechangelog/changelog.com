@@ -4,7 +4,7 @@ defmodule ChangelogWeb.HomeController do
   alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, StringKit, Subscription}
 
   plug(RequireUser, "except from email links" when action not in [:opt_out])
-  plug :preload_sponsors
+  plug :preload_current_user_extras
   plug(:scrub_params, "person" when action in [:update])
 
   def show(conn, %{"subscribed" => id}),
@@ -160,8 +160,12 @@ defmodule ChangelogWeb.HomeController do
     end
   end
 
-  defp preload_sponsors(conn = %{assigns: %{current_user: me}}, _) do
-    me = Repo.preload(me, :sponsors)
+  defp preload_current_user_extras(conn = %{assigns: %{current_user: me}}, _) do
+    me =
+      me
+      |> Repo.preload(:sponsors)
+      |> Repo.preload(:active_membership)
+
     assign(conn, :current_user, me)
   end
 end
