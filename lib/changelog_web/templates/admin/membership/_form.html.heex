@@ -1,0 +1,34 @@
+<%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
+  <div class={"field required #{AdminHelpers.error_class(f, :person_id)}"}>
+    <%= label(f, :person_id, "Person") %>
+    <div class="ui fluid remote person search selection dropdown">
+      <%= hidden_input(f, :person_id) %>
+      <i class="dropdown icon"></i>
+      <%= if AdminHelpers.is_loaded(f.data.person) do %>
+        <div class="selected text"><%= f.data.person.name %></div>
+      <% else %>
+        <div class="default text">Select Person</div>
+      <% end %>
+    </div>
+    <%= AdminHelpers.error_message(f, :person_id) %>
+  </div>
+
+  <div class={"field required #{AdminHelpers.error_class(f, :supercast_id)}"}>
+    <%= label f, :supercast_id, "Supercast ID" %>
+    <%= text_input f, :supercast_id, placeholder: "" %>
+    <%= AdminHelpers.error_message(f, :supercast_id) %>
+  </div>
+
+  <div class="ui hidden divider"></div>
+
+  <div class="ui equal width stackable grid">
+  <%= if !AdminHelpers.is_persisted(f.data) do %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Create") %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Create and Close", AdminHelpers.next_param(@conn, ~p"/admin/feeds")) %></div>
+  <% else %>
+    <div class="column"><%= AdminHelpers.submit_button(:primary, "Save", SharedHelpers.current_path(@conn)) %></div>
+    <div class="column"><%= AdminHelpers.submit_button(:secondary, "Save and Close", AdminHelpers.next_param(@conn)) %></div>
+  <% end %>
+    <div class="column"></div>
+  </div>
+<% end %>

@@ -42,7 +42,7 @@ defmodule ChangelogWeb.Admin.MembershipController do
 
     case Repo.update(changeset) do
       {:ok, membership} ->
-        params = replace_next_edit_path(params, ~p"/admin/memberships/#{membership.slug}/edit")
+        params = replace_next_edit_path(params, ~p"/admin/memberships/#{membership}/edit")
 
         conn
         |> put_flash(:result, "success")
@@ -56,7 +56,8 @@ defmodule ChangelogWeb.Admin.MembershipController do
   end
 
   defp assign_membership(conn = %{params: %{"id" => id}}, _) do
-    membership = Repo.get!(Membership, id: id)
-    assign(conn, :membership, membership)
+    membership = Membership |> Repo.get(id) |> Membership.preload_person()
+
+      assign(conn, :membership, membership)
   end
 end
