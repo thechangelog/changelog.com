@@ -6,7 +6,7 @@
       <th>Started At</th>
       <th>Last Changed At</th>
       <th>
-        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", active: "Active", inactive: "Inactive", unknown: "Unknown") %>
+        <%= if assigns[:filter], do: AdminHelpers.filter_select(@filter, all: "All", default: "Active", inactive: "Inactive", unknown: "Unknown") %>
       </th>
     </tr>
   </thead>

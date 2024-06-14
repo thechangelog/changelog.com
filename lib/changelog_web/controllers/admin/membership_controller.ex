@@ -8,12 +8,12 @@ defmodule ChangelogWeb.Admin.MembershipController do
   plug :scrub_params, "membership" when action in [:create, :update]
 
   def index(conn, params) do
-    filter = Map.get(params, "filter", "active")
+    filter = Map.get(params, "filter", "default")
     params = Map.put(params, :page_size, 1000)
 
     page =
       case filter do
-        "active" -> Membership.active()
+        "default" -> Membership.active()
         "inactive" -> Membership.inactive()
         "unknown" -> Membership.unknown()
         _else -> Membership
@@ -58,6 +58,6 @@ defmodule ChangelogWeb.Admin.MembershipController do
   defp assign_membership(conn = %{params: %{"id" => id}}, _) do
     membership = Membership |> Repo.get(id) |> Membership.preload_person()
 
-      assign(conn, :membership, membership)
+    assign(conn, :membership, membership)
   end
 end
