@@ -1,10 +1,10 @@
 defmodule ChangelogWeb.Admin.MembershipController do
   use ChangelogWeb, :controller
 
-  alias Changelog.Membership
+  alias Changelog.{Membership, ObanWorkers}
 
   plug :assign_membership when action in [:edit, :update, :delete]
-  plug Authorize, [Policies.AdminsOnly, :membership]
+  plug Authorize, [Policies.Admin.Membership, :membership]
   plug :scrub_params, "membership" when action in [:create, :update]
 
   def index(conn, params) do
@@ -53,6 +53,14 @@ defmodule ChangelogWeb.Admin.MembershipController do
         |> put_flash(:result, "failure")
         |> render(:edit, membership: membership, changeset: changeset)
     end
+  end
+
+  def refresh(conn, params) do
+    ObanWorkers.MembershipSyncer.queue()
+
+    conn
+    |> put_flash(:result, "success")
+    |> redirect_next(params, ~p"/admin/memberships")
   end
 
   defp assign_membership(conn = %{params: %{"id" => id}}, _) do

@@ -59,20 +59,26 @@ config :changelog, Changelog.Mailer,
   username: SecretOrEnv.get("CM_SMTP_TOKEN"),
   password: SecretOrEnv.get("CM_SMTP_TOKEN")
 
-config :elixir,
-  :time_zone_database, Tzdata.TimeZoneDatabase
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :changelog, Oban,
   plugins: [
-    {Oban.Plugins.Pruner, max_age: 43_200}, # 12 hours
+    # 12 hours
+    {Oban.Plugins.Pruner, max_age: 43_200},
     {Oban.Plugins.Cron,
      timezone: "US/Central",
      crontab: [
-       {"00 3 * * *", Changelog.ObanWorkers.SlackImporter}, # 3am daily
-       {"30 3 * * *", Changelog.ObanWorkers.Bouncer}, # 3:30am daily
-       {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor}, # 4am daily
-       {"0 */3 * * *", Changelog.ObanWorkers.Striper}, # every 3 hours
-       {"15 * * * *", Changelog.ObanWorkers.SmokeTester}, # 15 after every hour
-       {"* * * * *", Changelog.ObanWorkers.NewsPublisher} # every minute
+       # 3am daily
+       {"00 3 * * *", Changelog.ObanWorkers.SlackImporter},
+       # 3:30am daily
+       {"30 3 * * *", Changelog.ObanWorkers.Bouncer},
+       # 4am daily
+       {"00 4 * * *", Changelog.ObanWorkers.StatsProcessor},
+       # every 3 hours
+       {"0 */3 * * *", Changelog.ObanWorkers.MembershipSyncer},
+       # 15 after every hour
+       {"15 * * * *", Changelog.ObanWorkers.SmokeTester},
+       # every minute
+       {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
      ]}
   ]

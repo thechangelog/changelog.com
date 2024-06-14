@@ -1,6 +1,6 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
-    People++
+    Changelog++
     <div class="sub header">It's better!
     <%= if Policies.AdminsOnly.index(@current_user) do %>
       (<%= @page.total_entries |> SharedHelpers.comma_separated() %>)
@@ -9,6 +9,10 @@
   </h1>
 
   <div class="actions">
+  <%= link to: ~p"/admin/memberships/refresh", class: "ui right floated primary basic button", method: :post do %>
+    <i class="refresh icon"></i>
+    Refresh
+  <% end %>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-defmodule Changelog.ObanWorkers.Striper do
+defmodule Changelog.ObanWorkers.MembershipSyncer do
   use Oban.Worker, queue: :scheduled
 
   alias Changelog.{EventLog, Faker, Membership, Person, Repo}
@@ -16,6 +16,10 @@ defmodule Changelog.ObanWorkers.Striper do
     end
 
     :ok
+  end
+
+  def queue do
+    %{} |> new() |> Oban.insert()
   end
 
   def insert_membership(sub, person) do
