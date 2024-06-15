@@ -1,0 +1,323 @@
+#!/usr/bin/env bash
+
+# https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
+BOLD="$(tput bold)"
+RESET="$(tput sgr0)"
+# BLACK="$(tput bold)$(tput setaf 0)"
+RED="$(tput bold)$(tput setaf 1)"
+# GREEN="$(tput bold)$(tput setaf 2)"
+YELLOW="$(tput bold)$(tput setaf 3)"
+# BLUE="$(tput bold)$(tput setaf 4)"
+# MAGENTA="$(tput bold)$(tput setaf 5)"
+CYAN="$(tput bold)$(tput setaf 6)"
+# WHITE="$(tput bold)$(tput setaf 7)"
+# BLACKB="$(tput bold)$(tput setab 0)"
+# REDB="$(tput setab 1)$(tput setaf 0)"
+GREENB="$(tput setab 2)$(tput setaf 0)"
+YELLOWB="$(tput setab 3)$(tput setaf 0)"
+BLUEB="$(tput setab 4)$(tput setaf 0)"
+MAGENTAB="$(tput setab 5)$(tput setaf 0)"
+CYANB="$(tput setab 6)$(tput setaf 0)"
+WHITEB="$(tput setab 7)$(tput setaf 0)"
+
+APP="${PWD##*/}"
+TS="$(date +'%F.%H-%M-%S')"
+IMAGE="registry.fly.io/$APP:$TS"
+
+main() {
+  if [ -z "$1" ]
+  then
+    echo "${RED}First argument must be one of the following${RESET}"
+    echo "${BOLD}deploy${RESET}          → deploys to Fly.io"
+    echo "${BOLD}world-scale${RESET}     → makes it World Scale™"
+    echo "${BOLD}small-scale${RESET}     → makes it Small Scale™"
+    echo "${BOLD}http-detailed${RESET}   → shows detailed http response"
+    echo "${BOLD}http-measure${RESET}    → measures http response times"
+    echo "${BOLD}http-profile${RESET}    → profiles http responses"
+    echo "${CYAN}demo-2024-01-26${RESET} → runs through the first demo"
+    echo "${CYAN}demo-2024-06-21${RESET} → runs through the second demo"
+    echo ""
+    echo "${YELLOW}💡 All following arguments are passed to the command${RESET}"
+  else
+    clear
+    "$@"
+  fi
+}
+
+deploy() {
+  _run_interactive \
+    "1/3. BUILD LOCAL VARNISH CONTAINER IMAGE" \
+    "docker buildx build . --tag $IMAGE"
+
+  clear
+
+  _run_interactive \
+    "2/3. DEPLOY TO Fly.io" \
+    "flyctl auth docker && docker push $IMAGE && flyctl deploy --ha=false --image $IMAGE"
+
+  _run \
+    "3/3. SHOW MACHINES LOCATION" \
+    "flyctl machines list"
+}
+
+world-scale() {
+  _run \
+    "Run across many regions to show what World Scale™ feels like" \
+    "flyctl scale count 16 --max-per-region 1 --region sjc,dfw,ord,iad,yyz,scl,gru,lhr,cdg,fra,ams,jnb,bom,sin,nrt,syd"
+
+  _run_interactive \
+    "Show machines location" \
+    "flyctl machines list"
+
+  clear
+
+  _run_interactive \
+    "${GREENB}How many USDs do you think this costs PER MONTH?${RESET} 🤔" \
+    ":"
+
+  _run \
+    "16 x shared-cpu-1x instances with 256MB memory ${GREENB} 16 * \$1.94 = \$31.04 ${RESET}" \
+    ": https://fly.io/docs/about/pricing/#compute"
+}
+
+small-scale() {
+  _run \
+    "Run in a remote region only to show what low latency feels like" \
+    "flyctl scale count 1 --max-per-region 1 --region syd"
+
+  _run \
+    "Scale down all other locations" \
+    "flyctl scale count 0 --region sjc,dfw,ord,iad,yyz,scl,gru,lhr,cdg,fra,ams,jnb,bom,sin,nrt"
+
+  _run \
+    "Show machines location" \
+    "flyctl machines list"
+}
+
+close-to-gerhard() {
+  _run \
+    "Run close to Gerhard" \
+    "flyctl scale count 1 --max-per-region 1 --region lhr"
+
+  _run \
+    "Scale down all other locations" \
+    "flyctl scale count 0 --region sjc,dfw,ord,iad,yyz,scl,gru,cdg,fra,ams,jnb,bom,sin,nrt,syd"
+
+  _run \
+    "Show machines location" \
+    "flyctl machines list"
+}
+
+close-to-jerod() {
+  _run \
+    "Run close to Jerod" \
+    "flyctl scale count 1 --max-per-region 1 --region ord"
+
+  _run \
+    "Scale down all other locations" \
+    "flyctl scale count 0 --region sjc,dfw,iad,yyz,scl,gru,lhr,cdg,fra,ams,jnb,bom,sin,nrt,syd"
+
+  _run \
+    "Show machines location" \
+    "flyctl machines list"
+}
+
+close-to-adam() {
+  _run \
+    "Run close to Adam" \
+    "flyctl scale count 1 --max-per-region 1 --region dfw"
+
+  _run \
+    "Scale down all other locations" \
+    "flyctl scale count 0 --region sjc,ord,iad,yyz,scl,gru,lhr,cdg,fra,ams,jnb,bom,sin,nrt,syd"
+
+  _run \
+    "Show machines location" \
+    "flyctl machines list"
+}
+
+http-detailed() {
+  local url="${1:-https://pipedream.changelog.com/}"
+  shift # remove first argument
+  local command="httpstat $url $*"
+
+  if ! which httpstat >/dev/null
+  then
+    brew install httpstat
+  fi
+
+  $command
+  _play "$command"
+}
+
+http-measure() {
+  local url="${1:-https://pipedream.changelog.com/}"
+  shift # remove first argument
+  local command="oha -c 1 -n 30 -q 1 $* $url"
+
+  if ! which oha >/dev/null
+  then
+    brew install oha
+  fi
+
+  $command
+  _play "$command"
+}
+
+http-profile() {
+  local url="${1:-https://pipedream.changelog.com/}"
+  shift # remove first argument
+
+  while sleep 1
+  do
+    # https://blog.cloudflare.com/a-question-of-timing
+    curl -sL -o /dev/null \
+      --write-out "%{url} http:%{http_version} status:%{http_code} ${WHITEB}ip:%{remote_ip}${RESET} ${CYANB}dns:%{time_namelookup}s${RESET} ${YELLOWB}tcp:%{time_connect}s${RESET} ${MAGENTAB}tls:%{time_appconnect}s${RESET} ${GREENB}wait:%{time_starttransfer}s${RESET} ${BLUEB}total:%{time_total}s${RESET}\n" \
+    "$url"
+  done
+}
+
+how-many-lines() {
+  _run_interactive \
+    "${GREENB}How many lines of Varnish config?${RESET} 🧐" \
+    ":"
+
+  clear
+
+  _run_interactive \
+    "Total lines of Varnish config" \
+    "bat default.vcl && wc -l default.vcl"
+
+  clear
+
+  _run_interactive \
+    "${GREENB}How many lines of Varnish config without comments!${RESET} 🧐" \
+    ":"
+
+  clear
+
+  _run_interactive \
+    "Total lines of Varnish config without comments or empty lines" \
+    "rg -v '^.*#|^\$' default.vcl | bat && rg -vc '^.*#|^\$' default.vcl"
+}
+
+demo-2024-01-26() {
+  _run_interactive \
+    "1/7. EXPLORE Varnish container image" \
+    "docker history --no-trunc --format=json $(_varnish_version) | jq .CreatedBy | lvim -"
+
+  clear
+
+  _run_interactive \
+    "2/7. EXPLORE Varnish container image command" \
+    "true https://github.com/varnish/docker-varnish/blob/master/fresh/debian/scripts/docker-varnish-entrypoint"
+
+  clear
+
+  _run_interactive \
+    "3/7. BUILD LOCAL Varnish container image" \
+    "docker buildx build . --tag $IMAGE"
+
+  clear
+
+  _run_interactive \
+    "4/7. EXPLORE Varnish command-line options" \
+    "docker run --rm $IMAGE varnishd -? | lvim -"
+
+  clear
+
+  _run_interactive \
+    "5/7. EXPLORE Varnish parameters" \
+    "docker run --rm $IMAGE varnishd -x parameter | lvim -"
+
+  clear
+
+  _run_interactive \
+    "6/7. EXPERIMENT with Varnish locally" \
+    "docker run --name $APP --volume $PWD/default.vcl:/etc/varnish/default.vcl --rm -itp 9000:9000 $IMAGE"
+
+  clear
+
+  _run_interactive \
+    "7/7. Deploy to Fly.io" \
+    "flyctl auth docker && docker push $IMAGE && flyctl deploy --ha=false --image $IMAGE"
+}
+
+demo-2024-06-21() {
+  _run_interactive \
+    "${CYANB}1/7. WHAT COMMANDS ARE AVAILABLE?${RESET}" \
+    "main"
+
+  clear
+
+  _run_interactive \
+    "${CYANB}2/7. WHAT DOES THE https://pipedream.changelog.com RESPONSE LOOK LIKE?${RESET}" \
+    "http-detailed https://pipedream.changelog.com/"
+
+  clear
+
+  _run_interactive \
+    "${CYANB}3/7. MAKE IT WORLD SCALE™${RESET}" \
+    "world-scale"
+
+  clear
+
+  _run_interactive \
+    "${CYANB}4/7. WHAT DOES THE https://pipedream.changelog.com RESPONSE LOOK LIKE NOW?${RESET}" \
+    "http-detailed https://pipedream.changelog.com/"
+
+  clear
+
+  _run_interactive \
+    "${CYANB}5/7. LET'S MEASURE THE https://pipedream.changelog.com RESPONSE LATENCY${RESET}" \
+    "http-measure https://pipedream.changelog.com/"
+
+  clear
+
+  _run_interactive \
+    "${CYANB}6/7. HOW DOES https://changelog.com COMPARE?${RESET}" \
+    "http-measure https://changelog.com/"
+
+  clear
+
+  _run \
+    "${CYANB}7/7. HOW MANY LINES?${RESET}" \
+    "how-many-lines"
+}
+
+
+
+## PRIVATE FUNCTIONS
+#
+
+_run() {
+  local name="${1:?first argument must be command description}"
+  local command="${2:?second argument must be command to run}"
+
+  printf "\n${MAGENTAB}$name${RESET}\n${BOLD}$command${RESET}\n\n"
+
+  eval "$command"
+}
+
+_run_interactive() {
+  _run "$1" "$2"
+  _next
+}
+
+_play() {
+  local command="${1:?first argument must be command to run}"
+
+  printf "\n${CYANB}PLAY WITH IT${RESET} %s\n" "$command"
+}
+
+_next() {
+  echo
+  read -rp "${WHITEB}PRESS ANY KEY TO CONTINUE${RESET} " -n 1
+}
+
+_varnish_version() {
+  rg FROM Dockerfile \
+  | awk '{ print $2 }'
+}
+
+main "$@"

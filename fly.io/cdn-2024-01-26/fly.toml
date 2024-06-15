@@ -12,7 +12,7 @@ VARNISH_SIZE="500M"
 
 [[vm]]
 size = "shared-cpu-1x"
-memory = "512MB"
+memory = "256MB"
 
 [deploy]
 strategy = "bluegreen"
@@ -22,12 +22,12 @@ internal_port = 9000
 protocol = "tcp"
 
 [[services.http_checks]]
-grace_period = "30s"
-interval = "10s"
+grace_period = "5s"
+interval = "5s"
 method = "get"
-path = "/health"
+path = "/varnish_status"
 protocol = "http"
-timeout = "9s"
+timeout = "4s"
 
 [[services.ports]]
 handlers = ["tls", "http"]
@@ -36,7 +36,6 @@ port = 443
 [[services.ports]]
 handlers = ["http"]
 port = "80"
-force_https = true
 
 [services.concurrency]
 hard_limit = 2500
