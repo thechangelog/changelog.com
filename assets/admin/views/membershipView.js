@@ -1,3 +1,4 @@
+import BelongsToWidget from "components/belongsToWidget";
 import FilterWidget from "components/filterWidget";
 
 export default class MembershipView {
