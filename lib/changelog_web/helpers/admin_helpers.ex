@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Helpers.AdminHelpers do
     assigns = %{up: up, down: down, sdiff: sdiff, color: color}
 
     ~H"""
-    <div class={"ui small basic #{color} label"} data-popup="true" title={"up #{@up} (down #{@down})"}><%= @sdiff %></div>
+    <div class={"ui small basic #{@color} label"} data-popup="true" title={"up #{@up} (down #{@down})"}><%= @sdiff %></div>
     """
   end
 
