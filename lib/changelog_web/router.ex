@@ -151,6 +151,12 @@ defmodule ChangelogWeb.Router do
     post "/event", SlackController, :event
   end
 
+  scope "/stripe", ChangelogWeb do
+    pipe_through [:api]
+
+    post "/event", StripeController, :event
+  end
+
   scope "/", ChangelogWeb do
     pipe_through [:feed]
 

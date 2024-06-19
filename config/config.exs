@@ -99,7 +99,9 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: SecretOrEnv.get("GITHUB_CLIENT_ID"),
   client_secret: SecretOrEnv.get("GITHUB_CLIENT_SECRET")
 
-config :stripity_stripe, api_key: SecretOrEnv.get("STRIPE_SECRET")
+config :stripity_stripe,
+  api_key: SecretOrEnv.get("STRIPE_SECRET"),
+  signing_secret: SecretOrEnv.get("STRIPE_WEBHOOK_SECRET")
 
 config :opentelemetry,
   resource: [

@@ -68,6 +68,9 @@ defmodule ChangelogWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
+  # This must come before Plug.Parsers so raw body hasn't been dropped yet
+  plug ChangelogWeb.Plug.StripeWebhooks
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
