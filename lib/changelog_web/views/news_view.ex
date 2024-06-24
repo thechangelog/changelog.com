@@ -1,5 +1,5 @@
 defmodule ChangelogWeb.NewsView do
-  import ChangelogWeb.Helpers.SharedHelpers, only: [word_count: 1, md_to_text: 1, truncate: 2]
+  import ChangelogWeb.Helpers.SharedHelpers, only: [word_count: 1, md_to_text: 1]
 
   alias Changelog.Regexp
 
@@ -13,7 +13,6 @@ defmodule ChangelogWeb.NewsView do
     |> Enum.filter(&String.match?(&1, Regexp.top_story()))
     |> Enum.map(&md_to_text(&1))
     |> Enum.reject(fn s -> String.contains?(s, first) end)
-    |> Enum.map(&truncate(&1, 40))
   end
 
   def title(%{email_subject: subject, title: title}) do

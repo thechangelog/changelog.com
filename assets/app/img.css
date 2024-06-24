@@ -197,9 +197,9 @@ body {
     var(--color-dark) 40%,
     var(--primary) 100%
   );
-  height: 630px;
   margin: 0 auto 1rem;
   width: 1200px;
+  height: 630px;
 }
 
 .inner {
@@ -279,10 +279,10 @@ Changelog News
 
 .news-container {
   background: var(--color-dark);
-  height: 630px;
   margin: 0 auto 1rem;
   position: relative;
   width: 1200px;
+  height: 630px;
 }
 
 .news-fade {
@@ -321,6 +321,7 @@ Changelog News
 }
 
 .news-articles li {
-  display: flex;
-  gap: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
