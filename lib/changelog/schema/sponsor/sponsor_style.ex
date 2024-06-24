@@ -128,52 +128,39 @@ defmodule Changelog.SponsorStyle do
   def sponsor_landing do
     [
       %{
-        type: "Endorsement",
-        name: "Linode, Zeus-like power",
+        type: "Insider",
+        name: "Sentry, User Feedback",
         audio:
-          "https://cdn.changelog.com/podcast-ad-examples/linode-zeus-like-power.mp3",
-        duration: 38
+          "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--jasmin--preroll--user-feedback-is-here--v1-1.mp3",
+        duration: 21
       },
       %{
-        type: "Endorsement",
-        name: "Linode, Dedicated CPUs",
+        type: "Insider",
+        name: "Neon, Building the Future.",
         audio:
-          "https://cdn.changelog.com/podcast-ad-examples/linode-dedicated-cpu.mp3",
-        duration: 52
+          "https://cdn.changelog.com/podcast-ad-examples/2024/neon-2024--nikita--building-the-future--midroll--v1-1.mp3",
+        duration: 121
       },
       %{
-        type: "Endorsement",
-        name: "Digital Ocean, Product Lineup",
+        type: "Insider",
+        name: "Neon, Serverless with Instant Branching",
         audio:
-          "https://cdn.changelog.com/podcast-ad-examples/digitalocean-product-lineup.mp3",
-        duration: 43
+          "https://cdn.changelog.com/podcast-ad-examples/2024/neon-2024--nikita--serverless-branching--midroll--v2-1.mp3",
+        duration: 324
       },
       %{
-        type: "Customer story",
-        name: "Rollbar, CircleCI - Paul Biggar",
+        type: "Customer Story",
+        name: "RetoolDB Uses Neon Fleets",
         audio:
-          "https://cdn.changelog.com/podcast-ad-examples/rollbar-circleci-1.mp3",
-        duration: 63
+          "https://cdn.changelog.com/podcast-ad-examples/2024/neon-2024--tamar--without-neon--v1-1.mp3",
+        duration: 352
       },
       %{
-        type: "Team Culture / Hiring",
-        name: "Indeed, Darren Nix",
+        type: "Insider",
+        name: "Sentry, 100,000 Teams Use Sentry",
         audio:
-          "https://cdn.changelog.com/podcast-ad-examples/indeed-darren-001.mp3",
-        duration: 141
-      },
-      %{
-        type: "Endorsement",
-        name: "Rollbar, Move fast and fix things",
-        audio:
-          "https://cdn.changelog.com/podcast-ad-examples/rollbar-move-fast-and-fix-things.mp3",
-        duration: 33
-      },
-      %{
-        type: "Partner Pre-roll",
-        name: "Fastly, Network-wide pre-roll",
-        audio: "https://cdn.changelog.com/partner-stories/fastly-preroll.mp3",
-        duration: 06
+          "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--salma--preroll--100000-teams-use-sentry--v1-1.mp3",
+        duration: 194
       }
     ]
   end
