@@ -21,6 +21,10 @@ defmodule ChangelogWeb.SponsorController do
     render(conn, :pricing)
   end
 
+  def styles(conn, _params) do
+    render(conn, :styles)
+  end
+
   def story(conn, %{"slug" => slug}) do
     story = Changelog.SponsorStory.get_by_slug(slug)
     render(conn, :story, story: story)
