@@ -87,7 +87,7 @@ defmodule Changelog.ObanWorkers.MembershipSyncer do
     email |> Person.with_email() |> Repo.one()
   end
 
-  defp insert_person(%{email: email, name: name}) do
+  defp insert_person(%{email: email, name: name, created: created_at}) do
     person =
       if name do
         %Person{name: name, handle: Faker.handle(name)}
@@ -95,7 +95,13 @@ defmodule Changelog.ObanWorkers.MembershipSyncer do
         Person.with_fake_data()
       end
 
-    changeset = Person.insert_changeset(person, %{email: email, public_profile: false})
+    attrs = %{
+      email: email,
+      public_profile: false,
+      joined_at: DateTime.from_unix!(created_at)
+    }
+
+    changeset = Person.insert_changeset(person, attrs)
 
     case Repo.insert(changeset) do
       {:ok, person} ->
