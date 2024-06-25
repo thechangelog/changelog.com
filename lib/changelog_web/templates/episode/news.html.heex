@@ -1,6 +1,8 @@
 <article class="issue_list-item issue_list-item--sticky">
   <%= render(SharedView, "_news_issue_meta.html", issue: @episode) %>
-  <a class="play_button" title="Play Audio" href={audio_url(@episode)} onclick="news.togglePlayPause(); return false;" data-title={@episode.title}></a>
+  <a class="play_button" title="Play Audio" href={audio_url(@episode)} onclick="news.togglePlayPause(); return false;" data-title={@episode.title}>
+    <span class="mono-sm">PLAY</span>
+  </a>
   <div class="progress_bar" style="--progress: 0%;"></div>
 </article>
 

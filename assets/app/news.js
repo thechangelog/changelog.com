@@ -84,7 +84,8 @@ export default class News {
   }
 
   togglePlayPause() {
-    const issue = event.target.parentNode;
+    const button = event.target;
+    const issue = button.parentNode;
 
     if (!issue.audio) {
       issue.audio = new Audio();
@@ -117,9 +118,11 @@ export default class News {
       issue.audio.pause();
       issue.classList.add("is-paused");
       issue.classList.remove("is-playing");
+      button.children[0].innerText = "PLAY";
     } else {
       issue.classList.remove("is-paused");
       issue.classList.add("is-playing");
+      button.children[0].innerText = "PAUSE";
       issue.audio.play();
     }
   }
