@@ -132,7 +132,7 @@ defmodule Changelog.SponsorStyle do
         name: "Sentry, User Feedback",
         audio:
           "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--jasmin--preroll--user-feedback-is-here--v1-1.mp3",
-        duration: 21
+        duration: 219
       },
       %{
         type: "Insider",
@@ -150,7 +150,7 @@ defmodule Changelog.SponsorStyle do
       },
       %{
         type: "Customer Story",
-        name: "RetoolDB Uses Neon Fleets",
+        name: "Neon, Retool Database Uses Neon Fleets",
         audio:
           "https://cdn.changelog.com/podcast-ad-examples/2024/neon-2024--tamar--without-neon--v1-1.mp3",
         duration: 352
@@ -161,6 +161,27 @@ defmodule Changelog.SponsorStyle do
         audio:
           "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--salma--preroll--100000-teams-use-sentry--v1-1.mp3",
         duration: 194
+      },
+      %{
+        type: "Endorsement",
+        name: "Plumb, Low-code AI Pipeline Builder",
+        audio:
+          "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--salma--preroll--100000-teams-use-sentry--v1-1.mp3",
+        duration: 85
+      },
+      %{
+        type: "Insider",
+        name: "Sentry, Scaling Teams with Sentry",
+        audio:
+          "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--salma--midroll--scaling-teams-with-sentry--v1-1.mp3",
+        duration: 219
+      },
+      %{
+        type: "Insider",
+        name: "Sentry, Getting to Root Cause",
+        audio:
+          "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--salma--midroll--getting-to-root-cause-with-sentry--v1-2.mp3",
+        duration: 209
       }
     ]
   end
