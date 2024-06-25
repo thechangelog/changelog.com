@@ -47,6 +47,8 @@ defmodule ChangelogWeb.NewsItemController do
     try do
       podcast = Podcast.get_by_slug!("news")
 
+      sub_count = Subscription.subscribed_count(podcast)
+
       episode =
         assoc(podcast, :episodes)
         |> Episode.published()
@@ -62,6 +64,7 @@ defmodule ChangelogWeb.NewsItemController do
         |> Repo.one()
 
       conn
+      |> assign(:sub_count, sub_count)
       |> assign(:podcast, podcast)
       |> assign(:episode, episode)
       |> assign(:previous, previous)

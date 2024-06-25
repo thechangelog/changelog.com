@@ -77,11 +77,12 @@
               <button class="reasons-close" title="Close" onclick="news.toggleReasons();"></button>
               <h2 class="display-xl m-b-lg m-r-lg">29 reasons to subscribe to&nbsp;Changelog News</h2>
               <ol class="reasons-list">
+                <li>You'll join <%= SharedHelpers.comma_separated(@sub_count) %> others who subscribe.</li>
                 <li>We feature the best community <%= link("submissions", to: ~p"/news/submit") %>.</li>
                 <li>We like sending email, but nothing spammy.</li>
                 <li>You like receiving email, but nothing spammy.</li>
                 <li>We do NOT redirect or track your link clicks.</li>
-                <li>Hover on a link to preview where it's headed.</li>
+                <li>Hover on a link to <a href="https://cdn.changelog.com/news/changelog-news-direct-links.mov" target="_blank">preview</a> where it's headed.</li>
                 <li>We try to keep puns & bad jokes to a minimum.</li>
                 <li>But every once in awhile, one slips through...</li>
                 <li>Dev has problem. Uses Java. Now ProblemFactory.</li>
@@ -90,21 +91,20 @@
                 <li>It costs the same amount as a free cup of coffee.</li>
                 <li>We order our lists using the pyramid(ical) scheme.</li>
                 <li>Sometimes we take meme breaks, which are on point.</li>
-                <li>Like the one from <%= link("issue #66", to: ~p"/news/66") %> - if you commit to it.</li>
+                <li>Like the one from <%= link("issue #66", to: ~p"/news/66") %> (if you commit to it).</li>
                 <li>We've been in the software game for over 20 years.</li>
                 <li>You might actually start looking forward to Mondays.</li>
                 <li>We hand-pick our partners so even the ads are useful!</li>
                 <li>You can reply! We read every message & respond to many.</li>
                 <li>Specialization is for ants! This is a polyglot operation.</li>
-                <li>You get to enjoy the freshest Breakmaster Cylinder <%= link("Beats", to: ~p"/beats") %></li>
+                <li>You get to enjoy the freshest Breakmaster Cylinder <%= link("Beats", to: ~p"/beats") %>.</li>
                 <li>Who else takes the time to list 29 reasons to subscribe?!</li>
                 <li>We've been known to <code>ORDER BY LENGTH(title) ASC</code>. <%= link("Seriously", to: ~p"/news/86") %>.</li>
-                <li>Each episode has chapters so that you can explore it easier.</li>
+                <li>Each episode has chapters that link to the stories featured.</li>
                 <li>Emoji are lovingly sprinkled on. Not too much! Just a pinch 🤌</li>
                 <li>Who doesn't want to improve constantly? Consistency always wins!</li>
-                <li>You'll be one of 21k+ subscribers that learns new stuff every Monday.</li>
-                <li>Your colleagues will be <em>so impressed</em> by how much new stuff you know first!</li>
-                <li>We have been playing this game <%= link("for a long time", to: ~p"/ten") %> & <%= link("are constantly improving", to: ~p"/topic/kaizen") %>.</li>
+                <li>We do not rest on our laurels & are committed to <%= link("constant improvement", to: ~p"/topic/kaizen") %>.</li>
+                <li>Your colleagues will be <em>so impressed</em> by how on top of the game you are!</li>
                 <li>We keep our word. This is the 29th (!) reason to subscribe to Changelog News.</li>
               </ol>
 

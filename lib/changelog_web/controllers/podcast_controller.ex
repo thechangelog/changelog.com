@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.PodcastController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Episode, Podcast, Post}
+  alias Changelog.{Episode, Podcast, Post, Subscription}
 
   def index(conn, _params) do
     render(conn, :index)
@@ -31,7 +31,10 @@ defmodule ChangelogWeb.PodcastController do
       |> Episode.preload_podcast()
       |> Repo.all()
 
+    sub_count = Subscription.subscribed_count(podcast)
+
     conn
+    |> assign(:sub_count, sub_count)
     |> assign(:podcast, podcast)
     |> assign(:episode, latest)
     |> assign(:previous, previous)
