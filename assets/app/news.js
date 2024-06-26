@@ -6,6 +6,10 @@ export default class News {
     this.container = document.getElementById("newsletter_iframe-container");
     this.testimonialsPlayed = 0;
 
+    document.querySelectorAll(".js-play-pause").forEach((el) => {
+      el.addEventListener("click", this.togglePlayPause);
+    });
+
     window.onload = () => {
       this.goToTestimonial(Math.floor(Math.random() * 4));
     };
@@ -83,7 +87,9 @@ export default class News {
     paginationButtons[index].parentNode.classList.add("is-active");
   }
 
-  togglePlayPause() {
+  togglePlayPause(event) {
+    event.preventDefault();
+
     const button = event.target;
     const issue = button.parentNode;
 
