@@ -85,6 +85,7 @@ h4,
 h5 {
   font-weight: normal;
   text-wrap: balance;
+  word-break: break-word;
 }
 
 /* Display */
@@ -209,7 +210,7 @@ body {
   margin: 0 auto;
   overflow: hidden;
   padding: 3.5rem 0;
-  width: 800px;
+  width: 900px;
   height: 100%;
 }
 
@@ -301,7 +302,7 @@ Changelog News
   margin: 0 auto;
   overflow: hidden;
   padding: 3.5rem 0;
-  width: 800px;
+  width: 850px;
   height: 100%;
 }
 
