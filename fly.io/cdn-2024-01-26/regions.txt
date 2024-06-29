@@ -1,0 +1,36 @@
+NAME                        	CODE	GATEWAY	LAUNCH PLAN + ONLY	GPUS 
+Amsterdam, Netherlands      	ams 	✓      	                  	✓   	
+Ashburn, Virginia (US)      	iad 	✓      	                  	✓   	
+Atlanta, Georgia (US)       	atl 	       	                  	    	
+Bogotá, Colombia            	bog 	       	                  	    	
+Boston, Massachusetts (US)  	bos 	       	                  	    	
+Bucharest, Romania          	otp 	       	                  	    	
+Chicago, Illinois (US)      	ord 	✓      	                  	    	
+Dallas, Texas (US)          	dfw 	✓      	                  	    	
+Denver, Colorado (US)       	den 	       	                  	    	
+Ezeiza, Argentina           	eze 	       	                  	    	
+Frankfurt, Germany          	fra 	✓      	✓                 	    	
+Guadalajara, Mexico         	gdl 	       	                  	    	
+Hong Kong, Hong Kong        	hkg 	✓      	                  	    	
+Johannesburg, South Africa  	jnb 	       	                  	    	
+London, United Kingdom      	lhr 	✓      	                  	    	
+Los Angeles, California (US)	lax 	✓      	                  	    	
+Madrid, Spain               	mad 	       	                  	    	
+Miami, Florida (US)         	mia 	       	                  	    	
+Montreal, Canada            	yul 	       	                  	    	
+Mumbai, India               	bom 	       	✓                 	    	
+Paris, France               	cdg 	✓      	                  	    	
+Phoenix, Arizona (US)       	phx 	       	                  	    	
+Querétaro, Mexico           	qro 	✓      	                  	    	
+Rio de Janeiro, Brazil      	gig 	       	                  	    	
+San Jose, California (US)   	sjc 	✓      	                  	✓   	
+Santiago, Chile             	scl 	✓      	                  	    	
+Sao Paulo, Brazil           	gru 	       	                  	    	
+Seattle, Washington (US)    	sea 	✓      	                  	    	
+Secaucus, NJ (US)           	ewr 	✓      	                  	    	
+Singapore, Singapore        	sin 	✓      	                  	    	
+Stockholm, Sweden           	arn 	       	                  	    	
+Sydney, Australia           	syd 	✓      	                  	✓   	
+Tokyo, Japan                	nrt 	✓      	                  	    	
+Toronto, Canada             	yyz 	✓      	                  	    	
+Warsaw, Poland              	waw 	       	                  	    	
