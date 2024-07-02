@@ -1,0 +1,9 @@
+<%= for issue <- @issues do %>
+  <article class="issue_list-item js-issue">
+    <%= render(SharedView, "_news_issue_meta.html", issue: issue) %>
+    <a class="play_button js-play-pause" title="Play Audio" href={EpisodeView.audio_url(issue)} data-title={issue.title}>
+      <span class="mono-sm">PLAY</span>
+    </a>
+    <div class="progress_bar" style="--progress: 0%;"></div>
+  </article>
+<% end %>

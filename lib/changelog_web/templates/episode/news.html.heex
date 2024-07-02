@@ -14,8 +14,7 @@
 <div class="issue_list-pagination">
   <article class="issue_list-item issue_list-item--view_all">
     <div>
-      <p class="mono-sm">🚧 Coming Soon 🚧</p>
-      <h2 class="display-lg"><a href="javascript:void(0);" onclick="alert('Coming Soon!');">View the archive</a></h2>
+      <h2 class="display-lg"><%= link("View the archive", to: ~p"/news/archive") %></h2>
     </div>
   </article>
 <%= if @previous do %>

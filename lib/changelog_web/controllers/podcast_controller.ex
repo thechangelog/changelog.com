@@ -7,6 +7,31 @@ defmodule ChangelogWeb.PodcastController do
     render(conn, :index)
   end
 
+  def archive(conn, %{"slug" => "news"}) do
+    podcast = get_podcast_by_slug("news")
+
+    issues =
+      podcast
+      |> Podcast.get_episodes()
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.preload_podcast()
+      |> Repo.all()
+
+    sub_count = Subscription.subscribed_count(podcast)
+
+    conn
+    |> assign(:sub_count, sub_count)
+    |> assign(:podcast, podcast)
+    |> assign(:issues, issues)
+    |> render(:archive, layout: {ChangelogWeb.LayoutView, "news.html"})
+  end
+
+  # Changelog News is the only podcast with an archive
+  def archive(conn, %{"slug" => slug}) do
+    redirect(conn, to: ~p"/#{slug}")
+  end
+
   # front the "actual" show function with this one that tries to fetch a
   # podcast, then falls back to find a (legacy) post and redirect appropriately
   def show(conn, params = %{"slug" => slug}) do

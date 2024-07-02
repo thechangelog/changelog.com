@@ -273,7 +273,7 @@ defmodule ChangelogWeb.Router do
 
     get "/podcasts", PodcastController, :index, as: :podcast
 
-    for subpage <- ~w(popular recommended)a do
+    for subpage <- ~w(popular recommended archive)a do
       get "/:slug/#{subpage}", PodcastController, subpage, as: :podcast
     end
 

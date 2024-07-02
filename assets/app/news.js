@@ -7,17 +7,19 @@ export default class News {
     this.testimonialsPlayed = 0;
 
     document.querySelectorAll(".js-play-pause").forEach((el) => {
-      el.addEventListener("click", this.togglePlayPause);
+      el.addEventListener("click", this.togglePlayPause.bind(this));
     });
 
     window.onload = () => {
       this.goToTestimonial(Math.floor(Math.random() * 4));
     };
 
-    this.iframe.onload = () => {
-      this.resizeFrameToFit();
-      this.makeFrameLinksOpenInNewTab();
-    };
+    if (this.iframe) {
+      this.iframe.onload = () => {
+        this.resizeFrameToFit();
+        this.makeFrameLinksOpenInNewTab();
+      };
+    }
 
     window.onresize = () => {
       this.resizeFrameToFit();
@@ -90,16 +92,15 @@ export default class News {
   togglePlayPause(event) {
     event.preventDefault();
 
-    const button = event.target;
-    const issue = button.parentNode;
+    const issue = event.target.parentNode;
 
     if (!issue.audio) {
+      issue.button = event.target;
       issue.audio = new Audio();
-      issue.audio.type = "audio/mpeg";
       issue.audio.src = event.target.href;
+      issue.audio.type = "audio/mpeg";
       issue.title = event.target.getAttribute("data-title");
       issue.progress = 0;
-
       issue.audio.addEventListener("canplaythrough", function () {
         issue.audio.play();
         Log.track("News Player", { action: "Play", audio: issue.title });
@@ -121,16 +122,33 @@ export default class News {
     }
 
     if (issue.classList.contains("is-playing")) {
+      this.pauseIssue(issue);
+    } else {
+      this.playIssue(issue);
+    }
+  }
+
+  pauseIssue(issue) {
+    if (issue.audio) {
       issue.audio.pause();
       issue.classList.add("is-paused");
       issue.classList.remove("is-playing");
-      button.children[0].innerText = "PLAY";
-    } else {
-      issue.classList.remove("is-paused");
-      issue.classList.add("is-playing");
-      button.children[0].innerText = "PAUSE";
-      issue.audio.play();
+      issue.button.children[0].innerText = "PLAY";
     }
+  }
+
+  playIssue(issue) {
+    // pause all other issues that might be playing
+    document.querySelectorAll(".js-issue").forEach((el) => {
+      if (el !== issue) {
+        this.pauseIssue(el);
+      }
+    });
+
+    issue.audio.play();
+    issue.classList.remove("is-paused");
+    issue.classList.add("is-playing");
+    issue.button.children[0].innerText = "PAUSE";
   }
 
   toggleReasons() {
