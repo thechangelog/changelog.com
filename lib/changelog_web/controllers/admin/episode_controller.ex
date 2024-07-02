@@ -14,7 +14,8 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     ListKit,
     NewsItem,
     NewsQueue,
-    Podcast
+    Podcast,
+    Snap
   }
 
   alias Changelog.ObanWorkers.{AudioUpdater, FeedUpdater}
@@ -249,6 +250,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         EpisodeNewsItem.update(episode)
         handle_feed_updates(episode)
         Cache.delete(episode)
+        Snap.purge(episode)
 
         unless any_files_uploaded?(changeset) do
           AudioUpdater.queue(episode)

@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.Meta.Image do
   use ChangelogWeb, :verified_routes
 
+  alias Changelog.Snap
+
   alias ChangelogWeb.{
     AlbumView,
     Endpoint,
@@ -85,8 +87,7 @@ defmodule ChangelogWeb.Meta.Image do
   defp podcast_image(podcast), do: static_image(~w[images share twitter-#{podcast.slug}.png])
   defp podcasts_image, do: static_image(~w[images share all-podcasts.png])
 
-  defp episode_image(podcast, episode),
-    do: "https://snap.fly.dev" <> ~p"/#{podcast.slug}/#{episode.slug}/img"
+  defp episode_image(podcast, episode), do: Snap.img_url(podcast, episode)
 
   defp post_image(post), do: PostView.image_url(post, :large)
   defp source_image(source), do: NewsSourceView.icon_url(source, :large)

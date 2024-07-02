@@ -31,6 +31,7 @@ config :changelog,
   turnstile_secret_key: SecretOrEnv.get("TURNSTILE_SECRET_KEY"),
   slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
   slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
+  snap_token: SecretOrEnv.get("SNAP_TOKEN"),
   typesense_url: SecretOrEnv.get("TYPESENSE_URL"),
   typesense_api_key: SecretOrEnv.get("TYPESENSE_API_KEY"),
   # 60 = one minute, 3600 = one hour, 86,400 = one day, 604,800 = one week, 31,536,000 = one year

@@ -15,6 +15,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
       {Github.Puller, [], [update: fn _, _ -> true end]},
       {Changelog.Merch, [], [create_discount: fn _, _ -> {:ok, %{code: "yup"}} end]},
       {ObanWorkers.AudioUpdater, [], [queue: fn _ -> :ok end]},
+      {Changelog.Snap, [], [purge: fn _ -> :ok end]},
       {Craisin.Client, [], [stats: fn _ -> %{"Delivered" => 0, "Opened" => 0} end]}
     ],
     assigns
@@ -78,7 +79,9 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     count_before = count(Episode)
 
     conn =
-      post(conn, Routes.admin_podcast_episode_path(conn, :create, p.slug), episode: @invalid_attrs)
+      post(conn, Routes.admin_podcast_episode_path(conn, :create, p.slug),
+        episode: @invalid_attrs
+      )
 
     assert html_response(conn, 200) =~ ~r/error/
     assert count(Episode) == count_before
@@ -105,6 +108,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     refute called(Github.Pusher.push(:_, :_))
     assert called(ObanWorkers.AudioUpdater.queue(:_))
+    assert called(Changelog.Snap.purge(:_))
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode) == 1
   end
