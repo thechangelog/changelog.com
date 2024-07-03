@@ -14,11 +14,13 @@
     <a id="podcast" class="anchor"></a>
     <h2>The Changelog</h2>
 
-    <p>The Changelog is our flagship podcast hosted by Adam Stacoviak (Editor-in-Chief) and Jerod Santo (Managing Editor). Every week we feature conversations with the leaders, visionaries, and disruptors who are actively shaping the future landscape of software development and the tech industry. The majority of our listenership is in the United States (40-50%) with the rest of our listenership throughout the world &mdash; Australia, South America, Europe, India, Mainland China, Japan, and South Africa (and more).</p> 
+    <p>The Changelog is our flagship podcast hosted by Adam Stacoviak (Editor-in-Chief) and Jerod Santo (Managing Editor). Every week we feature conversations with the leaders, visionaries, and disruptors who are actively shaping the future landscape of software development and the tech industry.</p> 
 
     <p><strong>What's the reach?</strong> We ship two (2) episodes every week that reach 40,000 to 80,000 developers weekly.</p>
 
     <p><strong>Who will you reach?</strong> Software developers and engineers, engineering leadership and decision-makers who drive the technology stack and direction of their organization, open source maintainers/leaders and contributors, technology enthusiasts and learners who are Junior in their role or just getting started.</p>
+
+    <p><strong>Where in the world are our listeners?</strong> The majority of our listenership is in the United States (40-50%) with the rest of our listenership throughout the world &mdash; Australia, South America, Europe, India, Mainland China, Japan, and South Africa (and more).</p>
 
     <p><strong>Who is this perfect for?</strong> The Changelog reaches a wide demographic of developers on a global scale. This podcast will help you reach a large and wide developer audience.</p>
 
@@ -106,7 +108,7 @@
     <a id="shipit" class="anchor"></a>
     <h2>Ship It</h2>
 
-    <p>Ship It features deep discussions with experts exploring everything that happens after <code>git push</code>. We explore topics like cloud/infra/tech choices, deployment strategies, continuous integration, automated testing, observability and monitoring &mdash; providing listeners with a comprehensive understanding of the software development lifecycle beyond code submission. Hosted by <%= link "Justin Garrison", to: "/person/jgarr" %> and <%= link "Justin Garrison", to: "/person/autumn808" %>.</p>
+    <p>Ship It features deep discussions with experts exploring everything that happens after <code>git push</code>. We explore topics like cloud/infra/tech choices, deployment strategies, continuous integration, automated testing, observability and monitoring &mdash; providing listeners with a comprehensive understanding of the software development lifecycle beyond code submission. Hosted by <%= link "Justin Garrison", to: "/person/jgarr" %> and <%= link "Autumn Nash", to: "/person/autumn808" %>.</p>
 
     <p><strong>What's the reach?</strong> We ship one (1) episode weekly that reaches 8,000 to 12,000 developers weekly</p>
 
