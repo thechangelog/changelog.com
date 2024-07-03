@@ -182,6 +182,13 @@ defmodule Changelog.SponsorStyle do
         audio:
           "https://cdn.changelog.com/podcast-ad-examples/2024/sentry-2024--salma--midroll--getting-to-root-cause-with-sentry--v1-2.mp3",
         duration: 209
+      },
+      %{
+        type: "Insider",
+        name: "Socket, Explain Socket to Vercel",
+        audio:
+          "https://cdn.changelog.com/podcast-ad-examples/2024/socket-2024--feross-session-1--explain-it-to-vercel--allroll--v1-1.mp3",
+        duration: 221
       }
     ]
   end
