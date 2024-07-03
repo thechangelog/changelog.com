@@ -51,7 +51,7 @@
     <ul>
       <li>Changelog News is a podcast + newsletter that ships on Mondays</li>
       <li>Each week we feature one brand on the podcast and the newsletter</li>
-      <li>$1,500/wk with no minimums ($1,250/wk if you bundle with The Changelog)</li>
+      <li><mark>$1,500 per week (no minimums)</mark> ($1,250/wk if you bundle with The Changelog)</li>
       <li>Reaches an average 20,000 to 30,000 listens per episode</li>
       <li>The newsletter reaches 22,000+ subscribers with a 51.35% open rate</li>
       <li><%= link "Review previous episodes", to: "/news" %>
