@@ -16,17 +16,23 @@
 
     <p>The Changelog is our flagship podcast hosted by Adam Stacoviak (Editor-in-Chief) and Jerod Santo (Managing Editor). Every week we feature insightful conversations with the leaders, visionaries, and disruptors who are actively shaping the future landscape of the software industry.</p>
 
-    <p><strong>What's the reach?</strong> We ship two (2) episodes every week that reach 50,000 to 90,000 developers weekly.</p>
+    <p>The Changelog is our flagship podcast hosted by Adam Stacoviak (Editor-in-Chief) and Jerod Santo (Managing Editor). Every week we feature conversations with the leaders, visionaries, and disruptors who are actively shaping the future landscape of software development and the tech industry. The majority of our listenership is in the United States (40-50%) with the rest of our listenership throughout the world &mdash; Australia, South America, Europe, India, Mainland China, Japan, and South Africa (and more).</p> 
 
-    <p><strong>Who you'll reach:</strong> Software developers and engineers, engineering leadership and decision-makers who drive the technology stack and direction of their organization, open source maintainers/leaders and contributors, technology enthusiasts and learners who are Junior in their role or just getting started.</p>
+    <p><strong>What's the reach?</strong> We ship two (2) episodes every week that reach 40,000 to 80,000 developers weekly.</p>
+
+    <p><strong>Who will you reach?</strong> Software developers and engineers, engineering leadership and decision-makers who drive the technology stack and direction of their organization, open source maintainers/leaders and contributors, technology enthusiasts and learners who are Junior in their role or just getting started.</p>
+
+    <p><strong>Who is this perfect for?</strong> The Changelog reaches a wide demographic of developers on a global scale. This podcast will help you reach a large and wide developer audience.</p>
 
     <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-      <li><mark>$1,500 per episode</mark></li>
-      <li>Four (4) week minimum with an estimated reach between 100,000 to 180,000</li>
-      <li>Reaches an average 25-45k listens per episode</li>
+      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
+      <li><mark>$2,500 per week</mark> &mdash; two (2) episode per week</li>
+      <li>Four (4) week minimum with an estimated reach between 160,000 to 320,000</li>
+      <li>Reaches an average 20,000 to 35,000 listens per episode</li>
+      <li>Reaches an average 100,000 listens per month, podcast-wide</li>
       <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
       <li><%= link "Review previous episodes", to: "/podcast" %>
  for examples.</li>
     </ul>
@@ -36,38 +42,43 @@
 
     <p>Changelog News is our weekly guide to developer news worth your attention. It's hosted and written by our Managing Editor Jerod Santo. Every Monday we cover the developer news worth your attention. We keep it brief, entertaining & always on point. Developers tune-in to the podcast and read the newsletter to keep up.</p>
 
-    <p><strong>What's the reach?</strong> Changelog News reaches 25,000 to 45,000 per week on the pod, plus another 22,000 via the newsletter.</p>
+    <p><strong>What's the reach?</strong> Changelog News reaches 25,000 to 45,000 per week on the podcast, plus another 22,000 via the newsletter.</p>
 
-    <p><strong>Who you'll reach:</strong> Busy software developers and engineers who want a single subscription to keep them informed and up to date with what's happening in the software world. The podcast is often 8 mins (or less) in length which makes it a must listen. It's often listened to within 1-2 days of publishing. The newsletter is for those who prefer to read instead of listen. It contains extended details, links, and bonus sections not included in the podcast.</p>
+    <p><strong>Who will you reach?</strong> Busy software developers and engineers who want a single subscription to keep them informed and up to date with what's happening in the software world. The podcast is often 8 mins (or less) in length which makes it a must listen. It's often listened to within 1-2 days of publishing. The newsletter is for those who prefer to read instead of listen. It contains extended details, links, and bonus sections not included in the podcast.</p>
 
-    <p><strong>Perfect for:</strong> Launches and announcements, conferences and events, promoting developer tools and services, job opportunities, courses and training programs.</p>
+    <p><strong>Who is this perfect for?</strong> Launches and announcements, conferences and events, promoting new developer tools and services, new features, job opportunities, courses and training programs.</p>
 
     <ul>
       <li>Changelog News is a podcast + newsletter that ships on Mondays</li>
       <li>Each week we feature one brand on the podcast and the newsletter</li>
-      <li>$1,250 per week with no minimums ($1,000/wk if you bundle with The Changelog)</li>
-      <li>Reaches an average 25-45k listens per episode</li>
-      <li>The newsletter reaches 20k+ subscribers with a 51.35% open rate</li>
+      <li>$1,500/wk with no minimums ($1,250/wk if you bundle with The Changelog)</li>
+      <li>Reaches an average 20,000 to 30,000 listens per episode</li>
+      <li>The newsletter reaches 22,000+ subscribers with a 51.35% open rate</li>
       <li><%= link "Review previous episodes", to: "/news" %>
  for examples.</li>
     </ul>
 
     <hr>
 
-    <a id="founderstalk" class="anchor"></a>
-    <h2>Founders Talk</h2>
+    <a id="practicalai" class="anchor"></a>
+    <h2>Practical AI</h2>
 
-    <p>Founders Talk is hosted by our Editor-in-Chief Adam Stacoviak. This show features in-depth one-on-one conversations with tech founders and CEOs. They share their journey, discuss lessons learned, and the struggles they go through to build and run their product and business.</p>
+    <p>Practical AI takes you on a journey into the world of AI from the lens of expert AI practitioners implementing and deploying AI at scale. We're making artificial intelligence practical, productive, and accessible to developers. Hosted by <%= link "Daniel Whitenack", to: "/person/dwhitena" %> and <%= link "Chris Benson", to: "/person/chris" %></p>
+
+    <p><strong>What's the reach?</strong> We ship one (1) episode weekly that reaches 35,000 to 45,000 AI developers weekly.</p>
+
+    <p><strong>Who will you reach?</strong> AI practitioners and developers who are focused on implementing and deploying AI solutions at scale — AI Engineers, Machine Learning and Data Scientists, AI Researchers, NLP Engineers (Natural Language Processing) and more. When you sponsor this podcast you'll reach the developers from several diciplines looking to gain insights and knowledge to take AI to the next stage in their organization.</p>
 
     <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
       <li><mark>$1,200 per episode</mark></li>
-      <li>Two (2) week minimum &mdash; reach between 26,000 to 36,000 listens</li>
-      <li>Reaches an average 6,500 to 10,000 listens per episode</li>
+      <li>Four (4) week minimum with an estimated reach between 140,000 to 180,000</li>
+      <li>Reaches an average 35,000 to 45,000 listens per episode</li>
+      <li>Reaches an average 200,000 listens per month, podcast-wide</li>
       <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li><%= link "Review previous episodes", to: "/founderstalk" %>
- for examples.</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+      <li><%= link "Review previous episodes", to: "/practicalai" %>
     </ul>
 
     <hr>
@@ -79,15 +90,62 @@
 
     <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 15,000 to 20,000 web developers weekly.</p>
 
-    <p><strong>Who you'll reach:</strong> JavaScript developers, Front-end/Back-end/Full-stack developers, Framework and Library makeers and users, mobile app developers (using  React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
+    <p><strong>Who will you reach?</strong> JavaScript developers, Front-end/Back-end/Full-stack developers, Framework and Library makeers and users, mobile app developers (using  React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
     <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
       <li><mark>$1,200 per episode</mark></li>
-      <li>Two (2) week minimum &mdash; reach between 46,400 to 60,000 listens</li>
+      <li>Four (4) week minimum with an estimated reach between 60,000 to 80,000</li>
       <li>Reaches an average 8,000 to 15,000 listens per episode</li>
       <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+      <li><%= link "Review previous episodes", to: "/jsparty" %>
+    </ul>
+
+    <hr>
+
+    <a id="shipit" class="anchor"></a>
+    <h2>Ship It</h2>
+
+    <p>Ship It features deep discussions with experts exploring everything that happens after <code>git push</code>. We explore topics like cloud/infra/tech choices, deployment strategies, continuous integration, automated testing, observability and monitoring &mdash; providing listeners with a comprehensive understanding of the software development lifecycle beyond code submission. Hosted by <%= link "Justin Garrison", to: "/person/jgarr" %> and <%= link "Justin Garrison", to: "/person/autumn808" %>.</p>
+
+    <p><strong>What's the reach?</strong> We ship one (1) episode weekly that reaches 8,000 to 12,000 developers weekly</p>
+
+    <p><strong>Who will you reach?</strong> Operations and SRE type folks, CTOs and Director/VP of Engineering, software developers and engineers, engineering leadership and decision-makers who drive the infrastructure/tech stack and direction of their organization.</p>
+
+    <ul>
+      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
+      <li><mark>$800 per episode</mark></li>
+      <li>Four (4) week minimum with an estimated reach between 32,000 to 48,000</li>
+      <li>Reaches an average 8,000 to 12,000 listens per episode</li>
+      <li>Reaches an average 40,000 listens per month, podcast-wide</li>
+      <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+      <li><%= link "Review previous episodes", to: "/shipit" %>
+    </ul>
+
+    <hr>
+
+    <a id="founderstalk" class="anchor"></a>
+    <h2>Founders Talk</h2>
+
+    <p>Founders Talk is hosted by our Editor-in-Chief Adam Stacoviak. This show features in-depth one-on-one conversations with tech founders and CEOs. They share their journey, discuss lessons learned, and the struggles they go through to build and run their product and business.</p>
+
+    <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 6,500 to 10,000 developers weekly.</p>
+
+    <p><strong>Who will you reach?</strong> Entrepreneurs, startup founders, CEOs, and makers from various industries, including those who are interested in company growth strategies, product development, and overcoming challenges. The audience also includes individuals passionate about entrepreneurial journeys, leadership strategies, and the stories behind successful companies.</p>
+
+    <ul>
+      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
+      <li><mark>$1,200 per episode</mark></li>
+      <li>Four (4) week minimum with an estimated reach between 26,000 to 36,000</li>
+      <li>Reaches an average 6,500 to 10,000 listens per episode</li>
+      <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
+      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
+      <li><%= link "Review previous episodes", to: "/founderstalk" %>
+ for examples.</li>
     </ul>
 
     <hr>
@@ -95,36 +153,20 @@
     <a id="gotime" class="anchor"></a>
     <h2>Go Time</h2>
 
-    <p>Go Time is the #1 podcast for Go developers! Every week a rotating panel of Go experts are joined by special guests and members of the community to discuss distributed systems, cloud infrastructure, microservices, Kubernetes...oh, and also Go! We ship one (1) episode every week that reaches 15,000 to 22,000 Go developers (and Go-curious) weekly.</p>
+    <p>Go Time is the #1 podcast for Go developers! Every week a rotating panel of Go experts are joined by special guests and members of the community to discuss distributed systems, cloud infrastructure, microservices, Kubernetes...oh, and also Go!</p>
 
-    <p><strong>Who you'll reach:</strong> Go developers and devs who are "Go curious", distributed systems experts, cloud infrastructure professionals, microservices specialists, Kubernetes practitioners and decision-makers, SRE and DevOps engineers, engineering leadership (CTOs and tech leads), and open source contributors.</p>
+    <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 15,000 to 22,000 Go developers (and Go-curious) weekly.</p>
+
+    <p><strong>Who will you reach?</strong> Go developers and devs who are "Go curious", distributed systems experts, cloud infrastructure professionals, microservices specialists, Kubernetes practitioners and decision-makers, SRE and DevOps engineers, engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
     <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
+      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
       <li><mark>$1,200 per episode</mark></li>
-      <li>Two (2) week minimum &mdash; reach between 62,000 to 88,000 listens</li>
+      <li>Four (4) week minimum with an estimated reach between 62,000 to 88,000</li>
       <li>Reaches an average 15,000 to 22,000 listens per episode</li>
       <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
       <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-    </ul>
-
-    <hr>
-
-    <a id="practicalai" class="anchor"></a>
-    <h2>Practical AI</h2>
-
-    <p>Practical AI takes you on a journey into the world of AI from the lens of expert AI practitioners implementing and deploying AI at scale. We're making artificial intelligence practical, productive, and accessible to developers. We ship one (1) episode weekly that reaches 25,000 to 35,000 AI developers weekly.</p>
-
-    <p><strong>Who will you reach?</strong> AI practitioners and developers who are focused on implementing and deploying AI solutions at scale — AI Engineers, Machine Learning and Data Scientists, AI Researchers, NLP Engineers (Natural Language Processing) and more. When you sponsor this podcast you'll reach the developers from several diciplines looking to gain insights and knowledge to take AI to the next stage in their organization.</p>
-
-    <ul>
-      <li>Each episode includes one (1) pre-roll sponsorship and two (2) mid-roll sponsorships</li>
-      <li><mark>$1,200 per episode</mark></li>
-      <li>Four (4) week minimum with an estimated reach between 100,000 to 180,000</li>
-      <li>Reaches an average 25,000 to 35,000 listens per episode</li>
-      <li>Reaches an average 150,000 listens per month, podcast-wide</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
+      <li><%= link "Review previous episodes", to: "/gotime" %>
     </ul>
 
     <hr>
