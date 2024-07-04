@@ -51,7 +51,7 @@
     <ul>
       <li>Changelog News is a podcast + newsletter that ships on Mondays</li>
       <li>Each week we feature one brand on the podcast and the newsletter</li>
-      <li><mark>$1,500 per week (no minimums)</mark> ($1,250/wk if you bundle with The Changelog)</li>
+      <li><mark>$1,500 per week (no minimums)</mark> &mdash; $1,250/wk if you bundle with The Changelog</li>
       <li>Reaches an average 20,000 to 30,000 listens per episode</li>
       <li>The newsletter reaches 22,000+ subscribers with a 51.35% open rate</li>
       <li><%= link "Review previous episodes", to: "/news" %>
@@ -63,7 +63,7 @@
     <a id="practicalai" class="anchor"></a>
     <h2>Practical AI</h2>
 
-    <p>Practical AI takes you on a journey into the world of AI from the lens of expert AI practitioners implementing and deploying AI at scale. We're making artificial intelligence practical, productive, and accessible to developers. Hosted by <%= link "Daniel Whitenack", to: "/person/dwhitena" %> and <%= link "Chris Benson", to: "/person/chris" %></p>
+    <p>Practical AI takes you on a journey into the world of AI from the lens of expert AI practitioners implementing and deploying AI at scale. This podcast is focused on making artificial intelligence practical, productive, and accessible to every developer. Hosted by <%= link "Daniel Whitenack", to: "/person/dwhitena" %> and <%= link "Chris Benson", to: "/person/chris" %></p>
 
     <p><strong>What's the reach?</strong> We ship one (1) episode weekly that reaches 35,000 to 45,000 AI developers weekly.</p>
 
@@ -90,7 +90,7 @@
 
     <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 15,000 to 20,000 web developers weekly.</p>
 
-    <p><strong>Who will you reach?</strong> JavaScript developers, Front-end/Back-end/Full-stack developers, Framework and Library makeers and users, mobile app developers (using  React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
+    <p><strong>Who will you reach?</strong> JavaScript developers, frontend/backend/fullstack developers, framework and library creators, mobile app developers (using React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
     <ul>
       <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
