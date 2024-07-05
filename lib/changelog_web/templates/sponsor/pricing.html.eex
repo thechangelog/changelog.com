@@ -42,7 +42,7 @@
 
     <p>Changelog News is our weekly guide to developer news worth your attention. It's hosted and written by our Managing Editor Jerod Santo. Every Monday we cover the developer news worth your attention. We keep it brief, entertaining & always on point. Developers tune-in to the podcast and read the newsletter to keep up.</p>
 
-    <p><strong>What's the reach?</strong> Changelog News reaches 25,000 to 45,000 per week on the podcast, plus another 22,000 via the newsletter.</p>
+    <p><strong>What's the reach?</strong> Changelog News reaches 20,000 to 30,000 per week on the podcast, plus another 22,000 via the newsletter.</p>
 
     <p><strong>Who will you reach?</strong> Busy software developers and engineers who want a single subscription to keep them informed and up to date with what's happening in the software world. The podcast is often 8 mins (or less) in length which makes it a must listen. It's often listened to within 1-2 days of publishing. The newsletter is for those who prefer to read instead of listen. It contains extended details, links, and bonus sections not included in the podcast.</p>
 
@@ -51,7 +51,7 @@
     <ul>
       <li>Changelog News is a podcast + newsletter that ships on Mondays</li>
       <li>Each week we feature one brand on the podcast and the newsletter</li>
-      <li><mark>$1,500 per week (no minimums)</mark> &mdash; $1,250/wk if you bundle with The Changelog</li>
+      <li><mark>$1,500 per week (no minimums)</mark> &mdash; $1,250 per week if you bundle with The Changelog</li>
       <li>Reaches an average 20,000 to 30,000 listens per episode</li>
       <li>The newsletter reaches 22,000+ subscribers with a 51.35% open rate</li>
       <li><%= link "Review previous episodes", to: "/news" %>
