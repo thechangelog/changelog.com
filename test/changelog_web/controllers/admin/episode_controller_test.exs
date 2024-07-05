@@ -11,10 +11,10 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
   setup_with_mocks(
     [
-      {Github.Pusher, [], [push: fn _, _ -> {:ok, "success"} end]},
       {Github.Puller, [], [update: fn _, _ -> true end]},
       {Changelog.Merch, [], [create_discount: fn _, _ -> {:ok, %{code: "yup"}} end]},
       {ObanWorkers.AudioUpdater, [], [queue: fn _ -> :ok end]},
+      {ObanWorkers.NotesPusher, [], [queue: fn _ -> :ok end]},
       {Changelog.Snap, [], [purge: fn _ -> :ok end]},
       {Craisin.Client, [], [stats: fn _ -> %{"Delivered" => 0, "Opened" => 0} end]}
     ],
@@ -106,7 +106,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
         episode: @valid_attrs
       )
 
-    refute called(Github.Pusher.push(:_, :_))
+    refute called(ObanWorkers.NotesPusher.queue(:_))
     assert called(ObanWorkers.AudioUpdater.queue(:_))
     assert called(Changelog.Snap.purge(:_))
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
@@ -123,7 +123,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
         episode: @valid_attrs
       )
 
-    assert called(Github.Pusher.push(:_, e.notes))
+    assert called(ObanWorkers.NotesPusher.queue(:_))
     assert called(ObanWorkers.AudioUpdater.queue(:_))
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
   end
@@ -138,7 +138,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
         episode: @invalid_attrs
       )
 
-    refute called(Github.Pusher.push())
+    refute called(ObanWorkers.NotesPusher.queue(:_))
     refute called(ObanWorkers.AudioUpdater.queue(:_))
     assert html_response(conn, 200) =~ ~r/error/
   end
@@ -173,7 +173,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
 
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 1
-    assert called(Github.Pusher.push(:_, e.notes))
+    assert called(ObanWorkers.NotesPusher.queue(:_))
   end
 
   @tag :as_inserted_admin
@@ -186,7 +186,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert redirected_to(conn) == Routes.admin_podcast_episode_path(conn, :index, p.slug)
     assert count(Episode.published()) == 0
     assert count(Episode.scheduled()) == 1
-    assert called(Github.Pusher.push(:_, e.notes))
+    assert called(ObanWorkers.NotesPusher.queue(:_))
   end
 
   @tag :as_inserted_admin
@@ -207,7 +207,7 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
     assert count(Episode.published()) == 1
     assert Repo.get(EpisodeGuest, eg1.id).thanks
     assert Repo.get(EpisodeGuest, eg2.id).thanks
-    assert called(Github.Pusher.push(:_, e.notes))
+    assert called(ObanWorkers.NotesPusher.queue(:_))
   end
 
   @tag :as_inserted_admin

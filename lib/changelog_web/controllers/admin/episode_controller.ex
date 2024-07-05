@@ -18,7 +18,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     Snap
   }
 
-  alias Changelog.ObanWorkers.{AudioUpdater, FeedUpdater}
+  alias Changelog.ObanWorkers.{AudioUpdater, FeedUpdater, NotesPusher}
 
   plug :assign_podcast
   plug Authorize, [Policies.Admin.Episode, :podcast]
@@ -399,9 +399,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
   defp handle_notes_push_to_github(episode) do
     if Episode.is_published(episode) do
-      episode = Episode.preload_podcast(episode)
-      source = Github.Source.new("show-notes", episode)
-      Github.Pusher.push(source, episode.notes)
+      NotesPusher.queue(episode)
     end
   end
 
