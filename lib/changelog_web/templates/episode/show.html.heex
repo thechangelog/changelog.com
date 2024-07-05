@@ -57,16 +57,16 @@
       </div>
 
       <div class="episode-body-summary-cta richtext">
-        <p><a href="<%= Routes.page_path(@conn, :++) %>" title="Join Changelog++">Changelog++ <%= plusplus_cta(@episode) %> Join!</a></p>
+        <p><a href={~p"/++"} title="Join Changelog++">Changelog++ <%= plusplus_cta(@episode) %> Join!</a></p>
       </div>
 
       <ul class="episode-body-summary-meta">
         <li><%= TimeView.rounded_minutes(@episode.audio_duration) %> minutes</li>
       <%= if @episode.recorded_at do %>
-        <li>Recorded <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.recorded_at) %></time></li>
+          <li>Recorded <time datetime={@episode.published_at}><%= TimeView.pretty_date(@episode.recorded_at) %></time></li>
       <% end %>
-        <li>Published <time datetime="<%= @episode.published_at %>"><%= TimeView.pretty_date(@episode.published_at) %></time></li>
-        <li><a href="<%= audio_url(@episode) %>" download title="Download MP3">Download (<%= megabytes(@episode) %>MB)</a></li>
+        <li>Published <time datetime={@episode.published_at}><%= TimeView.pretty_date(@episode.published_at) %></time></li>
+        <li><a href={audio_url(@episode)} download title="Download MP3">Download (<%= megabytes(@episode) %>MB)</a></li>
         <li><a href="#transcript" title="Jump to transcript">Transcript</a></li>
         <li><%= admin_edit_link(@conn, @current_user, @episode) %></li>
       </ul>
@@ -82,7 +82,7 @@
       <% end %>
     </div>
 
-    <div class="episode-body-details episode-body-details--<%= @podcast.slug %>">
+    <div class={"episode-body-details episode-body-details--#{@podcast.slug}"}>
     <%= if Enum.any?(participants) do %>
       <section class="episode-body-section">
         <a id="featuring" class="anchor"></a>
@@ -141,22 +141,24 @@
                 <td>Chapter Number</td>
                 <td>Chapter Start Time</td>
                 <td>Chapter Title</td>
+                <td>Chapter Duration</td>
               </tr>
             </thead>
             <tbody>
             <%= for {chapter, index} <- Enum.with_index(@episode.audio_chapters, 1) do %>
-              <tr data-chapter="<%= @episode.id %>-<%= index %>">
+                <tr data-chapter={"#{@episode.id}-#{index}"}>
                 <td style="width: 5%"><%= index %></td>
                 <td style="width: 10%">
-                  <a href="#t=<%= round(chapter.starts_at) %>" title="Play episode starting at '<%= chapter.title %>'"><%= TimeView.duration(chapter.starts_at) %></a>
+                  <a href={"#t=#{round(chapter.starts_at)}"} title={"Play episode starting at '#{chapter.title}'"}><%= TimeView.duration(chapter.starts_at) %></a>
                 </td>
-                <td style="width: 85%">
+                <td style="width: 80%">
                 <%= if Changelog.StringKit.present?(chapter.link_url) do %>
                   <%= link(chapter.title, to: chapter.link_url, rel: "nofollow") %>
                 <% else %>
                   <%= chapter.title %>
                 <% end %>
                 </td>
+                <td style="width: 5%"><%= TimeView.duration(chapter.ends_at - chapter.starts_at) %></td>
               </tr>
             <% end %>
             </tbody>
@@ -198,8 +200,8 @@
           </div>
           <%= for {part, index} <- Enum.with_index(@episode.transcript) do %>
             <% speaker = Enum.find(participants, fn(x) -> x.id == part["person_id"] end) %>
-            <a id="transcript-<%= index %>" class="anchor"></a>
-            <div class="transcript-item <%= unless speaker do %>transcript-item--break<% end %>">
+            <a id={"transcript-#{index}"} class="anchor"></a>
+            <div class={"transcript-item #{if !speaker, do: "transcript-item--break"}"}>
               <div class="transcript-item-speaker">
               <%= if speaker do %>
                 <%= link to: PersonView.profile_path(speaker), title: speaker.name do %>
@@ -241,13 +243,14 @@
               <p>We're hard at work on the transcript for this episode!
               <%= if @current_user do %>
                 <%= if Subscription.is_subscribed(@current_user, @episode) do %>
-                  <%= link("Click here", to: Routes.episode_path(@conn, :unsubscribe, @podcast.slug, @episode.slug), method: :post) %> to cancel your transcript notification. 💪</p>
+                  <%= link("Click here", to: ~p"/#{@podcast.slug}/#{@episode.slug}/unsubscribe", method: :post) %> to cancel your transcript notification. 💪
                 <% else %>
-                  <%= link("Click here", to: Routes.episode_path(@conn, :subscribe, @podcast.slug, @episode.slug), method: :post) %> and we'll notify you when it's ready. 💪</p>
+                  <%= link("Click here", to: ~p"/#{@podcast.slug}/#{@episode.slug}/subscribe", method: :post) %> and we'll notify you when it's ready. 💪
                 <% end %>
               <% else %>
-                <%= link("Sign in", to: Routes.sign_in_path(@conn, :new)) %> / <%= link("up", to: Routes.person_path(@conn, :join)) %> to access transcript notifications. 💪</p>
+                <%= link("Sign in", to: ~p"/in") %> / <%= link("up", to: ~p"/join") %> to access transcript notifications. 💪
               <% end %>
+              </p>
             <% end %>
             </div>
           </div>
