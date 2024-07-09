@@ -73,26 +73,26 @@
               <li class="subscribe_icons-item" style={"--image-url: url(#{url(~p"/images/icons/podcast_icon-android.png")})"}><a title="Listen on Android" href={PodcastView.subscribe_on_android_url(@podcast)}></a></li>
             </ul>
 
-            <div class="reasons">
+            <div id="reasons" class="reasons">
               <button class="reasons-close" title="Close" onclick="news.toggleReasons();"></button>
               <h2 class="display-xl m-b-lg m-r-lg">29 reasons to subscribe to&nbsp;Changelog News</h2>
               <ol class="reasons-list">
+                <li>Every word is 100% crafted by humans.</li>
                 <li>You'll join <%= SharedHelpers.comma_separated(@sub_count) %> others who subscribe.</li>
                 <li>We feature the best community <%= link("submissions", to: ~p"/news/submit") %>.</li>
                 <li>We like sending email, but nothing spammy.</li>
                 <li>You like receiving email, but nothing spammy.</li>
                 <li>We do NOT redirect or track your link clicks.</li>
                 <li>Hover on a link to <a href="https://cdn.changelog.com/news/changelog-news-direct-links.mov" target="_blank">preview</a> where it's headed.</li>
-                <li>We try to keep puns & bad jokes to a minimum.</li>
-                <li>But every once in awhile, one slips through...</li>
-                <li>Dev has problem. Uses Java. Now ProblemFactory.</li>
-                <li>Oh nice, that joke was better than you expected.</li>
-                <li>Every word we publish is 100% crafted by humans.</li>
                 <li>It costs the same amount as a free cup of coffee.</li>
-                <li>We order our lists using the pyramid(ical) scheme.</li>
+                <li>We've been in the software game for over 20 years.</li>
                 <li>Sometimes we take meme breaks, which are on point.</li>
                 <li>Like the one from <%= link("issue #66", to: ~p"/news/66") %> (if you commit to it).</li>
-                <li>We've been in the software game for over 20 years.</li>
+                <li>We order our lists using the pyramid(ical) scheme.</li>
+                <li>We try hard to keep puns & bad jokes to a minimum.</li>
+                <li>Even so, once in awhile they still slip through...</li>
+                <li>Dev has problem. Uses Java. Creates ProblemFactory.</li>
+                <li>Hopefully that bad joke was funnier than expected?!</li>
                 <li>You might actually start looking forward to Mondays.</li>
                 <li>We hand-pick our partners so even the ads are useful!</li>
                 <li>You can reply! We read every message & respond to many.</li>
@@ -159,11 +159,11 @@
               </div>
             </blockquote>
             <ul class="testimonials-pagination">
-              <li class="is-active"><button title="Go to 1" onclick="news.goToTestimonial(0);"></button></li>
-              <li><button title="Go to 2" onclick="news.goToTestimonial(1);"></button></li>
-              <li><button title="Go to 3" onclick="news.goToTestimonial(2);"></button></li>
-              <li><button title="Go to 4" onclick="news.goToTestimonial(3);"></button></li>
-              <li><button title="Go to 5" onclick="news.goToTestimonial(4);"></button></li>
+              <li class="is-active"><button title="Show testimonial #1" onclick="news.goToTestimonial(0);"></button></li>
+              <li><button title="Show testimonial #2" onclick="news.goToTestimonial(1);"></button></li>
+              <li><button title="Show testimonial #3" onclick="news.goToTestimonial(2);"></button></li>
+              <li><button title="Show testimonial #4" onclick="news.goToTestimonial(3);"></button></li>
+              <li><button title="Show testimonial #5" onclick="news.goToTestimonial(4);"></button></li>
             </ul>
           </div>
 

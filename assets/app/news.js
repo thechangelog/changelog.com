@@ -11,6 +11,10 @@ export default class News {
     });
 
     window.onload = () => {
+      if (location.href.includes("#reasons")) {
+        this.toggleReasons();
+      }
+
       this.goToTestimonial(Math.floor(Math.random() * 4));
     };
 
