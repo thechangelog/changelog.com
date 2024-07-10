@@ -85,7 +85,7 @@ defmodule Changelog.Notifier do
     moderators = ~w(jerod@changelog.com)
 
     for person <- moderators |> Person.with_email() |> Repo.all() do
-      MailDeliverer.enqueue("comment_approval", %{"person" => person.id, "comment" => comment.id})
+      MailDeliverer.queue("comment_approval", %{"person" => person.id, "comment" => comment.id})
     end
   end
 
@@ -105,7 +105,7 @@ defmodule Changelog.Notifier do
       Subscription.is_unsubscribed(person, comment.news_item)
     end)
     |> Enum.each(fn {_person, recipient, mailer} ->
-      MailDeliverer.enqueue(mailer, %{"person" => recipient.id, "comment" => comment.id})
+      MailDeliverer.queue(mailer, %{"person" => recipient.id, "comment" => comment.id})
     end)
   end
 
@@ -167,13 +167,13 @@ defmodule Changelog.Notifier do
 
   defp deliver_author_email(person, item) do
     if person.settings.email_on_authored_news do
-      MailDeliverer.enqueue("authored_news_published", %{"item" => item.id})
+      MailDeliverer.queue("authored_news_published", %{"item" => item.id})
     end
   end
 
   defp deliver_episode_guest_thanks_emails(episode) do
     for eg <- Enum.filter(episode.episode_guests, & &1.thanks) do
-      MailDeliverer.enqueue("guest_thanks", %{"episode_guest" => eg.id})
+      MailDeliverer.queue("guest_thanks", %{"episode_guest" => eg.id})
     end
   end
 
@@ -183,19 +183,22 @@ defmodule Changelog.Notifier do
     request = EpisodeRequest.preload_submitter(request)
 
     if !Enum.member?(guests, request.submitter) do
-      MailDeliverer.enqueue("episode_request_published", %{"request" => request.id})
+      MailDeliverer.queue("episode_request_published", %{"request" => request.id})
     end
   end
 
   defp deliver_episode_transcribed_email(person, episode) do
-    MailDeliverer.enqueue("episode_transcribed", %{"person" => person.id, "episode" => episode.id})
+    MailDeliverer.queue("episode_transcribed", %{"person" => person.id, "episode" => episode.id})
   end
 
   defp deliver_podcast_subscription_emails(episode) do
     podcast = Podcast.preload_subscriptions(episode.podcast)
 
     for subscription <- podcast.subscriptions do
-      MailDeliverer.enqueue("episode_published", %{"subscription" => subscription.id, "episode" => episode.id})
+      MailDeliverer.queue("episode_published", %{
+        "subscription" => subscription.id,
+        "episode" => episode.id
+      })
     end
   end
 
@@ -213,23 +216,23 @@ defmodule Changelog.Notifier do
 
   defp deliver_submitter_email(person, item) do
     if person.settings.email_on_submitted_news do
-      MailDeliverer.enqueue("submitted_news_published", %{"item" => item.id})
+      MailDeliverer.queue("submitted_news_published", %{"item" => item.id})
     end
   end
 
   defp deliver_submitter_accepted_email(item) do
-    MailDeliverer.enqueue("submitted_news_accepted", %{"item" => item.id})
+    MailDeliverer.queue("submitted_news_accepted", %{"item" => item.id})
   end
 
   defp deliver_submitter_decline_email(item) do
-    MailDeliverer.enqueue("submitted_news_declined", %{"item" => item.id})
+    MailDeliverer.queue("submitted_news_declined", %{"item" => item.id})
   end
 
   defp deliver_request_decline_email(request) do
-    MailDeliverer.enqueue("episode_request_declined", %{"request" => request.id})
+    MailDeliverer.queue("episode_request_declined", %{"request" => request.id})
   end
 
   defp deliver_request_fail_email(request) do
-    MailDeliverer.enqueue("episode_request_failed", %{"request" => request.id})
+    MailDeliverer.queue("episode_request_failed", %{"request" => request.id})
   end
 end

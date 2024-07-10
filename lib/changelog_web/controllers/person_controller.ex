@@ -53,6 +53,7 @@ defmodule ChangelogWeb.PersonController do
             Repo.update(Person.file_changeset(person, person_params))
             maybe_sign_up_for_news(person, params, "you signed up while joining")
             welcome_community(conn, person)
+
           {:error, changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
@@ -150,8 +151,15 @@ defmodule ChangelogWeb.PersonController do
         case Repo.insert(changeset) do
           {:ok, person} ->
             log_request(conn)
-            maybe_sign_up_for_news(person, params, "you signed up while subscribing to #{subscribe_to}")
+
+            maybe_sign_up_for_news(
+              person,
+              params,
+              "you signed up while subscribing to #{subscribe_to}"
+            )
+
             welcome_subscriber(conn, person, subscribe_to)
+
           {:error, _changeset} ->
             conn
             |> put_flash(:error, "Something went wrong. 😭")
@@ -191,7 +199,11 @@ defmodule ChangelogWeb.PersonController do
 
   defp subscribe_to_newsletter(person, newsletter) do
     Craisin.Subscriber.subscribe(newsletter.id, Person.sans_fake_data(person))
-    MailDeliverer.enqueue("subscriber_welcome", %{"person" => person.id, "newsletter" => newsletter.slug})
+
+    MailDeliverer.queue("subscriber_welcome", %{
+      "person" => person.id,
+      "newsletter" => newsletter.slug
+    })
   end
 
   defp subscribe_to_podcast(person, "master") do
@@ -200,7 +212,7 @@ defmodule ChangelogWeb.PersonController do
       Subscription.subscribe(person, podcast, context)
     end
 
-    MailDeliverer.enqueue("subscriber_welcome", %{"person" => person.id, "podcast" => "master"})
+    MailDeliverer.queue("subscriber_welcome", %{"person" => person.id, "podcast" => "master"})
   end
 
   defp subscribe_to_podcast(person, slug) do
@@ -208,13 +220,13 @@ defmodule ChangelogWeb.PersonController do
     context = "you signed up for email notifications on changelog.com"
 
     Subscription.subscribe(person, podcast, context)
-    MailDeliverer.enqueue("subscriber_welcome", %{"person" => person.id, "podcast" => podcast.slug})
+    MailDeliverer.queue("subscriber_welcome", %{"person" => person.id, "podcast" => podcast.slug})
   end
 
   defp welcome_community(conn, person) do
     person = Person.refresh_auth_token(person)
 
-    MailDeliverer.enqueue("community_welcome", %{"person" => person.id})
+    MailDeliverer.queue("community_welcome", %{"person" => person.id})
 
     conn
     |> put_flash(:success, "Only one step left! Check your inbox for a confirmation email.")

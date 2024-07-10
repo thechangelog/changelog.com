@@ -5,8 +5,19 @@ defmodule Changelog.ObanWorkers.MailDeliverer do
   """
   use Oban.Worker, queue: :email, unique: [fields: [:args, :queue], period: 60], max_attempts: 1
 
-  alias Changelog.{Episode, EpisodeGuest, EpisodeRequest, Mailer, NewsItem,
-    NewsItemComment, Newsletters, Person, Podcast, Repo, Subscription}
+  alias Changelog.{
+    Episode,
+    EpisodeGuest,
+    EpisodeRequest,
+    Mailer,
+    NewsItem,
+    NewsItemComment,
+    Newsletters,
+    Person,
+    Podcast,
+    Repo,
+    Subscription
+  }
 
   alias ChangelogWeb.Email
 
@@ -17,7 +28,7 @@ defmodule Changelog.ObanWorkers.MailDeliverer do
     :ok
   end
 
-  def enqueue(mailer, args) do
+  def queue(mailer, args) do
     %{"mailer" => mailer}
     |> Map.merge(args)
     |> new()

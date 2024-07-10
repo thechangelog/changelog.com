@@ -10,7 +10,7 @@ defmodule ChangelogWeb.AuthController do
   def new(conn, %{"auth" => %{"email" => email}}) do
     if person = Repo.get_by(Person, email: email) do
       person = Person.refresh_auth_token(person)
-      MailDeliverer.enqueue("sign_in", %{"person" => person.id})
+      MailDeliverer.queue("sign_in", %{"person" => person.id})
       render(conn, "new.html", person: person)
     else
       conn

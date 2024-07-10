@@ -15,7 +15,9 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   alias Changelog.ObanWorkers.MailDeliverer
 
-  plug :assign_person when action in [:show, :edit, :update, :delete, :slack, :news, :comments, :masq]
+  plug :assign_person
+       when action in [:show, :edit, :update, :delete, :slack, :news, :comments, :masq]
+
   plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
 
@@ -156,7 +158,10 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     Craisin.Subscriber.delete(Newsletters.nightly().id, person.email)
 
-    send_to_sentry("person_delete", %{person: person.id, referer: Plug.Conn.get_req_header(conn, "referer")})
+    send_to_sentry("person_delete", %{
+      person: person.id,
+      referer: Plug.Conn.get_req_header(conn, "referer")
+    })
 
     conn
     |> put_flash(:result, "success")
@@ -257,11 +262,11 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   defp handle_generic_welcome_email(person) do
     person = Person.refresh_auth_token(person)
-    MailDeliverer.enqueue("community_welcome", %{"person" => person.id})
+    MailDeliverer.queue("community_welcome", %{"person" => person.id})
   end
 
   defp handle_guest_welcome_email(person) do
     person = Person.refresh_auth_token(person)
-    MailDeliverer.enqueue("guest_welcome", %{"person" => person.id})
+    MailDeliverer.queue("guest_welcome", %{"person" => person.id})
   end
 end
