@@ -82,7 +82,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   def new(conn = %{assigns: %{current_user: me}}, params) do
     url = UrlKit.normalize_url(params["url"])
-    html = UrlKit.get_html(url)
+    html = UrlKit.get_body(url)
 
     changeset =
       me

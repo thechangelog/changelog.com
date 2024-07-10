@@ -5,7 +5,7 @@ defmodule Changelog.UrlKit do
   def get_author(url), do: Person.get_by_website(url)
 
   def get_tempfile(url) do
-    case HTTP.get(url, [], [follow_redirect: true, max_redirect: 5]) do
+    case HTTP.get(url, [], follow_redirect: true, max_redirect: 5) do
       {:ok, %{status_code: 200, body: body}} ->
         hash = :sha256 |> :crypto.hash(body) |> Base.encode16()
         path = Path.join(System.tmp_dir(), hash)
@@ -14,17 +14,18 @@ defmodule Changelog.UrlKit do
     end
   end
 
-  def get_html(nil), do: ""
+  def get_body(nil), do: ""
 
-  def get_html(url) do
+  def get_body(url) do
     try do
-      case HTTP.get!(url, [], [follow_redirect: true, max_redirect: 5]) do
+      case HTTP.get!(url, [], follow_redirect: true, max_redirect: 5) do
         %{status_code: 200, headers: headers, body: body} ->
           case List.keyfind(headers, "Content-Encoding", 0) do
             {"Content-Encoding", "gzip"} -> :zlib.gunzip(body)
             {"Content-Encoding", "x-gzip"} -> :zlib.gunzip(body)
             _else -> body
           end
+
         _else ->
           ""
       end
@@ -102,6 +103,7 @@ defmodule Changelog.UrlKit do
   def sans_scheme(url), do: String.replace(url, Regexp.http(), "")
 
   def sans_query(nil), do: nil
+
   def sans_query(url) do
     url
     |> URI.parse()

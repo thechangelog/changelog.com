@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Meta.Description do
   defp description(%{view_module: AlbumView, album: album}), do: album.description
 
   defp description(%{view_module: EpisodeView, episode: episode}),
-    do: episode.summary |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
+    do: EpisodeView.text_description(episode)
 
   defp description(%{view_module: NewsItemView, item: item}),
     do: item.story |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
