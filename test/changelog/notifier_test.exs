@@ -5,7 +5,7 @@ defmodule Changelog.NotifierTest do
 
   import Mock
 
-  alias Changelog.{Bsky, Notifier, Slack, Subscription, NewsItem, EpisodeRequest}
+  alias Changelog.{Bsky, Notifier, Slack, Social, Subscription, NewsItem, EpisodeRequest}
   alias ChangelogWeb.Email
 
   describe "notify/1 with news item comment" do
@@ -186,8 +186,9 @@ defmodule Changelog.NotifierTest do
 
   describe "notify/1 with episode item" do
     setup_with_mocks([
+      {Bsky, [], [post: fn _ -> true end]},
       {Slack.Client, [], [message: fn _, _ -> true end]},
-      {Bsky, [], [post: fn _ -> true end]}
+      {Social, [], [post: fn _ -> true end]}
     ]) do
       :ok
     end
@@ -203,6 +204,7 @@ defmodule Changelog.NotifierTest do
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
       assert called(Bsky.post(:_))
+      assert called(Social.post(:_))
     end
 
     test "when episode has guests but none of them have 'thanks' set" do
@@ -220,6 +222,7 @@ defmodule Changelog.NotifierTest do
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
       assert called(Bsky.post(:_))
+      assert called(Social.post(:_))
     end
 
     test "when episode has guests and some of them have 'thanks' set" do
@@ -241,6 +244,7 @@ defmodule Changelog.NotifierTest do
       assert_delivered_email(Email.guest_thanks(eg2))
       assert called(Slack.Client.message("#main", :_))
       assert called(Bsky.post(:_))
+      assert called(Social.post(:_))
     end
 
     test "when episode was requested" do
