@@ -259,8 +259,8 @@ defmodule ChangelogWeb.EpisodeView do
     end
   end
 
-  def text_description(episode) do
-    episode.summary |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(320)
+  def text_description(episode, truncate_to \\ 320) do
+    episode.summary |> SharedHelpers.md_to_text() |> SharedHelpers.truncate(truncate_to)
   end
 
   def title_with_podcast_aside(episode) do

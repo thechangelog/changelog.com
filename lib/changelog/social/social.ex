@@ -2,44 +2,55 @@ defmodule Changelog.Social do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.Social.Client
-  alias Changelog.NewsItem
-  alias ChangelogWeb.NewsItemView
+  alias Changelog.Episode
+  alias ChangelogWeb.EpisodeView
 
-  # feed-only news items don't get posted
-  def post(%NewsItem{feed_only: true}), do: false
-
-  # episode news items don't get posted (for now)
-  def post(%NewsItem{type: :audio}), do: false
-
-  # post news items also don't get posted (for now)
-  def post(item = %NewsItem{}) do
-    item = NewsItem.preload_all(item)
+  def post(episode = %Episode{}) do
+    episode = Episode.preload_all(episode)
+    podcast = episode.podcast
 
     content = """
-    #{headline(item)}
-    #{author(item)}
-    #{link(item)}
+    #{ann_emoj()} #{ann_text(podcast)}
+
+    #{description(episode)}
+
+    #{link_emoj()} #{link_url(episode)} #{tags(podcast)}
     """
 
-    Client.create_status(content)
+    token = token_for_podcast(podcast)
+
+    Client.create_status(token, content)
   end
 
-  def post(_), do: false
+  defp ann_emoj, do: ~w(🙌 🎉 🔥 💥 🚢 🚀 ⚡️ ✨ 🤘) |> Enum.random()
 
-  defp headline(item) do
-    item.headline
+  defp ann_text(podcast) do
+    case podcast.slug do
+      "podcast" -> "New Changelog interview!"
+      "shipit" -> "New episode of Ship It!"
+      _else -> "New episode of #{podcast.name}!"
+    end
   end
 
-  defp author(%{author: nil}), do: nil
-  defp author(%{author: %{mastodon_handle: nil}}), do: nil
-  defp author(%{author: %{mastodon_handle: handle}}), do: "#{author_emoj()} by @#{handle}"
-
-  defp link(item), do: "#{link_emoj()} #{link_url(item)}"
-
-  defp author_emoj, do: ~w(✍️ 🖋 ✏️) |> Enum.random()
-  defp link_emoj, do: ~w(✨ 💫 🔗 👉) |> Enum.random()
-
-  defp link_url(item) do
-    url(~p"/news/#{NewsItemView.hashid(item)}")
+  defp description(episode) do
+    episode |> EpisodeView.text_description(400)
   end
+
+  defp link_emoj, do: ~w(✨ 💫 🔗 👉 🎧) |> Enum.random()
+
+  defp link_url(episode), do: episode |> EpisodeView.share_url()
+
+  defp tags(podcast) do
+    case podcast.slug do
+      "news" -> "#news #podcast"
+      "gotime" -> "#golang #podcast"
+      _else -> "#podcast"
+    end
+  end
+
+  defp token_for_podcast(%{mastodon_token: nil}) do
+    Application.get_env(:changelog, :mastodon_api_token)
+  end
+
+  defp token_for_podcast(%{mastodon_token: token}), do: token
 end
