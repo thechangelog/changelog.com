@@ -30,6 +30,7 @@ defmodule Changelog.Podcast do
     field :vanity_domain, :string
     field :keywords, :string
     field :mastodon_handle, :string
+    field :mastodon_token, :string
     field :twitter_handle, :string
     field :apple_url, :string
     field :spotify_url, :string
@@ -73,6 +74,7 @@ defmodule Changelog.Podcast do
       is_meta: true,
       twitter_handle: "changelog",
       mastodon_handle: "changelog@changelog.social",
+      mastodon_token: nil,
       welcome: "Your one-stop shop for all Changelog podcasts",
       description: "Your one-stop shop for all Changelog podcasts.",
       extended_description:
@@ -95,6 +97,7 @@ defmodule Changelog.Podcast do
       vanity_domain: "https://changelog.fm",
       twitter_handle: "changelog",
       mastodon_handle: "changelog@changelog.social",
+      mastodon_token: nil,
       welcome: "Software's best weekly news brief, deep technical interviews & talk show",
       description: "Software's best weekly news brief, deep technical interviews & talk show.",
       extended_description: "",
@@ -132,7 +135,7 @@ defmodule Changelog.Podcast do
     podcast
     |> cast(
       attrs,
-      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle twitter_handle apple_url spotify_url riverside_url chartable_id recorded_live partner position)a
+      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle mastodon_token twitter_handle apple_url spotify_url riverside_url chartable_id recorded_live partner position)a
     )
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http(), message: Regexp.http_message())

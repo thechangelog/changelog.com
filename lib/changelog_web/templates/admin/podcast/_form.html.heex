@@ -1,47 +1,50 @@
 <%= form_for @changeset, @action, [multipart: true, class: "ui form"], fn f -> %>
   <div class="four fields">
-    <div class="field required <%= AdminHelpers.error_class(f, :name) %>">
+    <div class={"field required #{AdminHelpers.error_class(f, :name)}"}>
       <%= label(f, :name, "Name") %>
       <%= text_input(f, :name, placeholder: "The Changelog") %>
       <%= AdminHelpers.error_message(f, :name) %>
     </div>
 
-    <div class="field required <%= AdminHelpers.error_class(f, :status) %>">
+    <div class={"field required #{AdminHelpers.error_class(f, :status)}"}>
       <%= label(f, :status) %>
       <%= select(f, :status, status_options(), class: "ui fluid dropdown") %>
     </div>
 
-    <div class="field required <%= AdminHelpers.error_class(f, :slug) %>">
+    <div class={"field required #{AdminHelpers.error_class(f, :slug)}"}>
       <%= label(f, :slug) %>
       <%= text_input(f, :slug, placeholder: "tcl", readonly: AdminHelpers.is_persisted(f.data)) %>
       <%= AdminHelpers.error_message(f, :slug) %>
     </div>
 
-    <div class="field required <%= AdminHelpers.error_class(f, :position) %>">
+    <div class={"field required #{AdminHelpers.error_class(f, :position)}"}>
       <%= label(f, :position) %>
       <%= select(f, :position, position_options(), class: "ui fluid dropdown") %>
     </div>
   </div>
 
   <div class="three fields">
-    
-
-    <div class="field <%= AdminHelpers.error_class(f, :vanity_domain) %>">
+    <div class={"field #{AdminHelpers.error_class(f, :vanity_domain)}"}>
       <%= label(f, :vanity_domain, "Vanity Domain") %>
       <%= text_input(f, :vanity_domain, placeholder: "https://changelog.fm") %>
       <%= AdminHelpers.error_message(f, :vanity_domain) %>
     </div>
 
-    <div class="field <%= AdminHelpers.error_class(f, :twitter_handle) %>">
+    <div class={"field #{AdminHelpers.error_class(f, :twitter_handle)}"}>
       <%= label(f, :twitter_handle, "On Twitter") %>
       <%= text_input(f, :twitter_handle, placeholder: "gracehopper") %>
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
-    <div class="field <%= AdminHelpers.error_class(f, :mastodon_handle) %>">
+    <div class={"field #{AdminHelpers.error_class(f, :mastodon_handle)}"}>
       <%= label(f, :mastodon_handle, "On Mastodon") %>
       <%= text_input(f, :mastodon_handle, placeholder: "changelog@changelog.social") %>
     </div>
+  </div>
+
+  <div class={"field #{AdminHelpers.error_class(f, :mastodon_token)}"}>
+    <%= label(f, :mastodon_token, "Mastodon API Token") %>
+    <%= text_input(f, :mastodon_token) %>
   </div>
 
   <div class="two fields">
@@ -55,7 +58,7 @@
     </div>
 
     <div class="two wide field">
-      <img src="<%= cover_url(f.data, :small) %>" height=66>
+      <img src={cover_url(f.data, :small)} height="66">
     </div>
   </div>
 
@@ -64,10 +67,10 @@
 
     <div class="ui middle aligned selection list js-podcast_hosts">
       <%= inputs_for f, :podcast_hosts, fn i -> %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+          <div class={"item #{if AdminHelpers.is_persisted(i.data), do: "persisted"}"}>
           <%= hidden_input i, :person_id %>
           <%= hidden_input i, :position, class: "js-position" %>
-          <img class="ui avatar image" src="<%= ChangelogWeb.PersonView.avatar_url(i.data.person) %>">
+          <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(i.data.person)}>
 
           <div class="content">
             <div class="header"><%= i.data.person.name %> (@<%= i.data.person.handle %>)</div>
@@ -109,7 +112,7 @@
     <div class="ui horizontal selection list js-podcast_topics">
       <%= inputs_for f, :podcast_topics, fn i -> %>
         <% topic = AdminHelpers.load_from_form(i, Topic, :topic) %>
-        <div class="item <%= if AdminHelpers.is_persisted(i.data), do: "persisted" %>">
+        <div class={"item #{if AdminHelpers.is_persisted(i.data), do: "persisted"}"}>
           <%= hidden_input i, :topic_id %>
           <%= hidden_input i, :position, class: "js-position" %>
 
@@ -134,7 +137,7 @@
     </div>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :schedule_note) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :schedule_note)}"}>
     <%= label(f, :schedule_note) do %>
       Schedule Note <%= AdminHelpers.help_icon("Markdown supported.") %>
     <% end %>
@@ -149,7 +152,7 @@
     </div>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :welcome) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :welcome)}"}>
     <%= label(f, :welcome) do %>
       Welcome <%= AdminHelpers.help_icon("Only used on changelog.com landing pages.") %>
     <% end %>
@@ -157,13 +160,13 @@
     <%= AdminHelpers.error_message(f, :welcome) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :description) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :description)}"}>
     <%= label(f, :description) %>
     <%= textarea f, :description, placeholder: "Markdown enabled." %>
     <%= AdminHelpers.error_message(f, :description) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :extended_description) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :extended_description)}"}>
     <%= label(f, :extended_description) do %>
       Extended Description <%= AdminHelpers.help_icon("Only used in RSS for SEO.") %>
     <% end %>
@@ -171,25 +174,25 @@
     <%= AdminHelpers.error_message(f, :extneded_description) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :keywords) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :keywords)}"}>
     <%= label(f, :keywords) %>
     <%= text_input(f, :keywords, placeholder: "changelog, open source, software, development") %>
     <%= AdminHelpers.error_message(f, :keywords) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :apple_url) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :apple_url)}"}>
     <%= label(f, :apple_url, "Apple Podcasts URL") %>
     <%= text_input(f, :apple_url) %>
     <%= AdminHelpers.error_message(f, :apple_url) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :spotify_url) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :spotify_url)}"}>
     <%= label(f, :spotify_url, "Spotify URL") %>
     <%= text_input(f, :spotify_url) %>
     <%= AdminHelpers.error_message(f, :spotify_url) %>
   </div>
 
-  <div class="field <%= AdminHelpers.error_class(f, :riverside_url) %>">
+  <div class={"field #{AdminHelpers.error_class(f, :riverside_url)}"}>
     <%= label(f, :riverside_url, "Riverside URL") %>
     <%= text_input(f, :riverside_url) %>
     <%= AdminHelpers.error_message(f, :riverside_url) %>
