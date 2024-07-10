@@ -11,7 +11,8 @@ defmodule Changelog.Notifier do
     Slack,
     StringKit
   }
-  alias Changelog.ObanWorkers.MailDeliverer
+
+  alias Changelog.ObanWorkers.{MailDeliverer, SocialPoster}
 
   def notify(%NewsItem{feed_only: true}), do: false
 
@@ -22,7 +23,8 @@ defmodule Changelog.Notifier do
       |> Map.get(:object)
       |> Episode.preload_all()
 
-    deliver_slack_new_episode_message(episode)
+    SocialPoster.queue(episode)
+
     deliver_episode_guest_thanks_emails(episode)
     deliver_episode_request_email(episode)
     deliver_podcast_subscription_emails(episode)
@@ -200,11 +202,6 @@ defmodule Changelog.Notifier do
   defp deliver_slack_new_comment_message(comment) do
     message = Slack.Messages.new_comment(comment)
     Slack.Client.message("#news-comments", message)
-  end
-
-  defp deliver_slack_new_episode_message(episode) do
-    message = Slack.Messages.new_episode(episode)
-    Slack.Client.message("#main", message)
   end
 
   defp deliver_slack_new_post_message(post) do

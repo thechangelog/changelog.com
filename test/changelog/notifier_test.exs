@@ -5,7 +5,7 @@ defmodule Changelog.NotifierTest do
 
   import Mock
 
-  alias Changelog.{Notifier, Slack, Subscription, NewsItem, EpisodeRequest}
+  alias Changelog.{Bsky, Notifier, Slack, Subscription, NewsItem, EpisodeRequest}
   alias ChangelogWeb.Email
 
   describe "notify/1 with news item comment" do
@@ -186,7 +186,8 @@ defmodule Changelog.NotifierTest do
 
   describe "notify/1 with episode item" do
     setup_with_mocks([
-      {Slack.Client, [], [message: fn _, _ -> true end]}
+      {Slack.Client, [], [message: fn _, _ -> true end]},
+      {Bsky, [], [post: fn _ -> true end]}
     ]) do
       :ok
     end
@@ -197,9 +198,11 @@ defmodule Changelog.NotifierTest do
       Notifier.notify(item)
 
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :default)
 
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
+      assert called(Bsky.post(:_))
     end
 
     test "when episode has guests but none of them have 'thanks' set" do
@@ -212,9 +215,11 @@ defmodule Changelog.NotifierTest do
       Notifier.notify(item)
 
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :default)
 
       assert_no_emails_delivered()
       assert called(Slack.Client.message("#main", :_))
+      assert called(Bsky.post(:_))
     end
 
     test "when episode has guests and some of them have 'thanks' set" do
@@ -230,10 +235,12 @@ defmodule Changelog.NotifierTest do
       Notifier.notify(item)
 
       assert %{success: 2, failure: 0} = Oban.drain_queue(queue: :email)
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :default)
 
       assert_delivered_email(Email.guest_thanks(eg1))
       assert_delivered_email(Email.guest_thanks(eg2))
       assert called(Slack.Client.message("#main", :_))
+      assert called(Bsky.post(:_))
     end
 
     test "when episode was requested" do
