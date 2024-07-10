@@ -24,11 +24,11 @@ defmodule Changelog.Bsky do
   end
 
   def title(episode) do
-    EpisodeView.podcast_name_and_number(episode)
+    episode |> EpisodeView.podcast_name_and_number()
   end
 
   def description(episode) do
-    EpisodeView.text_description(episode)
+    episode |> EpisodeView.text_description()
   end
 
   def img(episode) do

@@ -57,7 +57,7 @@ defmodule Changelog.Bsky.Client do
           "embed" => %{
             "$type" => "app.bsky.embed.external",
             "external" => %{
-              "uri" => "https:#{link}",
+              "uri" => "https://#{link}",
               "title" => title,
               "description" => description,
               "thumb" => img
