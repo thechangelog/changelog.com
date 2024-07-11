@@ -21,22 +21,12 @@ defmodule ChangelogWeb.FeedController do
 
   def custom(conn, %{"slug" => slug}) do
     feed = ChangelogWeb.Feeds.generate(slug)
-
-    conn
-    |> put_layout(false)
-    |> put_resp_header("access-control-allow-origin", "*")
-    |> put_resp_content_type("application/xml")
-    |> send_resp(200, feed)
+    send_xml_resp(conn, feed)
   end
 
   def news(conn, _params) do
     feed = ChangelogWeb.Feeds.generate("feed")
-
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> ResponseCache.cache_public(:timer.minutes(1))
-    |> send_resp(200, feed)
+    send_xml_resp(conn, feed)
   end
 
   def news_titles(conn, _params) do
@@ -54,25 +44,25 @@ defmodule ChangelogWeb.FeedController do
 
   def podcast(conn, %{"slug" => slug}) do
     feed = ChangelogWeb.Feeds.generate(slug)
-
-    conn
-    |> put_resp_header("access-control-allow-origin", "*")
-    |> put_resp_content_type("application/xml")
-    |> send_resp(200, feed)
+    send_xml_resp(conn, feed)
   end
 
   def plusplus(conn, %{"slug" => slug}) do
     if Application.get_env(:changelog, :plusplus_slug) == slug do
       feed = ChangelogWeb.Feeds.generate("plusplus")
 
-      conn
-      |> put_layout(false)
-      |> put_resp_header("access-control-allow-origin", "*")
-      |> put_resp_content_type("application/xml")
-      |> send_resp(200, feed)
+      send_xml_resp(conn, feed)
     else
       send_resp(conn, :not_found, "")
     end
+  end
+
+  defp send_xml_resp(conn, document) do
+    conn
+    |> put_layout(false)
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_content_type("application/xml")
+    |> send_resp(200, document)
   end
 
   defp log_subscribers(conn = %{params: %{"slug" => slug}}, _) do
