@@ -7,7 +7,6 @@ defmodule ChangelogWeb.FeedView do
     EpisodeView,
     NewsItemView,
     PersonView,
-    PodcastView,
     PostView,
     TimeView
   }

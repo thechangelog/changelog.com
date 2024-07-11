@@ -85,7 +85,8 @@ defmodule ChangelogWeb.Feeds do
 
   def generate(%Feed{} = feed) do
     episodes = get_episodes(feed)
-    render("feed.xml", feed: feed, episodes: episodes)
+
+    Xml.Feed.document(feed, episodes) |> Xml.generate()
   end
 
   def generate(%Podcast{} = podcast) do
