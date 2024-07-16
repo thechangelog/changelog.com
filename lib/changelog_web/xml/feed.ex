@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Xml.Feed do
   use ChangelogWeb, :verified_routes
 
-  alias Changelog.{Episode, ListKit}
+  alias Changelog.{ListKit}
   alias ChangelogWeb.{EpisodeView, FeedView, PersonView, PodcastView, TimeView, Xml}
   alias ChangelogWeb.Helpers.SharedHelpers
 
@@ -11,13 +11,7 @@ defmodule ChangelogWeb.Xml.Feed do
   def document(feed, episodes) do
     {
       :rss,
-      %{
-        version: "2.0",
-        "xmlns:content": "http://purl.org/rss/1.0/modules/content/",
-        "xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd",
-        "xmlns:podcast": "https://podcastindex.org/namespace/1.0",
-        "xmlns:psc": "http://podlove.org/simple-chapters"
-      },
+      Xml.podcast_namespaces(),
       [channel(feed, episodes)]
     }
     |> XmlBuilder.document()
@@ -37,7 +31,7 @@ defmodule ChangelogWeb.Xml.Feed do
         {"itunes:explicit", nil, "no"},
         {"itunes:summary", nil, feed.description},
         {"itunes:image", %{href: PodcastView.cover_url(feed)}},
-        {"itunes:owner", nil, itunes_owner()},
+        {"itunes:owner", nil, Xml.itunes_owner()},
         Enum.map(episodes, fn episode -> episode(feed, episode) end)
       ]
       |> List.flatten()
@@ -60,11 +54,11 @@ defmodule ChangelogWeb.Xml.Feed do
        {"itunes:explicit", nil, "no"},
        {"itunes:subtitle", nil, episode.subtitle},
        {"itunes:summary", nil, SharedHelpers.md_to_text(episode.summary)},
-       Enum.map(episode.hosts, fn p -> person(p, "host") end),
-       Enum.map(episode.guests, fn p -> person(p, "guest") end),
-       transcript(episode),
+       Enum.map(episode.hosts, fn p -> Xml.person(p, "host") end),
+       Enum.map(episode.guests, fn p -> Xml.person(p, "guest") end),
+       Xml.transcript(episode),
        chapters(feed, episode),
-       socialize(episode),
+       Xml.socialize(episode),
        {"content:encoded", nil, show_notes(episode)}
      ]}
   end
@@ -95,7 +89,7 @@ defmodule ChangelogWeb.Xml.Feed do
 
   defp chapters(feed, episode) do
     {chapters, url} =
-      if feed.plusplus do
+      if feed.plusplus && Enum.any?(episode.plusplus_chapters) do
         {episode.plusplus_chapters,
          url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters?pp=true")}
       else
@@ -110,19 +104,6 @@ defmodule ChangelogWeb.Xml.Feed do
        }},
       Xml.Chapters.chapters(chapters, "psc")
     ]
-  end
-
-  defp itunes_owner do
-    [{"itunes:name", nil, "Changelog Media"}, {"itunes:email", nil, "editors@changelog.com"}]
-  end
-
-  defp person(person, role) do
-    {"podcast:person",
-     %{
-       role: role,
-       img: PersonView.avatar_url(person, :large),
-       href: PersonView.profile_url(person)
-     }, person.name}
   end
 
   defp show_notes(episode) do
@@ -171,20 +152,5 @@ defmodule ChangelogWeb.Xml.Feed do
       end)
 
     ["<p>Featuring:</p><ul>", items, "</ul></p>"]
-  end
-
-  defp socialize(%{socialize_url: nil}), do: nil
-
-  defp socialize(%{socialize_url: url}) do
-    {"podcast:socialInteract", %{uri: url, protocol: "activitypub"}}
-  end
-
-  defp transcript(episode) do
-    if Episode.has_transcript(episode) do
-      {"podcast:transcript",
-       %{url: url(~p"/#{episode.podcast.slug}/#{episode.slug}/transcript"), type: "text/html"}}
-    else
-      nil
-    end
   end
 end

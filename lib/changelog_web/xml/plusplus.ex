@@ -1,8 +1,8 @@
-defmodule ChangelogWeb.Xml.Podcast do
+defmodule ChangelogWeb.Xml.Plusplus do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.{ListKit}
-  alias ChangelogWeb.{EpisodeView, FeedView, PersonView, PodcastView, TimeView, Xml}
+  alias ChangelogWeb.{EpisodeView, FeedView, PersonView, TimeView, Xml}
   alias ChangelogWeb.Helpers.SharedHelpers
 
   @doc """
@@ -22,26 +22,18 @@ defmodule ChangelogWeb.Xml.Podcast do
       :channel,
       nil,
       [
-        {:title, nil, podcast.name},
+        {:title, nil, "Changelog++"},
         {:copyright, nil, "All rights reserved"},
-        {:link, nil, FeedView.podcast_url(podcast)},
-        {"atom:link",
-         %{href: PodcastView.feed_url(podcast), rel: "self", type: "application/rss+xml"}},
-        {"atom:link",
-         %{href: FeedView.podcast_url(podcast), rel: "alternate", type: "text/html"}},
+        {:link, nil, "https://changelog.com/++"},
         {:language, nil, "en-us"},
-        {:description, nil, FeedView.podcast_full_description(podcast)},
-        {"itunes:summary", nil, FeedView.podcast_full_description(podcast)},
-        {"itunes:explicit", nil, "no"},
-        {"itunes:image", %{href: PodcastView.cover_url(podcast)}},
+        {:description, nil, "Thank you for subscribing to Changelog++!"},
         {"itunes:author", nil, "Changelog Media"},
-        {"itunes:owner", nil, Xml.itunes_owner()},
-        {"itunes:keywords", nil, podcast.keywords},
+        {"itunes:block", nil, "yes"},
+        {"itunes:explicit", nil, "no"},
+        {"itunes:summary", nil, "Thank you for subscribing to Changelog++!"},
+        {"itunes:image", %{href: url(~p"/images/podcasts/plusplus-original.png")}},
         {"itunes:category", nil, Xml.itunes_category()},
         Xml.itunes_sub_category(podcast),
-        {"podcast:funding", %{url: "https://changelog.com/++"},
-         "Support our work by joining Changelog++"},
-        Enum.map(podcast.active_hosts, fn p -> Xml.person(p, "host") end),
         Enum.map(episodes, fn episode -> episode(podcast, episode) end)
       ]
       |> List.flatten()
@@ -56,12 +48,11 @@ defmodule ChangelogWeb.Xml.Podcast do
        {:guid, %{isPermaLink: false}, EpisodeView.guid(episode)},
        {:link, nil, url(~p"/#{episode.podcast.slug}/#{episode.slug}")},
        {:pubDate, nil, TimeView.rss(episode.published_at)},
-       {:enclosure,
-        %{url: EpisodeView.audio_url(episode), length: episode.audio_bytes, type: "audio/mpeg"}},
+       {:enclosure, enclosure(episode)},
        {:description, nil, SharedHelpers.md_to_text(episode.summary)},
        {"itunes:episodeType", nil, episode.type},
        {"itunes:image", %{href: EpisodeView.cover_url(episode)}},
-       {"itunes:duration", nil, TimeView.duration(episode.audio_duration)},
+       {"itunes:duration", nil, duration(episode)},
        {"itunes:explicit", nil, "no"},
        Enum.map(episode.hosts, fn p -> Xml.person(p, "host") end),
        Enum.map(episode.guests, fn p -> Xml.person(p, "guest") end),
@@ -72,13 +63,43 @@ defmodule ChangelogWeb.Xml.Podcast do
      ]}
   end
 
+  defp duration(episode) do
+    t =
+      if episode.plusplus_file do
+        episode.plusplus_duration
+      else
+        episode.audio_duration
+      end
+
+    TimeView.duration(t)
+  end
+
+  defp enclosure(episode) do
+    {url, bytes} =
+      if episode.plusplus_file do
+        {EpisodeView.plusplus_url(episode), episode.plusplus_bytes}
+      else
+        {EpisodeView.audio_url(episode), episode.audio_bytes}
+      end
+
+    %{url: url, length: bytes, type: "audio/mpeg"}
+  end
+
   defp chapters(%{audio_chapters: []}), do: nil
 
-  defp chapters(episode = %{audio_chapters: chapters}) do
+  defp chapters(episode) do
+    {chapters, url} =
+      if episode.plusplus_file && Enum.any?(episode.plusplus_chapters) do
+        {episode.plusplus_chapters,
+         url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters?pp=true")}
+      else
+        {episode.audio_chapters, url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters")}
+      end
+
     [
       {"podcast:chapters",
        %{
-         url: url(~p"/#{episode.podcast.slug}/#{episode.slug}/chapters"),
+         url: url,
          type: "application/json+chapters"
        }},
       Xml.Chapters.chapters(chapters, "psc")
@@ -86,15 +107,12 @@ defmodule ChangelogWeb.Xml.Podcast do
   end
 
   defp show_notes(episode) do
-    sponsors = episode.episode_sponsors
     participants = EpisodeView.participants(episode)
 
     data =
       [
         SharedHelpers.md_to_html(episode.summary),
         FeedView.discussion_link(episode),
-        ~s(<p><a href="#{url(~p"/++")}" rel="payment">Changelog++</a> #{EpisodeView.plusplus_cta(episode)} Join today!</p>),
-        show_notes_sponsors(sponsors),
         show_notes_featuring(participants),
         "<p>Show Notes:</p>",
         "<p>#{SharedHelpers.md_to_html(episode.notes)}</p>",
@@ -103,21 +121,6 @@ defmodule ChangelogWeb.Xml.Podcast do
       |> ListKit.compact_join("")
 
     {:cdata, data}
-  end
-
-  defp show_notes_sponsors([]), do: nil
-
-  defp show_notes_sponsors(sponsors) do
-    items =
-      Enum.map(sponsors, fn s ->
-        description = s.description |> SharedHelpers.md_to_html() |> SharedHelpers.sans_p_tags()
-
-        ~s"""
-        <li><a href="#{s.link_url}">#{s.title}</a> – #{description}</li>
-        """
-      end)
-
-    ["<p>Sponsors:</p><p><ul>", items, "</ul></p>"]
   end
 
   defp show_notes_featuring([]), do: nil

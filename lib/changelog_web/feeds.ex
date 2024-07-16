@@ -76,7 +76,10 @@ defmodule ChangelogWeb.Feeds do
   def generate("plusplus") do
     podcast = Podcast.get_by_slug!("master")
     episodes = get_episodes(podcast)
-    render("plusplus.xml", podcast: podcast, episodes: episodes)
+
+    podcast
+    |> Xml.Plusplus.document(episodes)
+    |> Xml.generate()
   end
 
   # Special case for "The Changelog" feed which gets its episodes from
@@ -86,13 +89,17 @@ defmodule ChangelogWeb.Feeds do
   def generate(%Feed{} = feed) do
     episodes = get_episodes(feed)
 
-    Xml.Feed.document(feed, episodes) |> Xml.generate()
+    feed
+    |> Xml.Feed.document(episodes)
+    |> Xml.generate()
   end
 
   def generate(%Podcast{} = podcast) do
     episodes = get_episodes(podcast)
 
-    Xml.Podcast.document(podcast, episodes) |> Xml.generate()
+    podcast
+    |> Xml.Podcast.document(episodes)
+    |> Xml.generate()
   end
 
   # When we have an unknown slug, look for a podcast followed by a feed
