@@ -70,7 +70,9 @@ defmodule ChangelogWeb.Feeds do
       |> Repo.all()
       |> Enum.map(&Post.load_news_item/1)
 
-    render("posts.xml", posts: posts)
+    posts
+    |> Xml.Posts.document()
+    |> Xml.generate()
   end
 
   def generate("plusplus") do

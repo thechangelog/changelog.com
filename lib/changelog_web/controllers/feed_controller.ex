@@ -57,40 +57,10 @@ defmodule ChangelogWeb.FeedController do
     end
   end
 
-  defp send_xml_resp(conn, document) do
-    conn
-    |> put_layout(false)
-    |> put_resp_header("access-control-allow-origin", "*")
-    |> put_resp_content_type("application/xml")
-    |> send_resp(200, document)
-  end
-
-  defp log_subscribers(conn = %{params: %{"slug" => slug}}, _) do
-    ua = ChangelogWeb.Plug.Conn.get_agent(conn)
-
-    case AgentKit.get_subscribers(ua) do
-      {:ok, {agent, subs}} ->
-        Logger.info("Known agent reporting: #{slug}, #{agent}, #{subs}")
-        Podcast.update_subscribers(slug, agent, subs)
-
-      {:error, :unknown_agent} ->
-        Logger.info("Unknown agent reporting: #{ua}")
-
-      {:error, _message} ->
-        false
-    end
-
-    conn
-  end
-
   def posts(conn, _params) do
     feed = ChangelogWeb.Feeds.generate("posts")
 
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> ResponseCache.cache_public(:timer.minutes(1))
-    |> send_resp(200, feed)
+    send_xml_resp(conn, feed)
   end
 
   def sitemap(conn, _params) do
@@ -143,5 +113,31 @@ defmodule ChangelogWeb.FeedController do
     |> assign(:topics, topics)
     |> ResponseCache.cache_public(:timer.minutes(5))
     |> render("sitemap.xml")
+  end
+
+  defp send_xml_resp(conn, document) do
+    conn
+    |> put_layout(false)
+    |> put_resp_header("access-control-allow-origin", "*")
+    |> put_resp_content_type("application/xml")
+    |> send_resp(200, document)
+  end
+
+  defp log_subscribers(conn = %{params: %{"slug" => slug}}, _) do
+    ua = ChangelogWeb.Plug.Conn.get_agent(conn)
+
+    case AgentKit.get_subscribers(ua) do
+      {:ok, {agent, subs}} ->
+        Logger.info("Known agent reporting: #{slug}, #{agent}, #{subs}")
+        Podcast.update_subscribers(slug, agent, subs)
+
+      {:error, :unknown_agent} ->
+        Logger.info("Unknown agent reporting: #{ua}")
+
+      {:error, _message} ->
+        false
+    end
+
+    conn
   end
 end
