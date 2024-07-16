@@ -40,22 +40,6 @@ defmodule ChangelogWeb.FeedControllerTest do
     assert conn.resp_body =~ episode.summary
   end
 
-  test "the news feed with just titles", %{conn: conn} do
-    post = insert(:published_post, body: "zomg")
-    post |> post_news_item() |> insert()
-    episode = insert(:published_episode, summary: "zomg")
-    episode |> episode_news_item() |> insert()
-
-    conn = get(conn, Routes.feed_path(conn, :news_titles))
-
-    assert conn.status == 200
-    assert valid_xml(conn)
-    assert conn.resp_body =~ post.title
-    assert conn.resp_body =~ episode.title
-    refute conn.resp_body =~ post.body
-    refute conn.resp_body =~ episode.summary
-  end
-
   test "the podcast feed", %{conn: conn} do
     p = insert(:podcast, description: "this & that", extended_description: "that & more stuff")
     e = insert(:published_episode, podcast: p)

@@ -29,15 +29,6 @@ defmodule ChangelogWeb.FeedController do
     send_xml_resp(conn, feed)
   end
 
-  def news_titles(conn, _params) do
-    conn
-    |> put_layout(false)
-    |> put_resp_content_type("application/xml")
-    |> assign(:items, NewsItem.latest_news_items())
-    |> ResponseCache.cache_public(:timer.minutes(2))
-    |> render("news_titles.xml")
-  end
-
   def podcast(conn, %{"slug" => "backstage"}) do
     send_resp(conn, :not_found, "")
   end
