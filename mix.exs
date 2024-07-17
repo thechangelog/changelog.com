@@ -55,7 +55,6 @@ defmodule Changelog.Mixfile do
       {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-7"},
       {:cmark, "~> 0.6"},
       {:floki, "~> 0.35.2"},
-      {:html_sanitize_ex, "~> 1.1"},
       {:waffle_ecto, "~> 0.0"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
