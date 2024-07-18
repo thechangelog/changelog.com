@@ -388,6 +388,12 @@ defmodule Changelog.Episode do
     |> Repo.update!()
   end
 
+  def socialize_url(episode, url) do
+    episode
+    |> change(socialize_url: url)
+    |> Repo.update!()
+  end
+
   def update_transcript(episode, text) do
     case Transcripts.Parser.parse_text(text, participants(episode)) do
       {:ok, parsed} ->

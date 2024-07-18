@@ -19,7 +19,10 @@ defmodule Changelog.Social do
 
     token = token_for_podcast(podcast)
 
-    Client.create_status(token, content)
+    case Client.create_status(token, content) do
+      {:ok, %{body: body}} -> Episode.socialize_url(episode, body["url"])
+      {:error, response} -> {:error, response}
+    end
   end
 
   defp ann_emoj, do: ~w(🙌 🎉 🔥 💥 🚢 🚀 ⚡️ ✨ 🤘) |> Enum.random()
@@ -49,7 +52,7 @@ defmodule Changelog.Social do
   end
 
   defp token_for_podcast(%{mastodon_token: nil}) do
-    Application.get_env(:changelog, :mastodon_api_token)
+    Client.default_token()
   end
 
   defp token_for_podcast(%{mastodon_token: token}), do: token

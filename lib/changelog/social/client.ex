@@ -28,6 +28,10 @@ defmodule Changelog.Social.Client do
     base_url() <> "/oauth/authorize?" <> params
   end
 
+  def default_token do
+    Application.get_env(:changelog, :mastodon_api_token)
+  end
+
   # once we have the one-time authorize code, use here for multi-use token
   def get_oauth_token(code) do
     body =
@@ -57,5 +61,9 @@ defmodule Changelog.Social.Client do
     ]
 
     post("/statuses", {:form, params}, [{"authorization", "Bearer #{token}"}])
+  end
+
+  def get_status(id) do
+    get("/statuses/#{id}", [{"authorization", "Bearer #{default_token()}"}])
   end
 end
