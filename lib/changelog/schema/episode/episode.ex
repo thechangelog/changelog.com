@@ -227,6 +227,8 @@ defmodule Changelog.Episode do
     |> validate_format(:socialize_url, Regexp.http(), message: Regexp.http_message())
     |> validate_published_has_published_at()
     |> validate_all_email_fields_together()
+    |> validate_audio_file_no_plusplus()
+    |> validate_plusplus_file_yes_plusplus()
     |> unique_constraint(:slug, name: :episodes_slug_podcast_id_index)
     |> cast_assoc(:episode_hosts)
     |> cast_assoc(:episode_guests)
@@ -533,6 +535,26 @@ defmodule Changelog.Episode do
 
     if content && (is_nil(subject) || is_nil(teaser)) do
       add_error(changeset, :email_content, "other email fields must be filled")
+    else
+      changeset
+    end
+  end
+
+  defp validate_audio_file_no_plusplus(changeset) do
+    audio_file = get_field(changeset, :audio_file)
+
+    if audio_file && String.contains?(audio_file.file_name, "++") do
+      add_error(changeset, :audio_file, "this looks like a ++ mp3 (filename)")
+    else
+      changeset
+    end
+  end
+
+  defp validate_plusplus_file_yes_plusplus(changeset) do
+    plusplus_file = get_field(changeset, :plusplus_file)
+
+    if plusplus_file && !String.contains?(plusplus_file.file_name, "++") do
+      add_error(changeset, :plusplus_file, "this doesn't look like a ++ mp3 (filename)")
     else
       changeset
     end

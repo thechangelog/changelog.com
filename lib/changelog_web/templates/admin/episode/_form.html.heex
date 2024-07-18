@@ -307,6 +307,7 @@
     <% end %>
 
     <%= file_input(f, :audio_file) %>
+    <%= AdminHelpers.error_message(f, :audio_file) %>
   </div>
 
   <% has_audio_chapters = Enum.any?(f.data.audio_chapters) %>
@@ -422,6 +423,7 @@
     <% end %>
 
     <%= file_input(f, :plusplus_file) %>
+    <%= AdminHelpers.error_message(f, :plusplus_file) %>
   </div>
 
   <% has_plusplus_chapters = Enum.any?(f.data.plusplus_chapters) %>
