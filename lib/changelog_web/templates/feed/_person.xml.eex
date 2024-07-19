@@ -1,1 +1,0 @@
-<podcast:person role="<%= @role %>" img="<%= @person |> PersonView.avatar_url(:large) |> html_escape() |> safe_to_string() %>" href="<%= PersonView.profile_url(@person) %>"><%= @person.name %></podcast:person>

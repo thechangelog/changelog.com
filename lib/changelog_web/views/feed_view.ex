@@ -2,14 +2,7 @@ defmodule ChangelogWeb.FeedView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Episode, ListKit, NewsItem, Podcast, Post, StringKit}
-
-  alias ChangelogWeb.{
-    EpisodeView,
-    NewsItemView,
-    PersonView,
-    PostView,
-    TimeView
-  }
+  alias ChangelogWeb.{EpisodeView, NewsItemView}
 
   def discussion_link(nil), do: ""
 
@@ -109,29 +102,6 @@ defmodule ChangelogWeb.FeedView do
     slug = if Podcast.is_interviews(podcast), do: "interviews", else: podcast.slug
     url(~p"/#{slug}")
   end
-
-  def render_item(item = %{object: episode = %Episode{}}, assigns) do
-    episode = episode |> Episode.preload_all() |> Map.put(:news_item, item)
-    render("_episode.xml", Map.merge(assigns, %{episode: episode, plusplus: false}))
-  end
-
-  def render_item(item = %{object: post = %Post{}}, assigns) do
-    post = post |> Map.put(:news_item, item)
-    render("_post.xml", Map.put(assigns, :post, post))
-  end
-
-  def render_item(item = %{object: nil}, assigns) do
-    render("_item.xml", Map.put(assigns, :item, item))
-  end
-
-  def render_title(_item = %{object: episode = %Episode{}}, assigns),
-    do: render("_episode_title.xml", Map.put(assigns, :episode, Episode.preload_all(episode)))
-
-  def render_title(_item = %{object: post = %Post{}}, assigns),
-    do: render("_post_title.xml", Map.put(assigns, :post, post))
-
-  def render_title(item = %{object: nil}, assigns),
-    do: render("_item_title.xml", Map.put(assigns, :item, item))
 
   def video_embed(item = %NewsItem{}) do
     if embed = NewsItemView.video_embed(item), do: safe_to_string(embed)

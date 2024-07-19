@@ -1,6 +1,0 @@
-<%= render("_item_title.xml", assigns) %>
-<description><![CDATA[
-<%= SharedHelpers.md_to_html(@item.story) %>
-<%= video_embed(@item) %>
-<%= image_link(@item) %>
-<%= discussion_link(@item) %>]]></description>

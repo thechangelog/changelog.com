@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Xml.Posts do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.ListKit
-  alias ChangelogWeb.{PostView, TimeView}
+  alias ChangelogWeb.{PostView, TimeView, Xml}
   alias ChangelogWeb.Helpers.SharedHelpers
 
   @doc """
@@ -11,10 +11,7 @@ defmodule ChangelogWeb.Xml.Posts do
   def document(posts) do
     {
       :rss,
-      %{
-        version: "2.0",
-        "xmlns:dc": "http://purl.org/dc/elements/1.1/"
-      },
+      Xml.posts_namespaces(),
       [channel(posts)]
     }
     |> XmlBuilder.document()

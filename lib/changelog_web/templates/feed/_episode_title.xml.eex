@@ -1,5 +1,0 @@
-<title><%= podcast_name_with_numbered_episode_title(@episode) |> html_escape() |> safe_to_string() %></title>
-<link><%= Routes.episode_url(@conn, :show, @episode.podcast.slug, @episode.slug) %></link>
-<guid isPermaLink="false"><%= EpisodeView.guid(@episode) %></guid>
-<pubDate><%= TimeView.rss(@episode.published_at) %></pubDate>
-<enclosure url="<%= EpisodeView.audio_url(@episode) %>" length="<%= @episode.audio_bytes %>" type="audio/mpeg" />

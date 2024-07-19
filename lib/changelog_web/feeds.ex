@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Feeds do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, PodPing, Post, Repo}
-  alias ChangelogWeb.{Endpoint, FeedView, Xml}
+  alias ChangelogWeb.Xml
 
   @doc """
   Generates a fresh feed XML and uploads it to R2
@@ -58,7 +58,10 @@ defmodule ChangelogWeb.Feeds do
   """
   def generate("feed") do
     items = NewsItem.latest_news_items()
-    render("news.xml", items: items)
+
+    items
+    |> Xml.News.document()
+    |> Xml.generate()
   end
 
   def generate("posts") do
@@ -128,10 +131,5 @@ defmodule ChangelogWeb.Feeds do
     |> Episode.exclude_transcript()
     |> Episode.preload_all()
     |> Repo.all()
-  end
-
-  defp render(template, assigns) do
-    assigns = [conn: Endpoint] ++ assigns
-    Phoenix.View.render_to_string(FeedView, template, assigns)
   end
 end

@@ -32,7 +32,6 @@ defmodule ChangelogWeb.FeedController do
   def plusplus(conn, %{"slug" => slug}) do
     if Application.get_env(:changelog, :plusplus_slug) == slug do
       feed = ChangelogWeb.Feeds.generate("plusplus")
-
       send_xml_resp(conn, feed)
     else
       send_resp(conn, :not_found, "")
@@ -41,7 +40,6 @@ defmodule ChangelogWeb.FeedController do
 
   def posts(conn, _params) do
     feed = ChangelogWeb.Feeds.generate("posts")
-
     send_xml_resp(conn, feed)
   end
 

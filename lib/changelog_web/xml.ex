@@ -53,6 +53,13 @@ defmodule ChangelogWeb.Xml do
     }
   end
 
+  def posts_namespaces do
+    %{
+      version: "2.0",
+      "xmlns:dc": "http://purl.org/dc/elements/1.1/"
+    }
+  end
+
   def socialize(%{socialize_url: nil}), do: nil
 
   def socialize(%{socialize_url: url}) do

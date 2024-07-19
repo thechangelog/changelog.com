@@ -1,5 +1,0 @@
-<title><%= escaped(@item.headline) %></title>
-<dc:creator><%= @item.logger.name %></dc:creator>
-<link><%= escaped(NewsItemView.news_item_url(@item)) %></link>
-<guid isPermaLink="false"><%= "changelog.com/news/" <> NewsItemView.hashid(@item) %></guid>
-<pubDate><%= TimeView.rss(@item.published_at) %></pubDate>
