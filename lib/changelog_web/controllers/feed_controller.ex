@@ -3,18 +3,9 @@ defmodule ChangelogWeb.FeedController do
 
   require Logger
 
-  alias Changelog.{
-    AgentKit,
-    Episode,
-    NewsItem,
-    NewsSource,
-    Person,
-    Podcast,
-    Post,
-    Topic
-  }
-
+  alias Changelog.{AgentKit, Podcast}
   alias ChangelogWeb.Plug.ResponseCache
+  alias ChangelogWeb.Xml
 
   plug :log_subscribers, "log podcast subscribers" when action in [:podcast]
   plug ResponseCache
@@ -55,55 +46,11 @@ defmodule ChangelogWeb.FeedController do
   end
 
   def sitemap(conn, _params) do
-    albums = Changelog.Album.all()
-
-    news_items =
-      NewsItem.published()
-      |> NewsItem.newest_first()
-      |> Repo.all()
-
-    news_sources =
-      NewsSource
-      |> Repo.all()
-
-    episodes =
-      Episode.published()
-      |> Episode.newest_first()
-      |> Episode.exclude_transcript()
-      |> Episode.preload_podcast()
-      |> Repo.all()
-
-    people =
-      Person.with_public_profile()
-      |> Repo.all()
-
-    podcasts =
-      Podcast.public()
-      |> Podcast.oldest_first()
-      |> Repo.all()
-      |> Kernel.++([Podcast.master()])
-
-    posts =
-      Post.published()
-      |> Post.newest_first()
-      |> Repo.all()
-
-    topics =
-      Topic.with_news_items()
-      |> Repo.all()
+    sitemap = Xml.Sitemap.document() |> Xml.generate()
 
     conn
-    |> put_layout(false)
-    |> assign(:albums, albums)
-    |> assign(:news_items, news_items)
-    |> assign(:news_sources, news_sources)
-    |> assign(:episodes, episodes)
-    |> assign(:people, people)
-    |> assign(:podcasts, podcasts)
-    |> assign(:posts, posts)
-    |> assign(:topics, topics)
-    |> ResponseCache.cache_public(:timer.minutes(5))
-    |> render("sitemap.xml")
+    |> ResponseCache.cache_public(:timer.minutes(3))
+    |> send_xml_resp(sitemap)
   end
 
   defp send_xml_resp(conn, document) do
