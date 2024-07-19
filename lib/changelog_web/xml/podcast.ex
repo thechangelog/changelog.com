@@ -42,14 +42,14 @@ defmodule ChangelogWeb.Xml.Podcast do
         {"podcast:funding", %{url: "https://changelog.com/++"},
          "Support our work by joining Changelog++"},
         Enum.map(podcast.active_hosts, fn p -> Xml.person(p, "host") end),
-        Enum.map(episodes, fn episode -> episode(podcast, episode) end)
+        Enum.map(episodes, fn episode -> item(podcast, episode) end)
       ]
       |> List.flatten()
       |> ListKit.compact()
     }
   end
 
-  def episode(podcast, episode) do
+  def item(podcast, episode) do
     {:item, nil,
      [
        {:title, nil, FeedView.episode_title(podcast, episode)},

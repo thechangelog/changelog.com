@@ -5,7 +5,9 @@ defmodule ChangelogWeb.Xml.Chapters do
   Returns a full XML document structure ready to be sent to Xml.generate/1
   """
   def document(chapters, namespace \\ nil) do
-    chapters(chapters, namespace) |> XmlBuilder.document()
+    chapters
+    |> chapters(namespace)
+    |> XmlBuilder.document()
   end
 
   def chapters(chapters, namespace \\ nil) do

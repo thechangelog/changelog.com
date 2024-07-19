@@ -32,14 +32,14 @@ defmodule ChangelogWeb.Xml.Feed do
         {"itunes:summary", nil, feed.description},
         {"itunes:image", %{href: PodcastView.cover_url(feed)}},
         {"itunes:owner", nil, Xml.itunes_owner()},
-        Enum.map(episodes, fn episode -> episode(feed, episode) end)
+        Enum.map(episodes, fn episode -> item(feed, episode) end)
       ]
       |> List.flatten()
       |> ListKit.compact()
     }
   end
 
-  def episode(feed, episode) do
+  def item(feed, episode) do
     {:item, nil,
      [
        {:title, nil, FeedView.custom_episode_title(feed, episode)},

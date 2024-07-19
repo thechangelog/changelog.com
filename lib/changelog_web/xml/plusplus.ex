@@ -32,16 +32,14 @@ defmodule ChangelogWeb.Xml.Plusplus do
         {"itunes:explicit", nil, "no"},
         {"itunes:summary", nil, "Thank you for subscribing to Changelog++!"},
         {"itunes:image", %{href: url(~p"/images/podcasts/plusplus-original.png")}},
-        {"itunes:category", nil, Xml.itunes_category()},
-        Xml.itunes_sub_category(podcast),
-        Enum.map(episodes, fn episode -> episode(podcast, episode) end)
+        Enum.map(episodes, fn episode -> item(podcast, episode) end)
       ]
       |> List.flatten()
       |> ListKit.compact()
     }
   end
 
-  def episode(podcast, episode) do
+  def item(podcast, episode) do
     {:item, nil,
      [
        {:title, nil, FeedView.episode_title(podcast, episode)},
