@@ -22,7 +22,7 @@ defmodule ChangelogWeb.Xml.Podcast do
       :channel,
       nil,
       [
-        {:title, nil, podcast.name},
+        {:title, nil, FeedView.podcast_name_with_metadata(podcast)},
         {:copyright, nil, "All rights reserved"},
         {:link, nil, FeedView.podcast_url(podcast)},
         {"atom:link",

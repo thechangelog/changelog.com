@@ -86,8 +86,8 @@ defmodule ChangelogWeb.FeedView do
       "founderstalk" -> "#{podcast.name}: Startups, CEOs, Leadership"
       "gotime" -> "#{podcast.name}: Golang, Software Engineering"
       "jsparty" -> "#{podcast.name}: JavaScript, CSS, Web Development"
-      "practicalai" -> "#{podcast.name}: Machine Learning, Data Science"
-      "shipit" -> "#{podcast.name} SRE, Platform Engineering, DevOps"
+      "practicalai" -> "#{podcast.name}: Machine Learning, Data Science, LLM"
+      "shipit" -> "#{podcast.name} Cloud, SRE, Platform Engineering"
       _else -> podcast.name
     end
   end
