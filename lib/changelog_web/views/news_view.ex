@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.NewsView do
-  import ChangelogWeb.Helpers.SharedHelpers, only: [word_count: 1, md_to_text: 1]
+  import ChangelogWeb.Helpers.SharedHelpers, only: [word_count: 1]
 
-  alias Changelog.Regexp
+  alias Changelog.{Regexp, StringKit}
 
   def headlines(episode) do
     content = episode.email_content || ""
@@ -11,7 +11,9 @@ defmodule ChangelogWeb.NewsView do
     content
     |> String.split(Regexp.new_line())
     |> Enum.filter(&String.match?(&1, Regexp.top_story()))
-    |> Enum.map(&md_to_text(&1))
+    |> Enum.map(&StringKit.md_delinkify/1)
+    |> Enum.map(&String.trim_leading(&1, "## "))
+    |> Enum.map(&String.trim_leading(&1, "### "))
     |> Enum.reject(fn s -> String.contains?(s, first) end)
   end
 
