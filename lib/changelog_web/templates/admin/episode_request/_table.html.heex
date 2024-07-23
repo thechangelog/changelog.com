@@ -35,7 +35,7 @@
         <%= link to: ~p"/admin/people/#{request.submitter}",
           title: "#{request.submitter.name} (#{submitter_name(request)})",
           data: [popup: true] do %>
-          <img class="ui avatar image" src="<%= PersonView.avatar_url(request.submitter) %>">&nbsp;
+              <img class="ui avatar image" src={PersonView.avatar_url(request.submitter)}>&nbsp;
         <% end %>
       </td>
     <% end %>
@@ -58,7 +58,7 @@
             <div class="menu">
             <%= if Policies.Admin.EpisodeRequest.edit(@current_user, podcast) do %>
               <%= AdminHelpers.dropdown_link("Edit Request",
-              to: ~p"/admin/podcasts/#{podcast.slug}/episode_requests/#{request}/edit") %>
+                to: ~p"/admin/podcasts/#{podcast.slug}/episode_requests/#{request}/edit?next=#{SharedHelpers.current_path(@conn)}") %>
             <% end %>
 
             <%= if Changelog.EpisodeRequest.is_undecided(request) && Policies.Admin.Episode.create(@current_user, podcast) do %>
