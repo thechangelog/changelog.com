@@ -27,14 +27,19 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:show)
   end
 
-  def img(conn, %{"slug" => slug}, podcast = %{slug: "news"}) do
+  def img(conn, params = %{"slug" => slug}, podcast = %{slug: "news"}) do
     episode =
       assoc(podcast, :episodes)
       |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
 
+    width = Map.get(params, "w", "1200")
+    height = Map.get(params, "h", "630")
+
     conn
     |> assign(:episode, episode)
+    |> assign(:width, width)
+    |> assign(:height, height)
     |> render(:img_news, layout: false)
   end
 

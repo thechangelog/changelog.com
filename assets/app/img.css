@@ -282,8 +282,6 @@ Changelog News
   background: var(--color-dark);
   margin: 0 auto 1rem;
   position: relative;
-  width: 1200px;
-  height: 630px;
 }
 
 .news-fade {
