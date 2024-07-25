@@ -223,9 +223,10 @@ u(document).handle("click", "[data-copy]", function (event) {
   const data = [new ClipboardItem({ [type]: blob })];
 
   navigator.clipboard.write(data).then(() => {
+    let preText = u(el).text();
     u(el).text("Copied!");
     setTimeout(() => {
-      u(el).text("Share");
+      u(el).text(preText);
     }, 1500);
   });
 });

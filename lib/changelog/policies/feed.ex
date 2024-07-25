@@ -7,6 +7,7 @@ defmodule Changelog.Policies.Feed do
   def create(actor), do: new(actor)
 
   def edit(actor, feed), do: is_owner(actor, feed)
+  def refresh(actor, feed), do: edit(actor, feed)
   def update(actor, feed), do: edit(actor, feed)
   def delete(actor, feed), do: edit(actor, feed)
 

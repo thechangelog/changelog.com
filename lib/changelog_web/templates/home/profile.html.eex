@@ -4,9 +4,9 @@
   <div class="flash flash--inline flash--success">
     <div class="flash-message">
   <%= if @current_user.public_profile do %>
-    <p>Your <%= link("public profile", to: PersonView.profile_path(@current_user)) %> page shows news you've contributed and podcasts you've been on.</p>
+    <p>Your <%= link("public profile", to: PersonView.profile_path(@current_user)) %> page shows podcast episodes you've been on.</p>
   <% else %>
-    <p>Profiles pages show news you've contributed and podcasts you've been on. Your profile is private.</p>
+    <p>Profiles pages show podcast episodes you've been on. Your profile is private.</p>
   <% end %>
     </div>
   </div>

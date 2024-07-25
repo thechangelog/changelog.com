@@ -197,6 +197,7 @@ defmodule ChangelogWeb.Router do
     post "/~/unsubscribe", HomeController, :unsubscribe
 
     resources "/~/feeds", Home.FeedController
+    post "/~/feeds/:id/refresh", Home.FeedController, :refresh
 
     get "/in", AuthController, :new, as: :sign_in
     post "/in", AuthController, :new, as: :sign_in

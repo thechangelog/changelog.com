@@ -1,42 +1,47 @@
 <div class="page_basic">
   <%= render(HomeView, "_nav.html", assigns) %>
-  <div class="actions">
-    <%= link("Add Feed", to: ~p"/~/feeds/new", class: "button") %>
-  </div>
 
   <div class="richtext">
-    <table>
+  <%= if Enum.any?(@feeds) do %>
+    <table><% widths = %{feed: 18, cover: 12, includes: 50, actions: 20} %>
       <thead>
         <tr>
-          <td style="width: 18%">Feed</td>
-          <td style="width: 50%">Includes</td>
-          <td style="width: 32%; text-align: right;">Actions</td>
+          <th style={"width: #{widths.feed}%"}>Feed</th>
+          <th style={"width: #{widths.cover}%"}>Cover</th>
+          <th style={"width: #{widths.includes}%"}>Includes</th>
+          <th style={"width: #{widths.actions}%; text-align: right;"}>Actions</th>
         </tr>
       </thead>
 
       <tbody>
       <%= for feed <- @feeds do %>
         <tr>
-          <td style="width: 18%">
-            <img src={PodcastView.cover_url(feed, :small)} style="display: inline-block; width: 50px; margin: 0 auto;">
-            <br/>
-            <%= feed.name %>
+          <td style={"width: #{widths.feed}%"}><%= feed.name %></td>
+          <td style={"width: #{widths.cover}%"}>
+            <img src={PodcastView.cover_url(feed, :small)} width="50" height="50">
           </td>
-          <td style="width: 50%">
+          <td style={"width: #{widths.includes}%"}>
           <%= for podcast <- @podcasts do %>
             <%= if Enum.member?(feed.podcast_ids, podcast.id) do %>
             <img src={PodcastView.cover_url(podcast, :small)} style="display: inline-block; width: 35px; margin: 0 auto;">
             <% end %>
           <% end %>
           </td>
-          <td style="width: 32%; text-align: right;">
+          <td style={"width: #{widths.actions}%; text-align: right;"}>
+          <a href={~p"/feeds/#{feed.slug}"} data-copy={~p"/feeds/#{feed.slug}"}>Get URL</a>
+          <br/>
+          <%= link("Refresh", to: ~p"/~/feeds/#{feed}/refresh", method: :post) %>
+          <br/>
           <%= link("Edit", to: ~p"/~/feeds/#{feed}/edit") %>
-          <%= link("Refresh", to: ~p"/~/feeds/#{feed}/edit") %>
-          <%= link("Delete", to: ~p"/~/feeds/#{feed}", method: :delete, data: [confirm: "Are you sure?"]) %>
           </td>
         </tr>
       <% end %>
       </tbody>
     </table>
+    <% end %>
+
+  <div class="actions" style="float: right; margin-bottom: 15px;">
+    <%= link("Add Feed", to: ~p"/~/feeds/new", class: "button_large") %>
+  </div>
   </div>
 </div>

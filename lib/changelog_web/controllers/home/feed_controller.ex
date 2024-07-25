@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Home.FeedController do
 
     conn
     |> assign(:feeds, feeds)
-    |> render()
+    |> render(:index)
   end
 
   def new(conn, _params) do
@@ -37,9 +37,6 @@ defmodule ChangelogWeb.Home.FeedController do
         |> redirect(to: ~p"/~/feeds")
 
       {:error, changeset} ->
-        require IEx
-        IEx.pry()
-
         conn
         |> put_flash(:error, "There was a problem saving your feed. 😭")
         |> assign(:changeset, changeset)
@@ -57,7 +54,7 @@ defmodule ChangelogWeb.Home.FeedController do
 
     case Repo.update(changeset) do
       {:ok, feed} ->
-        params = replace_next_edit_path(params, ~p"/~/feeds/#{feed}/edit")
+        FeedUpdater.queue(feed)
 
         conn
         |> put_flash(:success, "Your feed has been updated! ✨")
@@ -70,20 +67,20 @@ defmodule ChangelogWeb.Home.FeedController do
     end
   end
 
-  def delete(conn = %{assigns: %{feed: feed}}, _params) do
+  def delete(conn = %{assigns: %{feed: feed}}, params) do
     Repo.delete!(feed)
 
     conn
     |> put_flash(:success, "Your feed has been put out to pasture. 🐑")
-    |> redirect(to: ~p"/~/feeds")
+    |> redirect_next(params, ~p"/~/feeds")
   end
 
-  def refresh(conn = %{assigns: %{feed: feed}}, _params) do
+  def refresh(conn = %{assigns: %{feed: feed}}, params) do
     FeedUpdater.queue(feed)
 
     conn
     |> put_flash(:success, "Your feed is being rebuilt as we speak. 🥂")
-    |> redirect(to: ~p"/~/feeds")
+    |> redirect_next(params, ~p"/~/feeds")
   end
 
   defp preload_current_user_extras(conn = %{assigns: %{current_user: me}}, _) do
@@ -95,6 +92,11 @@ defmodule ChangelogWeb.Home.FeedController do
     assign(conn, :current_user, me)
   end
 
+  defp assign_feed(conn = %{params: %{"id" => id}}, _params) do
+    feed = Feed |> Repo.get(id) |> Feed.preload_all()
+    assign(conn, :feed, feed)
+  end
+
   defp assign_podcasts(conn, _params) do
     podcasts =
       Podcast.active()
@@ -102,10 +104,5 @@ defmodule ChangelogWeb.Home.FeedController do
       |> Repo.all()
 
     assign(conn, :podcasts, podcasts)
-  end
-
-  defp assign_feed(conn = %{params: %{"id" => id}}, _params) do
-    feed = Feed |> Repo.get(id) |> Feed.preload_all()
-    assign(conn, :feed, feed)
   end
 end

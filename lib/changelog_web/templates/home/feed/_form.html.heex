@@ -89,7 +89,12 @@
   </div>
 
   <div class="form-submit">
-    <p class="form-submit-toc"></p>
+    <p class="form-submit-toc">
+    <%= if f.data.id do %>
+      <%= link("Delete this feed", to: ~p"/~/feeds/#{f.data.id}", method: :delete, data: [confirm: "Are you sure?"]) %>
+    <% end %>
+    </p>
+
     <div>
       <input type="submit" value="Save">
       <div class="form_submit_responses"></div>
