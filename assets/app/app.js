@@ -131,6 +131,47 @@ u(document).handle("click", ".js-subscribe-all", function (event) {
   });
 });
 
+// Manage custom feed podcasts
+u(document).on("click", ".js-feed-podcast_ids button", function (event) {
+  event.preventDefault();
+  let podcast = u(event.target).closest("button");
+  let id = podcast.data("id");
+
+  if (podcast.hasClass("disabled")) {
+    podcast.removeClass("disabled");
+    podcast.append(
+      `<input type="hidden" name="feed[podcast_ids][]" value="${id}">`
+    );
+  } else {
+    podcast.addClass("disabled");
+    podcast.find("input").remove();
+  }
+});
+
+// Manage custom feed covers
+u(document).on("change", ".js-feed-cover_select", function (event) {
+  let coverUrl = event.target.value;
+
+  u(".js-feed-cover_field").find("img").attr("src", coverUrl);
+  u(".js-feed-cover_field").find("input[type=hidden]").first().value = coverUrl;
+});
+
+u(document).on(
+  "change",
+  ".js-feed-cover_field input[type=file]",
+  function (event) {
+    let file = event.target.files[0];
+
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        u(".js-feed-cover_field").find("img").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+);
+
 u(document).handle("click", ".js-toggle_element", function (event) {
   const href = u(event.target).attr("href");
   u(href).toggleClass("is-hidden");

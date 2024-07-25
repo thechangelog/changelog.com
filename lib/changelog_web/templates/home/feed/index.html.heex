@@ -1,0 +1,42 @@
+<div class="page_basic">
+  <%= render(HomeView, "_nav.html", assigns) %>
+  <div class="actions">
+    <%= link("Add Feed", to: ~p"/~/feeds/new", class: "button") %>
+  </div>
+
+  <div class="richtext">
+    <table>
+      <thead>
+        <tr>
+          <td style="width: 18%">Feed</td>
+          <td style="width: 50%">Includes</td>
+          <td style="width: 32%; text-align: right;">Actions</td>
+        </tr>
+      </thead>
+
+      <tbody>
+      <%= for feed <- @feeds do %>
+        <tr>
+          <td style="width: 18%">
+            <img src={PodcastView.cover_url(feed, :small)} style="display: inline-block; width: 50px; margin: 0 auto;">
+            <br/>
+            <%= feed.name %>
+          </td>
+          <td style="width: 50%">
+          <%= for podcast <- @podcasts do %>
+            <%= if Enum.member?(feed.podcast_ids, podcast.id) do %>
+            <img src={PodcastView.cover_url(podcast, :small)} style="display: inline-block; width: 35px; margin: 0 auto;">
+            <% end %>
+          <% end %>
+          </td>
+          <td style="width: 32%; text-align: right;">
+          <%= link("Edit", to: ~p"/~/feeds/#{feed}/edit") %>
+          <%= link("Refresh", to: ~p"/~/feeds/#{feed}/edit") %>
+          <%= link("Delete", to: ~p"/~/feeds/#{feed}", method: :delete, data: [confirm: "Are you sure?"]) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<nav class="subnav">
+  <ul class="subnav-list">
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, ["home-show"])}"}>
+      <%= link("Subscriptions", to: ~p"/~") %>
+    </li>
+  <%= if Policies.Feed.index(@current_user) do %>
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, ["feed-"])}"}>
+      <%= link("Custom Feeds", to: ~p"/~/feeds") %>
+    </li>
+  <% end %>
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, ["home-profile"])}"}>
+      <%= link to: ~p"/~/profile" do %>
+        Public Profile <%= if !@current_user.public_profile, do: "🤫" %>
+      <% end %>
+    </li>
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, ["home-account"])}"}>
+      <%= link("Account Settings", to: ~p"/~/account") %>
+    </li>
+  <%= for sponsor <- @current_user.sponsors do %>
+    <li class="subnav-list-item">
+      <%= link(sponsor.name, to: ~p"/sponsor/#{sponsor.id}") %>
+    </li>
+  <% end %>
+  </ul>
+</nav>

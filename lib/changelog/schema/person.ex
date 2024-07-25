@@ -8,6 +8,7 @@ defmodule Changelog.Person do
     EpisodeHost,
     EpisodeRequest,
     Faker,
+    Feed,
     Files,
     Membership,
     NewsItem,
@@ -95,6 +96,8 @@ defmodule Changelog.Person do
     has_many :comments, NewsItemComment, foreign_key: :author_id
     has_many :subscriptions, Subscription, where: [unsubscribed_at: nil], on_delete: :delete_all
     has_many :episode_requests, EpisodeRequest, foreign_key: :submitter_id, on_delete: :delete_all
+
+    has_many :feeds, Feed, foreign_key: :owner_id
 
     timestamps()
   end

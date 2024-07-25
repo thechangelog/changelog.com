@@ -1,0 +1,98 @@
+<%= form_for @changeset, @action, [class: "form", multipart: true], fn f -> %>
+  <div class="form-element_wrap form-element_wrap--2">
+    <div class={"form-element #{PublicHelpers.error_class(f, :name)}"}>
+      <label>Name <span>*</span></label>
+      <%= text_input(f, :name, placeholder: "Changelog++") %>
+      <%= PublicHelpers.error_message(f, :name) %>
+    </div>
+
+    <div class={"form-element #{PublicHelpers.error_class(f, :description)}"}>
+      <label>Description</label>
+      <%= text_input(f, :description, placeholder: "It's better!") %>
+      <%= PublicHelpers.error_message(f, :description) %>
+      <p class="form-element-note">Add a summary or tagline to your feed.</p>
+    </div>
+  </div>
+
+  <div class="form-element_wrap form-element_wrap--2">
+    <div class={"form-element #{PublicHelpers.error_class(f, :cover)} js-feed-cover_field"} style="position: relative;">
+      <label>Upload Cover Art</label>
+      <%= hidden_input(f, :cover, value: nil) %>
+      <%= file_input(f, :cover) %>
+      <%= PublicHelpers.error_message(f, :cover) %>
+      <p class="form-element-note">Ideal size is 3000px by 3000px.</p>
+      <%= SharedHelpers.maybe_lazy_image(@conn, PodcastView.cover_url(@changeset.data, :medium), @changeset.data.name, width: 67, height: 67, style: "position: absolute; top: 0; right: 0;") %>
+    </div>
+    <div class="form-element">
+      <label>👈 Or use ours</label>
+
+      <select class="js-feed-cover_select">
+        <option></option>
+      <%= for podcast <- [Podcast.changelog(), Podcast.plusplus()] ++ @podcasts do %>
+        <option value={PodcastView.cover_url(podcast, :original)}><%= podcast.name %></option>
+      <% end %>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-element_wrap form-element_wrap--2">
+    <div class={"form-element #{PublicHelpers.error_class(f, :title_format)}"}>
+      <label>Title Format</label>
+      <%= text_input(f, :title_format, placeholder: "{title} {subtitle} ({podcast} #\{number\})") %>
+      <%= PublicHelpers.error_message(f, :title_format) %>
+      <p class="form-element-note">Leave this empty if you just want regular episode titles. You can use these fields: title, subtitle, podcast, number</p>
+    </div>
+
+    <div class={"form-element #{PublicHelpers.error_class(f, :starts_at)}"}>
+      <label>Starts At</label>
+      <%= date_input(f, :starts_at) %>
+      <%= PublicHelpers.error_message(f, :starts_at) %>
+      <p class="form-element-note">Feed will only include episodes published after this date. Leave blank to include all episodes.</p>
+    </div>
+  </div>
+
+  <label>Podcasts</label>
+  <div class="form-grid js-feed-podcast_ids">
+  <%= for podcast <- @podcasts do %>
+    <div class="form-grid-card">
+    <%= if Enum.member?(f.data.podcast_ids, podcast.id) do %>
+      <button class="podcast-image" href="javascript:void(0);" data-id={podcast.id}>
+        <img src={PodcastView.cover_url(podcast)}>
+        <input type="hidden" name="feed[podcast_ids][]" value={podcast.id}>
+      </button>
+    <% else %>
+      <button class="disabled podcast-image" href="javascript:void(0);" data-id={podcast.id}>
+        <img src={PodcastView.cover_url(podcast)}>
+      </button>
+    <% end %>
+    </div>
+  <% end %>
+  </div>
+  <p class="form-element-note">Select which pods you want to include in this feed.</p>
+
+  <div class="form-checklist">
+    <div class={"form-checklist-item #{PublicHelpers.error_class(f, :plusplus)}"}>
+      <label>
+        <%= checkbox(f, :plusplus) %>
+        <span class="form-checklist-item-box"></span>
+        <span class="form-checklist-item-text">This feed should contain Changelog++ (ad-free, extended) audio</span>
+      </label>
+    </div>
+
+    <div class={"form-checklist-item #{PublicHelpers.error_class(f, :autosub)}"}>
+      <label>
+        <%= checkbox(f, :autosub) %>
+        <span class="form-checklist-item-box"></span>
+        <span class="form-checklist-item-text">Automatically add new podcasts we launch to this feed</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-submit">
+    <p class="form-submit-toc"></p>
+    <div>
+      <input type="submit" value="Save">
+      <div class="form_submit_responses"></div>
+    </div>
+  </div>
+<% end %>

@@ -9,10 +9,11 @@
       <%= if @current_user.active_membership do %>
         <h3>It's better!</h3>
 
-        <p>Thank you for supporting our work with your hard-earned cash! <strong>Coming Soon:</strong> You'll be able to create and manage <strong>custom feeds</strong> right here on changelog.com.</p>
+        <p>Thank you for supporting our work with your hard-earned cash! <strong>Try it out:</strong> You can now create and manage your own <strong>custom feeds</strong> right here on changelog.com.</p>
 
         <div class="account_ctas-item-info-buttons">
           <%= link("Launch Supercast", to: "https://changelog.com/++", target: "_blank") %>
+          <%= link("Manage Feeds", to: ~p"/~/feeds") %>
         </div>
       <% else %>
         <h3>Join Changelog++</h3>

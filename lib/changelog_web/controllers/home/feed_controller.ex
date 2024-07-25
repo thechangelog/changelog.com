@@ -1,0 +1,111 @@
+defmodule ChangelogWeb.Home.FeedController do
+  use ChangelogWeb, :controller
+
+  alias Changelog.{Feed, Podcast}
+  alias Changelog.ObanWorkers.FeedUpdater
+
+  plug :assign_podcasts when action in [:index, :new, :create, :edit, :update]
+  plug :assign_feed when action in [:edit, :update, :delete, :refresh]
+  plug Authorize, [Policies.Feed, :feed]
+  plug :preload_current_user_extras
+
+  def index(conn = %{assigns: %{current_user: me}}, _params) do
+    feeds = me |> assoc(:feeds) |> Repo.all()
+
+    conn
+    |> assign(:feeds, feeds)
+    |> render()
+  end
+
+  def new(conn, _params) do
+    changeset = Feed.insert_changeset(%Feed{})
+
+    conn
+    |> assign(:changeset, changeset)
+    |> render(:new)
+  end
+
+  def create(conn = %{assigns: %{current_user: user}}, %{"feed" => feed_params}) do
+    changeset = Feed.insert_changeset(%Feed{owner_id: user.id}, feed_params)
+
+    case Repo.insert(changeset) do
+      {:ok, feed} ->
+        Repo.update(Feed.file_changeset(feed, feed_params))
+
+        conn
+        |> put_flash(:success, "Your new feed has been created! 👏")
+        |> redirect(to: ~p"/~/feeds")
+
+      {:error, changeset} ->
+        require IEx
+        IEx.pry()
+
+        conn
+        |> put_flash(:error, "There was a problem saving your feed. 😭")
+        |> assign(:changeset, changeset)
+        |> render(:new)
+    end
+  end
+
+  def edit(conn = %{assigns: %{feed: feed}}, _params) do
+    changeset = Feed.update_changeset(feed)
+    render(conn, :edit, feed: feed, changeset: changeset)
+  end
+
+  def update(conn = %{assigns: %{feed: feed}}, params = %{"feed" => feed_params}) do
+    changeset = Feed.update_changeset(feed, feed_params)
+
+    case Repo.update(changeset) do
+      {:ok, feed} ->
+        params = replace_next_edit_path(params, ~p"/~/feeds/#{feed}/edit")
+
+        conn
+        |> put_flash(:success, "Your feed has been updated! ✨")
+        |> redirect_next(params, ~p"/~/feeds")
+
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, "There was a problem updating your feed. 😭")
+        |> render(:edit, feed: feed, changeset: changeset)
+    end
+  end
+
+  def delete(conn = %{assigns: %{feed: feed}}, _params) do
+    Repo.delete!(feed)
+
+    conn
+    |> put_flash(:success, "Your feed has been put out to pasture. 🐑")
+    |> redirect(to: ~p"/~/feeds")
+  end
+
+  def refresh(conn = %{assigns: %{feed: feed}}, _params) do
+    FeedUpdater.queue(feed)
+
+    conn
+    |> put_flash(:success, "Your feed is being rebuilt as we speak. 🥂")
+    |> redirect(to: ~p"/~/feeds")
+  end
+
+  defp preload_current_user_extras(conn = %{assigns: %{current_user: me}}, _) do
+    me =
+      me
+      |> Repo.preload(:sponsors)
+      |> Repo.preload(:active_membership)
+
+    assign(conn, :current_user, me)
+  end
+
+  defp assign_podcasts(conn, _params) do
+    podcasts =
+      Podcast.active()
+      |> Podcast.by_position()
+      |> Repo.all()
+
+    assign(conn, :podcasts, podcasts)
+  end
+
+  defp assign_feed(conn = %{params: %{"id" => id}}, _params) do
+    feed = Feed |> Repo.get(id) |> Feed.preload_all()
+    assign(conn, :feed, feed)
+  end
+end

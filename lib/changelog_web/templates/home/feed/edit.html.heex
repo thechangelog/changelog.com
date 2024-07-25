@@ -1,0 +1,6 @@
+<div class="page_basic">
+  <%= render(HomeView, "_nav.html", assigns) %>
+  <h1>Editing <i><%= @feed.name %></i></h1>
+
+  <%= render("_form.html", Map.merge(assigns, %{action: ~p"/~/feeds/#{@feed}"})) %>
+</div>
