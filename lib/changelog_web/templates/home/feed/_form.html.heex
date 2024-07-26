@@ -2,7 +2,7 @@
   <div class="form-element_wrap form-element_wrap--2">
     <div class={"form-element #{PublicHelpers.error_class(f, :name)}"}>
       <label>Name <span>*</span></label>
-      <%= text_input(f, :name, placeholder: "Changelog++") %>
+      <%= text_input(f, :name, placeholder: "Changelog++", autocomplete: "off") %>
       <%= PublicHelpers.error_message(f, :name) %>
     </div>
 

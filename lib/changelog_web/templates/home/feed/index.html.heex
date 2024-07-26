@@ -1,8 +1,8 @@
 <div class="page_basic">
   <%= render(HomeView, "_nav.html", assigns) %>
 
-  <div class="richtext">
   <%= if Enum.any?(@feeds) do %>
+  <div class="richtext">
     <table><% widths = %{feed: 18, cover: 12, includes: 50, actions: 20} %>
       <thead>
         <tr>
@@ -38,10 +38,26 @@
       <% end %>
       </tbody>
     </table>
-    <% end %>
 
-  <div class="actions" style="float: right; margin-bottom: 15px;">
-    <%= link("Add Feed", to: ~p"/~/feeds/new", class: "button_large") %>
+    <div class="actions" style="float: right; margin-bottom: 15px;">
+      <%= link("Add Feed", to: ~p"/~/feeds/new", class: "button_large") %>
+    </div>
   </div>
+  <% else %>
+  <div class="account_ctas">
+    <div class="account_ctas-item">
+      <img class="account_ctas-item-icon" src={url(~p"/images/podcasts/plusplus-medium.png")} width="50" height="50" alt="Changelog++ Art"/>
+
+      <div class="account_ctas-item-info">
+        <h3>Custom feeds are here!?</h3>
+
+        <p>Yes! <strike>Jerod has</strike> We have <em>finally</em> rolled out the ability to create your own customized feeds, so you can enjoy Changelog pods <em>exactly</em> how you want. Create as many as you like, pop 'em in your podcast app of choice, and <a href="https://github.com/thechangelog/changelog.com/issues/new">let us know</a> if you hit any issues along the way!</p>
+
+        <div class="account_ctas-item-info-buttons">
+          <%= link("Get started", to: ~p"/~/feeds/new") %>
+        </div>
+      </div>
+    </div>
   </div>
+  <% end %>
 </div>
