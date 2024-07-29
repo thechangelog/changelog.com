@@ -245,6 +245,21 @@ defmodule Changelog.Factory do
     }
   end
 
+  def member_factory do
+    %Changelog.Person{
+      person_factory()
+      | active_membership: build(:membership)
+    }
+  end
+
+  def membership_factory do
+    %Changelog.Membership{
+      status: "active",
+      started_at: hours_ago(1),
+      subscription_id: sequence(:subscription_id, &"member-#{&1}")
+    }
+  end
+
   def podcast_factory do
     %Changelog.Podcast{
       name: sequence(:name, &"Show #{&1}"),

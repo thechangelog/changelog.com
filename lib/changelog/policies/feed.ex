@@ -16,11 +16,14 @@ defmodule Changelog.Policies.Feed do
   end
 
   defp is_active_member(nil), do: false
-  defp is_active_member(actor), do: Map.get(actor, :active_membership, false)
+  defp is_active_member(actor), do: is_map(Map.get(actor, :active_membership))
+
+  defp is_owner(nil, _feed), do: false
 
   defp is_owner(actor, feed) do
     feed
-    |> Map.get(:owner, nil)
-    |> Kernel.==(actor)
+    |> Map.get(:owner, %{})
+    |> Map.get(:id)
+    |> Kernel.==(actor.id)
   end
 end

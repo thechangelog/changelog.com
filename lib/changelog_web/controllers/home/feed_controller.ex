@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Home.FeedController do
   alias Changelog.{Feed, Podcast}
   alias Changelog.ObanWorkers.FeedUpdater
 
-  plug :assign_podcasts when action in [:index, :new, :create, :edit, :update]
+  plug :assign_podcasts
   plug :assign_feed when action in [:edit, :update, :delete, :refresh]
   plug Authorize, [Policies.Feed, :feed]
   plug :preload_current_user_extras
