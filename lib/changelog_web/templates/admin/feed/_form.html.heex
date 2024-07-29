@@ -62,12 +62,12 @@
     <%= AdminHelpers.error_message(f, :title_format) %>
   </div>
 
-  <div class={"field #{AdminHelpers.error_class(f, :starts_at)}"}>
-    <%= label(f, :starts_at) do %>
-      Starts At <%= AdminHelpers.help_icon("Feed will only include episodes published after this time") %>
+  <div class={"field #{AdminHelpers.error_class(f, :starts_on)}"}>
+    <%= label(f, :starts_on) do %>
+      Starts On <%= AdminHelpers.help_icon("Feed will only include episodes published on or after this date") %>
     <% end %>
-    <%= AdminHelpers.semantic_calendar_field(f, :starts_at) %>
-    <%= AdminHelpers.error_message(f, :starts_at) %>
+    <%= date_input f, :starts_on %>
+    <%= AdminHelpers.error_message(f, :starts_on) %>
   </div>
 
   <div class="fields">

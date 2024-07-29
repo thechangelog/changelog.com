@@ -43,11 +43,11 @@
       <p class="form-element-note">Leave this empty if you just want regular episode titles. You can use these fields: title, subtitle, podcast, number</p>
     </div>
 
-    <div class={"form-element #{PublicHelpers.error_class(f, :starts_at)}"}>
-      <label>Starts At</label>
-      <%= date_input(f, :starts_at) %>
-      <%= PublicHelpers.error_message(f, :starts_at) %>
-      <p class="form-element-note">Feed will only include episodes published after this date. Leave blank to include all episodes.</p>
+    <div class={"form-element #{PublicHelpers.error_class(f, :starts_on)}"}>
+      <label>Starts On</label>
+      <%= date_input(f, :starts_on) %>
+      <%= PublicHelpers.error_message(f, :starts_on) %>
+      <p class="form-element-note">Feed will only include episodes published on/after this date. Leave blank to include all episodes.</p>
     </div>
   </div>
 

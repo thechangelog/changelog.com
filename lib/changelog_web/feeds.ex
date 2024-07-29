@@ -117,7 +117,7 @@ defmodule ChangelogWeb.Feeds do
     |> Episode.with_ids(feed.podcast_ids, :podcast_id)
     |> Episode.published()
     |> Episode.newest_first()
-    |> Episode.newer_than(feed.starts_at, :published_at)
+    |> Episode.newer_than(Feed.starts_on_time(feed), :published_at)
     |> Episode.exclude_transcript()
     |> Episode.preload_all()
     |> Repo.all()

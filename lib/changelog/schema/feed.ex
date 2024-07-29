@@ -10,7 +10,8 @@ defmodule Changelog.Feed do
     field :title_format, :string
     field :plusplus, :boolean, default: false
     field :autosub, :boolean, default: true
-    field :starts_at, :utc_datetime
+    field :starts_on, :date
+    field :refreshed_at, :utc_datetime
     field :cover, Files.Cover.Type
 
     field :podcast_ids, {:array, :integer}, default: []
@@ -35,7 +36,7 @@ defmodule Changelog.Feed do
     feed
     |> cast(
       attrs,
-      ~w(name description title_format plusplus autosub starts_at podcast_ids person_ids owner_id)a
+      ~w(name description title_format plusplus autosub starts_on podcast_ids person_ids owner_id)a
     )
     |> put_random_slug()
     |> validate_required([:name, :slug, :owner_id])
@@ -55,6 +56,12 @@ defmodule Changelog.Feed do
 
   def preload_owner(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :owner)
   def preload_owner(feed), do: Repo.preload(feed, :owner)
+
+  def starts_on_time(%{starts_on: nil}), do: nil
+
+  def starts_on_time(%{starts_on: date}) do
+    Timex.beginning_of_day(date)
+  end
 
   defp put_random_slug(changeset, length \\ 16)
 

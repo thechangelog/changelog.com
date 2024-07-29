@@ -4,7 +4,7 @@
       <th>Owner</th>
       <th>Cover</th>
       <th>Name</th>
-      <th>Starts at</th>
+      <th>Starts on</th>
       <th>Podcasts</th>
       <th></th>
     </tr>
@@ -32,7 +32,7 @@
         <span class="ui tiny green basic label">auto</span>
       <% end %>
       </td>
-      <td><%= AdminHelpers.ts(feed.starts_at) %></td>
+      <td><%= TimeView.hacker_date(feed.starts_on) %></td>
       <td class="ui mini images">
       <%= for podcast <- @podcasts do %>
         <%= if Enum.member?(feed.podcast_ids, podcast.id) do %>

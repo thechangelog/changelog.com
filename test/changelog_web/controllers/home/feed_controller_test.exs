@@ -3,7 +3,7 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
 
   alias Changelog.Feed
 
-  @valid_attrs %{name: "My Custom Feed"}
+  @valid_attrs %{name: "My Custom Feed", starts_at: "2024-01-01"}
   @invalid_attrs %{name: ""}
 
   @tag :as_inserted_member
