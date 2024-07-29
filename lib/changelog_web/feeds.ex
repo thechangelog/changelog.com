@@ -10,6 +10,7 @@ defmodule ChangelogWeb.Feeds do
   def refresh(feed = %Feed{slug: slug}) do
     content = generate(feed)
     upload(content, slug)
+    Feed.refresh!(feed)
     notify_services(feed)
 
     :ok

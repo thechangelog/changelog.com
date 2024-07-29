@@ -57,6 +57,12 @@ defmodule Changelog.Feed do
   def preload_owner(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :owner)
   def preload_owner(feed), do: Repo.preload(feed, :owner)
 
+  def refresh!(feed) do
+    # using update_all to avoid auto `updated_at` change
+    query = from(q in __MODULE__, where: q.id == ^feed.id)
+    Repo.update_all(query, set: [refreshed_at: now_in_seconds()])
+  end
+
   def starts_on_time(%{starts_on: nil}), do: nil
 
   def starts_on_time(%{starts_on: date}) do
