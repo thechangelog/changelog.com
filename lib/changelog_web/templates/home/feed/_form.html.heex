@@ -38,9 +38,9 @@
   <div class="form-element_wrap form-element_wrap--2">
     <div class={"form-element #{PublicHelpers.error_class(f, :title_format)}"}>
       <label>Title Format</label>
-      <%= text_input(f, :title_format, placeholder: "{title} {subtitle} ({podcast} #\{number\})") %>
+      <%= text_input(f, :title_format) %>
       <%= PublicHelpers.error_message(f, :title_format) %>
-      <p class="form-element-note">Leave this empty if you just want regular episode titles. You can use these fields: title, subtitle, podcast, number</p>
+      <p class="form-element-note">Leave this empty if you just want regular episode titles. Fields: {title}, {subtitle}, {podcast}, {number}</p>
     </div>
 
     <div class={"form-element #{PublicHelpers.error_class(f, :starts_on)}"}>
@@ -50,6 +50,30 @@
       <p class="form-element-note">Feed will only include episodes published on/after this date. Leave blank to include all episodes.</p>
     </div>
   </div>
+
+  <div class="form-element">
+    <details class="richtext">
+      <summary>Title Format Examples</summary>
+      <p>&nbsp;</p>
+
+      <p>
+        <strong>Format</strong>: {title} ({subtitle})<br/>
+        <strong>Result</strong>: The man behind the Sandwich (featuring Adam Lisagor)
+      </p>
+
+      <p>
+        <strong>Format</strong>: {podcast}: {title}<br/>
+        <strong>Result</strong>: Changelog Interviews: The man behind the Sandwich
+      </p>
+
+      <p>
+        <strong>Format</strong>: {title} ({podcast} #{number})<br/>
+        <strong>Result</strong>: The man behind the Sandwich (Changelog Interviews #601)
+      </p>
+
+    </details>
+  </div>
+
 
   <label>Podcasts</label>
   <div class="form-grid js-feed-podcast_ids">
