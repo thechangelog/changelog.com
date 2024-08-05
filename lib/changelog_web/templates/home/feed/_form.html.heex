@@ -2,13 +2,14 @@
   <div class="form-element_wrap form-element_wrap--2">
     <div class={"form-element #{PublicHelpers.error_class(f, :name)}"}>
       <label>Name <span>*</span></label>
-      <%= text_input(f, :name, placeholder: "Changelog++", autocomplete: "off") %>
+      <%= text_input(f, :name, autocomplete: "off") %>
       <%= PublicHelpers.error_message(f, :name) %>
+      <p class="form-element-note">Required!</p>
     </div>
 
     <div class={"form-element #{PublicHelpers.error_class(f, :description)}"}>
       <label>Description</label>
-      <%= text_input(f, :description, placeholder: "It's better!") %>
+      <%= text_input(f, :description) %>
       <%= PublicHelpers.error_message(f, :description) %>
       <p class="form-element-note">Add a summary or tagline to your feed.</p>
     </div>
@@ -38,9 +39,9 @@
   <div class="form-element_wrap form-element_wrap--2">
     <div class={"form-element #{PublicHelpers.error_class(f, :title_format)}"}>
       <label>Title Format</label>
-      <%= text_input(f, :title_format) %>
+      <%= text_input(f, :title_format, placeholder: "{title}") %>
       <%= PublicHelpers.error_message(f, :title_format) %>
-      <p class="form-element-note">Leave this empty if you just want regular episode titles. Fields: {title}, {subtitle}, {podcast}, {number}</p>
+      <p class="form-element-note">Leave this empty if you just want {title}. Available Fields: {title}, {subtitle}, {podcast}, {number}</p>
     </div>
 
     <div class={"form-element #{PublicHelpers.error_class(f, :starts_on)}"}>
@@ -55,6 +56,11 @@
     <details class="richtext">
       <summary>Title Format Examples</summary>
       <p>&nbsp;</p>
+
+      <p>
+        <strong>Format</strong>: {title}<br/>
+        <strong>Result</strong>: The man behind the Sandwich
+      </p>
 
       <p>
         <strong>Format</strong>: {title} ({subtitle})<br/>
