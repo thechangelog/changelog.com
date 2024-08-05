@@ -25,11 +25,11 @@ defmodule ChangelogWeb.Xml.Feed do
         {:title, nil, feed.name},
         {:copyright, nil, "All rights reserved"},
         {:language, nil, "en-us"},
-        {:description, nil, feed.description},
+        {:description, nil, feed.description || " "},
         {"itunes:author", nil, "Changelog Media"},
         {"itunes:block", nil, "yes"},
         {"itunes:explicit", nil, "no"},
-        {"itunes:summary", nil, feed.description},
+        {"itunes:summary", nil, feed.description || " "},
         {"itunes:image", %{href: PodcastView.cover_url(feed)}},
         {"itunes:owner", nil, Xml.itunes_owner()},
         Enum.map(episodes, fn episode -> item(feed, episode) end)
