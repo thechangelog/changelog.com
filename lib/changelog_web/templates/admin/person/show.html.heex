@@ -5,6 +5,11 @@
     <%= link("People", to: ~p"/admin/people") %>
     &raquo;
     <%= @person.name %> (<%= @person.handle %>)
+  <%= if @person.active_membership do %>
+    <%= link(to: ~p"/admin/memberships/#{@person.active_membership}/edit") do %>
+    <span class="ui tiny blue label">++</span>
+    <% end %>
+  <% end %>
     <div class="ui basic right floated buttons">
       <%= link("View Public",
             to: ~p"/person/#{@person.handle}",
@@ -41,6 +46,13 @@
   <span class="ui large label">Nightly</span>
 <% end %>
 </div>
+
+<%= if Enum.any?(@feeds) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Feeds</h2>
+  <%= render(FeedView, "_table.html", assigns) %>
+</div>
+<% end %>
 
 <%= if Enum.any?(@published) do %>
 <div class="ui basic segment">

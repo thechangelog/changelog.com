@@ -118,6 +118,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{
       id: person.id,
       title: title,
+      extended_title: "#{title} #{description}",
       description: description,
       image: PersonView.avatar_url(person),
       url: Routes.admin_person_path(Endpoint, :edit, person)

@@ -9,6 +9,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     NewsItemComment,
     Newsletters,
     Person,
+    Podcast,
     Slack,
     Subscription
   }
@@ -92,6 +93,16 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> NewsItemComment.preload_all()
       |> Repo.all()
 
+    podcasts =
+      Podcast.active()
+      |> Podcast.by_position()
+      |> Repo.all()
+
+    feeds =
+      person
+      |> assoc(:feeds)
+      |> Repo.all()
+
     conn
     |> assign(:person, person)
     |> assign(:episodes, episodes)
@@ -100,6 +111,8 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> assign(:published, published)
     |> assign(:declined, declined)
     |> assign(:comments, comments)
+    |> assign(:podcasts, podcasts)
+    |> assign(:feeds, feeds)
     |> render(:show)
   end
 
@@ -226,7 +239,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   defp assign_person(conn = %{params: %{"id" => id}}, _) do
-    person = Repo.get!(Person, id)
+    person = Person |> Repo.get!(id) |>Repo.preload(:active_membership)
     assign(conn, :person, person)
   end
 

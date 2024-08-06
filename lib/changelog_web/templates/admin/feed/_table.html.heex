@@ -1,9 +1,12 @@
 <table class="ui celled striped table">
   <thead>
     <tr>
+    <%= if !assigns[:person] do %>
       <th>Owner</th>
+    <% end %>
       <th>Cover</th>
       <th>Name</th>
+      <th>Created at</th>
       <th>Refreshed at</th>
       <th>Starts on</th>
       <th>Podcasts</th>
@@ -12,15 +15,17 @@
   </thead>
 
   <tbody>
-  <%= for feed <- @page.entries do %>
+  <%= for feed <- @feeds do %>
     <tr>
+    <%= if !assigns[:person] do %>
       <td>
       <%= link to: ~p"/admin/people/#{feed.owner}", title: feed.owner.name, data: [popup: true] do %>
         <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(feed.owner)}> <%= feed.owner.name %>
       <% end %>
       </td>
+    <% end %>
       <td>
-        <img src={PodcastView.cover_url(feed, :medium)} class="ui image" width="100" />
+        <img src={PodcastView.cover_url(feed, :small)} class="ui image" width="50" />
       </td>
       <td>
       <%= feed.name %>
@@ -33,6 +38,7 @@
         <span class="ui tiny green basic label">auto</span>
       <% end %>
       </td>
+      <td><%= AdminHelpers.ts(feed.inserted_at) %></td>
       <td><%= AdminHelpers.ts(feed.refreshed_at) %></td>
       <td><%= TimeView.hacker_date(feed.starts_on) %></td>
       <td class="ui mini images">
