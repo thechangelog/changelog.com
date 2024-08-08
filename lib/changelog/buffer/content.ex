@@ -23,8 +23,7 @@ defmodule Changelog.Buffer.Content do
       [
         title_meta(episode),
         guest_meta(episode.guests),
-        host_meta(episode.hosts),
-        topic_meta(item.topics)
+        host_meta(episode.hosts)
       ]
       |> Enum.reject(&is_nil/1)
 
