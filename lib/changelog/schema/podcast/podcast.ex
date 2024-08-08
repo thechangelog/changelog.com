@@ -239,12 +239,27 @@ defmodule Changelog.Podcast do
     |> Enum.max(fn -> 0 end)
   end
 
+  def last_published_numbered_slug(podcast) do
+    query =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.with_numbered_slug()
+      |> Episode.published()
+      |> Episode.newest_first()
+      |> Episode.limit(1)
+
+    case Repo.one(query) do
+      %{slug: slug} -> String.to_integer(slug)
+      nil -> 0
+    end
+  end
+
   def latest_episode(podcast) do
     podcast
     |> assoc(:episodes)
     |> Episode.published()
     |> Episode.newest_first()
-    |> Ecto.Query.first()
+    |> Episode.limit(1)
     |> Repo.one()
   end
 

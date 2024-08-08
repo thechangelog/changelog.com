@@ -228,9 +228,12 @@ defmodule ChangelogWeb.Admin.EpisodeController do
 
     changeset = Episode.admin_changeset(episode)
 
+    last_slug = Podcast.last_published_numbered_slug(podcast)
+
     conn
     |> assign(:episode, episode)
     |> assign(:changeset, changeset)
+    |> assign(:last_slug, last_slug)
     |> assign(:episode_requests, episode_requests(episode))
     |> render(:edit)
   end
@@ -267,9 +270,12 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         |> redirect_next(params, ~p"/admin/podcasts/#{podcast.slug}/episodes")
 
       {:error, changeset} ->
+        last_slug = Podcast.last_published_numbered_slug(podcast)
+
         conn
         |> put_flash(:result, "failure")
         |> assign(:episode, episode)
+        |> assign(:last_slug, last_slug)
         |> assign(:changeset, changeset)
         |> assign(:episode_requests, episode_requests(episode))
         |> render(:edit)
