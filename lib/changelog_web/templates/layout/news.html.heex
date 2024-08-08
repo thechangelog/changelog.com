@@ -13,8 +13,8 @@
     <meta name="description" content={Meta.Description.get(@conn)}>
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:title" content={Meta.Title.get(@conn) |> escaped()}>
-    <meta name="twitter:description" content={Meta.Description.get(@conn) |> escaped()}>
+    <meta name="twitter:title" content={Meta.Title.get(@conn)}>
+    <meta name="twitter:description" content={Meta.Description.get(@conn)}>
     <meta name="twitter:url" content={current_url(@conn)}>
   <%= if share_image = Meta.Image.get(@conn) do %>
     <meta name="twitter:image" content={share_image}>
@@ -22,8 +22,8 @@
   <% end %>
     <meta property="og:url" content={current_url(@conn)}>
     <meta property="og:type" content="website">
-    <meta property="og:title" content={Meta.Title.get(@conn) |> escaped()}>
-    <meta property="og:description" content={Meta.Description.get(@conn) |> escaped()}>
+    <meta property="og:title" content={Meta.Title.get(@conn)}>
+    <meta property="og:description" content={Meta.Description.get(@conn)}>
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
   <%= if apple_id = Meta.Apple.get(:podcasts_id, @conn) do %>

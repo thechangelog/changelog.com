@@ -12,8 +12,8 @@
   <% twitter_card_type = Meta.Twitter.get(:card_type, @conn) %>
     <meta name="twitter:card" content={twitter_card_type}>
     <meta name="twitter:site" content="@Changelog">
-    <meta name="twitter:title" content={Meta.Title.get(@conn) |> escaped()}>
-    <meta name="twitter:description" content={Meta.Description.get(@conn) |> escaped()}>
+    <meta name="twitter:title" content={Meta.Title.get(@conn)}>
+    <meta name="twitter:description" content={Meta.Description.get(@conn)}>
   <%= if twitter_card_type == "player" do %>
     <meta name="twitter:player" content={Meta.Twitter.get(:player_url, @conn)}>
     <meta name="twitter:player:width" content="300">
@@ -30,8 +30,8 @@
   <% end %>
     <meta property="og:url" content={current_url(@conn)}>
     <meta property="og:type" content="website">
-    <meta property="og:title" content={Meta.Title.get(@conn) |> escaped()}>
-    <meta property="og:description" content={Meta.Description.get(@conn) |> escaped()}>
+    <meta property="og:title" content={Meta.Title.get(@conn)}>
+    <meta property="og:description" content={Meta.Description.get(@conn)}>
     <meta property="og:site_name" content="Changelog">
     <meta property="og:locale" content="en_US">
   <%= if apple_id = Meta.Apple.get(:podcasts_id, @conn) do %>
