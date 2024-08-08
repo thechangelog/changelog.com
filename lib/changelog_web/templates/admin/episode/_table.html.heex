@@ -42,7 +42,7 @@
     <% podcast = assigns[:podcast] || episode.podcast %>
     <tr>
     <%= if assigns[:podcast] do %>
-      <td title="<%= episode.id %>"><%= episode.slug %></td>
+        <td title={episode.id}><%= episode.slug %></td>
     <% else %>
       <td><%= link(podcast.name, to: ~p"/admin/podcasts/#{podcast.slug}/episodes") %></td>
     <% end %>
@@ -62,15 +62,15 @@
       <td>
       <% {main_participants, additional_participants} = episode |> Episode.participants() |> Enum.split(5) %>
       <%= for person <- main_participants do %>
-        <%= link to: ~p"/admin/people/#{person}", title: person.name, data: [popup: true] do %>
-          <img class="ui avatar image" src="<%= PersonView.avatar_url(person) %>">&nbsp;
+        <%= link to: ~p"/admin/people/#{person}?next=#{SharedHelpers.current_path(@conn)}", title: person.name, data: [popup: "true"] do %>
+            <img class="ui avatar image" src={PersonView.avatar_url(person)}>&nbsp;
         <% end %>
       <% end %>
       <%= if Enum.any?(additional_participants) do %>
           <img
             class="ui avatar image"
-            src="<%= url(~p"/images/icons/icon-plus.png") %>"
-            title="and <%= length(additional_participants) %> more"
+            src={url(~p"/images/icons/icon-plus.png")}
+            title={"and #{length(additional_participants)} more"}
             data-popup="true">
       <% end %>
       </td>
