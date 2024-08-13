@@ -233,13 +233,12 @@
         flex-wrap: wrap;
 
         &-item {
-          height: 20px;
+          height: 30px;
           margin: 0 8px 12px;
           padding: 4px 0 0 30px;
-          background-size: 20px 20px;
+          background-size: 30px 30px;
           background-repeat: no-repeat;
-          font-size: 0.74em;
-          line-height: 1;
+          font-size: 0;
           color: $white;
           transition: color 0.1s $base-easing;
 
@@ -269,6 +268,9 @@
           }
           &--youtube-music {
             background-image: url("../images/icons/podcast_icon-youtube-music.png");
+          }
+          &--youtube {
+            background-image: url("../images/icons/podcast_icon-youtube.png");
           }
           &--bandcamp {
             background-image: url("../images/icons/podcast_icon-bandcamp.png");

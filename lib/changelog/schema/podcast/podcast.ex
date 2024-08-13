@@ -26,20 +26,23 @@ defmodule Changelog.Podcast do
     field :welcome, :string
     field :description, :string
     field :extended_description, :string
-
-    field :vanity_domain, :string
     field :keywords, :string
+    field :vanity_domain, :string
+    field :schedule_note, :string
+    field :recorded_live, :boolean, default: false
+
     field :mastodon_handle, :string
     field :mastodon_token, :string
     field :twitter_handle, :string
     field :apple_url, :string
     field :spotify_url, :string
     field :riverside_url, :string
-    field :chartable_id, :string
-    field :schedule_note, :string
+    field :youtube_url, :string
+    field :clips_url, :string
+
     field :download_count, :float
     field :reach_count, :integer
-    field :recorded_live, :boolean, default: false
+
     field :partner, :boolean, default: false
     field :position, :integer
     field :subscribers, :map
@@ -82,6 +85,8 @@ defmodule Changelog.Podcast do
       keywords: "changelog, open source, oss, software, development, developer, hacker",
       apple_url: "https://podcasts.apple.com/us/podcast/changelog-master-feed/id1164554936",
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
+      youtube_url: "https://www.youtube.com/changelog",
+      clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreJ1p9RXR6Z667mrMyHXAeH",
       cover: true,
       active_hosts: [],
       retired_hosts: []
@@ -105,6 +110,8 @@ defmodule Changelog.Podcast do
         "changelog, open source, software, development, code, programming, hacker, change log, software engineering",
       apple_url: "https://podcasts.apple.com/us/podcast/the-changelog/id341623264",
       spotify_url: "https://open.spotify.com/show/5bBki72YeKSLUqyD94qsuJ",
+      youtube_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYrf9nHWFF1dQsk-X5cghL6UH",
+      clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreumc6MQV7C8FiRuaMczhjK",
       cover: true,
       active_hosts: Person.with_ids([1, 2]) |> Person.newest_first() |> Repo.all()
     }
@@ -135,7 +142,7 @@ defmodule Changelog.Podcast do
     podcast
     |> cast(
       attrs,
-      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle mastodon_token twitter_handle apple_url spotify_url riverside_url chartable_id recorded_live partner position)a
+      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle mastodon_token twitter_handle apple_url spotify_url riverside_url youtube_url clips_url recorded_live partner position)a
     )
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http(), message: Regexp.http_message())

@@ -6,11 +6,16 @@
       <li><%= link("Direct (RSS)", to: subscribe_via_rss_url(@podcast)) %></li>
     <%= if @podcast.apple_url do %>
       <li><%= link("Apple Podcasts", to: subscribe_on_apple_url(@podcast)) %></li>
-      <li><%= link("Overcast", to: subscribe_on_overcast_url(@podcast)) %></li>
-      <li><%= link("Pocket Casts", to: subscribe_on_pocket_casts_url(@podcast)) %></li>
     <% end %>
     <%= if @podcast.spotify_url do %>
       <li><%= link("Spotify", to: subscribe_on_spotify_url(@podcast)) %></li>
+    <% end %>
+    <%= if @podcast.youtube_url do %>
+      <li><%= link("YouTube", to: subscribe_on_youtube_url(@podcast)) %></li>
+    <% end %>
+    <%= if @podcast.apple_url do %>
+      <li><%= link("Overcast", to: subscribe_on_overcast_url(@podcast)) %></li>
+      <li><%= link("Pocket Casts", to: subscribe_on_pocket_casts_url(@podcast)) %></li>
     <% end %>
       <li><%= link("Android", to: subscribe_on_android_url(@podcast)) %></li>
     <%= if @podcast.mastodon_handle do %>

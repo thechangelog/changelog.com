@@ -198,6 +198,18 @@
     <%= AdminHelpers.error_message(f, :riverside_url) %>
   </div>
 
+  <div class={"field #{AdminHelpers.error_class(f, :youtube_url)}"}>
+    <%= label(f, :youtube_url, "YouTube URL") %>
+    <%= text_input(f, :youtube_url) %>
+    <%= AdminHelpers.error_message(f, :youtube_url) %>
+  </div>
+
+  <div class={"field #{AdminHelpers.error_class(f, :clips_url)}"}>
+    <%= label(f, :clips_url, "Clips URL") %>
+    <%= text_input(f, :clips_url) %>
+    <%= AdminHelpers.error_message(f, :clips_url) %>
+  </div>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>

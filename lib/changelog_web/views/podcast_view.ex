@@ -136,6 +136,11 @@ defmodule ChangelogWeb.PodcastView do
 
   def subscribe_on_spotify_url(podcast), do: podcast.spotify_url
 
+  def subscribe_on_youtube_url(%{vanity_domain: vanity}) when not is_nil(vanity),
+    do: vanity <> "/youtube"
+
+  def subscribe_on_youtube_url(podcast), do: podcast.youtube_url
+
   def subscribe_via_rss_url(%{vanity_domain: vanity}) when not is_nil(vanity),
     do: vanity <> "/rss"
 

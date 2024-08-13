@@ -1,0 +1,32 @@
+<%= if @podcast.status == :inactive do %>
+  <p class="feed-note">This podcast is not in production. Please browse and enjoy the archive below.</p>
+<% end %>
+
+<nav class="subnav">
+  <ul class="subnav-list">
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, "show")}"}>
+      <%= link("Recent", to: ~p"/#{@podcast.slug}" <> "#feed", title: "Recent episodes of #{@podcast.name}", alt: "Recent Episodes") %>
+    </li>
+  <%= if @podcast.clips_url do %>
+    <li class="subnav-list-item">
+      <%= link("Clips", to: @podcast.clips_url, title: "Clips from #{@podcast.name}", alt: "#{@podcast.name} Clips") %>
+    </li>
+  <% end %>
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, "recommended")}"}>
+      <%= link("Recommended", to: ~p"/#{@podcast.slug}/recommended" <> "#feed", title: "Recommended episodes of #{@podcast.name}", alt: "Recommended Episodes") %>
+    </li>
+    <li class={"subnav-list-item #{SharedHelpers.active_class(@conn, "popular")}"}>
+      <%= link("Popular", to: ~p"/#{@podcast.slug}/popular" <> "#feed", title: "Popular episodes of #{@podcast.name}", alt: "Popular Episodes") %>
+    </li>
+    <li class="subnav-list-item subnav-list-item--right">
+      <%= link("🙏 Request!", to: ~p"/request/#{@podcast.slug}", title: "Request an episode of #{@podcast.name}", alt: "Request an Episode") %>
+    </li>
+  </ul>
+</nav>
+
+<%= if Enum.any?(@page) do %>
+  <%= render_many(@page, EpisodeView, "_item.html") %>
+  <%= render(SharedView, "_more_button.html", assigns) %>
+<% else %>
+  <p class="feed-note">Nothing to see here. Move along.</p>
+<% end %>

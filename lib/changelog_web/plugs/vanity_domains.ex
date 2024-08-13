@@ -75,6 +75,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
       ["apple"] -> PodcastView.subscribe_on_apple_url(podcast)
       ["android"] -> PodcastView.subscribe_on_android_url(podcast)
       ["spotify"] -> PodcastView.subscribe_on_spotify_url(podcast)
+      ["youtube"] -> PodcastView.subscribe_on_youtube_url(podcast)
       ["overcast"] -> PodcastView.subscribe_on_overcast_url(podcast)
       ["pcast"] -> PodcastView.subscribe_on_pocket_casts_url(podcast)
       ["rss"] -> changelog_destination([podcast.slug, "feed"])
