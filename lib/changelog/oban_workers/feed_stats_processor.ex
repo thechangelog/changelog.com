@@ -1,7 +1,8 @@
 defmodule Changelog.ObanWorkers.FeedStatsProcessor do
   use Oban.Worker, queue: :scheduled, unique: [period: 600]
 
-  alias Changelog.{Feed, FeedStat, ListKit, Podcast, Repo, UrlKit}
+  alias Changelog.{AgentKit, ListKit, UrlKit}
+  alias Changelog.{Feed, FeedStat, Podcast, Repo}
   alias Changelog.Stats.{S3}
   alias Ecto.Changeset
 
@@ -30,21 +31,16 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     url = "/feeds/#{feed.slug}"
     agents = get_unique_agents_map(logs, url)
 
-    stat =
-      case Repo.get_by(Ecto.assoc(feed, :feed_stats), date: date) do
-        nil ->
-          %FeedStat{feed_id: feed.id,date: date}
-        found ->
-          found
-      end
+    if Enum.any?(agents) do
+      stat =
+        case Repo.get_by(Ecto.assoc(feed, :feed_stats), date: date) do
+          nil -> %FeedStat{feed_id: feed.id,date: date}
+          found -> found
+        end
 
-    stat = Changeset.change(stat, %{agents: agents})
+      stat = Changeset.change(stat, %{agents: agents})
 
-    case Repo.insert_or_update(stat) do
-      {:ok, stat} ->
-        stat
-      {:error, _} ->
-        Logger.info("Stats: Failed to insert/update feed: #{date} #{feed.slug}")
+      Repo.insert_or_update(stat)
     end
   end
 
@@ -58,21 +54,16 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     url = "/#{slug}/feed"
     agents = get_unique_agents_map(logs, url)
 
-    stat =
-      case Repo.get_by(Ecto.assoc(podcast, :feed_stats), date: date) do
-        nil ->
-          %FeedStat{podcast_id: podcast.id,date: date}
-        found ->
-          found
-      end
+    if Enum.any?(agents) do
+      stat =
+        case Repo.get_by(Ecto.assoc(podcast, :feed_stats), date: date) do
+          nil -> %FeedStat{podcast_id: podcast.id,date: date}
+          found -> found
+        end
 
-    stat = Changeset.change(stat, %{agents: agents})
+      stat = Changeset.change(stat, %{agents: agents})
 
-    case Repo.insert_or_update(stat) do
-      {:ok, stat} ->
-        stat
-      {:error, _} ->
-        Logger.info("Stats: Failed to insert/update podcast: #{date} #{podcast.slug}")
+      Repo.insert_or_update(stat)
     end
   end
 
@@ -82,8 +73,10 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     logs
     |> Map.get(url, [])
     |> Enum.group_by(&Map.get(&1, "request_user_agent"))
-    |> Enum.map(fn {agent, requests} -> {agent, length(requests)} end)
-    |> Enum.sort_by(fn {_agent, requests} -> requests end, :desc)
+    |> Enum.map(fn {ua, requests} ->
+      agent = AgentKit.identify(ua)
+      {agent.name, %{type: agent.type, requests: length(requests), raw: ua}}
+      end)
     |> Enum.into(%{})
   end
 
