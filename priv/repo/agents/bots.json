@@ -1,0 +1,1328 @@
+{
+  "comments": [
+    "Look for User-Agent matches in this file order: 'bots', 'apps', 'libraries', 'browsers', and return the first entry matched, processing each entry in order in which they appear in the file."
+  ],
+  "$schema": "https://raw.githubusercontent.com/opawg/user-agents-v2/master/schemas/patterns.schema.json",
+  "entries": [
+    {
+      "name": "AAABot - unknown bot",
+      "pattern": "AAABot",
+      "examples": [
+        "AAABot"
+      ]
+    },
+    {
+      "name": "Adswizz",
+      "pattern": "^AIS VirtualListener",
+      "urls": [
+        "https://www.adswizz.com/publishers/insertion-suite/"
+      ],
+      "examples": [
+        "AIS VirtualListener"
+      ]
+    },
+    {
+      "name": "AhrefsBot",
+      "pattern": "AhrefsBot/",
+      "urls": [
+        "http://ahrefs.com/robot/"
+      ],
+      "examples": [
+        "Mozilla/5.0 (compatible; AhrefsBot/7.0; http://ahrefs.com/robot/)",
+        "Mozilla/5.0 (compatible; AhrefsBot/6.1; +http://ahrefs.com/robot/)"
+      ]
+    },
+    {
+      "name": "AirableBot",
+      "pattern": "AirableBot-Podcast/",
+      "description": "An aggregator of internet radio and podcasts, for connected devices.",
+      "urls": [
+        "https://www.airablenow.com"
+      ],
+      "examples": [
+        "AirableBot-Podcast/1.0 (+https//www.airablenow.com)",
+        "AirableBot-Podcast/1.0 ( https//www.airablenow.com)"
+      ]
+    },
+    {
+      "name": "Alexa Flash Briefing cache",
+      "pattern": "^AmazonNewsContentService",
+      "description": "A service which downloads, caches and normalises audio for the Flash Briefing service on Alexa-enabled devices",
+      "svg": "amazon.svg",
+      "urls": [
+        "https://developer.amazon.com/docs/flashbriefing/flash-briefing-skill-api-feed-reference.html#performance-requirements"
+      ],
+      "comments": "Stats are available within the Alexa skills dashboard."
+    },
+    {
+      "name": "AlignaBot",
+      "pattern": "^Alignabot",
+      "examples": [
+        "Alignabot 1.0 (https://www.alignable.com/)"
+      ]
+    },
+    {
+      "name": "All Ears",
+      "pattern": "^AllEars/",
+      "examples": [
+        "AllEars/1.0; (+www.allears.ai)"
+      ],
+      "urls": [
+        "https://allears.ai"
+      ]
+    },
+    {
+      "name": "Amazon Music Podcasts Bot",
+      "pattern": "^Amazon Music Podcast",
+      "description": "A music and podcasts streaming app",
+      "svg": "amazon.svg",
+      "comments": "Backend ingestion service"
+    },
+    {
+      "name": "Anchor Importer",
+      "pattern": "AnchorImport",
+      "description": "Anchor's tool for importing podcasts",
+      "comments": "This useragent is used during a user importing a podcast to the Anchor platform",
+      "examples": [
+        "AnchorImport/1.0"
+      ]
+    },
+    {
+      "name": "Apple Notes share extension",
+      "pattern": "^com.apple.(mobilenotes.SharingExtension|Notes.SharingExtension)/",
+      "examples": [
+        "com.apple.mobilenotes.SharingExtension/2511 CFNetwork/1494.0.7 Darwin/23.4.0",
+        "com.apple.Notes.SharingExtension/2812 CFNetwork/1494.0.7 Darwin/23.4.0"
+      ]
+    },
+    {
+      "name": "Apple Podcasts (Watch)",
+      "pattern": "^atc/|\\(null\\) watchOS/",
+      "comments": "Verified (via stamping the audio URL with the RSS useragent) as being sourced from Apple Podcasts; and accordingly this is marked as a bot since these downloads are duplicated with the phone.",
+      "examples": [
+        "atc/1.0",
+        "atc/1.0 watchOS/6.2 model/Watch3,3 hwp/t8004 build/17T529 (6; dt:155)",
+        "atc/1.0 watchOS/6.2.8 model/Watch2,3 hwp/t8002 build/17U63 (6; dt:133)",
+        "atc/1.0 watchOS/6.2.8 model/Watch3,3 hwp/t8004 build/17U63 (6; dt:155)",
+        "atc/1.0 watchOS/6.2.8 model/Watch4,2 hwp/t8006 build/17U63 (6; dt:191)",
+        "atc/1.0 watchOS/7.0.2 model/Watch5,10 hwp/t8006 build/18R402 (6; dt:233)",
+        "atc/1.0 watchOS/7.0.2 model/Watch5,11 hwp/t8006 build/18R402 (6; dt:234)",
+        "atc/1.0 watchOS/7.1 model/Watch4,2 hwp/t8006 build/18R590 (6; dt:191)",
+        "atc/1.0 watchOS/7.1 model/Watch4,3 hwp/t8006 build/18R590 (6; dt:192)",
+        "atc/1.0 watchOS/7.1 model/Watch4,4 hwp/t8006 build/18R590 (6; dt:193)",
+        "atc/1.0 watchOS/7.1 model/Watch5,1 hwp/t8006 build/18R590 (6; dt:201)",
+        "atc/1.0 watchOS/7.1 model/Watch5,3 hwp/t8006 build/18R590 (6; dt:202)",
+        "atc/1.0 watchOS/7.1 model/Watch5,4 hwp/t8006 build/18R590 (6; dt:202)",
+        "(null)/(null) watchOS/5.0.1 model/Watch3,3 hwp/t8004 build/16R381 (6; dt:155)"
+      ]
+    },
+    {
+      "name": "Apple Podcasts automated checks",
+      "pattern": "(iTMS|itunesstored|itms)"
+    },
+    {
+      "name": "Applebot",
+      "pattern": "^Applebot/",
+      "description": "Applebot is the web crawler for Apple. Products like Siri and Spotlight Suggestions use Applebot.",
+      "urls": [
+        "http://www.apple.com/go/applebot"
+      ]
+    },
+    {
+      "name": "Archive.org",
+      "pattern": "archive\\.org_bot",
+      "description": "The Internet Archive is a nonprofit digital library that preserves web data and makes it available for research purposes through the Wayback Machine.",
+      "urls": [
+        "https://archive.org/details/archive.org_bot"
+      ],
+      "examples": [
+        "Mozilla/5.0 (compatible; archive.org_bot http://archive.org/details/archive.org_bot)"
+      ]
+    },
+    {
+      "name": "atheerfm",
+      "pattern": "^atheerfm/",
+      "examples": [
+        "atheerfm/1 CFNetwork/758.3.15 Darwin/15.3.0"
+      ]
+    },
+    {
+      "name": "Audiomack",
+      "pattern": "^Audiomack Podcast Processor/",
+      "examples": [
+        "Audiomack Podcast Processor/1.0 (https://audiomack.com/)"
+      ]
+    },
+    {
+      "name": "AudioWave feed parser",
+      "pattern": "^AudioWaveBot/1\\.0",
+      "urls": [
+        "https://audiowave.io"
+      ],
+      "examples": [
+        "AudioWaveBot/1.0"
+      ]
+    },
+    {
+      "name": "AwarioSmartBot",
+      "pattern": "^AwarioSmartBot/",
+      "examples": [
+        "AwarioSmartBot/1.0 (+https://awario.com/bots.html; bots@awario.com)"
+      ]
+    },
+    {
+      "name": "Babbar",
+      "pattern": "Barkrowler/",
+      "urls": [
+        "https://beta.babbar.tech/crawler"
+      ]
+    },
+    {
+      "name": "Baidu",
+      "pattern": "\\(ce\\.baidu\\.com",
+      "examples": [
+        "Baidu-YunGuanCe-SLABot(ce.baidu.com)"
+      ]
+    },
+    {
+      "name": "bbot",
+      "pattern": "^bbot/",
+      "examples": [
+        "bbot/0.1"
+      ]
+    },
+    {
+      "name": "Beacon Podcast Sync",
+      "pattern": "^Beacon/\\d",
+      "examples": [
+        "Beacon/1.0 Podcast Sync +https://getbeacons.com/"
+      ],
+      "urls": [
+        "https://getbeacons.com/"
+      ]
+    },
+    {
+      "name": "British Library",
+      "pattern": "^bl\\.uk_ldfc_bot",
+      "description": "British Library's legal deposit web crawler",
+      "urls": [
+        "http://www.bl.uk/aboutus/legaldeposit/websites/websites/faqswebmaster/index.html"
+      ],
+      "examples": [
+        "bl.uk_ldfc_bot/3.4.0-20200518 ( http://www.bl.uk/aboutus/legaldeposit/websites/websites/faqswebmaster/index.html)"
+      ]
+    },
+    {
+      "name": "Blubrry Migration Service",
+      "pattern": "^Blubrry Migration Service",
+      "examples": [
+        "Blubrry Migration Service"
+      ]
+    },
+    {
+      "name": "Bullhorn Crawler",
+      "pattern": "^BullhornCrawler/",
+      "examples": [
+        "BullhornCrawler/unknown-version(+http://bullhorn.fm/)"
+      ],
+      "urls": [
+        "https://bullhorn.fm/"
+      ]
+    },
+    {
+      "name": "Buzzsprout Importer",
+      "pattern": "^Buzzsprout Importer",
+      "examples": [
+        "Buzzsprout Importer"
+      ]
+    },
+    {
+      "name": "Bytespider.*bytedance",
+      "pattern": "Bytespider",
+      "examples": [
+        "Mozilla/5.0 (Linux; Android 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Mobile Safari/537.36 (compatible; Bytespider; spider-feedback@bytedance.com)"
+      ]
+    },
+    {
+      "name": "CastFeedValidator",
+      "pattern": "^CastFeedValidator/",
+      "examples": [
+        "CastFeedValidator/3.0.5 (https://castfeedvalidator.com)"
+      ]
+    },
+    {
+      "name": "Castopod",
+      "pattern": "Castopod/\\d",
+      "examples": [
+        "Castopod/1.0",
+        "Castopod/1.1.2"
+      ]
+    },
+    {
+      "name": "Chartable",
+      "pattern": "^Trackable/",
+      "urls": [
+        "https://chartable.com/"
+      ]
+    },
+    {
+      "name": "Clark-Crawler, unknown",
+      "pattern": "^clark-crawler2"
+    },
+    {
+      "name": "Claudebot",
+      "pattern": "ClaudeBot/",
+      "description": "Claude is a family of large language models developed by Anthropic and designed to revolutionize the way you interact with AI",
+      "urls": [
+        "https://docs.anthropic.com/claude/docs/intro-to-claude"
+      ],
+      "examples": [
+        "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)"
+      ]
+    },
+    {
+      "name": "Critical Mention",
+      "pattern": "^Podcast-CriticalMention/",
+      "description": "Critical Mention is a business intelligence company, monitoring podcasts on the web for their clients",
+      "examples": [
+        "Podcast-CriticalMention/1.0"
+      ]
+    },
+    {
+      "name": "curl",
+      "pattern": "^curl|^libcurl/|^PycURL/| curl/",
+      "examples": [
+        "libcurl/7.65.1",
+        "PycURL/7.43.0 libcurl/7.47.0 GnuTLS/3.4.10 zlib/1.2.8 libidn/1.32 librtmp/2.3",
+        "GuzzleHttp/6.1.0 curl/7.50.1 PHP/7.0.13-0ubuntu0.16.10.1"
+      ]
+    },
+    {
+      "name": "DataforSEO",
+      "pattern": "DataForSeoBot/",
+      "description": "Working on the biggest available backlink database on the web that every single member of the community, including you, can use and benefit from.",
+      "urls": [
+        "https://dataforseo.com/dataforseo-bot"
+      ],
+      "examples": [
+        "Mozilla/5.0 (compatible; DataForSeoBot/1.0; +https://dataforseo.com/dataforseo-bot)"
+      ]
+    },
+    {
+      "name": "Datagnion Bot",
+      "pattern": "^datagnionbot"
+    },
+    {
+      "name": "dataprovider.com",
+      "pattern": "Dataprovider\\.com",
+      "examples": [
+        "Mozilla/5.0 (compatible; Dataprovider.com)"
+      ]
+    },
+    {
+      "name": "Daum",
+      "pattern": "http://cs\\.daum\\.net",
+      "examples": [
+        "Mozilla/5.0 (compatible; Daum/4.1; +http://cs.daum.net/faq/15/4118.html?faqId=28966)"
+      ]
+    },
+    {
+      "name": "Deezer Podcasters",
+      "pattern": "^Deezer Podcasters/1\\.0"
+    },
+    {
+      "name": "Digg",
+      "pattern": "^Digg ",
+      "examples": [
+        "Digg Mozilla/5.0 (Digg/1.0; support@digg.com)"
+      ]
+    },
+    {
+      "name": "dorada",
+      "pattern": "support@dorada\\.co\\.uk"
+    },
+    {
+      "name": "DotBot",
+      "pattern": "DotBot",
+      "examples": [
+        "Mozilla/5.0 (compatible; DotBot/1.1; http://www.opensiteexplorer.org/dotbot, help@moz.com)",
+        "Mozilla/5.0 (compatible; DotBot/1.2; https://opensiteexplorer.org/dotbot; help@moz.com)"
+      ]
+    },
+    {
+      "name": "Downcast Bot",
+      "pattern": "downcast feed consumer/",
+      "examples": [
+        "downcast feed consumer/0.0.175; (mode=dev; id=u2NgjBSPM6; downcast.fm)"
+      ]
+    },
+    {
+      "name": "DuckDuckBot",
+      "pattern": "DuckDuckBot",
+      "examples": [
+        "Mozilla/5.0 (compatible; DuckDuckBot-Https/1.1; https://duckduckgo.com/duckduckbot)"
+      ]
+    },
+    {
+      "name": "F-Secure Riddler",
+      "pattern": "^Riddler ",
+      "description": "an online research project which investigates algorithms for mapping the topology of the Internet",
+      "examples": [
+        "Riddler (http://riddler.io/about)"
+      ]
+    },
+    {
+      "name": "Facebook Bot",
+      "pattern": "FacebookBot|f?acebookexternalhit/?|^podcastbot$|Facebot|facebookexternalua|^facebookplatform/",
+      "urls": [
+        "https://www.facebook.com/externalhit_uatext.php"
+      ],
+      "comments": "The podcastbot UA appears to be part of Facebook Podcasts onboarding",
+      "examples": [
+        "facebookexternalhit/1.1 ( http://www.facebook.com/externalhit_uatext.php)",
+        "podcastbot",
+        "facebookexternalhit",
+        "Facebot",
+        "facebookexternalua",
+        "facebookplatform/1.0 (+http://developers.facebook.com)",
+        "acebookexternalhit/1.0 (+http://www.facebook.com/externalhit_uatext.php)"
+      ]
+    },
+    {
+      "name": "Feedly",
+      "pattern": "^Feedly/",
+      "examples": [
+        "Feedly/1.0 (+http://www.feedly.com/fetcher.html; like FeedFetcher-Google)"
+      ]
+    },
+    {
+      "name": "Feedspot Fetcher",
+      "pattern": "https://www\\.feedspot\\.com/fs/fetcher",
+      "description": "Feedspot Fetcher is how Feedspot fetches RSS/Atom feed when users add the feed to their Feedspot account.",
+      "urls": [
+        "https://www.feedspot.com/fs/fetcher"
+      ],
+      "examples": [
+        "Mozilla/5.0 (compatible; Feedspot/1.0 (+https://www.feedspot.com/fs/fetcher; like FeedFetcher-Google)"
+      ]
+    },
+    {
+      "name": "FlexGet",
+      "pattern": "^FlexGet/",
+      "examples": [
+        "FlexGet/3.3.4 (www.flexget.com)"
+      ]
+    },
+    {
+      "name": "Flipboard Proxy",
+      "pattern": "FlipboardProxy/",
+      "examples": [
+        "Mozilla/5.0 (compatible; FlipboardProxy/1.1; +http://flipboard.com/browserproxy)"
+      ]
+    },
+    {
+      "name": "Fyyd",
+      "pattern": "^fyyd-poll"
+    },
+    {
+      "name": "Go Storage Gateway V1",
+      "pattern": "^storagegw-v1-go$",
+      "comments": "Found coming from TikTok/ByteDance ASNs, along with Go Http Client.",
+      "examples": [
+        "storagegw-v1-go"
+      ]
+    },
+    {
+      "name": "Goodpods Bot",
+      "pattern": "Goodpods/\\d+\\.\\d+",
+      "description": "The social podcasting app",
+      "svg": "goodpods.svg",
+      "urls": [
+        "https://www.goodpods.com/"
+      ],
+      "comments": "RSS scraper / podcast verifier. Contact hello at goodpods dot com.",
+      "examples": [
+        "Goodpods/2.2"
+      ]
+    },
+    {
+      "name": "Google Adsense Bot",
+      "pattern": "Mediapartners-Google",
+      "examples": [
+        "Mediapartners-Google"
+      ],
+      "urls": [
+        "https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers"
+      ]
+    },
+    {
+      "name": "Google AdsBot",
+      "pattern": "AdsBot-Google",
+      "urls": [
+        "http://www.google.com/adsbot.html"
+      ]
+    },
+    {
+      "name": "Google Podcasts Manager",
+      "pattern": "Google-Podcast"
+    },
+    {
+      "name": "Googlebot",
+      "pattern": "Googlebot/|Googlebot-Video/|Googlebot-Image/|^Feedfetcher-Google|google-xrawler|^Googlebot-News|^Google-Safety$",
+      "description": "Google's search bots",
+      "urls": [
+        "http://www.google.com/bot.html"
+      ],
+      "examples": [
+        "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; http://www.google.com/bot.html)",
+        "Googlebot-Image/1.0",
+        "Feedfetcher-Google; (+http://www.google.com/feedfetcher.html; 1 subscribers; feed-id=4653447469100830145)",
+        "google-xrawler",
+        "Googlebot-News Audio",
+        "Google-Safety"
+      ]
+    },
+    {
+      "name": "Gumball",
+      "pattern": "^Gumball",
+      "description": "An attribution service (known as Gumshoe) from the Gumball network",
+      "examples": [
+        "Gumball.fm Analytics Prefix Checker"
+      ]
+    },
+    {
+      "name": "Headliner",
+      "pattern": "^Headliner/.*\\+https://headliner\\.app$",
+      "comments": "Variety of tools to help promote and drive listens to a podcast.",
+      "examples": [
+        "Headliner/1.0.0 +https://headliner.app"
+      ]
+    },
+    {
+      "name": "HubSpot Crawler",
+      "pattern": "HubSpot Crawler",
+      "examples": [
+        "Mozilla/5.0 (compatible; HubSpot Crawler; +https://www.hubspot.com)"
+      ]
+    },
+    {
+      "name": "Internet Archive",
+      "pattern": "Archive-It;|web\\.archive\\.org",
+      "description": "Archive-It is a web archiving service that allows institutions to build and preserve collections of born digital content saving this content for future generations.",
+      "urls": [
+        "https://archive-it.org/files/site-owners-special.html"
+      ],
+      "examples": [
+        "Mozilla/5.0 (compatible; special_archiver; Archive-It; http://archive-it.org/files/site-owners-special.html)",
+        "ia_archiver-web.archive.org"
+      ]
+    },
+    {
+      "name": "iOS share menu",
+      "pattern": "^SharingUIService/",
+      "examples": [
+        "SharingUIService/1 CFNetwork/1467.1 Darwin/23.0.0",
+        "SharingUIService/1 CFNetwork/1490.0.4 Darwin/23.2.0"
+      ],
+      "comments": "Found on iOS 17 e.g. when long-pressing an enclosure link from Safari and choosing Share..."
+    },
+    {
+      "name": "IPFS Podcasting Node",
+      "description": "Nodes downloading from the original source (before pinning to IPFS)",
+      "pattern": "^IPFS Podcasting Node/",
+      "examples": [
+        "IPFS Podcasting Node/0.6n (+https://ipfspodcasting.net)",
+        "IPFS Podcasting Node/0.7p,u,s (+https://ipfspodcasting.net)"
+      ],
+      "urls": [
+        "https://ipfspodcasting.net"
+      ]
+    },
+    {
+      "name": "Jaunt",
+      "pattern": "^Jaunt/",
+      "examples": [
+        "Jaunt/1.5"
+      ]
+    },
+    {
+      "name": "l'Institut national de l'audiovisuel",
+      "pattern": "INA dlweb",
+      "urls": [
+        "https://institut.ina.fr/collecte-du-depot-legal-web"
+      ],
+      "comments": "Institut National de l'Audiovisuel is a repository of all French radio and television audiovisual archives."
+    },
+    {
+      "name": "Library and Archives Canada",
+      "description": "The Web and Social Media Preservation Program at Library and Archives Canada (LAC) acquires Canadian web resources for the purposes of digital preservation and makes them available to the public via the Government of Canada Web Archive (GCWA) for future research.",
+      "pattern": "LAC_IAHarvester/",
+      "examples": [
+        "Mozilla/5.0 (compatible; LAC_IAHarvester/3.3.0; +https://library-archives.canada.ca/eng/services/government-canada/web-social-media-preservation-program/Pages/web-archive.aspx)"
+      ],
+      "urls": [
+        "https://library-archives.canada.ca/eng/services/government-canada/web-social-media-preservation-program/Pages/web-archive.aspx"
+      ]
+    },
+    {
+      "name": "Libsyn",
+      "pattern": "^Libsyn4",
+      "examples": [
+        "Libsyn4-Download"
+      ]
+    },
+    {
+      "name": "libwww-perl",
+      "pattern": "^libwww-perl| libwww-perl",
+      "examples": [
+        "LWP::Simple/6.34 libwww-perl/6.34"
+      ]
+    },
+    {
+      "name": "Livelap Crawler",
+      "pattern": "LivelapBot"
+    },
+    {
+      "name": "ListenNotes",
+      "pattern": "^ListenNotes/3\\.0 \\(",
+      "examples": [
+        "ListenNotes/3.0 (id=c1ef144e30174bf6ba1fedf9174ed908; +https://www.listennotes.com/about/)"
+      ],
+      "urls": [
+        "https://www.listennotes.com/about/"
+      ]
+    },
+    {
+      "name": "LTX71",
+      "pattern": "^ltx71 ",
+      "description": "We continuously scan the internet for security research purposes.",
+      "urls": [
+        "http://ltx71.com/"
+      ],
+      "examples": [
+        "ltx71 - (http://ltx71.com/)"
+      ]
+    },
+    {
+      "name": "MacOS share menu",
+      "pattern": "^ShareSheetUI/",
+      "examples": [
+        "ShareSheetUI/1 CFNetwork/1399.4 Darwin/22.1.0",
+        "ShareSheetUI/1 CFNetwork/1474 Darwin/23.0.0"
+      ],
+      "comments": "Found on MacOS 13 (Ventura) and higher e.g. when right-clicking an enclosure link from Safari and choosing Share..."
+    },
+    {
+      "name": "MauiBot",
+      "pattern": "^MauiBot",
+      "examples": [
+        "MauiBot (crawler.feedback dc@gmail.com)"
+      ]
+    },
+    {
+      "name": "Mastodon Bot",
+      "pattern": "rb/.*Mastodon/",
+      "examples": [
+        "http.rb/5.0.4 (Mastodon/3.5.3; +https://mastodon.xyz/) Bot"
+      ]
+    },
+    {
+      "name": "Metacast Crawler",
+      "pattern": "^Metacast/.* Crawler",
+      "examples": [
+        "Metacast/1.0 Crawler +https://metacast.app"
+      ],
+      "urls": [
+        "https://metacast.app/"
+      ]
+    },
+    {
+      "name": "Microsoft Bingbot",
+      "pattern": "(BingPreview/|adidxbot/|[bB]ingbot/)",
+      "urls": [
+        "https://www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0"
+      ],
+      "examples": [
+        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534 (KHTML, like Gecko) BingPreview/1.0b",
+        "Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)"
+      ]
+    },
+    {
+      "name": "Microsoft Office",
+      "pattern": "ms-office; MSOffice",
+      "examples": [
+        "Mozilla/4.0 (compatible; ms-office; MSOffice 16)"
+      ]
+    },
+    {
+      "name": "Mixcloud Podcast Importer",
+      "pattern": "^MixcloudPodcastImporter/",
+      "examples": [
+        "MixcloudPodcastImporter/2.0"
+      ]
+    },
+    {
+      "name": "MJ12bot",
+      "pattern": ".*MJ12bot",
+      "examples": [
+        "Mozilla/5.0 (compatible; MJ12bot/v1.4.8; http://mj12bot.com/)"
+      ]
+    },
+    {
+      "name": "Mozilla Bot",
+      "pattern": "^'?Mozilla(/5\\.0(\\.\\.\\.)?)?$|^\\(Mozilla/5\\.0\\)$",
+      "examples": [
+        "Mozilla/5.0",
+        "Mozilla",
+        "Mozilla/5.0...",
+        "'Mozilla/5.0",
+        "(Mozilla/5.0)"
+      ]
+    },
+    {
+      "name": "MSN Bot",
+      "pattern": "^msnbot/"
+    },
+    {
+      "name": "Neevabot",
+      "pattern": ".*Neevabot",
+      "urls": [
+        "https://neeva.com/neevabot"
+      ],
+      "examples": [
+        "Mozilla/5.0 (compatible; Neevabot/1.0; https://neeva.com/neevabot)"
+      ]
+    },
+    {
+      "name": "Netcraft Survey Agent",
+      "pattern": " NetcraftSurveyAgent/",
+      "examples": [
+        "Mozilla/5.0 (compatible; NetcraftSurveyAgent/1.0; +info@netcraft.com)"
+      ]
+    },
+    {
+      "name": "Newspaper",
+      "description": "News, full-text, and article metadata extraction in Python 3.",
+      "pattern": "^newspaper/\\d",
+      "examples": [
+        "newspaper/0.3.0"
+      ],
+      "urls": [
+        "https://github.com/codelucas/newspaper"
+      ]
+    },
+    {
+      "name": "OgScrper",
+      "pattern": "OgScrper",
+      "examples": [
+        "OgScrper"
+      ]
+    },
+    {
+      "name": "OkDownload",
+      "pattern": "^OkDownload/"
+    },
+    {
+      "name": "OP3 Fetcher",
+      "pattern": "^op3-fetcher/",
+      "examples": [
+        "op3-fetcher/1.0 (https://op3.dev)"
+      ],
+      "urls": [
+        "https://op3.dev"
+      ]
+    },
+    {
+      "name": "OpenAI GPTBot",
+      "pattern": "GPTBot/",
+      "examples": [
+        "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.2; +https://openai.com/gptbot)",
+        "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.0; +https://openai.com/gptbot)"
+      ],
+      "urls": [
+        "https://openai.com/gptbot"
+      ]
+    },
+    {
+      "name": "Overcast feed parser",
+      "pattern": "^Overcast/1\\.0 Podcast Sync",
+      "comments": "Marco Arment says: when a new episode is detected, the servers fetch a copy of it to seed these values with an initial set of data to make the privacy screen more accurate.",
+      "examples": [
+        "Overcast/1.0 Podcast Sync",
+        "Overcast/1.0 Podcast Sync (+http://overcast.fm/)",
+        "Overcast/1.0 Podcast Sync (1 subscribers; feed-id=1234567; +http://overcast.fm/)"
+      ]
+    },
+    {
+      "name": "Pandora RSS crawler",
+      "pattern": "^PandoraRSSCrawler"
+    },
+    {
+      "name": "PaperLi",
+      "pattern": "PaperLiBot/",
+      "examples": [
+        "Mozilla/5.0 (compatible; PaperLiBot/2.1; https://support.paper.li/entries/20023257-what-is-paper-li)"
+      ]
+    },
+    {
+      "name": "PetalBot",
+      "pattern": "PetalBot",
+      "description": "PetalBot is an automatic program of the Petal search engine.",
+      "urls": [
+        "https://aspiegel.com/petalbot"
+      ],
+      "examples": [
+        "Mozilla/5.0 (Linux; Android 7.0;) AppleWebKit/537.36 (KHTML, like Gecko) Mobile Safari/537.36 (compatible; PetalBot; https://aspiegel.com/petalbot)"
+      ]
+    },
+    {
+      "name": "Pingdom",
+      "pattern": "^Pingdom"
+    },
+    {
+      "name": "PlayerFM Podcast Sync",
+      "pattern": "PlayerFM/.* Podcast Sync",
+      "examples": [
+        "PlayerFM/1.0 Podcast Sync (0 subscribers; url=https://player.fm/series/series-2567872)"
+      ]
+    },
+    {
+      "name": "Podbean Importer",
+      "pattern": "^Podbean Importer",
+      "examples": [
+        "Podbean Importer"
+      ]
+    },
+    {
+      "name": "Podcastindex.org",
+      "pattern": "^Podcastindex\\.org/",
+      "svg": "podcast-index.svg",
+      "urls": [
+        "https://podcastindex.org/"
+      ],
+      "examples": [
+        "Podcastindex.org/v0.3.3 (Aggrivate)"
+      ]
+    },
+    {
+      "name": "Podcast de facto Standard",
+      "description": "Dedicated to providing guidance and information on the conventions and standards used in podcasting",
+      "pattern": "^PodcastStandard/",
+      "examples": [
+        "PodcastStandard/0.1.0 (+https://podcast-standard.org)"
+      ],
+      "urls": [
+        "https://podcast-standard.org/"
+      ]
+    },
+    {
+      "name": "Podcast Archiver",
+      "pattern": "^Podcast%20Archiver/",
+      "urls": [
+        "https://www.fredrikblank.com/podcast-archiver/"
+      ],
+      "examples": [
+        "Podcast%20Archiver/3000000003 CFNetwork/1406.0.4 Darwin/22.4.0"
+      ]
+    },
+    {
+      "name": "PodCloud",
+      "pattern": "podCloud",
+      "description": "Le podcast, simplement. A French-language web-based podcast player.",
+      "urls": [
+        "https://podcloud.fr"
+      ],
+      "comments": "This useragent is a bot, doing feed updates and downloading media files. It was observed every six hours. User plays will have a standard browser useragent with a referer of https://podcloud.fr/"
+    },
+    {
+      "name": "Podcorn",
+      "pattern": "Podcorn/",
+      "description": "The leading podcast influencer marketplace. Connecting unique voices to unique brands for native advertising.",
+      "urls": [
+        "https://podcorn.com/"
+      ],
+      "examples": [
+        "Podcorn/1.0"
+      ]
+    },
+    {
+      "name": "PodderBot",
+      "pattern": "PodderBot/",
+      "description": "PodderApp bot",
+      "urls": [
+        "https://www.podderapp.com/"
+      ],
+      "comments": "PodderApp bot for RSS fetching / verification",
+      "examples": [
+        "PodderBot/1.0"
+      ]
+    },
+    {
+      "name": "Podfollow",
+      "pattern": "podfollowbot/",
+      "description": "Podfollow, a service to help link to your podcast",
+      "urls": [
+        "https://podfollow.com"
+      ],
+      "examples": [
+        "Mozilla/5.0 https://podfollow.com/crawling podfollowbot/1.0"
+      ]
+    },
+    {
+      "name": "Podgrab",
+      "pattern": "^Podgrab$",
+      "description": "A self-hosted podcast manager to download episodes as soon as they become live",
+      "urls": [
+        "https://github.com/akhilrex/podgrab"
+      ],
+      "examples": [
+        "Podgrab"
+      ],
+      "comments": "Found used for automated archiving."
+    },
+    {
+      "name": "Podhound",
+      "pattern": "PodhoundBeta",
+      "description": "AI-powered podcast discovery",
+      "urls": [
+        "http://podhound.co"
+      ],
+      "comments": "'It grabs it once to get the audio file length.', says the developer.",
+      "examples": [
+        "PodhoundBeta"
+      ]
+    },
+    {
+      "name": "Podio Bot",
+      "pattern": "^Podio/",
+      "description": "Podcasts + Radio = Podio",
+      "urls": [
+        "https://podio.radio/"
+      ],
+      "comments": "This useragent appears to download and cache audio",
+      "examples": [
+        "Podio/1.0"
+      ]
+    },
+    {
+      "name": "Podnews",
+      "pattern": "PodnewsBot",
+      "description": "Podnews runs a number of bots to read and test RSS and audio files",
+      "urls": [
+        "http://podnews.net"
+      ]
+    },
+    {
+      "name": "Podnods Bot",
+      "pattern": "(podnods-crawler|podnods)",
+      "description": "Podnods is a podcast discovery site. This user agent is for crawling podcast data.",
+      "urls": [
+        "https://podnods.com/about"
+      ]
+    },
+    {
+      "name": "Podroll Analyzer",
+      "pattern": "^pdrl\\.fm ",
+      "examples": [
+        "pdrl.fm Analyzer / 1.0.0"
+      ]
+    },
+    {
+      "name": "Podscan Bot",
+      "pattern": "^PodscanBot/",
+      "examples": [
+        "PodscanBot/1.1.0 Ubuntu/22.04 (Linux) +https://podscan.fm",
+        "PodscanBot/1.1.0 Ubuntu/22.04 (Linux) Podscan.fm"
+      ],
+      "urls": [
+        "https://podscan.fm"
+      ]
+    },
+    {
+      "name": "Podscribe",
+      "pattern": "(^Adswizz-podscribe/|^Podscribe/)",
+      "examples": [
+        "Adswizz-podscribe/1.0",
+        "Podscribe/1.1"
+      ]
+    },
+    {
+      "name": "PodUptime",
+      "description": "Uptime Monitoring for the Podcast Industry",
+      "pattern": "PodUptime/\\d",
+      "examples": [
+        "Mozilla/5.0 (compatible; PodUptime/1.0; +https://poduptime.com)"
+      ],
+      "urls": [
+        "https://poduptime.com/"
+      ]
+    },
+    {
+      "name": "Podverse Feed Parser",
+      "pattern": "^Podverse/Feed Parser",
+      "description": "The Podverse feed parser.",
+      "urls": [
+        "https://podverse.fm"
+      ],
+      "comments": "This service parses publicly-accessible RSS feeds on a timer, then stores parsed data in the Podverse database."
+    },
+    {
+      "name": "PodvineBot",
+      "pattern": "^PodvineBot/",
+      "examples": [
+        "PodvineBot/4.0.1 (www.podvine.com)"
+      ]
+    },
+    {
+      "name": "PostRank Bot",
+      "pattern": "^PostRank/",
+      "examples": [
+        "PostRank/2.0 (postrank.com; 1 subscribers)"
+      ],
+      "comments": "Acquired by Google, https://en.wikipedia.org/wiki/PostRank"
+    },
+    {
+      "name": "PodwatchPro",
+      "pattern": "Podwatch-Pro Crawler",
+      "examples": [
+        "Podwatch-Pro Crawler"
+      ],
+      "description": "PodwatchPro is a podcast analytics software. This user agent is for crawling podcast data.",
+      "urls": [ "https://www.agma-mmc.de/media-analyse/ma-podcast" ]
+    },
+    {
+      "name": "Puppeteer",
+      "pattern": " HeadlessChrome/\\d",
+      "examples": [
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/105.0.5173.0 Safari/537.36"
+      ],
+      "urls": [
+        "https://pptr.dev/"
+      ]
+    },
+    {
+      "name": "python-requests",
+      "pattern": "python-requests"
+    },
+    {
+      "name": "Qiniu spider",
+      "pattern": "qiniu.*spider",
+      "examples": [
+        "z0-qiniu-imgstg-spider-1.0"
+      ]
+    },
+    {
+      "name": "Radioline Stream Monitoring",
+      "pattern": "^Radioline Stream Monitoring",
+      "examples": [
+        "Radioline Stream Monitoring (tech@radioline.co)"
+      ]
+    },
+    {
+      "name": "RedCircle",
+      "pattern": "RedCircle",
+      "description": "A platform for podcasts and brands to scale their message.",
+      "urls": [
+        "https://redcircle.com/"
+      ],
+      "examples": [
+        "RedCircle"
+      ]
+    },
+    {
+      "name": "Rephonic",
+      "pattern": "^Rephonic/\\d",
+      "urls": [
+        "https://rephonic.com/"
+      ],
+      "examples": [
+        "Rephonic/1.0"
+      ]
+    },
+    {
+      "name": "Ridder Bot",
+      "pattern": " RidderBot/",
+      "examples": [
+        "Mozilla/5.0 (compatible; RidderBot/1.0; bot@ridder.co)"
+      ]
+    },
+    {
+      "name": "RSS to Telegram",
+      "pattern": "^RSStT",
+      "description": "an RSS to Telegram bot",
+      "urls": [
+        "https://apps.apple.com/be/app/audiowave-podcast-player/id1602776751"
+      ],
+      "examples": [
+        "RSStT/2.2.1 RSS Reader"
+      ]
+    },
+    {
+      "name": "RSSRadio",
+      "pattern": "^RSSRadio \\("
+    },
+    {
+      "name": "Ruby Mechanize",
+      "pattern": "^Mechanize|[ -]Mechanize/",
+      "examples": [
+        "Mozilla/5.0 (compatible; Mechanize/2.7.4)",
+        "WWW-Mechanize/1.72"
+      ]
+    },
+    {
+      "name": "Screaming Frog SEO Spider",
+      "pattern": "^Screaming Frog ",
+      "examples": [
+        "Screaming Frog SEO Spider/5.1"
+      ]
+    },
+    {
+      "name": "SearchAtlas.com SEO Crawler",
+      "pattern": "^SearchAtlas.*Crawler",
+      "examples": [
+        "SearchAtlas.com SEO Crawler"
+      ]
+    },
+    {
+      "name": "SEMrushBot",
+      "pattern": "SemrushBot/|^SEMrushBot$",
+      "examples": [
+        "Mozilla/5.0 (compatible; SemrushBot/6~bl; http://www.semrush.com/bot.html)",
+        "SEMrushBot"
+      ]
+    },
+    {
+      "name": "Serendeputy",
+      "pattern": "SerendeputyBot/",
+      "urls": [
+        "https://serendeputy.com/about/serendeputy-bot"
+      ],
+      "examples": [
+        "SerendeputyBot/0.8.6 (http://serendeputy.com/about/serendeputy-bot)"
+      ]
+    },
+    {
+      "name": "Simplecast",
+      "pattern": "^Simplecast$",
+      "examples": [
+        "Simplecast"
+      ]
+    },
+    {
+      "name": "Slack Bot",
+      "pattern": "^Slackbot 1\\.0",
+      "examples": [
+        "Slackbot 1.0 ( https://api.slack.com/robots)"
+      ]
+    },
+    {
+      "name": "Snapchat Bot",
+      "pattern": "://developers\\.snap\\.com/robots",
+      "examples": [
+        "Snap URL Preview Service; bot; snapchat; https://developers.snap.com/robots"
+      ]
+    },
+    {
+      "name": "SoundOn Bot",
+      "pattern": "^SoundOn/[\\d.]+\\s+\\(bot"
+    },
+    {
+      "name": "Spotify cache service",
+      "pattern": "^Spotify/1\\.0$",
+      "comments": "This useragent, currently simply Spotify/1.0, is used when retrieving the RSS and audio for Spotify's catalogue. It isn't used for passthru.",
+      "examples": [
+        "Spotify/1.0"
+      ]
+    },
+    {
+      "name": "Stitcher Bot",
+      "pattern": "^StitcherBot"
+    },
+    {
+      "name": "Substack Content Fetcher",
+      "pattern": "^SubstackContentFetch/",
+      "examples": [
+        "SubstackContentFetch/1.0 (https://substack.com/)"
+      ]
+    },
+    {
+      "name": "SupportingCast",
+      "pattern": "^SupportingCast(/.*)?$",
+      "examples": [
+        "SupportingCast/1.0",
+        "SupportingCast"
+      ]
+    },
+    {
+      "name": "Timpi search crawler",
+      "pattern": "Timpibot/",
+      "examples": [
+        "Timpibot/0.8 ( http://www.timpi.io)"
+      ]
+    },
+    {
+      "name": "Tiny Tiny RSS",
+      "pattern": "^Tiny Tiny RSS/",
+      "examples": [
+        "Tiny Tiny RSS/22.12-c30b24d09 (Unsupported) (https://tt-rss.org/)"
+      ],
+      "urls": [
+        "https://tt-rss.org/"
+      ],
+      "comments": "Found autodownloading hundreds of episodes from an entire feed in rapid succession"
+    },
+    {
+      "name": "Transistor",
+      "pattern": "^Transistor\\.fm/",
+      "examples": [
+        "Transistor.fm/1.0"
+      ],
+      "urls": [
+        "https://transistor.fm"
+      ]
+    },
+    {
+      "name": "Trendsmap Resolver",
+      "pattern": "TrendsmapResolver/"
+    },
+    {
+      "name": "Triton Digital Podcast Sync",
+      "pattern": "^Triton Digital Podcast Sync$",
+      "examples": [
+        "Triton Digital Podcast Sync"
+      ]
+    },
+    {
+      "name": "Twingly Bot",
+      "pattern": "Twingly Recon;",
+      "examples": [
+        "Mozilla/5.0 (compatible; Twingly Recon; twingly.com)"
+      ]
+    },
+    {
+      "name": "Twitterbot",
+      "pattern": "^Twitterbot"
+    },
+    {
+      "name": "Typhoeus",
+      "pattern": "^Typhoeus"
+    },
+    {
+      "name": "UCast",
+      "pattern": "^UCast/",
+      "examples": [
+        "UCast/1.0 Podcast Sync (1 subscribers; feed-id=aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS8yMDg0OTQucnNzEAEBAD32-0242-42AC-8583-21E9BAD8C544; +http://www.ucastapp.com/)"
+      ]
+    },
+    {
+      "name": "TelegramBot",
+      "pattern": "^TelegramBot ",
+      "examples": [
+        "TelegramBot (like TwitterBot)"
+      ]
+    },
+    {
+      "name": "theTradeDesk Content Web Scraper",
+      "pattern": "TTD-Content",
+      "examples": [
+        "Mozilla/5.0 (compatible; TTD-Content; +https://www.thetradedesk.com/general/ttd-content)"
+      ],
+      "urls": [
+        "https://www.thetradedesk.com/us/ttd-content"
+      ]
+    },
+    {
+      "name": "Veritone Engine Toolkit",
+      "pattern": "^veritone/engine-toolkit",
+      "urls": [
+        "https://machinebox.io/veritone/engine-toolkit"
+      ],
+      "examples": [
+        "veritone/engine-toolkit-3.0"
+      ]
+    },
+    {
+      "name": "Vurbl",
+      "pattern": "VurblBot",
+      "description": "An audio streaming destination",
+      "urls": [
+        "https://vurbl.com/about-us/"
+      ],
+      "examples": [
+        "Mozilla/5.0 https://vurbl.com VurblBot/1.0"
+      ]
+    },
+    {
+      "name": "Wget",
+      "pattern": "Wget"
+    },
+    {
+      "name": "weborama",
+      "pattern": "^weborama-fetcher",
+      "examples": [
+        "weborama-fetcher (+http://www.weborama.com)"
+      ]
+    },
+    {
+      "name": "Windows Crawler",
+      "pattern": "^ZDM/.*Windows",
+      "examples": [
+        "ZDM/4.0; Windows Mobile 7.0;"
+      ]
+    },
+    {
+      "name": "Windows PowerShell",
+      "pattern": "WindowsPowerShell/",
+      "examples": [
+        "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.2673"
+      ]
+    },
+    {
+      "name": "WordPress",
+      "pattern": "^WordPress"
+    },
+    {
+      "name": "wsrv.nl",
+      "pattern": "https?://wsrv.nl/",
+      "examples": [
+        "Mozilla/5.0 (compatible; ImageFetcher/9.0; +http://wsrv.nl/)"
+      ]
+    },
+    {
+      "name": "YaCy",
+      "pattern": "^yacybot",
+      "description": "Decentralized Web Search",
+      "urls": [
+        "http://yacy.net/bot.html"
+      ],
+      "examples": [
+        "yacybot (/global; amd64 Linux 5.9.8-zen1-1-zen; java 1.8.0_265; Europe/de) http://yacy.net/bot.html"
+      ]
+    },
+    {
+      "name": "Yahoo Crawler",
+      "pattern": "Yahoo! Slurp",
+      "examples": [
+        "Crawler Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)"
+      ]
+    },
+    {
+      "name": "YandexBot",
+      "pattern": "YandexBot/"
+    },
+    {
+      "name": "Zapier",
+      "pattern": "^Zapier$",
+      "examples": [
+        "Zapier"
+      ]
+    },
+    {
+      "name": "Zencast",
+      "pattern": "^Zencastr/",
+      "examples": [
+        "Zencastr/2.0"
+      ]
+    }
+  ]
+}

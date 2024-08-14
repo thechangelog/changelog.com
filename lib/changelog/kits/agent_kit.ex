@@ -14,33 +14,26 @@ defmodule Changelog.AgentKit do
     "BazQux"
   ]
 
-  @client_regexes [
-    {"Apple TV", ~r/^AppleCoreMedia\/1\.(.*)Apple TV/},
-    {"Castro", ~r/^Castro\s/},
-    {"Apple Watch", ~r/^AppleCoreMedia\/1\.(.*)Apple Watch/},
-    {"Apple Watch", ~r/(.*)watchOS\//},
-    {"Google Play", ~r/(.*)Google-Podcast/}
-  ]
+  @bots Application.app_dir(:changelog, "/priv/repo/agents/bots.json") |> File.read!() |> Jason.decode!
+  @apps Application.app_dir(:changelog, "/priv/repo/agents/apps.json") |> File.read!() |> Jason.decode!
+  @libs Application.app_dir(:changelog, "/priv/repo/agents/libraries.json") |> File.read!() |> Jason.decode!
+  @browsers Application.app_dir(:changelog, "/priv/repo/agents/browsers.json") |> File.read!() |> Jason.decode!
 
-  # see https://podnews.net/article/podcast-app-useragents
-  def get_podcast_client(ua) when is_binary(ua) do
-    ua = URI.decode(ua)
-
-    name =
-      case Enum.find(@client_regexes, fn {_, regex} -> String.match?(ua, regex) end) do
-        {client, _} -> client
-        _else -> ua |> String.split("/") |> List.first()
-      end
-
-    case name do
-      "AndroidDownloadManager" -> "Android"
-      "AppleCoreMedia" -> "Apple Podcasts"
-      "Mozilla" -> "Browsers"
-      _else -> name
+  def identify(ua) when is_binary(ua) do
+    cond do
+      agent = find_in(@bots, ua) -> %{name: agent["name"], type: "bot"}
+      agent = find_in(@apps, ua) -> %{name: agent["name"], type: "app"}
+      agent = find_in(@libs, ua) -> %{name: agent["name"], type: "library"}
+      agent = find_in(@browsers, ua) -> %{name: agent["name"], type: "browser"}
+      :else -> %{name: "Unknown", type: "unknown"}
     end
   end
 
-  def get_podcast_client(_), do: "Unknown"
+  defp find_in(list, ua) do
+    Enum.find(list["entries"], fn entry ->
+      String.match?(ua, ~r/#{entry["pattern"]}/)
+    end)
+  end
 
   def get_subscribers(nil), do: {:error, :no_ua_string}
 

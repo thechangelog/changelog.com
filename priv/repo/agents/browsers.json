@@ -1,0 +1,94 @@
+{
+  "comments": [
+    "Look for User-Agent matches in this file order: 'bots', 'apps', 'libraries', 'browsers', and return the first entry matched, processing each entry in order in which they appear in the file.",
+    "If the match entry is from this file (i.e. not a bot), you can also match the User-Agent header against the 'devices' file to identity device and category.",
+    "If the match entry is a Browser (i.e. in this file), you can also match the Referer header against the 'referers' file to identify web-based apps and other known web entities."
+  ],
+  "$schema": "https://raw.githubusercontent.com/opawg/user-agents-v2/master/schemas/patterns.schema.json",
+  "entries": [
+    {
+      "name": "Brave",
+      "pattern": ".+[Bb]rave"
+    },
+    {
+      "name": "Opera",
+      "pattern": "Opera/|Macintosh.*OPR/|Windows.*OPR/|Mobile/.* OPT/",
+      "examples": [
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36 OPR/72.0.3815.186",
+        "Mozilla/5.0 (iPad; CPU OS 15_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 OPT/3.2.13"
+      ],
+      "comments": "Must match above Chrome"
+    },
+    {
+      "name": "Edge",
+      "pattern": "(Xbox.+Edg?/|Android.+EdgA/|iPhone.+EdgiOS/|Macintosh.+MacEdgeClient/|Windows Phone.+Edge?/|Windows.+Edge?/)",
+      "examples": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; WebView/3.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299"
+      ],
+      "comments": "Must match above Chrome"
+    },
+    {
+      "name": "Chrome",
+      "pattern": "^.*Android.*Chrome/|CrOS.*Chrome/|Linux.*Chrome/|Mac OS X.*Chrome/|Windows.*Chrome/|iPad.*CriOS/|iPhone.*CriOS/|^Chrome/\\d.*CFNetwork",
+      "examples": [
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36",
+        "Chrome/103.0.5060.63 CFNetwork/1390 Darwin/22.0.0"
+      ],
+      "comments": "Must match below Edge"
+    },
+    {
+      "name": "Firefox",
+      "pattern": "Firefox/|(Android|iPhone|iPad).*Focus/| FxiOS/",
+      "examples": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/100 Mobile/15E148 Version/15.0"
+      ]
+    },
+    {
+      "name": "Internet Explorer",
+      "pattern": "MSIE | Trident/",
+      "examples": [
+        "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)",
+        "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
+      ]
+    },
+    {
+      "name": "NCSA Mosaic",
+      "pattern": "^NCSA Mosaic/",
+      "examples": [
+        "NCSA Mosaic/1.0 (X11;SunOS 4.1.4 sun4m)"
+      ]
+    },
+    {
+      "name": "DuckDuckGo",
+      "pattern": "^DuckDuckGo",
+      "examples": [
+        "DuckDuckGo/3 CFNetwork/1494.0.7 Darwin/23.4.0"
+      ],
+      "comments": "Not a bot; but a downloadable browser on iOS"
+    },
+    {
+      "name": "Safari",
+      "pattern": "Macintosh.*AppleWebKit.*Safari/|Windows.*AppleWebKit.*Safari/|iPhone.*AppleWebKit.*Safari/|iPad.*AppleWebKit.*Safari/|^MobileSafari/|^Safari/",
+      "comments": "Must match below Chrome",
+      "examples": [
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15",
+        "MobileSafari/604.1 CFNetwork/1107.1 Darwin/19.0.0",
+        "Safari/18614.4.6.1.6 CFNetwork/1404.0.5 Darwin/22.3.0"
+      ]
+    },
+    {
+      "name": "iOS WebView",
+      "pattern": "Mozilla/5\\.0 \\([A-Za-z ]+; CPU( iPhone)? OS [\\d_]+ like Mac OS X\\) AppleWebKit/[\\d.]+ \\(KHTML, like Gecko\\) Mobile/[0-9A-Z]{6,}",
+      "description": "Default for UIWebView and WKWebView if apps do not customize",
+      "comments": "Be extremely specific to avoid false positives. Versions frozen (like Safari) to avoid fingerprinting: https://twitter.com/rmondello/status/943545865204989953?s=20",
+      "examples": [
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+        "Mozilla/5.0 (iPad; CPU OS 16_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E1480",
+        "Mozilla/5.0 (iPod touch; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+      ]
+    }
+  ]
+}
