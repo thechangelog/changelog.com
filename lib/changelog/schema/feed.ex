@@ -1,7 +1,7 @@
 defmodule Changelog.Feed do
   use Changelog.Schema
 
-  alias Changelog.{Files, Person}
+  alias Changelog.{Files, FeedStat, Person}
 
   schema "feeds" do
     field :name, :string
@@ -18,6 +18,8 @@ defmodule Changelog.Feed do
     field :person_ids, {:array, :integer}, default: []
 
     belongs_to :owner, Person
+
+    has_many :feed_stats, FeedStat
 
     timestamps()
   end

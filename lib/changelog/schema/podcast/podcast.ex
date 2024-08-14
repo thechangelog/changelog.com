@@ -5,6 +5,7 @@ defmodule Changelog.Podcast do
     Episode,
     EpisodeRequest,
     EpisodeStat,
+    FeedStat,
     Files,
     Person,
     PodcastTopic,
@@ -64,6 +65,7 @@ defmodule Changelog.Podcast do
     has_many :retired_hosts, through: [:retired_podcast_hosts, :person]
 
     has_many :episode_stats, EpisodeStat
+    has_many :feed_stats, FeedStat
     has_many :subscriptions, Subscription, where: [unsubscribed_at: nil]
 
     timestamps()
