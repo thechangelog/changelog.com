@@ -22,6 +22,7 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
 
     for podcast <- Repo.all(Podcast) do
       process_podcast(podcast, date, logs)
+      Podcast.update_subscribers(podcast)
     end
 
     :ok

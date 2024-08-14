@@ -9,6 +9,13 @@ defmodule Changelog.Factory do
     }
   end
 
+  def feed_stat_factory do
+    %Changelog.FeedStat{
+      date: Timex.today(),
+      agents: %{}
+    }
+  end
+
   def topic_factory do
     %Changelog.Topic{
       name: sequence(:name, &"Topic #{&1}"),

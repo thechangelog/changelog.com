@@ -346,26 +346,37 @@ defmodule Changelog.Podcast do
     |> Repo.update!()
   end
 
-  def update_subscribers(slug, client, count) when is_binary(slug) do
-    podcast = get_by_slug!(slug)
-    update_subscribers(podcast, client, count)
-  end
+  def update_subscribers(podcast) do
+    stat =
+      podcast
+      |> assoc(:feed_stats)
+      |> FeedStat.newest_first()
+      |> FeedStat.limit(1)
+      |> Repo.one()
 
-  def update_subscribers(%{slug: "master"}, client, count) do
-    update_subscribers("backstage", client, count)
-  end
+    if stat do
+      subscribers =
+        stat.agents
+        |> Enum.filter(fn {_name, data} -> String.match?(data["raw"], ~r/subscribers/) end)
+        |> Enum.map(fn {name, data} ->
+          subs = case Regex.named_captures(~r/(?<subs>\d+) subscribers/, data["raw"]) do
+            %{"subs" => count} -> String.to_integer(count)
+            _else -> 0
+          end
 
-  def update_subscribers(podcast = %{subscribers: nil}, client, count) do
-    podcast
-    |> Map.put(:subscribers, %{})
-    |> update_subscribers(client, count)
-  end
+          {name, subs}
+        end)
+        # less than 5 subs either an error or we don't care
+        |> Enum.filter(fn {_name, subs} -> subs >= 5 end)
+        |> Enum.into(%{})
 
-  def update_subscribers(podcast, client, count) do
-    new_subscribers = Map.put(podcast.subscribers, client, count)
+      new_subscribers = Map.merge(podcast.subscribers || %{}, subscribers)
 
-    podcast
-    |> change(%{subscribers: new_subscribers})
-    |> Repo.update!()
+      podcast
+      |> change(%{subscribers: new_subscribers})
+      |> Repo.update!()
+    else
+      podcast
+    end
   end
 end

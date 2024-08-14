@@ -37,7 +37,7 @@ defmodule Changelog.PodcastTest do
     assert Podcast.published_episode_count(podcast) == 1
   end
 
-  describe "update_stat_counts" do
+  describe "update_stat_counts/1" do
     setup do
       {:ok, podcast: insert(:podcast)}
     end
@@ -59,24 +59,48 @@ defmodule Changelog.PodcastTest do
     end
   end
 
-  describe "update_subscribers" do
-    test "it initializes the subscribers map on first run" do
-      podcast = insert(:podcast, slug: "afk")
-      podcast = Podcast.update_subscribers(podcast, "overcast", 12)
-      assert podcast.subscribers["overcast"] == 12
+  describe "update_subscribers/1" do
+    setup do
+      {:ok, podcast: insert(:podcast)}
     end
 
-    test "it won't overwrite other client subscribers" do
-      podcast = insert(:podcast, slug: "afk", subscribers: %{"overcast" => 12, "itunes" => 4})
-      podcast = Podcast.update_subscribers(podcast, "itunes", 24)
-      assert podcast.subscribers["overcast"] == 12
-      assert podcast.subscribers["itunes"] == 24
-    end
+    test "it uses the most recent feed stats, ignoring < 5 subs", %{podcast: podcast} do
+      insert(:feed_stat, date: ~D[2024-01-01], podcast: podcast, agents: %{
+        "Overcast" => %{
+          "raw" => "Overcast/1.0 Podcast Sync (993 subscribers; feed-id=554901; +http://overcast.fm/)"
+        },
+        "Player FM" => %{
+          "raw" => "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+        },
+        "Castro" => %{
+          "raw" => "Castro 2 Episode Download (1000 subscribers)"
+        },
+        "Fake Castro" => %{
+          "raw" => "Fake Castro 2 Episode Download (3 subscribers)"
+        }
+      })
 
-    test "it stores Master's subscribers on Backstage instead" do
-      insert(:podcast, slug: "backstage")
-      backstage = Podcast.update_subscribers(Podcast.master(), "overcast", 1200)
-      assert backstage.subscribers["overcast"] == 1200
+      podcast = Podcast.update_subscribers(podcast)
+
+      assert podcast.subscribers["Overcast"] == 993
+      assert podcast.subscribers["Player FM"] == 5033
+      assert podcast.subscribers["Castro"] == 1000
+      assert podcast.subscribers["Fake Castro"] == nil
+
+      insert(:feed_stat, date: ~D[2024-01-02], podcast: podcast, agents: %{
+        "Overcast" => %{
+          "raw" => "Overcast/1.0 Podcast Sync (994 subscribers; feed-id=554901; +http://overcast.fm/)"
+        },
+        "Player FM" => %{
+          "raw" => "PlayerFM/1.0 Podcast Sync (5133 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+        }
+      })
+
+      podcast = Podcast.update_subscribers(podcast)
+
+      assert podcast.subscribers["Overcast"] == 994
+      assert podcast.subscribers["Player FM"] == 5133
+      assert podcast.subscribers["Castro"] == 1000
     end
   end
 end
