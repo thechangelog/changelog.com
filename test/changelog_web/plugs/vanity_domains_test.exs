@@ -18,6 +18,7 @@ defmodule ChangelogWeb.VanityDomainsTest do
     vanity_domain: "https://gotime.fm",
     slug: "gotime",
     spotify_url: "https://spotify.com",
+    youtube_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYrf0OJWceitz-LFofzWdGY92",
     name: "Go Time"
   }
 
@@ -84,10 +85,19 @@ defmodule ChangelogWeb.VanityDomainsTest do
   test "vanity redirects for spotify URL" do
     conn =
       build_conn_with_host_and_path("gotime.fm", "/spotify")
-      |> assign_podcasts([@gotime, @gotime])
+      |> assign_podcasts([@gotime, @jsparty])
       |> VanityDomains.call([])
 
     assert_vanity_redirect(conn, @gotime.spotify_url)
+  end
+
+  test "vanity redirects for YouTube URL" do
+    conn =
+      build_conn_with_host_and_path("gotime.fm", "/youtube")
+      |> assign_podcasts([@gotime])
+      |> VanityDomains.call([])
+
+    assert_vanity_redirect(conn, @gotime.youtube_url)
   end
 
   test "vanity redirects for overcast URL" do
@@ -168,8 +178,8 @@ defmodule ChangelogWeb.VanityDomainsTest do
       |> assign_podcasts([@gotime, @jsparty])
       |> VanityDomains.call([])
 
-    assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
-    # assert_vanity_redirect(conn, "/topic/games")
+    # assert_vanity_redirect(conn, ~r/changelog\.typeform\.com\/.*/)
+    assert_vanity_redirect(conn, "/topic/games")
   end
 
   test "vanity redirects for merch" do
