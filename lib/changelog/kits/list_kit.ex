@@ -33,6 +33,13 @@ defmodule Changelog.ListKit do
   def exclude(list, thing), do: list -- [thing]
 
   @doc """
+  Merges two lists and ensures only unique entries
+  """
+  def uniq_merge(list1, list2) do
+    list1 |> Enum.concat(list2) |> Enum.uniq()
+  end
+
+  @doc """
   Returns whether or not two lists have any elements in common
   """
   def overlap?(one, two) when is_list(one) and is_list(two) do

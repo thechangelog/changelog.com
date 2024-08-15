@@ -4,7 +4,7 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessorTest do
 
   import Mock
 
-  alias Changelog.{FeedStat, Repo, Stats}
+  alias Changelog.{Feed, FeedStat, Podcast, Repo, Stats}
   alias Changelog.ObanWorkers.FeedStatsProcessor
 
   defp log_fixtures(date) do
@@ -31,6 +31,9 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessorTest do
       assert Repo.count(Ecto.assoc(jsparty, :feed_stats)) == 1
       assert Repo.count(Ecto.assoc(feed, :feed_stats)) == 1
       assert Repo.count(FeedStat.on_date("2024-08-09")) == 3
+
+      assert Repo.get(Podcast, gotime.id).subscribers == %{"Feedly" => 540, "Overcast feed parser" => 3040}
+      assert Repo.get(Feed, feed.id).agents == ["Pocket Casts"]
     end
   end
 end

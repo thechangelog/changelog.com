@@ -1,7 +1,7 @@
 defmodule Changelog.Feed do
   use Changelog.Schema
 
-  alias Changelog.{Files, FeedStat, Person}
+  alias Changelog.{ListKit, Files, FeedStat, Person}
 
   schema "feeds" do
     field :name, :string
@@ -14,6 +14,7 @@ defmodule Changelog.Feed do
     field :refreshed_at, :utc_datetime
     field :cover, Files.Cover.Type
 
+    field :agents, {:array, :string}, default: []
     field :podcast_ids, {:array, :integer}, default: []
     field :person_ids, {:array, :integer}, default: []
 
@@ -63,6 +64,27 @@ defmodule Changelog.Feed do
     # using update_all to avoid auto `updated_at` change
     query = from(q in __MODULE__, where: q.id == ^feed.id)
     Repo.update_all(query, set: [refreshed_at: now_in_seconds()])
+  end
+
+  def update_agents(feed) do
+    stat =
+      feed
+      |> assoc(:feed_stats)
+      |> FeedStat.newest_first()
+      |> FeedStat.limit(1)
+      |> Repo.one()
+
+    if stat do
+      agents = Enum.map(stat.agents, fn {name, _data} -> name end)
+
+      new_agents = ListKit.uniq_merge(feed.agents || [], agents)
+
+      feed
+      |> change(%{agents: new_agents})
+      |> Repo.update!()
+    else
+      feed
+    end
   end
 
   def starts_on_time(%{starts_on: nil}), do: nil

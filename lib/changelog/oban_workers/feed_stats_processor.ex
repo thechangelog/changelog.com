@@ -18,6 +18,7 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
 
     for feed <- Repo.all(Feed) do
       process_feed(feed, date, logs)
+      Feed.update_agents(feed)
     end
 
     for podcast <- Repo.all(Podcast) do

@@ -37,6 +37,22 @@ defmodule Changelog.ListKitTest do
     end
   end
 
+  describe "uniq_merge/2" do
+    test "makes one list from two" do
+      assert ListKit.uniq_merge([1,2,3], [4,5]) == [1,2,3,4,5]
+    end
+
+    test "works with empty lists" do
+      assert ListKit.uniq_merge([1,2,3], []) == [1,2,3]
+      assert ListKit.uniq_merge([], [4,5]) == [4,5]
+    end
+
+    test "doesn't include duplicates" do
+      assert ListKit.uniq_merge([1,2,3], [1,2,3]) == [1,2,3]
+      assert ListKit.uniq_merge([3,4], [4,5]) == [3,4,5]
+    end
+  end
+
   describe "overlap?/2" do
     test "is true when two lists have at least one common element" do
       assert ListKit.overlap?([1, 2, 3], [2, 3, 4])
