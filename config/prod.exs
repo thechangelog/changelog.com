@@ -74,6 +74,8 @@ config :changelog, Oban,
        {"30 3 * * *", Changelog.ObanWorkers.Bouncer},
        # 4am daily
        {"00 4 * * *", Changelog.ObanWorkers.EpisodeStatsProcessor},
+       # 4:45am daily
+       {"45 4 * * *", Changelog.ObanWorkers.FeedStatsProcessor},
        # every 3 hours
        {"0 */3 * * *", Changelog.ObanWorkers.MembershipSyncer},
        # 15 after every hour
