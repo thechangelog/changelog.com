@@ -1,10 +1,10 @@
 defmodule ChangelogWeb.Admin.FeedController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Feed, Podcast}
+  alias Changelog.{Feed, FeedStat, Podcast}
   alias Changelog.ObanWorkers.FeedUpdater
 
-  plug :assign_feed when action in [:edit, :update, :delete, :refresh]
+  plug :assign_feed when action in [:edit, :update, :delete, :refresh, :feed_stats]
   plug :assign_podcasts when action in [:index, :new, :create, :edit, :update]
   plug Authorize, [Policies.Admin.Feed, :feed]
   plug :scrub_params, "feed" when action in [:create, :update]
@@ -81,6 +81,31 @@ defmodule ChangelogWeb.Admin.FeedController do
     conn
     |> put_flash(:result, "success")
     |> redirect(to: ~p"/admin/feeds")
+  end
+
+  def feed_stats(conn = %{assigns: %{feed: feed}}, params) do
+    stat = if params["date"] do
+      feed
+      |> assoc(:feed_stats)
+      |> FeedStat.on_date(params["date"])
+      |> FeedStat.limit(1)
+      |> Repo.one()
+    else
+      feed
+      |> assoc(:feed_stats)
+      |> FeedStat.newest_first()
+      |> FeedStat.limit(1)
+      |> Repo.one()
+    end
+
+    prev = FeedStat.previous_to(stat) |> FeedStat.limit(1) |> Repo.one()
+    next = FeedStat.next_after(stat) |> FeedStat.limit(1) |> Repo.one()
+
+    conn
+    |> assign(:stat, stat)
+    |> assign(:prev, prev)
+    |> assign(:next, next)
+    |> render(:feed_stats)
   end
 
   defp assign_feed(conn = %{params: %{"id" => id}}, _params) do

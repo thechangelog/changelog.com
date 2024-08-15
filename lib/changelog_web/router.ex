@@ -68,6 +68,7 @@ defmodule ChangelogWeb.Router do
     get "/search/:type", SearchController, :one
 
     resources "/feeds", FeedController
+    get "/feeds/:id/feed_stats", FeedController, :feed_stats
     post "/feeds/:id/refresh", FeedController, :refresh, as: :feed
 
     resources "/memberships", MembershipController, except: [:create, :delete]
@@ -119,6 +120,7 @@ defmodule ChangelogWeb.Router do
 
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
     end
+    get "/podcasts/:id/feed_stats", PodcastController, :feed_stats
 
     post "/podcasts/:id/feed", PodcastController, :feed, as: :podcast
 

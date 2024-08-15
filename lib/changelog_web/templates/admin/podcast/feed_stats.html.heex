@@ -1,0 +1,47 @@
+<div class="ui basic segment">
+  <h1 class="ui dividing header">
+    <%= link("Podcasts", to: ~p"/admin/podcasts") %>
+    <%= render("_dropdown_list.html", assigns) %>
+    <%= @podcast.name %>
+    &raquo;Feed Stats
+  </h1>
+
+  <div class="actions right">
+  <%= if @prev do %>
+    <%= link to: ~p"/admin/podcasts/#{@podcast.slug}/feed_stats" <> "?date=#{@prev.date}", class: "ui right floated basic button" do %>
+      <i class="icon angle double left"></i>
+      Previous Day
+    <% end %>
+  <% end %>
+  <%= if @next do %>
+    <%= link to: ~p"/admin/podcasts/#{@podcast.slug}/feed_stats" <> "?date=#{@next.date}", class: "ui right floated basic button" do %>
+      <i class="icon angle double right"></i>
+      Next Day
+    <% end %>
+  <% end %>
+  </div>
+</div>
+
+<div class="ui basic segment">
+  <h2 class="ui header"><%= @stat.date %></h2>
+  <table class="ui striped table">
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th>Type</th>
+      <th>Requests</th>
+      <th>Raw</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for {name, data} <- Enum.sort_by(@stat.agents, fn {_name, data} -> data["requests"] end, :desc) do %>
+    <tr>
+      <td><%= name %></td>
+      <td><%= data["type"] %></td>
+      <td><%= data["requests"] %></td>
+      <td><%= data["raw"] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+</div>
