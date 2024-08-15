@@ -1,4 +1,4 @@
-defmodule Changelog.ObanWorkers.StatsProcessor do
+defmodule Changelog.ObanWorkers.EpisodeStatsProcessor do
   use Oban.Worker, queue: :scheduled, unique: [period: 600]
 
   import Ecto.Query, only: [select: 3]

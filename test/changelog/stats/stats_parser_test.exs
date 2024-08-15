@@ -9,8 +9,8 @@ defmodule ChangelogStatsParserTest do
   @log4 ~s{<134>2016-11-03T09:06:02Z cache-cdg8721 S3TheChangelog[301760]: 149.202.170.38,[03/Nov/2016:09:06:00 +0000],/uploads/podcast/224/the-changelog-224.mp3,0,200,"<div style="display:none;">",48.867,2.333,"Paris",EU,FR,"France"}
   @log5 ~s{<134>2016-10-17T06:32:48Z cache-fra1224 S3GoTime[326477]: 178.189.150.213,[17/Oct/2016:06:32:47 +0000],/uploads/gotime/19/go-time-19.mp3,328417,200,"",47.100,15.933,"Ilz",EU,AT,"Austria"}
   @log6 ~s{<134>2018-08-14T02:55:58Z cache-fra19122 S3TheChangelog[305528]: 85.179.179.149,[14/Aug/2018:02:55:58 +0000],/uploads/podcast/309/the-changelog-309.mp3%22,%22size_in_bytes%22:53386457,%22mime_type%22:%22audio/mpeg%22,%22duration_in_seconds%22:4426,123,404,"yacybot (/global; amd64 Linux 4.15.0-30-generic; java 1.8.0_181; Europe/de) http://yacy.net/bot.html",53.564,9.968,"Hamburg",EU,DE,"Germany"}
-  @file1 ~s{test/fixtures/logs/2016-10-14T13:00:00.000-oe6twX9qexnc62cAAAAA.log}
-  @file2 ~s{test/fixtures/logs/2016-10-13T08:00:00.000-aQlu8sDqCqHgsnMAAAAA.log}
+  @file1 ~s{test/fixtures/logs/episodes/2016-10-14T13:00:00.000-oe6twX9qexnc62cAAAAA.log}
+  @file2 ~s{test/fixtures/logs/episodes/2016-10-13T08:00:00.000-aQlu8sDqCqHgsnMAAAAA.log}
 
   describe "parse/1" do
     test "it creates a list with all the entries for the list of logs given" do

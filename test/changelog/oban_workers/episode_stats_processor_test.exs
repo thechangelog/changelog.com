@@ -1,14 +1,14 @@
-defmodule Changelog.ObanWorkers.StatsProcessorTest do
+defmodule Changelog.ObanWorkers.EpisodeStatsProcessorTest do
   use Changelog.SchemaCase
   use Oban.Testing, repo: Changelog.Repo
 
   import Mock
 
   alias Changelog.{Stats, Episode, Podcast, Repo}
-  alias Changelog.ObanWorkers.StatsProcessor
+  alias Changelog.ObanWorkers.EpisodeStatsProcessor
 
   defp log_fixtures(date) do
-    file_dir = "#{fixtures_path()}/logs/#{date}"
+    file_dir = "#{fixtures_path()}/logs/episodes/#{date}"
     {:ok, files} = File.ls(file_dir)
     Enum.map(files, fn file -> File.read!("#{file_dir}/#{file}") end)
   end
@@ -25,7 +25,7 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
       podcast1 = insert(:podcast)
       podcast2 = insert(:podcast)
 
-      {:ok, jobs} = perform_job(StatsProcessor, %{})
+      {:ok, jobs} = perform_job(EpisodeStatsProcessor, %{})
 
       assert length(jobs) == 4
 
@@ -42,7 +42,7 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
 
       e1 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
 
-      {:ok, stats} = perform_job(StatsProcessor, %{date: ~D[2016-10-10], podcast_id: podcast.id})
+      {:ok, stats} = perform_job(EpisodeStatsProcessor, %{date: ~D[2016-10-10], podcast_id: podcast.id})
 
       assert length(stats) == 1
       stat = get_stat(stats, e1)
@@ -74,7 +74,7 @@ defmodule Changelog.ObanWorkers.StatsProcessorTest do
       e15 = insert(:episode, podcast: podcast, slug: "222", audio_bytes: 81_563_934)
       e16 = insert(:episode, podcast: podcast, slug: "223", audio_bytes: 80_743_303)
 
-      {:ok, stats} = perform_job(StatsProcessor, %{date: ~D[2016-10-11], podcast_id: podcast.id})
+      {:ok, stats} = perform_job(EpisodeStatsProcessor, %{date: ~D[2016-10-11], podcast_id: podcast.id})
 
       assert length(stats) == 16
 

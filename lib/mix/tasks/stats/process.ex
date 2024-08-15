@@ -2,7 +2,7 @@ defmodule Mix.Tasks.Changelog.Stats.Process do
   use Mix.Task
 
   alias Changelog.{Podcast, Repo}
-  alias Changelog.ObanWorkers.StatsProcessor
+  alias Changelog.ObanWorkers.EpisodeStatsProcessor
 
   @shortdoc "Processes stats for given date, or all missing dates"
 
@@ -17,12 +17,12 @@ defmodule Mix.Tasks.Changelog.Stats.Process do
 
         Podcast.public()
         |> Repo.all()
-        |> Enum.map(&StatsProcessor.new(%{date: date, podcast_id: &1.id}))
+        |> Enum.map(&EpisodeStatsProcessor.new(%{date: date, podcast_id: &1.id}))
         |> Oban.insert_all()
 
       {:error, _message} ->
         %{}
-        |> StatsProcessor.new()
+        |> EpisodeStatsProcessor.new()
         |> Oban.insert!()
     end
 
