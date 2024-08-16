@@ -157,6 +157,9 @@
                 <% else %>
                   <%= chapter.title %>
                 <% end %>
+                <%= if chapter.image_url do %>
+                  <a href={chapter.image_url} title={"View image for chapter #{index}"} rel="external">👀</a>
+                <% end %>
                 </td>
                 <td style="width: 5%"><%= TimeView.duration(chapter.ends_at - chapter.starts_at) %></td>
               </tr>
