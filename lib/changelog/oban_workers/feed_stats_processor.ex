@@ -29,6 +29,11 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     :ok
   end
 
+  def perform(_job) do
+    yesterday = Date.add(Date.utc_today(), -1)
+    perform(%Job{args: %{"date" => Date.to_string(yesterday)}})
+  end
+
   defp process_feed(feed, date,logs) do
     url = "/feeds/#{feed.slug}"
     agents = get_unique_agents_map(logs, url)
