@@ -1,9 +1,9 @@
 <section class="show_list">
   <header class="show_list-header">
-    <h2>Changelog makes great podcasts for developers</h2>
-    <p><%= link("The Changelog", to: "/podcast", title: "The Changelog") %> podcast is the software world's best weekly <%= link("news brief", to: "/news") %> (Mondays), deep <%= link("technical interviews", to: "/interviews") %> (Wednesdays) and <%= link("talk show", to: "/friends") %> (Fridays) that's like putting the hallway track at your favorite tech conference on repeat.</p>
-    <p class="show_list-header-master_cta"><a href="/subscribe/news"><strong>Subscribe to the Changelog News(letter)!</strong> We keep it brief, entertaining &amp; always on-point.</a></p>
-    <p>But that's not all! We produce other great shows about web development, open source, building startups, AI & the human brain.</p>
+    <h2>World-class podcasts for developers</h2>
+    <p><%= link("The Changelog", to: "/podcast", title: "The Changelog podcast") %> podcast is software's best weekly news brief (Mondays), deep technical interviews (Wednesdays) &amp; talk show (Fridays).</p>
+    <p class="show_list-header-master_cta"><a href="/news" title="Subscribe to Changelog News"><strong>Get the Changelog News[letter]!</strong> "<em>So good I consider it a competitive advantage</em>"</a></p>
+    <p>But that's not all! We produce other great shows about AI, web development, open source, software engineering & running it in production.</p>
   </header>
   <div class="show_list-shows">
   <%= for podcast <- active_podcasts_for_index(@podcasts) do %>
