@@ -1,32 +1,30 @@
 <div class="ui basic segment">
   <h1 class="ui dividing header">
     <%= link("Feeds", to: ~p"/admin/feeds") %>
-    &raquo;<%= @feed.id %> (<%= @feed.name %>)
-    &raquo;Feed Stats
+    &raquo; <%= @feed.id %> (<%= @feed.name %>)
+    &raquo; Agents
+    &raquo; <%= @stat.date %>
   </h1>
 
   <div class="actions right">
-  <%= if @prev do %>
-    <%= link to: ~p"/admin/feeds/#{@feed}/feed_stats" <> "?date=#{@prev.date}", class: "ui right floated basic button" do %>
-      <i class="icon angle double left"></i>
-      Previous Day
+  <%= if @next do %>
+    <%= link to: ~p"/admin/feeds/#{@feed}/agents" <> "?date=#{@next.date}", class: "ui right floated basic button" do %>
+      Next Day <i class="icon angle double right"></i>
     <% end %>
   <% end %>
-  <%= if @next do %>
-    <%= link to: ~p"/admin/feeds/#{@feed}/feed_stats" <> "?date=#{@next.date}", class: "ui right floated basic button" do %>
-      <i class="icon angle double right"></i>
-      Next Day
+  <%= if @prev do %>
+    <%= link to: ~p"/admin/feeds/#{@feed}/agents" <> "?date=#{@prev.date}", class: "ui right floated basic button" do %>
+      <i class="icon angle double left"></i> Previous Day
     <% end %>
   <% end %>
   </div>
 </div>
 
 <div class="ui basic segment">
-  <h2 class="ui header"><%= @stat.date %></h2>
   <table class="ui striped table">
   <thead>
     <tr>
-      <th>Agent</th>
+      <th>Name</th>
       <th>Type</th>
       <th>Requests</th>
       <th>Raw</th>

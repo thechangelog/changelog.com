@@ -4,7 +4,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
   alias Changelog.{Cache, FeedStat, Podcast}
   alias Changelog.ObanWorkers.FeedUpdater
 
-  plug :assign_podcast when action in [:show, :edit, :update, :feed, :feed_stats]
+  plug :assign_podcast when action in [:show, :edit, :update, :feed, :agents]
   plug Authorize, [Policies.Admin.Podcast, :podcast]
   plug :scrub_params, "podcast" when action in [:create, :update]
 
@@ -118,7 +118,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     |> redirect(to: Routes.admin_podcast_path(conn, :index))
   end
 
-  def feed_stats(conn = %{assigns: %{podcast: podcast}}, params) do
+  def agents(conn = %{assigns: %{podcast: podcast}}, params) do
     stat = if params["date"] do
       podcast
       |> assoc(:feed_stats)
@@ -140,7 +140,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     |> assign(:stat, stat)
     |> assign(:prev, prev)
     |> assign(:next, next)
-    |> render(:feed_stats)
+    |> render(:agents)
   end
 
   defp assign_podcast(conn = %{params: %{"id" => id}}, _) do

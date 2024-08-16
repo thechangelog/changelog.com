@@ -42,7 +42,7 @@
       <td><%= AdminHelpers.ts(feed.inserted_at) %></td>
       <td><%= AdminHelpers.ts(feed.refreshed_at) %></td>
       <td><%= TimeView.hacker_date(feed.starts_on) %></td>
-      <td><%= link(length(feed.agents), to: ~p"/admin/feeds/#{feed}/feed_stats") %></td>
+      <td><%= link(length(feed.agents), to: ~p"/admin/feeds/#{feed}/agents") %></td>
       <td class="ui mini images">
       <%= for podcast <- @podcasts do %>
         <%= if Enum.member?(feed.podcast_ids, podcast.id) do %>

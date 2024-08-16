@@ -34,7 +34,7 @@
       <%= for {client, count} <- (podcast.subscribers || %{}) do %>
         <strong><%= client %>:</strong> <%= SharedHelpers.comma_separated(count) %><br/>
       <% end %>
-        <%= link("Feed Stats", to: ~p"/admin/podcasts/#{podcast.slug}/feed_stats") %>
+        <%= link("All Agents", to: ~p"/admin/podcasts/#{podcast.slug}/agents") %>
       </td>
       <td><%= episode_count(podcast) %></td>
       <td><%= SharedHelpers.pretty_downloads(podcast) %></td>
