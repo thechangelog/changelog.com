@@ -6,35 +6,32 @@
       <nav class="header-nav">
         <div class="header-nav-wrap">
           <ul class="header-nav-primary header-nav-list">
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["page-index", "podcast"]) %>">
+            <li class={"header-nav-list-item #{SharedHelpers.active_class(@conn, ["page-index", "podcast"])}"}>
               <%= link("Podcasts", to: ~p"/", title: "Changelog Podcasts") %>
             </li>
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["album-index", "album"]) %>">
+            <li class="header-nav-list-item">
+              <%= link("News", to: ~p"/news", title: "Changelog News") %>
+            </li>
+            <li class={"header-nav-list-item #{SharedHelpers.active_class(@conn, ["album-index", "album"])}"}>
               <%= link("Beats", to: ~p"/beats", title: "Changelog Beats") %>
             </li>
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["post"]) %>">
-              <%= link("Posts", to: ~p"/posts", title: "Changelog Posts") %>
-            </li>
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["page-community", "person-join"]) %>">
+            <li class={"header-nav-list-item #{SharedHelpers.active_class(@conn, ["page-community", "person-join"])}"}>
               <%= link("Community", to: ~p"/community", title: "Changelog Community") %>
             </li>
           <%= if !@current_user do %>
-            <li class="header-nav-list-item <%= SharedHelpers.active_class(@conn, ["person-subscribe"]) %>">
+            <li class={"header-nav-list-item #{SharedHelpers.active_class(@conn, ["person-subscribe"])}"}>
               <%= link("Subscribe", to: ~p"/subscribe") %>
             </li>
           <% end %>
           <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
-              <a href="<%= ~p"/++" %>" title="Join Changelog++">Changelog++</a>
+              <%= link("Changelog++", to: ~p"/++", title: "Join Changelog++") %>
             </li>
           <% end %>
           </ul>
 
           <div class="header-nav-secondary">
             <ul class="header-nav-list">
-              <li class="header-nav-list-item header-nav-list-item--live is-hidden <%= SharedHelpers.active_class(@conn, ["live"]) %> js-live-indicator">
-                <%= link("Live", to: ~p"/live", title: "Listen Live") %>
-              </li>
               <li class="header-nav-list-item is-desktop_only">
                 <%= link("Submit News", to: ~p"/news/submit", class: "header-button", title: "Submit News") %>
               </li>
@@ -42,7 +39,7 @@
 
           <%= if @current_user do %>
             <button class="has-tooltip">
-              <img class="header-nav-secondary-user" src="<%= PersonView.avatar_url(@current_user) %>" width="35" height="35" alt="<%= @current_user.name %> Avatar">
+              <img class="header-nav-secondary-user" src={PersonView.avatar_url(@current_user)} width="35" height="35" alt={"#{@current_user.name} Avatar"}>
             </button>
             <div class="tooltip" data-placement="bottom-end">
               <div class="tooltip-arrow"></div>
@@ -69,7 +66,7 @@
             </ul>
           <% end %>
 
-            <form action="<%= Routes.search_path(@conn, :search) %>" method="get" class="header-search">
+            <form action={Routes.search_path(@conn, :search)} method="get" class="header-search">
               <input name="q" type="text" placeholder="Search Changelog" value="" aria-label="Search">
             </form>
 
@@ -98,14 +95,14 @@
         <%= if !@current_user do %>
           <li class="mobile_nav-list-item"><%= link("Subscribe", to: ~p"/subscribe") %></li>
         <% end %>
-          <li class="mobile_nav-list-item"><a href="<%= ~p"/++" %>" title="Join Changelog++">Changelog++</a></li>
+          <li class="mobile_nav-list-item"><%= link("Changelog++", to: ~p"/++", title: "Join Changelog++") %></li>
           <li class="mobile_nav-list-item"><%= link("Submit News", to: ~p"/news/submit") %></li>
         </ul>
       </div>
     </div>
 
     <div class="mobile_nav-bottom">
-      <form action="<%= ~p"/search" %>" method="get" class="mobile_nav-search search-form">
+      <form action={~p"/search"} method="get" class="mobile_nav-search search-form">
         <input name="q" type="text" placeholder="Search Changelog" aria-label="Search">
       </form>
     </div>
