@@ -30,10 +30,16 @@
   <div class="ui basic buttons">
     <%= @person |> list_of_links() |> raw() %>
     <%= AdminHelpers.icon_link("inbox", to: "https://email.changelog.com/triggered/reports/da13bb163d5f4344#/?query=#{@person.email}", title: "View email history", rel: "external") %>
-    <%= AdminHelpers.icon_link("edit", to: ~p"/admin/people/#{@person}/edit?next=#{next}") %>
+  <%= if Policies.Admin.Person.edit(@current_user, @person) do %>
+    <%= AdminHelpers.icon_link("edit", to: ~p"/admin/people/#{@person}/edit?next=#{next}", title: "Edit") %>
+  <% end %>
     <%= AdminHelpers.icon_link("slack", to: ~p"/admin/people/#{@person}/slack", title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+  <%= if Policies.Admin.Person.masq(@current_user, @person) do %>
     <%= AdminHelpers.icon_link("user secret", to: ~p"/admin/people/#{@person}/masq", title: "Masquarade", method: :post, data: [confirm: "Do you want to use the site as this user?"]) %>
-    <%= AdminHelpers.icon_link("trash", to: ~p"/admin/people/#{@person}?next=#{next}", method: :delete, data: [confirm: "Are you sure?"]) %>
+  <% end %>
+  <%= if Policies.Admin.Person.delete(@current_user, @person) do %>
+    <%= AdminHelpers.icon_link("trash", to: ~p"/admin/people/#{@person}?next=#{next}", title: "Delete", method: :delete, data: [confirm: "Are you sure?"]) %>
+  <% end %>
   </div>
 </div>
 
