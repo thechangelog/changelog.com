@@ -82,4 +82,28 @@
       <div class="chart" data-chart="<%= line_chart_data(@stats) %>"></div>
     </div>
   </div>
+
+  <div class="ui basic segment">
+  <% agents = agents(@stats) %>
+    <table class="ui striped table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Requests</th>
+          <th>Raw UA strings</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%= for {name, data} <- Enum.sort_by(agents, fn {_name, data} -> data["count"] end, :desc) do %>
+        <tr>
+          <td><%= name %></td>
+          <td><%= data["type"] %></td>
+          <td><%= data["count"] |> round() |> SharedHelpers.comma_separated() %></td>
+          <td><details><ul><%= for raw <- data["raw"] do %><li><%= raw %></li><% end %></ul></details></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

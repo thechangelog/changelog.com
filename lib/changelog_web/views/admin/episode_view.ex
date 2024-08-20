@@ -15,6 +15,31 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def megabytes(episode, type), do: EpisodeView.megabytes(episode, type)
   def numbered_title(episode), do: EpisodeView.numbered_title(episode)
 
+  def agents(episode_stats) when is_list(episode_stats) do
+    episode_stats
+    |> Enum.map(&(&1.demographics["agents"]))
+    # remove (raw) duplicates, adding up download counts along the way
+    |> Enum.reduce(%{}, fn map, acc ->
+      Map.merge(acc, map, fn _k, v1, v2 -> v1 + v2 end)
+    end)
+    # identify agents from raw user agents
+    |> Enum.map(fn {ua, count} ->
+      %{name: name, type: type} = Changelog.AgentKit.identify(ua)
+      %{name => %{"type" => type, "count" => count, "raw" => [ua]}}
+    end)
+    # remove (id'd) duplicates, adding download counts and accumulating raw user agents
+    |> Enum.reduce(%{}, fn map, acc ->
+      Map.merge(acc, map, fn _k, v1, v2 ->
+        %{"type" => v1["type"], "count" => v1["count"] + v2["count"], "raw" => v1["raw"] ++ v2["raw"]}
+        end)
+    end)
+    |> Enum.filter(fn {_name, data} -> data["type"] != "bot" end)
+  end
+
+  def sum_downloads(agents) do
+    Enum.reduce(agents, 0, fn {_name, data}, acc -> acc + data["count"] end)
+  end
+
   def last_stat_date(podcast) do
     case PodcastView.last_stat(podcast) do
       stat = %{} ->
@@ -119,12 +144,6 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     Enum.map(requests, fn request ->
       {EpisodeRequestView.description(request), request.id}
     end)
-  end
-
-  def round_and_filter(stats) do
-    stats
-    |> Enum.map(fn {key, value} -> {key, round(value)} end)
-    |> Enum.reject(fn {_key, value} -> value == 0 end)
   end
 
   def status_label(episode) do
