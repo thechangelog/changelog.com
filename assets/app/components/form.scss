@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .form {
   $border: 1px solid $black;
 
@@ -152,7 +154,7 @@
     margin: 0 0 $base-spacing;
 
     & > label {
-      margin-bottom: $base-spacing / 2;
+      margin-bottom: math.div($base-spacing, 2);
     }
 
     &-item {

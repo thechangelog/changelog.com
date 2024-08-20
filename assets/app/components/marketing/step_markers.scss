@@ -1,8 +1,10 @@
+@use "sass:math";
+
 // Step, timeline-esque, markers for "How sponsorship works" grid
 .step_markers {
   &_wrap {
     display: none;
-    margin: $base-spacing*2.5 auto 0;
+    margin: $base-spacing * 2.5 auto 0;
     max-width: 1140px;
 
     @include breakpoint(tablet) {
@@ -11,7 +13,7 @@
   }
 
   $weight: 4px;
-  $color: #F3F3F4;
+  $color: #f3f3f4;
   align-items: center;
   display: flex;
   height: $weight;
@@ -24,17 +26,17 @@
   &:before {
     content: "";
     background: $color;
-    height: $base-spacing*2;
+    height: $base-spacing * 2;
     bottom: 0;
     left: 50%;
-    margin-left: -$weight/2;
+    margin-left: math.div(-$weight, 2);
     position: absolute;
     width: $weight;
     z-index: 0;
   }
 
   &-line {
-    border: $weight/2 solid $color;
+    border: math.div($weight, 2) solid $color;
     flex: 1 0 auto;
   }
 

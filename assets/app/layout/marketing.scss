@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .marketing {
   font-size: 16px;
   overflow-x: hidden;
@@ -34,7 +36,9 @@
     //   margin: 0;
     // }
 
-    .button_large { margin: 10px; }
+    .button_large {
+      margin: 10px;
+    }
   }
   p.button_note {
     color: $medium-grey;
@@ -42,20 +46,32 @@
     font-style: italic;
     margin-top: 0.75em;
 
-    a { color: $medium-grey; }
+    a {
+      color: $medium-grey;
+    }
   }
 
   // Section
   &-section {
     padding: 40px 0;
 
-    @include breakpoint(mobile) { padding: 50px 0; }
-    @include breakpoint(tablet) { padding: 60px 0; }
+    @include breakpoint(mobile) {
+      padding: 50px 0;
+    }
+    @include breakpoint(tablet) {
+      padding: 60px 0;
+    }
 
-    &> *:first-child { margin-top: 0; }
-    &> *:last-child { margin-bottom: 0; }
+    & > *:first-child {
+      margin-top: 0;
+    }
+    & > *:last-child {
+      margin-bottom: 0;
+    }
 
-    &--no_top_padding { padding-top: 0; }
+    &--no_top_padding {
+      padding-top: 0;
+    }
 
     &--dark,
     &--map,
@@ -63,28 +79,31 @@
       background: $black;
       color: $white;
 
-      p { color: $half-white; }
+      p {
+        color: $half-white;
+      }
     }
 
     &--intro {
       .marketing--community & {
-        background: $black url('../images/content/community/grid.jpg') top center;
+        background: $black url("../images/content/community/grid.jpg") top
+          center;
         background-size: 1300px;
       }
     }
 
     &--body {
-      p > a, li > a {
+      p > a,
+      li > a {
         color: $black;
         font-weight: 500;
         border-bottom: 2px solid $light-grey;
 
         &:hover {
-          border-color: rgba($green, .3);
+          border-color: rgba($green, 0.3);
           color: $green;
         }
       }
-
     }
 
     &-wrap {
@@ -116,30 +135,40 @@
 
       & > img {
         text-align: center;
-        margin: $base-spacing/2 auto $base-spacing;
+        margin: math.div($base-spacing, 2) auto $base-spacing;
         max-width: 370px;
         padding: 0 $base-spacing;
         width: 100%;
 
-        @include breakpoint(tablet) { margin-bottom: $base-spacing*2; }
+        @include breakpoint(tablet) {
+          margin-bottom: $base-spacing * 2;
+        }
       }
 
       h1 {
         font-size: 1.5em;
         line-height: 1.25em;
         margin: 0 0 1.125em;
-        @include breakpoint(tiny) { font-size: 1.75em; }
-        @include breakpoint(tablet) { font-size: 2em; }
+        @include breakpoint(tiny) {
+          font-size: 1.75em;
+        }
+        @include breakpoint(tablet) {
+          font-size: 2em;
+        }
 
         @include breakpoint(tablet, max) {
-          br { display: none; }
+          br {
+            display: none;
+          }
         }
 
         .marketing-section--map & {
           color: $half-white;
           font-size: 1.25em;
           line-height: 1.5em;
-          @media (min-width: $tablet) { font-size: 1.5em; }
+          @media (min-width: $tablet) {
+            font-size: 1.5em;
+          }
         }
       }
 
@@ -150,14 +179,18 @@
 
       h2 {
         font-size: 1.5em;
-        @media (min-width: $tablet) { font-size: 1.75em; }
+        @media (min-width: $tablet) {
+          font-size: 1.75em;
+        }
       }
 
       h3 {
         font-size: 1.25em;
         font-weight: normal;
         line-height: 1.5em;
-        @media (min-width: $tablet) { font-size: 1.5625em; }
+        @media (min-width: $tablet) {
+          font-size: 1.5625em;
+        }
 
         .marketing-section--map & {
           color: $half-white;
@@ -166,15 +199,21 @@
 
       p {
         font-size: 1.125em;
-        @media (min-width: $tablet) { font-size: 1.25em; }
+        @media (min-width: $tablet) {
+          font-size: 1.25em;
+        }
       }
 
       .marketing-section--intro & p {
         font-size: 1em;
-        @media (min-width: $tablet) { font-size: 1.125em; }
+        @media (min-width: $tablet) {
+          font-size: 1.125em;
+        }
       }
 
-      p.button_note a { color: $half-white; }
+      p.button_note a {
+        color: $half-white;
+      }
     }
 
     &-centered {
@@ -186,7 +225,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin: $padding-large*2 auto $padding-large;
+      margin: $padding-large * 2 auto $padding-large;
       max-width: 1080px;
       text-align: center;
       padding: 0 $padding-large;
@@ -261,7 +300,9 @@
         img {
           border: 1px solid $light-grey;
           // box-shadow: 0 $base-spacing 40px 20px rgba($black, 0.2);
-          box-shadow: -20px 20px 50px 0 rgba($black, 0.2), -60px 60px $base-spacing 0 rgba($black, 0.03);
+          box-shadow:
+            -20px 20px 50px 0 rgba($black, 0.2),
+            -60px 60px $base-spacing 0 rgba($black, 0.03);
           width: 100%;
 
           @media (min-width: $breakpoint) {
@@ -306,7 +347,9 @@
       padding: 0 $base-spacing;
       width: 100%;
 
-      @include breakpoint(mobile) { margin-top: 50px; }
+      @include breakpoint(mobile) {
+        margin-top: 50px;
+      }
       @include breakpoint(tablet) {
         align-items: flex-start;
         display: flex;
@@ -335,7 +378,7 @@
         h3 {
           font-size: 1.125em;
           font-weight: 600;
-          margin-bottom: .5em;
+          margin-bottom: 0.5em;
         }
 
         p {
@@ -356,8 +399,12 @@
           width: 100px;
         }
 
-        h3 { margin-bottom: 2px; }
-        &-title { font-style: italic; }
+        h3 {
+          margin-bottom: 2px;
+        }
+        &-title {
+          font-style: italic;
+        }
 
         p {
           font-size: 1em;

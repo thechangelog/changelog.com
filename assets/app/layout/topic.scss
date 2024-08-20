@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .topic {
   //
   //
@@ -37,9 +39,11 @@
     }
 
     &-buttons {
-      margin: $base-spacing*1.5 0 $base-spacing/2;
+      margin: $base-spacing * 1.5 0 math.div($base-spacing, 2);
 
-      & > * { margin: 0 5px; }
+      & > * {
+        margin: 0 5px;
+      }
 
       &-follow {
         @include button($green, $white);
@@ -49,7 +53,7 @@
 
       &-more {
         @include button($black, $white);
-        border: 2px solid #393F45;
+        border: 2px solid #393f45;
         position: relative;
 
         &:before {

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // Dark Headers
 body[class*="podcast"],
 body[class*="album"],
@@ -19,11 +21,13 @@ body[class*="live"],
     }
 
     &-logo a {
-      background-image: url('../images/brand/changelog-logomark-white.svg');
+      background-image: url("../images/brand/changelog-logomark-white.svg");
     }
 
     &-nav-list-item {
-      &.is-active a { color: $white; }
+      &.is-active a {
+        color: $white;
+      }
 
       &.is-active a,
       a:hover {
@@ -34,7 +38,6 @@ body[class*="live"],
     }
 
     &-search {
-
       input {
         background: rgba($border-color, 0.1);
         color: $white;
@@ -43,7 +46,9 @@ body[class*="live"],
           color: $medium-grey;
         }
 
-        &:focus::placeholder { opacity: .7; }
+        &:focus::placeholder {
+          opacity: 0.7;
+        }
       }
     }
   }
@@ -57,23 +62,27 @@ body[class*="live"],
   z-index: 99999;
 
   &-container {
-    background-color: rgba($white, .98);
+    background-color: rgba($white, 0.98);
     border-bottom: 1px solid $light-grey;
     padding: 7px $mobile-spacing;
 
-    @include breakpoint(tablet) { padding: 13px $base-spacing; }
+    @include breakpoint(tablet) {
+      padding: 13px $base-spacing;
+    }
   }
 
   @include breakpoint(tablet, max) {
     .nav-open & {
-      transition: background-color .2s ease-in-out;
+      transition: background-color 0.2s ease-in-out;
     }
 
     .nav-open.nav-animate & {
       background-color: $black;
       border: none !important;
 
-      &-logo { opacity: 0; }
+      &-logo {
+        opacity: 0;
+      }
     }
   }
 
@@ -95,7 +104,8 @@ body[class*="live"],
     text-indent: -9999px;
 
     a {
-      background: url('../images/brand/changelog-logomark.svg') left center no-repeat;
+      background: url("../images/brand/changelog-logomark.svg") left center
+        no-repeat;
       background-size: auto $size;
       display: block;
       height: $size;
@@ -107,7 +117,6 @@ body[class*="live"],
   //
   // Hamburger Menu Button via https://github.com/jonsuh/hamburgers/blob/master/_sass/hamburgers/hamburgers.scss
   &-menu {
-
     // Settings
     $button-padding-x: 10px;
     $button-padding-y: 10px;
@@ -149,7 +158,7 @@ body[class*="live"],
 
     &-inner {
       display: block;
-      margin-top: $button-layer-height / -2;
+      margin-top: math.div($button-layer-height, -2);
       top: 50%;
 
       &,
@@ -171,8 +180,12 @@ body[class*="live"],
         display: block;
       }
 
-      &:before { top: ($button-layer-spacing + $button-layer-height) * -1; }
-      &:after { bottom: ($button-layer-spacing + $button-layer-height) * -1; }
+      &:before {
+        top: ($button-layer-spacing + $button-layer-height) * -1;
+      }
+      &:after {
+        bottom: ($button-layer-spacing + $button-layer-height) * -1;
+      }
     }
 
     // Animation Specific Styles
@@ -180,8 +193,16 @@ body[class*="live"],
       transition-duration: 0.1s;
       transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 
-      &:before { transition: top 0.1s 0.14s ease, opacity 0.1s ease; }
-      &:after { transition: bottom 0.1s 0.14s ease, transform 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19); }
+      &:before {
+        transition:
+          top 0.1s 0.14s ease,
+          opacity 0.1s ease;
+      }
+      &:after {
+        transition:
+          bottom 0.1s 0.14s ease,
+          transform 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      }
     }
 
     .nav-open &-inner {
@@ -192,13 +213,17 @@ body[class*="live"],
       &:before {
         top: 0;
         opacity: 0;
-        transition: top 0.1s ease,opacity 0.1s 0.14s ease;
+        transition:
+          top 0.1s ease,
+          opacity 0.1s 0.14s ease;
       }
 
       &:after {
         bottom: 0;
         transform: rotate(-90deg);
-        transition: bottom 0.1s ease, transform 0.1s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition:
+          bottom 0.1s ease,
+          transform 0.1s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
       }
     }
   }
@@ -214,7 +239,9 @@ body[class*="live"],
       display: flex;
       flex: 1 0 auto; // Pushes secondary nav to the far right
 
-      @include breakpoint(tablet, max) { justify-content: flex-end; }
+      @include breakpoint(tablet, max) {
+        justify-content: flex-end;
+      }
     }
 
     // Lists
@@ -237,7 +264,9 @@ body[class*="live"],
           position: relative;
         }
 
-        &.is-active a { color: $black; }
+        &.is-active a {
+          color: $black;
+        }
 
         &.is-active a,
         a:hover {
@@ -252,7 +281,14 @@ body[class*="live"],
 
         &--ten {
           a {
-            background: linear-gradient(to right, $jsparty, $green, $green, $practicalai, $brainscience);
+            background: linear-gradient(
+              to right,
+              $jsparty,
+              $green,
+              $green,
+              $practicalai,
+              $brainscience
+            );
             background-clip: text;
             background-size: 300% 300%;
             -webkit-text-fill-color: transparent;
@@ -275,7 +311,7 @@ body[class*="live"],
               animation: pulse 4s infinite 1s;
               background: $red;
               border-radius: $size;
-              box-shadow: 0 0 0 0 rgba($red, .5);
+              box-shadow: 0 0 0 0 rgba($red, 0.5);
               display: block;
               height: $size;
               width: $size;
@@ -286,17 +322,21 @@ body[class*="live"],
 
         &.is-desktop_only {
           display: none;
-          @include breakpoint(mobile) { display: block; }
+          @include breakpoint(mobile) {
+            display: block;
+          }
         }
       }
     }
 
     // Primary Navigation
     &-primary {
-      display:  none;
+      display: none;
       flex: 1 0 auto; // Pushes secondary nav to the far right
 
-      @include breakpoint(tablet) { display: flex; }
+      @include breakpoint(tablet) {
+        display: flex;
+      }
     }
 
     // Secondary Nav
@@ -332,10 +372,12 @@ body[class*="live"],
     display: none;
     margin-left: 10px;
 
-    @include breakpoint(desktop) { display: block; }
+    @include breakpoint(desktop) {
+      display: block;
+    }
 
     input {
-      background: rgba($black, .05);
+      background: rgba($black, 0.05);
       border: none;
       color: $black;
       font-size: 13px;
@@ -348,10 +390,12 @@ body[class*="live"],
       &::placeholder {
         color: $medium-grey;
         line-height: 1.5;
-        transition: opacity .1s ease-in-out;
+        transition: opacity 0.1s ease-in-out;
       }
 
-      &:focus::placeholder { opacity: .7; }
+      &:focus::placeholder {
+        opacity: 0.7;
+      }
     }
   }
 }

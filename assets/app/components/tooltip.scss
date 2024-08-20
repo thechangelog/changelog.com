@@ -1,7 +1,9 @@
+@use "sass:math";
+
 // General Tooltip Styles
 .tooltip {
   $arrowSize: 10px;
-  $background: #252B32;
+  $background: #252b32;
   $padding: 10px 20px;
   font-family: $content;
   display: none;
@@ -9,13 +11,17 @@
   text-align: left;
   z-index: 9999;
 
-  &.is-visible { display: block; }
+  &.is-visible {
+    display: block;
+  }
 
   a,
   li a {
     color: $white;
     text-decoration: none !important;
-    &:hover { color: rgba($white, 0.8); }
+    &:hover {
+      color: rgba($white, 0.8);
+    }
   }
 
   &-wrap {
@@ -33,7 +39,9 @@
       padding: 3px 15px 6px;
     }
 
-    &--centered { text-align: center; }
+    &--centered {
+      text-align: center;
+    }
 
     li {
       color: $white;
@@ -54,14 +62,15 @@
       }
     }
 
-    .show-header-subscribe & li { padding-right: 0; }
+    .show-header-subscribe & li {
+      padding-right: 0;
+    }
   }
 
   &-footer {
-    border-top: 1px solid #333A42;
+    border-top: 1px solid #333a42;
     padding: $padding;
   }
-
 
   //
   //
@@ -84,7 +93,7 @@
     border-right-color: transparent;
     border-bottom-color: transparent;
     bottom: -$arrowSize;
-    left: calc(50% - #{$arrowSize*2});
+    left: calc(50% - #{$arrowSize * 2});
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -97,7 +106,7 @@
     border-right-color: transparent;
     border-top-color: transparent;
     top: -$arrowSize;
-    left: calc(50% - #{$arrowSize*2});
+    left: calc(50% - #{$arrowSize * 2});
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -120,7 +129,7 @@
     border-top-color: transparent;
     border-bottom-color: transparent;
     left: -$arrowSize;
-    top: calc(50% - #{$arrowSize*2});
+    top: calc(50% - #{$arrowSize * 2});
     margin-left: 0;
     margin-right: 0;
   }
@@ -133,12 +142,11 @@
     border-right-color: transparent;
     border-bottom-color: transparent;
     right: -$arrowSize;
-    top: calc(50% - #{$arrowSize*2});
+    top: calc(50% - #{$arrowSize * 2});
     margin-left: 0;
     margin-right: 0;
   }
 }
-
 
 //
 //
@@ -148,7 +156,7 @@
 
   &-header {
     display: flex;
-    padding: $base-spacing/2;
+    padding: math.div($base-spacing, 2);
     width: 100%;
 
     &:hover {
@@ -184,8 +192,8 @@
   }
 
   &-info {
-    border-top: 2px solid #333A42;
-    padding: $base-spacing/2;
+    border-top: 2px solid #333a42;
+    padding: math.div($base-spacing, 2);
 
     p {
       color: $white;

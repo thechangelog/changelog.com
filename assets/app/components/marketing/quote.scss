@@ -1,14 +1,18 @@
+@use "sass:math";
+
 // Community specific bloquote styles
 .marketing_quote {
   font-size: 1.125em;
   margin: 0;
   padding: 0;
 
-  &-body { font-style: italic; }
+  &-body {
+    font-style: italic;
+  }
 
   &:before {
     color: $half-black;
-    content: '“';
+    content: "“";
     display: block;
     font-size: 4em;
     height: 20px;
@@ -26,7 +30,7 @@
       border-radius: 2px;
       display: block;
       height: $size;
-      margin: 0 auto $size/2;
+      margin: 0 auto math.div($size, 2);
       width: $size;
     }
 
@@ -44,7 +48,6 @@
         content: "\A";
         white-space: pre;
       }
-
     }
 
     a {

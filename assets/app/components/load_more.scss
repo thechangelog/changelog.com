@@ -1,7 +1,9 @@
+@use "sass:math";
+
 .load_more {
   @include wrap;
   display: block;
-  margin: $base-spacing/2 auto $base-spacing*2 !important;
+  margin: math.div($base-spacing, 2) auto $base-spacing * 2 !important;
   padding: 0;
   text-align: center;
 

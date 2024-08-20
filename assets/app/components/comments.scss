@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .comments {
   $condensedBreakpoint: 1000px;
   $horizontal-padding: 20px;
@@ -30,7 +32,7 @@
   border-radius: 3px;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: $base-spacing*1.5;
+  margin-bottom: $base-spacing * 1.5;
   min-height: 100px;
 
   &.is-hidden {
@@ -97,7 +99,8 @@
       }
 
       &-write {
-        background: url("../images/icons/comments-markdown.svg") left center no-repeat;
+        background: url("../images/icons/comments-markdown.svg") left center
+          no-repeat;
         background-size: 20px 12px;
         margin-left: 0.75em;
         padding-left: 28px !important;
@@ -107,7 +110,9 @@
         }
       }
       &-preview {
-        .comment_form--preview & { font-weight: bold; }
+        .comment_form--preview & {
+          font-weight: bold;
+        }
       }
     }
 
@@ -131,11 +136,13 @@
 
   // Child comments
   .comment {
-    margin-bottom: $base-spacing/2;
+    margin-bottom: math.div($base-spacing, 2);
   }
 
   &.is-collapsed {
-    .comment-header { opacity: 0.4; }
+    .comment-header {
+      opacity: 0.4;
+    }
 
     .comment_form,
     .comment-footer,
@@ -144,8 +151,12 @@
       display: none;
     }
 
-    .comment-toggle { cursor: s-resize; }
-    .comment-toggle:before { content: "[+]"; }
+    .comment-toggle {
+      cursor: s-resize;
+    }
+    .comment-toggle:before {
+      content: "[+]";
+    }
   }
 
   &-connector {
@@ -180,12 +191,16 @@
 
   &-toggle {
     @include position(absolute, 2px null null -26px);
-    &:before { content: "[-]"; }
+    &:before {
+      content: "[-]";
+    }
     cursor: n-resize;
     z-index: 2;
 
     color: $medium-grey;
-    &:hover { color: $black; }
+    &:hover {
+      color: $black;
+    }
 
     @include breakpoint(mobile) {
       left: -($base-spacing);
@@ -200,7 +215,9 @@
     position: relative;
     width: 100%;
 
-    & > * { z-index: 1; }
+    & > * {
+      z-index: 1;
+    }
   }
   // Highlight the permalink comment
   &.is-permalink > .comment-header {
@@ -257,13 +274,21 @@
     margin: 0 0 0 35px;
 
     // Highlight the permalink comment
-    .comment.is-permalink > & a { color: $black; }
+    .comment.is-permalink > & a {
+      color: $black;
+    }
 
     a {
       color: $black;
-      &:hover { text-decoration: underline; }
-      &:after { content: " \2022"; }
-      &:last-child:after { display: none; }
+      &:hover {
+        text-decoration: underline;
+      }
+      &:after {
+        content: " \2022";
+      }
+      &:last-child:after {
+        display: none;
+      }
     }
   }
 
@@ -284,13 +309,19 @@
 .comment-body.richtext--comment,
 .comment_form-preview.richtext--comment,
 .comment_form-preview {
-
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: 1em;
     margin: 0 0 1em;
   }
 
-  blockquote, p, li {
+  blockquote,
+  p,
+  li {
     font-size: 1em;
   }
 

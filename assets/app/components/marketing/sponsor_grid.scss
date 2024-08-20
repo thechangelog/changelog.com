@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .sponsor_grid {
   display: flex;
   flex-wrap: wrap;
@@ -6,7 +8,8 @@
   padding: 1em $mobile-spacing;
   width: 100%;
 
-  &-item { // <a>
+  &-item {
+    // <a>
     display: flex;
     flex: 0 0 100%;
     padding: $mobile-spacing;
@@ -32,7 +35,7 @@
       box-shadow: 0 0 20px #000;
       flex: 0 0 $size;
       height: $size;
-      margin-right: $base-spacing/2;
+      margin-right: math.div($base-spacing, 2);
       width: $size;
 
       @include breakpoint(tablet) {
