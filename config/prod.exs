@@ -53,8 +53,8 @@ config :changelog, Changelog.Repo,
   pool_size: 40
 
 config :changelog, Changelog.Mailer,
-  adapter: Bamboo.SMTPAdapter,
-  server: "smtp.api.createsend.com",
+  adapter: Swoosh.Adapters.SMTP,
+  relay: "smtp.api.createsend.com",
   port: 587,
   username: SecretOrEnv.get("CM_SMTP_TOKEN"),
   password: SecretOrEnv.get("CM_SMTP_TOKEN")

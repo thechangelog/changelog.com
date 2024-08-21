@@ -2,10 +2,8 @@ defmodule ChangelogWeb.Admin.MailerPreviewView do
   use ChangelogWeb, :admin_view
 
   def email_addresses(email) do
-    email
-    |> Bamboo.Mailer.normalize_addresses()
-    |> Bamboo.Email.all_recipients()
-    |> Enum.map(&Bamboo.Email.get_address/1)
+    email.to
+    |> Enum.map(fn {_name, address} -> address end)
     |> Enum.join(", ")
   end
 

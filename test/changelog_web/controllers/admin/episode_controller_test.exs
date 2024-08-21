@@ -1,6 +1,5 @@
 defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   use ChangelogWeb.ConnCase
-  use Bamboo.Test
 
   import Mock
 

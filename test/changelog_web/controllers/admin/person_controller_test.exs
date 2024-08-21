@@ -1,6 +1,6 @@
 defmodule ChangelogWeb.Admin.PersonControllerTest do
   use ChangelogWeb.ConnCase
-  use Bamboo.Test
+  use Changelog.EmailCase
   use Oban.Testing, repo: Changelog.Repo
 
   import Mock
@@ -42,7 +42,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
     conn = post(conn, Routes.admin_person_path(conn, :create), person: @valid_attrs, close: true)
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
-    assert_no_emails_delivered()
+    assert_no_email_sent()
     assert redirected_to(conn) == Routes.admin_person_path(conn, :edit, person)
     assert count(Person) == 1
   end
@@ -59,7 +59,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
     assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
-    assert_delivered_email(ChangelogWeb.Email.community_welcome(person))
+    assert_email_sent(ChangelogWeb.Email.community_welcome(person))
     assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
     assert count(Person) == 1
   end
@@ -72,7 +72,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
     assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
     person = Repo.one(from p in Person, where: p.email == ^@valid_attrs[:email])
-    assert_delivered_email(ChangelogWeb.Email.guest_welcome(person))
+    assert_email_sent(ChangelogWeb.Email.guest_welcome(person))
     assert redirected_to(conn) == Routes.admin_person_path(conn, :edit, person)
     assert count(Person) == 1
   end

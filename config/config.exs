@@ -54,7 +54,7 @@ config :changelog, Oban,
   queues: [default: 1, audio_updater: 2, scheduled: 5, email: 5, feeds: 5],
   plugins: [Oban.Plugins.Pruner]
 
-config :changelog, Changelog.Mailer, adapter: Bamboo.LocalAdapter
+config :changelog, Changelog.Mailer, adapter: Swoosh.Adapters.Local
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

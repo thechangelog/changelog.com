@@ -1,6 +1,6 @@
 defmodule ChangelogWeb.AuthControllerTest do
   use ChangelogWeb.ConnCase
-  use Bamboo.Test
+  use Changelog.EmailCase
   use Oban.Testing, repo: Changelog.Repo
 
   alias Changelog.Person
@@ -28,7 +28,7 @@ defmodule ChangelogWeb.AuthControllerTest do
 
     assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
-    assert_delivered_email(ChangelogWeb.Email.sign_in(person))
+    assert_email_sent(ChangelogWeb.Email.sign_in(person))
   end
 
   test "submitting the form with unknown email sends you to join", %{conn: conn} do

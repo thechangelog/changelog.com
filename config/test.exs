@@ -9,8 +9,7 @@ config :changelog, ChangelogWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warning
 
-# Configures Bamboo
-config :changelog, Changelog.Mailer, adapter: Bamboo.TestAdapter
+config :changelog, Changelog.Mailer, adapter: Swoosh.Adapters.Test
 
 # Configure your database
 config :changelog, Changelog.Repo,

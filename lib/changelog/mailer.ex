@@ -1,3 +1,3 @@
 defmodule Changelog.Mailer do
-  use Bamboo.Mailer, otp_app: :changelog
+  use Swoosh.Mailer, otp_app: :changelog
 end

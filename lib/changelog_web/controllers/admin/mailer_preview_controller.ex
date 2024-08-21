@@ -42,7 +42,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
   def send(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
     __MODULE__
     |> apply(String.to_existing_atom("#{id}_email"), [me])
-    |> Mailer.deliver_now()
+    |> Mailer.deliver()
 
     conn
     |> put_flash(:result, :success)

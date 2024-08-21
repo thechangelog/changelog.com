@@ -4,10 +4,6 @@ defmodule ChangelogWeb.Router do
 
   alias ChangelogWeb.Plug
 
-  if Mix.env() == :dev do
-    forward "/sent_emails", Bamboo.SentEmailViewerPlug
-  end
-
   # should be used before :browser pipeline to avoid auth and cache headers
   pipeline :public do
     plug Plug.Robots
