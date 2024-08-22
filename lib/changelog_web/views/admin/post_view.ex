@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.PostView do
 
   alias Changelog.{Post, Topic}
   alias ChangelogWeb.PostView
+  alias ChangelogWeb.Admin.SharedView
 
   def image_url(post, version), do: PostView.image_url(post, version)
 

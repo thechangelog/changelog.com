@@ -52,6 +52,6 @@
 <%= if Enum.any?(@published) do %>
   <h2 id="published" class="ui header">Published (<%= @page.total_entries |> SharedHelpers.comma_separated %>)</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, items: @published})) %>
-  <%= pagination_links(@conn, @page, path: &Routes.admin_news_item_path/3) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 <% end %>
 </div>

@@ -52,7 +52,6 @@ defmodule Changelog.Mixfile do
       {:oban_web, "~> 2.10.2", repo: "oban", only: @oban_envs},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
-      {:scrivener_html, "~> 1.8", github: "jerodsanto/scrivener_html", branch: "phx-1-7"},
       {:cmark, "~> 0.6"},
       {:floki, "~> 0.35.2"},
       {:waffle_ecto, "~> 0.0"},

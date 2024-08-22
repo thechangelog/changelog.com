@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.NewsItemCommentView do
 
   alias Changelog.NewsItem
   alias ChangelogWeb.{NewsItemCommentView, PersonView}
+  alias ChangelogWeb.Admin.SharedView
 
   def permalink(conn, comment) do
     Routes.news_item_path(conn, :show, NewsItem.slug(comment.news_item)) <>

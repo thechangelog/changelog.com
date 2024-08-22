@@ -1,0 +1,15 @@
+<%= if @page.total_pages > 1 do %>
+<div class="ui pagination menu">
+  <%= link("<< 1", to: pagination_path(@conn, 1), class: pagination_link_classes(@page, 1)) %>
+<%= if @page.page_number != 1 do %>
+  <%= link("< Prev", to: pagination_path(@conn, @page.page_number - 1), class: "item") %>
+<% end %>
+<%= if @page.page_number != 1 && @page.page_number < @page.total_pages do %>
+  <%= link(@page.page_number, to: "", class: "active item") %>
+<% end %>
+<%= if @page.page_number < @page.total_pages do %>
+  <%= link("Next >", to: pagination_path(@conn, @page.page_number + 1), class: "item") %>
+<% end %>
+  <%= link("#{@page.total_pages} >>", to: pagination_path(@conn, @page.total_pages), class: pagination_link_classes(@page, @page.total_pages)) %>
+</div>
+<% end %>

@@ -10,5 +10,5 @@
 
 <div class="ui basic segment">
   <%= render(NewsItemCommentView, "_table.html", Map.merge(assigns, %{comments: @comments})) %>
-  <%= pagination_links(@conn, @page, [@person], path: &Routes.admin_person_path/4, action: :comments) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 </div>

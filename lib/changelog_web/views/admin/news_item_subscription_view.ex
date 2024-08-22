@@ -3,4 +3,5 @@ defmodule ChangelogWeb.Admin.NewsItemSubscriptionView do
 
   alias Changelog.{NewsItem, Subscription}
   alias ChangelogWeb.PersonView
+  alias ChangelogWeb.Admin.SharedView
 end

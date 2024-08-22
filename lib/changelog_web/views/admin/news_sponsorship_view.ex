@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.NewsSponsorshipView do
 
   alias Changelog.{ListKit, NewsAd, NewsSponsorship, Sponsor}
   alias ChangelogWeb.{Endpoint, TimeView}
-  alias ChangelogWeb.Admin.{NewsAdView}
+  alias ChangelogWeb.Admin.{NewsAdView, SharedView}
 
   def active_ads(sponsorship), do: Enum.filter(sponsorship.ads, & &1.active)
   def inactive_ads(sponsorship), do: Enum.reject(sponsorship.ads, & &1.active)

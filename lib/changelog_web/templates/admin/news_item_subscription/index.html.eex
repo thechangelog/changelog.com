@@ -55,6 +55,6 @@
     </tbody>
   </table>
 
-  <%= pagination_links(@conn, @page, [@item], path: &Routes.admin_news_item_subscription_path/4) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 <% end %>
 </div>

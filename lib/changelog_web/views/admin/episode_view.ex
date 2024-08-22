@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.EpisodeView do
 
   alias Changelog.{Episode, Person, Podcast, Sponsor, StringKit, Topic}
   alias ChangelogWeb.{EpisodeView, PersonView, TimeView}
-  alias ChangelogWeb.Admin.{EpisodeRequestView, PodcastView}
+  alias ChangelogWeb.Admin.{EpisodeRequestView, PodcastView, SharedView}
 
   def audio_filename(episode), do: EpisodeView.audio_filename(episode)
   def plusplus_filename(episode), do: EpisodeView.plusplus_filename(episode)

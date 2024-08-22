@@ -68,10 +68,6 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
-config :scrivener_html,
-  routes_helper: ChangelogWeb.Router.Helpers,
-  view_style: :semantic
-
 config :mime, :types, %{"application/javascript" => ["js"], "application/xml" => ["xml"]}
 
 config :shopify,

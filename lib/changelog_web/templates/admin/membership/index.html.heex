@@ -18,5 +18,5 @@
 
 <div class="ui basic segment">
   <%= render("_table.html", assigns) %>
-  <%= pagination_links(@conn, @page, path: &Routes.admin_membership_path/3, filter: @filter) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 </div>

@@ -19,6 +19,6 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@people) do %>
   <%= render("_table.html", assigns) %>
-  <%= pagination_links(@conn, @page, path: &Routes.admin_person_path/3, filter: @filter) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 <% end %>
 </div>

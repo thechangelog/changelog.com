@@ -63,8 +63,9 @@ defmodule ChangelogWeb do
     quote do
       use Phoenix.View, root: "lib/changelog_web/templates", namespace: ChangelogWeb
       use Phoenix.HTML
+
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
-      import Scrivener.HTML
+
       alias ChangelogWeb.Router.Helpers, as: Routes
       alias ChangelogWeb.Helpers.{AdminHelpers, SharedHelpers}
       alias Changelog.Policies

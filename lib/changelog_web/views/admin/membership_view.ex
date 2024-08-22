@@ -2,6 +2,7 @@ defmodule ChangelogWeb.Admin.MembershipView do
   use ChangelogWeb, :admin_view
 
   alias ChangelogWeb.PersonView
+  alias ChangelogWeb.Admin.SharedView
 
   def last_changed_at(membership) do
     if membership.updated_at > membership.inserted_at do

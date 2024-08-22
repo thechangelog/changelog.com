@@ -76,6 +76,6 @@
     </tbody>
   </table>
 
-  <%= pagination_links(@conn, @page, [@podcast.slug], path: &Routes.admin_podcast_subscription_path/4) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 <% end %>
 </div>

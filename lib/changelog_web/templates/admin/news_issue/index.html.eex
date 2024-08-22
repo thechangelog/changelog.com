@@ -41,6 +41,6 @@
 <div class="ui basic segment">
   <h2 class="ui header">Published</h2>
   <%= render("_table.html", conn: @conn, issues: @issues) %>
-  <%= pagination_links(@conn, @page, path: &Routes.admin_news_source_path/3) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 </div>
 <% end %>

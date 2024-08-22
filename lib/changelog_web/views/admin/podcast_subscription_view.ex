@@ -3,6 +3,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
 
   alias Changelog.Subscription
   alias ChangelogWeb.PersonView
+  alias ChangelogWeb.Admin.SharedView
 
   def chart_data(podcast) do
     this_month = Timex.today() |> Timex.beginning_of_month()

@@ -22,6 +22,6 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@sponsorships) do %>
   <%= render("_table.html", conn: @conn, sponsorships: @sponsorships) %>
-  <%= pagination_links(@conn, @page, path: &Routes.admin_news_sponsorship_path/3) %>
+  <%= render(SharedView, "_pagination.html", assigns) %>
 <% end %>
 </div>

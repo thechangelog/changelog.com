@@ -3,7 +3,7 @@ defmodule ChangelogWeb.Admin.PersonView do
 
   alias Changelog.Person
   alias ChangelogWeb.PersonView
-  alias ChangelogWeb.Admin.{EpisodeView, EpisodeRequestView, FeedView, NewsItemView, NewsItemCommentView}
+  alias ChangelogWeb.Admin.{EpisodeView, EpisodeRequestView, FeedView, NewsItemView, NewsItemCommentView, SharedView}
 
   def avatar_url(person), do: PersonView.avatar_url(person)
 
