@@ -53,7 +53,7 @@ defmodule Changelog.Mixfile do
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 2.0"},
       {:cmark, "~> 0.6"},
-      {:floki, "~> 0.35.2"},
+      {:floki, "~> 0.36"},
       {:waffle_ecto, "~> 0.0"},
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
