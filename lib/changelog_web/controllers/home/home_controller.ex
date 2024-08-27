@@ -138,7 +138,7 @@ defmodule ChangelogWeb.HomeController do
 
     conn
     |> put_flash(:success, "You're unsubscribed! Resubscribe any time 🤗")
-    |> redirect(to: ~p"/#{podcast.slug}")
+    |> redirect(to: ~p"/")
   end
 
   defp opt_out_setting(conn, person, setting) do
