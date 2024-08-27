@@ -92,17 +92,34 @@ defmodule ChangelogWeb.Xml.Podcast do
     data =
       [
         SharedHelpers.md_to_html(episode.summary),
+        show_notes_newsletter_link(episode),
         FeedView.discussion_link(episode),
         ~s(<p><a href="#{url(~p"/++")}" rel="payment">Changelog++</a> #{EpisodeView.plusplus_cta(episode)} Join today!</p>),
         show_notes_sponsors(sponsors),
         show_notes_featuring(participants),
-        "<p>Show Notes:</p>",
-        "<p>#{SharedHelpers.md_to_html(episode.notes)}</p>",
-        ~s(<p>Something missing or broken? <a href="#{EpisodeView.show_notes_source_url(episode)}">PRs welcome!</a></p>)
+        show_notes_notes(episode)
       ]
       |> ListKit.compact_join("")
 
     {:cdata, data}
+  end
+
+  # Only News episodes have a newsletter link for now
+  defp show_notes_newsletter_link(%{slug: slug, podcast: %{slug: "news"}}) do
+    ~s(<p><a href="#{url(~p"/news/#{slug}/email")}">View the newsletter</a></p>)
+  end
+
+  defp show_notes_newsletter_link(_other), do: nil
+
+  # However, News episodes do not have additional notes
+  defp show_notes_notes(%{podcast: %{slug: "news"}}), do: nil
+
+  defp show_notes_notes(episode) do
+    [
+      "<p>Show Notes:</p>",
+      "<p>#{SharedHelpers.md_to_html(episode.notes)}</p>",
+      ~s(<p>Something missing or broken? <a href="#{EpisodeView.show_notes_source_url(episode)}">PRs welcome!</a></p>)
+    ] |> Enum.join("")
   end
 
   defp show_notes_sponsors([]), do: nil

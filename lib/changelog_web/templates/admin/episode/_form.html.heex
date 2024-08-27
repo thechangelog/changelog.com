@@ -279,10 +279,12 @@
     <%= text_input(f, :doc_url, placeholder: "https://hackmd.io/8675309/edit") %>
   </div>
 
+<%= if !Podcast.is_news(@podcast) do %>
   <div class="field">
     <%= label(f, :notes) %>
     <%= textarea(f, :notes, placeholder: "The more, the better. Markdown enabled.", rows: 5) %>
   </div>
+<% end %>
 
   <div class="field">
     <%= label(f, :audio_file) do %>
@@ -552,7 +554,9 @@
   </div>
 
   <div class={"field #{AdminHelpers.error_class(f, :email_teaser)}"}>
-    <%= label(:f, :email_teaser) %>
+    <%= label(:f, :email_teaser) do %>
+      Email teaser <%= AdminHelpers.help_icon("Sentence case FTW") %>
+    <% end %>
     <%= text_input(f, :email_teaser) %>
   </div>
 
