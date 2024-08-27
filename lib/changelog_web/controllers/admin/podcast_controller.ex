@@ -133,8 +133,15 @@ defmodule ChangelogWeb.Admin.PodcastController do
       |> Repo.one()
     end
 
-    prev = FeedStat.previous_to(stat) |> FeedStat.limit(1) |> Repo.one()
-    next = FeedStat.next_after(stat) |> FeedStat.limit(1) |> Repo.one()
+    prev = FeedStat.previous_to(stat)
+      |> FeedStat.newest_first()
+      |> FeedStat.limit(1)
+      |> Repo.one()
+
+    next = FeedStat.next_after(stat)
+      |> FeedStat.newest_last()
+      |> FeedStat.limit(1)
+      |> Repo.one()
 
     conn
     |> assign(:stat, stat)
