@@ -676,6 +676,7 @@ body.no-scroll {
     background: var(--color-dark);
     color: var(--color-white);
     border-right: 1px solid #000;
+    position: relative;
 
     @media (prefers-color-scheme: dark) {
       & {
@@ -683,9 +684,39 @@ body.no-scroll {
       }
     }
 
-    @media (width >= 880px) {
-      & {
-        position: relative;
+    #latest-right {
+      width: 175px;
+      position: absolute;
+      top: 22px;
+      right: 0;
+
+      @media (width <= 1200px) {
+        width: 150px;
+      }
+
+      @media (width <= 880px) {
+        display: none;
+      }
+    }
+
+    #latest-down {
+      width: 175px;
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+
+      @media (width > 880px) {
+        display: none;
+      }
+
+      @media (width <= 700px) {
+        width: 125px;
+        right: 15px;
+      }
+
+      @media (width <= 550px) {
+        width: 100px;
+        right: 0px;
       }
     }
 

@@ -48,6 +48,10 @@
   <body>
     <div class="container">
       <header class="header">
+      <%= if SharedHelpers.controller_action_combo(@conn) == "podcast-show" do %>
+        <img id="latest-right" loading="lazy" src={url(~p"/images/news/the-latest-right.svg")}>
+        <img id="latest-down" loading="lazy" src={url(~p"/images/news/the-latest-down.svg")}>
+      <% end %>
         <div class="header-inner">
           <div class="header-info">
             <div class="logo">
@@ -169,7 +173,7 @@
 
           <div class="header-ctas">
             <button class="text_button m-b-sm" onclick="news.toggleReasons();">29 more reasons to subscribe</button>
-            <p class="mono-sm color-grey">Check out our <%= link("other pods", to: ~p"/") %> or the <%= link("News archive", to: ~p"/news/archive") %></p>
+            <p class="mono-sm color-grey">Check out our <%= link("other pods", to: ~p"/") %> &amp; <%= link("News archive", to: ~p"/news/archive") %></p>
           </div>
         </div>
       </header>
