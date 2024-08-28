@@ -1,8 +1,9 @@
 defmodule ChangelogWeb.Xml do
   use ChangelogWeb, :verified_routes
 
-  alias Changelog.Episode
-  alias ChangelogWeb.{PersonView}
+  alias Changelog.{Episode, ListKit}
+  alias ChangelogWeb.{EpisodeView, FeedView, PersonView}
+  alias ChangelogWeb.Helpers.SharedHelpers
 
   def generate(document), do: XmlBuilder.generate(document)
 
@@ -58,6 +59,76 @@ defmodule ChangelogWeb.Xml do
       version: "2.0",
       "xmlns:dc": "http://purl.org/dc/elements/1.1/"
     }
+  end
+
+  def show_notes(episode, plusplus \\ false) do
+    data =
+      [
+        SharedHelpers.md_to_html(episode.summary),
+        show_notes_newsletter_link(episode),
+        FeedView.discussion_link(episode),
+        show_notes_plusplus_cta(episode, plusplus),
+        show_notes_sponsors(episode, plusplus),
+        show_notes_featuring(episode),
+        show_notes_notes(episode)
+      ]
+      |> ListKit.compact_join("")
+
+    {:cdata, data}
+  end
+
+  # Only News episodes have a newsletter link for now
+  defp show_notes_newsletter_link(%{slug: slug, podcast: %{slug: "news"}}) do
+    ~s(<p><a href="#{url(~p"/news/#{slug}/email")}">View the newsletter</a></p>)
+  end
+
+  defp show_notes_newsletter_link(_other), do: nil
+
+  defp show_notes_plusplus_cta(_episode, true), do: nil
+
+  defp show_notes_plusplus_cta(episode, false) do
+    ~s(<p><a href="#{url(~p"/++")}" rel="payment">Changelog++</a> #{EpisodeView.plusplus_cta(episode)} Join today!</p>)
+  end
+
+  # However, News episodes do not have additional notes
+  defp show_notes_notes(%{podcast: %{slug: "news"}}), do: nil
+
+  defp show_notes_notes(episode) do
+    [
+      "<p>Show Notes:</p>",
+      "<p>#{SharedHelpers.md_to_html(episode.notes)}</p>",
+      ~s(<p>Something missing or broken? <a href="#{EpisodeView.show_notes_source_url(episode)}">PRs welcome!</a></p>)
+    ] |> Enum.join("")
+  end
+
+  defp show_notes_sponsors(_episode, true), do: nil
+
+  defp show_notes_sponsors(%{episode_sponsors: []}, false), do: nil
+
+  defp show_notes_sponsors(%{episode_sponsors: sponsors}, false) do
+    items =
+      Enum.map(sponsors, fn s ->
+        description = s.description |> SharedHelpers.md_to_html() |> SharedHelpers.sans_p_tags()
+
+        ~s"""
+        <li><a href="#{s.link_url}">#{s.title}</a> – #{description}</li>
+        """
+      end)
+
+    ["<p>Sponsors:</p><p><ul>", items, "</ul></p>"]
+  end
+
+  defp show_notes_featuring(episode) do
+    case EpisodeView.participants(episode) do
+      [] -> nil
+      participants ->
+        items =
+          Enum.map(participants, fn p ->
+            ~s(<li>#{p.name} &ndash; #{PersonView.list_of_links(p)}</li>)
+          end)
+
+        ["<p>Featuring:</p><ul>", items, "</ul></p>"]
+    end
   end
 
   def socialize(%{socialize_url: nil}), do: nil

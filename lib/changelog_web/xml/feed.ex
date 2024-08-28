@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Xml.Feed do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.{ListKit}
-  alias ChangelogWeb.{EpisodeView, FeedView, PersonView, PodcastView, TimeView, Xml}
+  alias ChangelogWeb.{EpisodeView, FeedView, PodcastView, TimeView, Xml}
   alias ChangelogWeb.Helpers.SharedHelpers
 
   @doc """
@@ -59,7 +59,7 @@ defmodule ChangelogWeb.Xml.Feed do
        Xml.transcript(episode),
        chapters(feed, episode),
        Xml.socialize(episode),
-       {"content:encoded", nil, show_notes(episode)}
+       {"content:encoded", nil, Xml.show_notes(episode, feed.plusplus)}
      ]}
   end
 
@@ -104,53 +104,5 @@ defmodule ChangelogWeb.Xml.Feed do
        }},
       Xml.Chapters.chapters(chapters, "psc")
     ]
-  end
-
-  defp show_notes(episode) do
-    sponsors = episode.episode_sponsors
-    participants = EpisodeView.participants(episode)
-
-    data =
-      [
-        SharedHelpers.md_to_html(episode.summary),
-        FeedView.discussion_link(episode),
-        ~s(<p><a href="#{url(~p"/++")}" rel="payment">Changelog++</a> #{EpisodeView.plusplus_cta(episode)} Join today!</p>),
-        show_notes_sponsors(sponsors),
-        show_notes_featuring(participants),
-        "<p>Show Notes:</p>",
-        "<p>#{SharedHelpers.md_to_html(episode.notes)}</p>",
-        ~s(<p>Something missing or broken? <a href="#{EpisodeView.show_notes_source_url(episode)}">PRs welcome!</a></p>)
-      ]
-      |> ListKit.compact_join("")
-
-    {:cdata, data}
-  end
-
-  defp show_notes_sponsors([]), do: nil
-
-  defp show_notes_sponsors(sponsors) do
-    items =
-      Enum.map(sponsors, fn s ->
-        description = s.description |> SharedHelpers.md_to_html() |> SharedHelpers.sans_p_tags()
-
-        ~s"""
-        <li><a href="#{s.link_url}">#{s.title}</a> – #{description}</li>
-        """
-      end)
-
-    ["<p>Sponsors:</p><p><ul>", items, "</ul></p>"]
-  end
-
-  defp show_notes_featuring([]), do: nil
-
-  defp show_notes_featuring(participants) do
-    items =
-      Enum.map(participants, fn p ->
-        ~s"""
-          <li>#{p.name} &ndash; #{PersonView.list_of_links(p)}</li>
-        """
-      end)
-
-    ["<p>Featuring:</p><ul>", items, "</ul></p>"]
   end
 end

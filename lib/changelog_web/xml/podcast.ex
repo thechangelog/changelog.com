@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Xml.Podcast do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.{ListKit}
-  alias ChangelogWeb.{EpisodeView, FeedView, PersonView, PodcastView, TimeView, Xml}
+  alias ChangelogWeb.{EpisodeView, FeedView, PodcastView, TimeView, Xml}
   alias ChangelogWeb.Helpers.SharedHelpers
 
   @doc """
@@ -68,7 +68,7 @@ defmodule ChangelogWeb.Xml.Podcast do
        Xml.transcript(episode),
        chapters(episode),
        Xml.socialize(episode),
-       {"content:encoded", nil, show_notes(episode)}
+       {"content:encoded", nil, Xml.show_notes(episode, false)}
      ]}
   end
 
@@ -83,70 +83,5 @@ defmodule ChangelogWeb.Xml.Podcast do
        }},
       Xml.Chapters.chapters(chapters, "psc")
     ]
-  end
-
-  defp show_notes(episode) do
-    sponsors = episode.episode_sponsors
-    participants = EpisodeView.participants(episode)
-
-    data =
-      [
-        SharedHelpers.md_to_html(episode.summary),
-        show_notes_newsletter_link(episode),
-        FeedView.discussion_link(episode),
-        ~s(<p><a href="#{url(~p"/++")}" rel="payment">Changelog++</a> #{EpisodeView.plusplus_cta(episode)} Join today!</p>),
-        show_notes_sponsors(sponsors),
-        show_notes_featuring(participants),
-        show_notes_notes(episode)
-      ]
-      |> ListKit.compact_join("")
-
-    {:cdata, data}
-  end
-
-  # Only News episodes have a newsletter link for now
-  defp show_notes_newsletter_link(%{slug: slug, podcast: %{slug: "news"}}) do
-    ~s(<p><a href="#{url(~p"/news/#{slug}/email")}">View the newsletter</a></p>)
-  end
-
-  defp show_notes_newsletter_link(_other), do: nil
-
-  # However, News episodes do not have additional notes
-  defp show_notes_notes(%{podcast: %{slug: "news"}}), do: nil
-
-  defp show_notes_notes(episode) do
-    [
-      "<p>Show Notes:</p>",
-      "<p>#{SharedHelpers.md_to_html(episode.notes)}</p>",
-      ~s(<p>Something missing or broken? <a href="#{EpisodeView.show_notes_source_url(episode)}">PRs welcome!</a></p>)
-    ] |> Enum.join("")
-  end
-
-  defp show_notes_sponsors([]), do: nil
-
-  defp show_notes_sponsors(sponsors) do
-    items =
-      Enum.map(sponsors, fn s ->
-        description = s.description |> SharedHelpers.md_to_html() |> SharedHelpers.sans_p_tags()
-
-        ~s"""
-        <li><a href="#{s.link_url}">#{s.title}</a> – #{description}</li>
-        """
-      end)
-
-    ["<p>Sponsors:</p><p><ul>", items, "</ul></p>"]
-  end
-
-  defp show_notes_featuring([]), do: nil
-
-  defp show_notes_featuring(participants) do
-    items =
-      Enum.map(participants, fn p ->
-        ~s"""
-          <li>#{p.name} &ndash; #{PersonView.list_of_links(p)}</li>
-        """
-      end)
-
-    ["<p>Featuring:</p><ul>", items, "</ul></p>"]
   end
 end
