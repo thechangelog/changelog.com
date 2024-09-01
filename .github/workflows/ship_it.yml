@@ -16,22 +16,16 @@ on:
 jobs:
   # In thechangelog/changelog repository (a.k.a. upstream),
   # this is the preferred default:
-  dagger-on-fly:
-    if: ${{ contains(vars.RUNS_ON, 'fly') }}
-    uses: ./.github/workflows/dagger_on_fly.yml
+  dagger-on-namespace:
+    if: ${{ contains(vars.RUNS_ON, 'namespace') }}
+    uses: ./.github/workflows/dagger_on_namespace.yml
     secrets: inherit
 
-  # When our Fly.io setup misbehaves, we want a fallback:
+  # Just in case Namespace.so misbehaves, we want a fallback:
+  # a.k.a. "Always run 2 of everything"
   dagger-on-github-fallback:
-    needs: dagger-on-fly
+    needs: dagger-on-namespace
     if: ${{ failure() }}
-    uses: ./.github/workflows/dagger_on_github.yml
-    secrets: inherit
-
-  # As forks will not have access to our Fly.io,
-  # we fallback to GitHub default:
-  dagger-on-github:
-    if: ${{ !contains(vars.RUNS_ON, 'fly') }}
     uses: ./.github/workflows/dagger_on_github.yml
     secrets: inherit
 
@@ -40,4 +34,11 @@ jobs:
   dagger-on-k8s:
     if: ${{ contains(vars.RUNS_ON, 'k8s') }}
     uses: ./.github/workflows/dagger_on_k8s.yml
+    secrets: inherit
+
+  # As forks will not have access to our Namespace.so,
+  # we fallback to GitHub default:
+  dagger-on-github:
+    if: ${{ !contains(vars.RUNS_ON, 'namespace') }}
+    uses: ./.github/workflows/dagger_on_github.yml
     secrets: inherit
