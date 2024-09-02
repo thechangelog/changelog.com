@@ -9,9 +9,9 @@ jobs:
     continue-on-error: true
     steps:
       - name: "Checkout code..."
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: "1.20"
           cache-dependency-path: "magefiles/go.sum"

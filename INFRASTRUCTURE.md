@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Mar.%2028%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Sep.%202%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -33,9 +33,8 @@ graph TD
     repo -.- |fly.io/changelog-2024-01-12| app
     
     registry --> |ghcr.io/changelog/changelog-prod| app
-    dagger06 --> |flyctl deploy| app
+    runner --> |flyctl deploy| app
         
-    repo -.- |fly.io/dagger-engine-2023-05-20| dagger06
     repo -.- |fly.io/dagger-engine-2024-03-28| dagger010
 
     repo -.- |fly.io/pghero-2024-03-27| pghero
@@ -44,9 +43,6 @@ graph TD
     subgraph Fly.io
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
-
-        dagger06([ fa:fa-project-diagram Dagger Engine v0.6 2023-05-20 ]):::link
-        click dagger06 "https://fly.io/apps/dagger-engine-2023-05-20"
 
         dagger010([ fa:fa-project-diagram Dagger Engine v0.10 2024-03-28 ]):::link
         click dagger010 "https://fly.io/apps/dagger-engine-2024-03-28"
@@ -58,14 +54,9 @@ graph TD
         pghero([ fa:fa-gem PgHero 2024-03-27 ]):::link
         click pghero "https://fly.io/apps/pghero-2024-03-27"
 
-        automation --> |wireguard| dagger06
-        dagger06 --> |ghcr.io/changelog/changelog-runtime| registry
-        dagger06 --> |ghcr.io/changelog/changelog-prod| registry
-
         grafana[ fa:fa-columns Grafana fly-metrics.net ]:::link
         click grafana "https://fly-metrics.net"
         grafana -.- |metrics| app
-        grafana -.- |metrics| dagger06
         grafana -.- |metrics| dagger010
         grafana -.- |metrics| pghero
     end
@@ -79,6 +70,16 @@ graph TD
 
         dbro1([ fa:fa-database main branch replica ])
         dbrw -.-> |replicate| dbro1
+    end
+
+    subgraph Namespace.so
+        runner([ fa:fa-person-running GitHub Runner ]):::link
+        click runner "https://cloud.namespace.so/9s8hfvousnlae/ghrunners"
+
+        automation --> |runs-on: namespace-profile-changelog| runner
+        runner --> |ghcr.io/changelog/changelog-runtime| registry
+        runner --> |ghcr.io/changelog/changelog-prod| registry
+
     end
 
     %% Secrets
@@ -140,7 +141,7 @@ graph TD
 ```
 
 > [!TIP]
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqdWHlv2zYU_yqEihYtEEk-4iPuuqFrurQo2gVzuwGLi4KSaImLRGok1cSN8933SOqgHDtNlz8cmXr38XuPvvFinhBv4T1-jDKlSrkIwzVnCl8RyQsSxLwIJcEizlYsFbjM0MfTFUPwF-dYylOyRjlll0gqwS_J4tHkJBrNZ0f2q39FE5UtxuX1c8tjP0HVK1CKniCQQJS0p7KKrIIzqt5UkT3Uf4KU_OYGrXG0WGM_pSqrIqQyEmeYpSTnadg-aXPR7e1isdBGdSLinMaXRhBaeY2bVpLx8LC0lbdijhwaJxchmKItiamIc-LHwHtZG41exopyhny0zGiJ3iq0Wn0-YI2W9aPWhNjIl-EVF5frnF_JUIKiL1QFmyLXtjY6uidcKV5gzXaxWrVR5DmIRac4TYlAZxwtT9-h8JCpnYgfNjjKeRQWWCoi4F9K1jQnsnsKUt6PsCApheLZPH26k_A0i0VAOXr27GB2Led-E7lIZd_OEseXYIbcyXCGVadb5kCElubzoGLN4ijt_DfcNm3QP_QrOP5qMF6-nP_5erTrNVSmH_g_o21gjd6f4a2pmn49Il-z7Y_t1kndvtro-GUVx0RK9CghX7fGJUtFWOK2bmMo2q7zDaSj89YfDUbH_mDoD0egtSz7XHVqjKo6k-GekvFLwROHPTH1OZhaRlAZqxwlpMz5xqG6xzwrwCcspYxoE8f-YAL_t63ohzKCb2N_NG8Zh4MmgXd4yzQjgndMsy2yRw0HAOA5xkuAiRZyG60yizgWSReSHXD8zRB2fkPArjc3FpBS6DWCzvXJ7Q4FevECAmi01YHrCJpIPL2ogQ04_iGx8hOKQWnRoMRrEwv0dRBMURdJ9PlQX7TJ63qjdhMMkAdT0--MNtoPt244QF2-vmseUD_Qvlqii7I7SFuWHXSUGSeMXvtrsJHoZkYvyxLta5dAa4W224cwUm1yogUjaOl88eh4Pj-Znjy_A9BAsN-LfQr7Ebal2YY3JQU6T9_AURfF2eEoWu4Dyu80Ql-zM1ZMf19RAIoKqn-3O-9CwX0YIiqmaEG2Lez8HyEWiDoJnQwoujVmuIlXzPOqYBKd2WME_vsFUYLGMmBEoUMztRbTj5zL6dZZQ2xQpqbZAcD9JHfjeC-dBrX7CRsga2eDfdQF-NMLAzLnXKpUEC00Elf2dV0lOur2cAfVPhDOAkX0ktmmCujaokywwhGWBBWYMhQJzOIMgI0WGIbK4Q4HEe5ghsWJ5wRiWyvTRRrWcCJhQ9C59yWvWOLPp9PB8cl8GlpdMFYj4V9hlhBBWerLQm-3s_nxdD6cnOwgViT48H7LYWKAgRgs7_tbrwD1a0W2VtidaMP8WJJYdKuz_WLARyu9JBs0PIflGnAn2YUVG5uaZe_eMixrVrO7NHXYcFgb629OER54r6djz257l7Ac-rm1GhYXRtcbHd9U3y3Qx01JJGEQvGfPujLzg1qBZt6i5nLSanh9HZPSbMl13NrvraYYCz8WMGvBHKb3kr0h6hidKEnDoFEDNkrM6DdsF_IOOQoCkymkUlZQNb_U5fViMp0Cco-aYDqOdGq2jkrHoVenH5xNoYCeTEmwhpUakFYnCOp6TdNKEDBOfKWwxoWz9F0Uv1u-Ozvd_Ptp9rY6Fcdjcra7ShgR7vgi1xeof5c6eCMA2r21U1-Z7g7HVu1LWHEqwfpDNE7Yhf4IdtR3VO0i6vRBJ_OvZbAcd8TALy-aSYyvpDN39atGbivTuPNEG2CrVxNtjRQnD79HOr44ojlVddi4e9SWV1Sl6A1nZAMuRPtrq8foBLKiQdZw9keTBhJ9We6OvvASipHkRIPzJszgut4vL-2JEjjWWMzvGm8i4fq7h8ZxXpcx7CMAkylxouYulmbV3EnNq5xXyTrHggR_jJxiMzf_NkdxS-WkytI4FVnChYq4RbEmJPmOEENiCYMDktoygPz3F2VrwBPL7pTCe84oRAKgasfbX4mCm-5SwcXPXeKwqmQzEXK8gbUyFbwq6zfBw3rOErtYtIe7P4uK1s62OGEc5cRXhDEq0adSb0qHr7Ydv1ujhimIjKtSNXdcRXARDsfj8WAU1nzShQJHFiCfxb6Gbmtq6QBtnxBy9CA6pxa_Q2nD6JSCd-QVRMDATryFd6NfrDyVEd1eC3hMsLjUjt0CnV5hlxsWewslKnLkVSX0KTm1VxMP4p1LOC0x8xY33rW38GfjaTCdDQYn8-PRZDYZzo-8jbc4GQbD48lsPJoN4Hgyntweed84BwnDYDaejE-OB7CbDWYDIIfxAna_t7_amR_vjIK_DblRePsfsqFhlQ)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWHlv2zYU_yqEihUtEEk-4nPrhqzp0qHYFsw7gMXDQEnPkhaJ1EgqiRfnu-9R1EE5VrvmD0em3v1-76AfnZBH4KydL74giVKFXPv-jjNF70HyHLyQ574EKsJky2JBi4T8crllBP_CjEp5CTuSpeyWSCX4LaxfzFbBZLk4M1_d-zRSyXpaPHxpeMwnqnqLSslLghJASXMqy8AouErV-zIwh_pPQMEfH8mOBusddeNUJWVAVAJhQlkMGY_99kmbS56e1uu1NqoTEWZpeFsJIluncdNIqjwclrZ1tsySk4bRjY-maEvCVIQZuCHy3tZGk4tQpZwRl2yStCDfK7Ld_jlgjZb1udb4tJIv_XsubncZv5e-REV_pcrb55m2tdHRPdFS8Zxqtpvtto0iz1AsuaRxDIJccbK5_ED8IVM7EZ9tcJDxwM-pVCDwXwy7NAPZPXkx70dYQJwiePavXh0lPE5C4aWcvH49mF3DedpELmLZt7Og4S2aIY8ynFDV6ZYZEpFN9TmoWLNYSjv_K26TNqyf9A4dfzuabi6Wv72bHHuNyHQ992ty8IzRpzN8qFDTxyNxNdvp2B6s1J3CRscvyzAEKcmLCO4OlUuGClhkl25jKDnssj2mo_PWnYwm5-5o7I4nqLUo-lx1aipVdSb9E5BxC8Eji12UjCE-KzZUGKqMRFBkfG_RfMS4qIK3CyxOGdQGTt3J8kDMm9F41GThGW8RJyB4x7Q4EHPUcGAXu6Z0g7Xe9s1Gq0wCTkXU-XXU4b6rCDvz0euH_aPpKjEWDJBrffJ0REHevME4VNpq_zuC1qFXN3V7Qpa_IVRulFLUmje1_q4KBrkbeeMR6UJC_hyCdyvZwnjtKdogB4Nsd6OjjlQUXYkVCQeWPrg7tBE06MlFUZBTsPK0VoTnqUqUap-BFkwQ-tn6xflyuZqvvnzWyJDgtBenFPZr1GS_DW8MObmO3-NRF8XFcBQN94DyZ1jra8b07SijjeaQZ2XOJLkyxwQluTkokYbSY6DIUBevxfRtsDntjDXEVUnUNEdFd5rEqqyPEzbV1HYZ86hT9NWbCunXXKpYgBYaiHvzuo6j7gjm8Ki0fgTOPAV6XWlLA-natEVU0YBKIDlNGQkEZWGC1ZXmFNvTcA2gCLvF4wjmGWDMamU6jX5dcBJnjcaSK3nJInc5n4_OV8u5b3Rhgw6Ee09ZBCJlsStzvSctlufz5Xi26ucdtfLxxy3HtoUGUrS87289TOrXCg5G2LNod3HD6pM4EsGTVmMy_bdrKSAkZ64-Rdubnedn06QHg1c3cSt8GS8jj1ka_ZVcJrs7XkqWUfDjxPAczWZrDakmAhJJl7M1aUXppqdnn9uW86FWf-zTp0cR0qk0x8g10-vzRZhp1vE_Cz_OkA2EotuBzZeqO-qA38KejK9xS8bGGB33PRPdmuXkAjIuatZqCWnKu-EwEKm_WbU98F5PyJ7d5lJgOPRzazVuICzd7TW8Y31JIL_sC5DAELuvX3dV7nq1As18IM0to9Xw7iGEolp367i131tNIRVuKHDeojlMLxgnQ9QxWlGSFYPOHK6GlKX_UrNZd9nLAUenn0pZYtF-U1f3m9l8jqNl0gTTcqRTc7BUWg69vfzR2hZybIkxeDvcjXEU6ARhW9mlcSkAjRN3Ke5j_iL-EIQfNh-uLvf__Lr4vrwU51O4Ol4nKhH2fIWHG9K_FA2u9kh7Ejv13ef59G7VXuCaUwrWn_JhxG70h3ekvqNqN8pTbeji9423mXbEyC9vmlWB3ktrMdCvGrmtzMqdl9oAg15NdKikWHn4KdDxpUGapaoOG7ePWngFZUzecwZ7dCE4ja0eoxXIMvWShrPfHnQf17fe7ugvXiAYIQM9G_d-gvfuPry0J0pgf0Nf-HPjq0jY_p6gsZzXMMaFCadUDFbU7OWyWjePUvNWd-1dRgV4P08ssFVX-DZHYUtlpcrQWIgs8GYENih2ANEnhFQkhtAbkNTCAPPfX5aNAS8NuwWFHzhLMRLYqo68_RYUXlk3Cm9w9pZJVSmbaZjRPe69seBlUb_x_l_NGWK7F53g7o--vLWzBSduAzjoFOAsluTXQs-q4Ttqx29jtGLygspVqZrLqgKa--PpdDqa-DWftFuBJQs7n-l9Dd2hwtIAbZ8Qc_S_6CwsfoLShNGCgnPm5CBwX4qctfOoX2wdlYAurzU-RlTcaseekE7vFps9C521EiWcOWWBdQqX5u7UHBaU_cG5_dVZPzoPzhqvO1NvMV3NF7PVbDWZLednzt5ZLxfebLRcjueL0Wq2XM0mT2fOv5WAsTeejyYrPJ6frxbj1eT8zMFxg378YH6Oq36Ve_oPk-hbCQ)
 
 Let's dig into how all the above pieces fit together.
 
@@ -209,9 +210,9 @@ workflow jobs perspective, it is fairly standard:
 - **1/2. CI/CD**
   - Uses Dagger Go SDK so that it works exactly the same locally as it does in
     GitHub Actions
-  - [Starts a Dagger Engine as a Fly.io machine on-demand, then connects to
-    it](https://github.com/thechangelog/changelog.com/pull/471) so that caching
-    is reliable & persistent across workflow runs
+  - [Uses a Namespace.so GitHub
+    Runner](https://github.com/thechangelog/changelog.com/pull/522) so that
+    caching is reliable & persistent across workflow runs
   - A successful run publishes a container image to
     https://ghcr.io/thechangelog/changelog-runtime &
     https://ghcr.io/thechangelog/changelog-prod
@@ -294,4 +295,4 @@ you very much!
 
 ## How to branch the production db instance?
 
-See [`changelog/README.md`](changelog/README.md).
+See [Enable changelog.com devs to create prod db forks with a single command](https://github.com/thechangelog/changelog.com/pull/508).
