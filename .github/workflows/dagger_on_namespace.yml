@@ -24,7 +24,7 @@ jobs:
             --privileged \
             registry.dagger.io/engine:v0.6.4
 
-      - name: "Build, test, publish & deploy..."
+      - name: "Build, test & publish..."
         env:
           IMAGE_OWNER: "${{ vars.IMAGE_OWNER }}"
           GHCR_USERNAME: "${{ github.actor }}"
@@ -39,7 +39,25 @@ jobs:
           _EXPERIMENTAL_DAGGER_RUNNER_HOST: "docker-container://dagger-0-6-4"
         run: |
           cd magefiles
-          go run main.go -w ../ ci cd
+          go run main.go -w ../ ci
+
+      - name: "Deploy..."
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        env:
+          IMAGE_OWNER: "${{ vars.IMAGE_OWNER }}"
+          GHCR_USERNAME: "${{ github.actor }}"
+          GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          R2_API_HOST: "${{ secrets.R2_API_HOST }}"
+          R2_ACCESS_KEY_ID: "${{ secrets.R2_ACCESS_KEY_ID }}"
+          R2_SECRET_ACCESS_KEY: "${{ secrets.R2_SECRET_ACCESS_KEY }}"
+          R2_ASSETS_BUCKET: "${{ env.R2_ASSETS_BUCKET }}"
+          OBAN_KEY_FINGERPRINT: "${{ secrets.OBAN_KEY_FINGERPRINT }}"
+          OBAN_LICENSE_KEY: "${{ secrets.OBAN_LICENSE_KEY }}"
+          _EXPERIMENTAL_DAGGER_RUNNER_HOST: "docker-container://dagger-0-6-4"
+        run: |
+          cd magefiles
+          go run main.go -w ../ cd
 
       - name: "Announce deploy in #dev Slack..."
         if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
