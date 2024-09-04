@@ -43,7 +43,7 @@
           <%= if !StringKit.is_integer(@changeset.data.slug) do %>
               <div class="ui basic yellow left pointing label">not a number ⚠️</div>
           <% end %>
-          <%= if String.to_integer(@changeset.data.slug) - @last_slug > 1 do %>
+          <%= if StringKit.is_integer(@changeset.data.slug) && (String.to_integer(@changeset.data.slug) - @last_slug > 1) do %>
             <div class="ui basic red left pointing label">last published was <%= @last_slug %> ⚠️</div>
           <% end %>
             </td>
@@ -87,7 +87,7 @@
             <td>No topics for this episode?</td>
           </tr>
         <% end %>
-        <%= if Changelog.StringKit.blank?(@changeset.data.notes) do %>
+        <%= if !Podcast.is_news(@podcast) && Changelog.StringKit.blank?(@changeset.data.notes) do %>
           <tr>
             <td>Data Note ⚠️</td>
             <td>No notes for this episode?</td>
