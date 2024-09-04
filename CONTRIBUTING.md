@@ -78,7 +78,7 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 
 ## How do I run the application locally?
 
-You will need to have the following dependencies installed:
+You will need to have the following system dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v16
 - [Elixir](https://elixir-lang.org/install.html) v1.16
 - [Erlang/OTP](https://www.erlang.org/downloads) v26 - usually installed as an Elixir dependency
@@ -86,60 +86,36 @@ You will need to have the following dependencies installed:
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
 - [Golang](https://go.dev/doc/install) v1.22 - if you want to run CI locally
 
-We are using [`asdf`](https://asdf-vm.com/) to install the correct dependency versions in our development environment.
+We are using [`just`](https://github.com/casey/just) to manage `brew` & `asdf` which in turn manage all app dependencies for development.
 
-This is what that looks like on macOS 12, our usual development environment:
-
-<img src="changelog-local-dev-2022.png">
+Once you have [`just` installed](https://github.com/casey/just?tab=readme-ov-file#installation), running `just` in the root of this repository will produce the following output:
 
 ```console
-
-# 🛠 INSTALL DEPENDENCIES 🛠
-awk '{ system("asdf plugin-add " $1) }' < .tool-versions
-# icu4c required by https://github.com/smashedtoatoms/asdf-postgres
-PKG_CONFIG_PATH="$(brew --prefix)/opt/icu4c/lib/pkgconfig" asdf install
-
-#👇 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
-# - Elixir v1.14.5
-# - Erlang v26.2
-# - Golang 1.20.12
-# - Node.js v20.10.0
-# - Yarn v1.22.19
-# - PostgreSQL v16.1
-#👆 installed on a MacBook Pro 16" (2021) running macOS 12.7.1 in ~4mins on Dec 16, 2023 by @gerhard
-
-# You will also need to install imagemagick via Homebrew.
-# asdf imagemagick plugin did not work for me.
-brew install imagemagick
-
-# 🪣 CONFIGURE DATABASE 🪣
-# Start PostgreSQL
-postgres # or pg_ctl start
-# Create changelog_dev db owned by the postgres user
-createdb changelog_dev --username=postgres
-# Create changelog_test db owned by the postgres user
-createdb changelog_test --username=postgres
-
-# 💜 CONFIGURE APP 💜
-# Install deps
-mix deps.get --only dev
-mix deps.get --only test
-# Prepare dev database
-mix ecto.setup
-
-# 🌈 CONFIGURE STATIC ASSETS 🌈
-cd assets
-# Install dependencies requires for static assets
-yarn install
-cd ..
-
-# 🏃 RUN APP 🏃
-mix phx.server
-# Go to http://localhost:4000
-
-# 🏋️ TESTS 🏋️
-mix test
+Available recipes:
+    contribute    # Setup everything needed for your first contribution
+    deps          # Get app dependencies
+    dev           # Run app in dev mode
+    install       # Install all system dependencies
+    postgres-down # Stop Postgres server
+    postgres-up   # Start Postgres server
+    test          # Run app tests
 ```
+
+The only command that you need to run is `just contribute`.
+As per the description, this will setup everything needed for your first contribution:
+- installs all system dependencies (Postgres, Elixir, etc.)
+- downloads app (Elixir) dependencies
+- starts Postgres
+- runs app tests
+- runs app in dev mode
+
+When the above succeeds, this is the end-result that you can expect to see on macOS 12, our team's development environment of choice:
+
+<img src="changelog-local-dev-2024.png">
+
+> [!TIP]
+> 1. If you want to see what a full setup on a blank MacBook Pro looks like, you can [watch this 3 minutes-long video](https://github.com/thechangelog/changelog.com/pull/521).
+> 2. All the above works equally well on a Debian-based Linux distribution (tested on Ubuntu 22.04 & 24.04).
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 

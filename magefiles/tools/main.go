@@ -49,9 +49,9 @@ func (v *Versions) Nodejs() string {
 }
 
 // https://www.postgresql.org/docs/release
-// asdf list all postgres
+// Hard-coding & installing via brew (keep hitting icu4c & root permissions with asdf)
 func (v *Versions) Postgres() string {
-	return v.toolVersions["postgres"]
+	return "16"
 }
 
 // https://github.com/yarnpkg/yarn/releases
