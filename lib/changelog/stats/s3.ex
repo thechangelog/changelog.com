@@ -1,9 +1,9 @@
 defmodule Changelog.Stats.S3 do
   def config do
     [
-      access_key_id: SecretOrEnv.get("AWS_ACCESS_KEY_ID"),
-      secret_access_key: SecretOrEnv.get("AWS_SECRET_ACCESS_KEY"),
-      host: SecretOrEnv.get("AWS_API_HOST")
+      access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+      secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+      host: System.get_env("AWS_API_HOST")
     ]
   end
 

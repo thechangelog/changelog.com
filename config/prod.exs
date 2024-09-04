@@ -48,7 +48,7 @@ config :changelog, Changelog.Repo,
       match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
     ]
   ],
-  password: SecretOrEnv.get("DB_PASS"),
+  password: System.get_env("DB_PASS"),
   timeout: 60000,
   pool_size: 40
 
@@ -56,8 +56,8 @@ config :changelog, Changelog.Mailer,
   adapter: Swoosh.Adapters.SMTP,
   relay: "smtp.api.createsend.com",
   port: 587,
-  username: SecretOrEnv.get("CM_SMTP_TOKEN"),
-  password: SecretOrEnv.get("CM_SMTP_TOKEN")
+  username: System.get_env("CM_SMTP_TOKEN"),
+  password: System.get_env("CM_SMTP_TOKEN")
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 

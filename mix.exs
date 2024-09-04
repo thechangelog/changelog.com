@@ -6,8 +6,6 @@ defmodule Changelog.Mixfile do
     @oban_envs [:dev, :prod]
   end
 
-  Code.compile_file("config/secret_or_env.exs")
-
   def project do
     [
       app: :changelog,

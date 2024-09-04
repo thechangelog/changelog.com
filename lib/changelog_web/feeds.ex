@@ -25,7 +25,7 @@ defmodule ChangelogWeb.Feeds do
   end
 
   defp upload(content, key) do
-    bucket = SecretOrEnv.get("R2_FEEDS_BUCKET", "changelog-feeds-dev")
+    bucket = System.get_env("R2_FEEDS_BUCKET", "changelog-feeds-dev")
     headers = [content_type: "application/xml"]
     file = "#{key}.xml"
 

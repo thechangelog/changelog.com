@@ -8,7 +8,7 @@ defmodule Changelog.S3Static do
   @app_path "priv/static"
 
   def upload_static_files_to_s3 do
-    s3_bucket = SecretOrEnv.get("R2_ASSETS_BUCKET")
+    s3_bucket = System.get_env("R2_ASSETS_BUCKET")
     static_path = Path.join(Application.app_dir(:changelog), @app_path)
 
     static_path
@@ -18,7 +18,7 @@ defmodule Changelog.S3Static do
   end
 
   def delete_unused_files_from_s3 do
-    s3_bucket = SecretOrEnv.get("R2_ASSETS_BUCKET")
+    s3_bucket = System.get_env("R2_ASSETS_BUCKET")
     static_path = Path.join(Application.app_dir(:changelog), @app_path)
 
     latest_files =

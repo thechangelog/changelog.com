@@ -8,7 +8,7 @@ import Config
 config :changelog, ChangelogWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base:
-    SecretOrEnv.get(
+    System.get_env(
       "SECRET_KEY_BASE",
       "PABstVJCyPEcRByCU8tmSZjv0UfoV+UeBlXNRigy4ba221RzqfN82qwsKvA5bJzi"
     ),
@@ -17,33 +17,33 @@ config :changelog, ChangelogWeb.Endpoint,
   live_view: [signing_salt: "+GzuQhsbhBJIqc4ctHLGjo+D2ZohVqNW"]
 
 config :changelog,
-  buffer_token: SecretOrEnv.get("BUFFER_TOKEN"),
-  cm_api_token: Base.encode64("#{SecretOrEnv.get("CM_API_TOKEN")}:x"),
-  fastly_token: SecretOrEnv.get("FASTLY_TOKEN"),
-  github_api_token: SecretOrEnv.get("GITHUB_API_TOKEN"),
-  bsky_user: SecretOrEnv.get("BSKY_USER"),
-  bsky_pass: SecretOrEnv.get("BSKY_PASS"),
-  hn_user: SecretOrEnv.get("HN_USER"),
-  hn_pass: SecretOrEnv.get("HN_PASS"),
-  mastodon_client_id: SecretOrEnv.get("MASTODON_CLIENT_ID"),
-  mastodon_client_secret: SecretOrEnv.get("MASTODON_CLIENT_SECRET"),
-  mastodon_api_token: SecretOrEnv.get("MASTODON_API_TOKEN"),
-  plusplus_slug: SecretOrEnv.get("PLUSPLUS_SLUG"),
+  buffer_token: System.get_env("BUFFER_TOKEN"),
+  cm_api_token: Base.encode64("#{System.get_env("CM_API_TOKEN")}:x"),
+  fastly_token: System.get_env("FASTLY_TOKEN"),
+  github_api_token: System.get_env("GITHUB_API_TOKEN"),
+  bsky_user: System.get_env("BSKY_USER"),
+  bsky_pass: System.get_env("BSKY_PASS"),
+  hn_user: System.get_env("HN_USER"),
+  hn_pass: System.get_env("HN_PASS"),
+  mastodon_client_id: System.get_env("MASTODON_CLIENT_ID"),
+  mastodon_client_secret: System.get_env("MASTODON_CLIENT_SECRET"),
+  mastodon_api_token: System.get_env("MASTODON_API_TOKEN"),
+  plusplus_slug: System.get_env("PLUSPLUS_SLUG"),
   plusplus_url: "https://changelog.supercast.com",
-  turnstile_secret_key: SecretOrEnv.get("TURNSTILE_SECRET_KEY"),
-  slack_invite_api_token: SecretOrEnv.get("SLACK_INVITE_API_TOKEN"),
-  slack_app_api_token: SecretOrEnv.get("SLACK_APP_API_TOKEN"),
-  snap_token: SecretOrEnv.get("SNAP_TOKEN"),
-  typesense_url: SecretOrEnv.get("TYPESENSE_URL"),
-  typesense_api_key: SecretOrEnv.get("TYPESENSE_API_KEY"),
+  turnstile_secret_key: System.get_env("TURNSTILE_SECRET_KEY"),
+  slack_invite_api_token: System.get_env("SLACK_INVITE_API_TOKEN"),
+  slack_app_api_token: System.get_env("SLACK_APP_API_TOKEN"),
+  snap_token: System.get_env("SNAP_TOKEN"),
+  typesense_url: System.get_env("TYPESENSE_URL"),
+  typesense_api_key: System.get_env("TYPESENSE_API_KEY"),
   # 60 = one minute, 3600 = one hour, 86,400 = one day, 604,800 = one week, 31,536,000 = one year
   cdn_cache_control_s3:
-    SecretOrEnv.get(
+    System.get_env(
       "CDN_CACHE_CONTROL_S3",
       "max-age=31536000, stale-while-revalidate=3600, stale-if-error=86400"
     ),
   cdn_cache_control_app:
-    SecretOrEnv.get(
+    System.get_env(
       "CDN_CACHE_CONTROL_APP",
       "max-age=60, stale-while-revalidate=60, stale-if-error=604800"
     ),
@@ -72,21 +72,21 @@ config :mime, :types, %{"application/javascript" => ["js"], "application/xml" =>
 
 config :shopify,
   shop_name: "changelog",
-  api_key: SecretOrEnv.get("SHOPIFY_API_KEY"),
-  password: SecretOrEnv.get("SHOPIFY_API_PASSWORD")
+  api_key: System.get_env("SHOPIFY_API_KEY"),
+  password: System.get_env("SHOPIFY_API_PASSWORD")
 
 config :ex_aws,
-  access_key_id: SecretOrEnv.get("R2_ACCESS_KEY_ID"),
-  secret_access_key: SecretOrEnv.get("R2_SECRET_ACCESS_KEY")
+  access_key_id: System.get_env("R2_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("R2_SECRET_ACCESS_KEY")
 
-config :ex_aws, :s3, host: SecretOrEnv.get("R2_API_HOST")
+config :ex_aws, :s3, host: System.get_env("R2_API_HOST")
 
 config :ex_aws, :hackney_opts, recv_timeout: 300_000
 
 config :waffle,
   storage: Waffle.Storage.S3,
   version_timeout: 30_000,
-  bucket: SecretOrEnv.get("R2_ASSETS_BUCKET")
+  bucket: System.get_env("R2_ASSETS_BUCKET")
 
 config :ueberauth, Ueberauth,
   providers: [
@@ -95,12 +95,12 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: SecretOrEnv.get("GITHUB_CLIENT_ID"),
-  client_secret: SecretOrEnv.get("GITHUB_CLIENT_SECRET")
+  client_id: System.get_env("GITHUB_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
 
 config :stripity_stripe,
-  api_key: SecretOrEnv.get("STRIPE_SECRET"),
-  signing_secret: SecretOrEnv.get("STRIPE_WEBHOOK_SECRET")
+  api_key: System.get_env("STRIPE_SECRET"),
+  signing_secret: System.get_env("STRIPE_WEBHOOK_SECRET")
 
 config :opentelemetry,
   resource: [
@@ -123,7 +123,7 @@ if System.get_env("HONEYCOMB_API_KEY") do
     otlp_compression: :gzip,
     otlp_endpoint: "https://api.honeycomb.io:443",
     otlp_headers: [
-      {"x-honeycomb-team", SecretOrEnv.get("HONEYCOMB_API_KEY")},
+      {"x-honeycomb-team", System.get_env("HONEYCOMB_API_KEY")},
       {"x-honeycomb-dataset", "changelog_opentelemetry"}
     ]
 end
