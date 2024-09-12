@@ -2,12 +2,12 @@
   <header class="topic-header">
     <div class="topic-header-wrap">
       <div class="topic-header-avatar">
-        <img src="<%= avatar_url(@sponsor, :large) %>" width="80" height="80" alt="<%= @sponsor.name %> Logo">
+        <img src={avatar_url(@sponsor, :large)} width="80" height="80" alt={"#{@sponsor.name} Logo"}>
       </div>
 
       <h2 class="topic-header-title"><%= @sponsor.name %></h2>
 
-      <div class="topic-header-description"><%= @sponsor.description %></div>
+      <div class="topic-header-description"><%= @sponsor.description |> SharedHelpers.md_to_safe_html() |> raw() %></div>
 
       <div class="topic-header-meta">
         <%= @sponsor |> list_of_links(" · ") |> raw() %>
@@ -18,7 +18,9 @@
   </header>
 
   <div class="feed richtext">
-    <h3 class="section_heading-text">Global Reach: <%= total_reach(@sponsorships) %></h3>
+    <h3 class="section_heading-text">Global Reach: <%= total_reach(@sponsorships) %>
+      <button data-copy={sponsorship_data(@sponsorships)} data-copy-text="✅" style="float: right">📋</button>
+    </h3>
 
     <table>
       <thead>

@@ -48,6 +48,18 @@ defmodule ChangelogWeb.SponsorView do
     module.url({file, sponsor}, version)
   end
 
+  def sponsorship_data(sponsorships) do
+    sponsorships
+    |> Enum.map(fn %{episode: episode} ->
+      [
+        TimeView.terse_date(episode.published_at),
+        EpisodeView.podcast_name_and_number(episode),
+        SharedHelpers.pretty_downloads(episode)
+      ] |> Enum.join(" - ")
+    end)
+    |> Enum.join("\n")
+  end
+
   def sponsors_list do
     [
       {"Toptal", "https://www.toptal.com/?utm_source=changelog"},

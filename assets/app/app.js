@@ -217,17 +217,18 @@ u(document).handle("click", "[data-share]", function (event) {
 });
 
 u(document).handle("click", "[data-copy]", function (event) {
-  const el = event.target;
+  const el = u(event.target);
   const type = "text/plain";
-  const blob = new Blob([el.href], { type });
+  const blob = new Blob([el.data("copy")], { type });
   const data = [new ClipboardItem({ [type]: blob })];
 
   navigator.clipboard.write(data).then(() => {
-    let preText = u(el).text();
-    u(el).text("Copied!");
+    let preText = el.text();
+    let successText = el.data("copy-text") || "Copied!";
+    el.text(successText);
     setTimeout(() => {
-      u(el).text(preText);
-    }, 1500);
+      el.text(preText);
+    }, 1200);
   });
 });
 
