@@ -28,7 +28,7 @@
           <% end %>
           </td>
           <td style={"width: #{widths.actions}%; text-align: right;"}>
-          <a href={~p"/feeds/#{feed.slug}"} data-copy={~p"/feeds/#{feed.slug}"}>Get URL</a>
+          <a href={~p"/feeds/#{feed.slug}"} data-copy={url(~p"/feeds/#{feed.slug}")}>Get URL</a>
           <br/>
           <%= link("Refresh", to: ~p"/~/feeds/#{feed}/refresh", method: :post) %>
           <br/>
