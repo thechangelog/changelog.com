@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Plug.Robots do
     disallow: /news/impress
     disallow: /auth/github
     disallow: /auth/twitter
-    disallow: /search?q=*
+    disallow: /search?*
     """
   end
 
