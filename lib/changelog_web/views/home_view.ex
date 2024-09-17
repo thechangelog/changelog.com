@@ -2,7 +2,9 @@ defmodule ChangelogWeb.HomeView do
   use ChangelogWeb, :public_view
 
   alias Changelog.Podcast
-  alias ChangelogWeb.{PersonView, PodcastView}
+  alias ChangelogWeb.{Home, PersonView, PodcastView}
+
+  def cover_options(pods), do: Home.FeedView.cover_options(pods)
 
   def podcasts_with_subs(podcasts, user) do
     podcasts

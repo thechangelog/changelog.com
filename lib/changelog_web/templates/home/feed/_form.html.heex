@@ -29,8 +29,8 @@
 
       <select class="js-feed-cover_select">
         <option></option>
-      <%= for podcast <- [Podcast.changelog(), Podcast.plusplus()] ++ @podcasts do %>
-        <option value={PodcastView.cover_url(podcast, :original)}><%= podcast.name %></option>
+      <%= for option <- cover_options(@podcasts) do %>
+        <option value={option.url}><%= option.name %></option>
       <% end %>
       </select>
     </div>

@@ -45,10 +45,10 @@
     <i class="dropdown icon"></i>
     <div class="default text">Or select existing cover art</div>
     <div class="menu">
-    <%= for podcast <- [Podcast.changelog(), Podcast.plusplus()] ++ @podcasts do %>
-      <div class="item" data-value={PodcastView.cover_url(podcast, :original)}>
-        <img class="ui image" src={PodcastView.cover_url(podcast, :original)}>
-        <%= podcast.name %>
+    <%= for option <- cover_options(@podcasts) do %>
+      <div class="item" data-value={option.url}>
+        <img class="ui image" src={option.url}>
+        <%= option.name %>
       </div>
     <% end %>
     </div>

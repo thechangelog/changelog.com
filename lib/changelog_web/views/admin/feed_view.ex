@@ -1,6 +1,7 @@
 defmodule ChangelogWeb.Admin.FeedView do
   use ChangelogWeb, :admin_view
 
-  alias Changelog.Podcast
-  alias ChangelogWeb.PodcastView
+  alias ChangelogWeb.{Home, PodcastView}
+
+  def cover_options(pods), do: Home.FeedView.cover_options(pods)
 end
