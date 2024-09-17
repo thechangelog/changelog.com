@@ -8,7 +8,7 @@
     <% end %>
   <% else %>
     <p class="auth-links">via <a href="/auth/github" title="Sign in via GitHub">GitHub</a></p>
-    <%= form_for @conn, Routes.sign_in_path(@conn, :new), [as: :auth, class: "form form--full_width"], fn f -> %>
+    <%= form_for @conn, ~p"/in", [as: :auth, class: "form form--full_width"], fn f -> %>
       <div class="form-element_wrap">
         <div class="form-element">
           <label>via Email Address</label>
@@ -17,7 +17,7 @@
       </div>
       <div class="form-submit">
         <div class="form-submit-note">
-          <div>Need an account? <em><%= link "Sign up", to: Routes.person_path(@conn, :join), title: "" %></em></div>
+          <div>Need an account? <em><%= link "Sign up", to: ~p"/join", title: "" %></em></div>
         </div>
         <input type="submit" value="Enter">
       </div>

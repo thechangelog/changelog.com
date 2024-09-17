@@ -1,8 +1,8 @@
 <ul>
   <li>Complete your profile</li>
   <li>Gain access to our Slack</li>
-  <li><%= link("Submit", to: Routes.news_item_path(Endpoint, :new)) %> news links for coverage</li>
+  <li><%= link("Submit", to: ~p"/submit") %> news links for coverage</li>
   <li>Comment on podcast episodes</li>
-  <li><%= link("Request", to: Routes.episode_request_path(Endpoint, :new)) %> podcast topics &amp; guests</li>
+  <li><%= link("Request", to: ~p"/request") %> podcast topics &amp; guests</li>
   <li>Manage your email subscriptions</li>
 </ul>

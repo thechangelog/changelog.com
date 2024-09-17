@@ -115,7 +115,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
 
     conn
     |> put_flash(:result, "success")
-    |> redirect(to: Routes.admin_podcast_path(conn, :index))
+    |> redirect(to: ~p"/admin/podcasts")
   end
 
   def agents(conn = %{assigns: %{podcast: podcast}}, params) do

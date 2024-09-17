@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PodcastView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Podcast, StringKit, UrlKit}
-  alias ChangelogWeb.{Endpoint, EpisodeView, PersonView, SharedView}
+  alias ChangelogWeb.{EpisodeView, PersonView, SharedView}
   alias Changelog.Files.Cover
 
   def active_podcasts_for_index(podcasts) do
@@ -90,7 +90,7 @@ defmodule ChangelogWeb.PodcastView do
   # Exists to special-case /interviews
   def feed_url(podcast) do
     slug = if Podcast.is_interviews(podcast), do: "interviews", else: podcast.slug
-    Routes.feed_url(Endpoint, :podcast, slug)
+    url(~p"/#{slug}/feed")
   end
 
   def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)

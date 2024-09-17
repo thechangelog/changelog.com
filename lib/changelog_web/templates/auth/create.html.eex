@@ -1,7 +1,7 @@
 <article class="auth">
   <h1 class="auth-header">Signing In...</h1>
 
-  <%= form_for @conn, Routes.sign_in_path(@conn, :create, @token), [id: "in", class: "form form--full_width"], fn _f -> %>
+  <%= form_for @conn, ~p"/in/#{@token}", [id: "in", class: "form form--full_width"], fn _f -> %>
     <noscript>
       <div class="form-submit">
         <div class="form-submit-note">
