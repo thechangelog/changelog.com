@@ -216,6 +216,7 @@ defmodule Changelog.Episode do
     |> cast(attrs, ~w(slug title subtitle published featured request_id highlight
       subhighlight summary notes doc_url socialize_url published_at recorded_at
       email_subject email_teaser email_content recorded_live youtube_id guid type)a)
+    |> purge_audio_when_slug_changes()
     |> prep_audio_file(attrs)
     |> prep_plusplus_file(attrs)
     |> cast_attachments(attrs, [:audio_file, :plusplus_file, :cover])
@@ -422,45 +423,20 @@ defmodule Changelog.Episode do
     end
   end
 
-  def flatten_for_filtering(query \\ __MODULE__) do
-    query =
-      from episode in query,
-        left_join: podcast in assoc(episode, :podcast),
-        left_join: hosts in assoc(episode, :hosts),
-        left_join: guests in assoc(episode, :guests),
-        left_join: topics in assoc(episode, :topics),
-        preload: [podcast: podcast, hosts: hosts, guests: guests, topics: topics]
-
-    result =
-      query
-      |> published()
-      |> exclude_transcript()
-      |> Repo.all()
-      |> Enum.map(fn episode ->
-        extract_episode_fields(episode)
-      end)
-
-    {:ok, result}
-  end
-
-  def flatten_episode_for_filtering(episode) do
-    episode
-    |> Repo.preload([:podcast, :hosts, :guests, :topics])
-    |> extract_episode_fields()
-  end
-
-  defp extract_episode_fields(episode) do
-    %{
-      id: episode.id,
-      slug: episode.slug,
-      title: episode.title,
-      type: episode.type,
-      published_at: episode.published_at,
-      podcast: episode.podcast.slug,
-      host: Enum.map(episode.hosts, fn host -> host.name end),
-      guest: Enum.map(episode.guests, fn guest -> guest.name end),
-      topic: Enum.map(episode.topics, fn topic -> topic.slug end)
-    }
+  def purge_audio_when_slug_changes(changeset) do
+    if Map.has_key?(changeset.changes, :slug) do
+      changeset
+      |> change(%{
+        audio_file: nil,
+        audio_bytes: nil,
+        audio_duration: nil,
+        plusplus_file: nil,
+        plusplus_bytes: nil,
+        plusplus_duration: nil
+      })
+    else
+      changeset
+    end
   end
 
   # We do all pre-processing of uploaded audio files here instead of in

@@ -5,7 +5,7 @@ defmodule Changelog.EpisodeTest do
 
   alias Changelog.{Episode}
 
-  describe "admin_changeset" do
+  describe "admin_changeset/2" do
     test "with valid attributes" do
       changeset = Episode.admin_changeset(%Episode{}, %{slug: "181", title: "some content"})
       assert changeset.valid?
@@ -14,6 +14,38 @@ defmodule Changelog.EpisodeTest do
     test "with invalid attributes" do
       changeset = Episode.admin_changeset(%Episode{}, %{})
       refute changeset.valid?
+    end
+
+    test "purges audio-related attrs whenever slug changes" do
+      episode = build(:episode,
+        audio_file: %{file_name: "test.mp3"},
+        audio_bytes: 42,
+        audio_duration: 2600,
+        plusplus_file: %{file_name: "test++.mp3"},
+        plusplus_bytes: 43,
+        plusplus_duration: 600)
+
+      changeset = Episode.admin_changeset(episode, %{slug: "newslug"})
+
+      for attr <- [:audio_file, :audio_bytes, :audio_duration, :plusplus_file, :plusplus_bytes, :plusplus_duration] do
+        assert Map.has_key?(changeset.changes, attr)
+      end
+    end
+
+    test "doesn't purge audio-related attrs whenever slug doesn't change" do
+      episode = build(:episode,
+        audio_file: %{file_name: "test.mp3"},
+        audio_bytes: 42,
+        audio_duration: 2600,
+        plusplus_file: %{file_name: "test++.mp3"},
+        plusplus_bytes: 43,
+        plusplus_duration: 600)
+
+      changeset = Episode.admin_changeset(episode, %{title: "new title"})
+
+      for attr <- [:audio_file, :audio_bytes, :audio_duration, :plusplus_file, :plusplus_bytes, :plusplus_duration] do
+        refute Map.has_key?(changeset.changes, attr)
+      end
     end
   end
 
