@@ -14,7 +14,7 @@ defmodule ChangelogWeb.EmailView do
   }
 
   def feed_app_url(feed, app_prefix, strip_scheme \\ true) do
-    feed_url = url(~p"/feed/#{feed.slug}")
+    feed_url = url(~p"/feeds/#{feed.slug}")
 
     if strip_scheme do
       app_prefix <> UrlKit.sans_scheme(feed_url)

@@ -10,7 +10,7 @@ Apple Podcasts: <%= feed_app_url(@feed, "podcast://") %>
 Podcast Addict: <%= feed_app_url(@feed, "podcastaddict://") %>
 
 
-Direct RSS: <%= url(~p"/feed/#{@feed.slug}") %>
+Direct RSS: <%= url(~p"/feeds/#{@feed.slug}") %>
 
 
 💚, Logbot
