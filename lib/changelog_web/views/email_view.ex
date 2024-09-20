@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.EmailView do
   use ChangelogWeb, :public_view
 
-  alias Changelog.{Faker, HtmlKit, NewsItem, Podcast}
+  alias Changelog.{Faker, HtmlKit, NewsItem, Podcast, UrlKit}
 
   alias ChangelogWeb.{
     AuthView,
@@ -12,6 +12,16 @@ defmodule ChangelogWeb.EmailView do
     PersonView,
     PodcastView
   }
+
+  def feed_app_url(feed, app_prefix, strip_scheme \\ true) do
+    feed_url = url(~p"/feed/#{feed.slug}")
+
+    if strip_scheme do
+      app_prefix <> UrlKit.sans_scheme(feed_url)
+    else
+      app_prefix <> feed_url
+    end
+  end
 
   def greeting(nil), do: "Hey there,"
 

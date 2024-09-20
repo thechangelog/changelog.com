@@ -1,0 +1,16 @@
+<%= greeting(@person) %>
+
+Pick a link to add '<%= @feed.name %>' feed to your favorite podcast app!
+
+Castro: <%= feed_app_url(@feed, "castros://subscribe/") %>
+Overcast: <%= feed_app_url(@feed, "overcast://x-callback-url/add?url=", false) %>
+Downcast: <%= feed_app_url(@feed, "downcast://") %>
+Pocket Casts: <%= feed_app_url(@feed, "pktc://subscribe/") %>
+Apple Podcasts: <%= feed_app_url(@feed, "podcast://") %>
+Podcast Addict: <%= feed_app_url(@feed, "podcastaddict://") %>
+
+
+Direct RSS: <%= url(~p"/feed/#{@feed.slug}") %>
+
+
+💚, Logbot

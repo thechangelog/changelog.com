@@ -2,10 +2,10 @@ defmodule ChangelogWeb.Home.FeedController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Feed, Podcast}
-  alias Changelog.ObanWorkers.FeedUpdater
+  alias Changelog.ObanWorkers.{FeedUpdater, MailDeliverer}
 
   plug :assign_podcasts
-  plug :assign_feed when action in [:edit, :update, :delete, :refresh]
+  plug :assign_feed when action in [:edit, :update, :delete, :email, :refresh]
   plug Authorize, [Policies.Feed, :feed]
   plug :preload_current_user_extras
 
@@ -75,11 +75,19 @@ defmodule ChangelogWeb.Home.FeedController do
     |> redirect_next(params, ~p"/~/feeds")
   end
 
+  def email(conn = %{assigns: %{feed: feed}}, params) do
+    MailDeliverer.queue("feed_links", %{"feed" => feed.id})
+
+    conn
+    |> put_flash(:success, "It should be in your inbox real soon 📥")
+    |> redirect_next(params, ~p"/~/feeds")
+  end
+
   def refresh(conn = %{assigns: %{feed: feed}}, params) do
     FeedUpdater.queue(feed)
 
     conn
-    |> put_flash(:success, "Your feed is being rebuilt as we speak. 🥂")
+    |> put_flash(:success, "Your feed is being rebuilt as we speak 🥂")
     |> redirect_next(params, ~p"/~/feeds")
   end
 

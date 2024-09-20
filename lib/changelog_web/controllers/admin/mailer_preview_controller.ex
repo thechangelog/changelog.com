@@ -5,6 +5,7 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     Episode,
     EpisodeGuest,
     EpisodeRequest,
+    Feed,
     Mailer,
     NewsItem,
     NewsItemComment,
@@ -117,6 +118,17 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
       |> Repo.one()
 
     Email.comment_subscription(subscription, comment)
+  end
+
+  def feed_links_email(person) do
+    feed =
+      person
+      |> assoc(:feeds)
+      |> Feed.limit(1)
+      |> Feed.preload_owner()
+      |> Repo.one()
+
+    Email.feed_links(feed)
   end
 
   # Podcast related emails

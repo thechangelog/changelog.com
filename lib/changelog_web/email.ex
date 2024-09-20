@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.Email do
   import Swoosh.Email
 
-  alias Changelog.{EpisodeGuest, EpisodeRequest, NewsItem, Podcast}
+  alias Changelog.{EpisodeGuest, EpisodeRequest, Feed, NewsItem, Podcast}
   alias ChangelogWeb.{EpisodeView, EmailView}
 
   # Comment related emails
@@ -93,6 +93,18 @@ defmodule ChangelogWeb.Email do
     |> subject("Your magic link")
     |> assign(:person, person)
     |> render(:sign_in)
+  end
+
+  def feed_links(feed) do
+    feed = Feed.preload_owner(feed)
+
+    styled_email()
+    |> header("X-CMail-GroupName", "Feed Links")
+    |> to(feed.owner)
+    |> subject("Your custom feed links")
+    |> assign(:person, feed.owner)
+    |> assign(:feed, feed)
+    |> render(:feed_links)
   end
 
   # Podcast related emails

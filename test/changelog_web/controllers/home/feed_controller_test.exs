@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.HomeFeedControllerTest do
   use ChangelogWeb.ConnCase
+  use Changelog.EmailCase
 
   alias Changelog.Feed
 
@@ -69,6 +70,17 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
     assert html_response(conn, 200) =~ ~r/error/
   end
 
+  @tag :as_inserted_member
+  test "sends feed URL email and redirects", %{conn: conn} do
+    feed = insert(:feed, owner: conn.assigns.current_user)
+
+    conn = post(conn, ~p"/~/feeds/#{feed}/email")
+
+    assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+    assert_email_sent(ChangelogWeb.Email.feed_links(feed))
+    assert redirected_to(conn) == ~p"/~/feeds"
+  end
+
   test "requires user auth on all actions", %{conn: conn} do
     feed = insert(:feed)
 
@@ -78,6 +90,8 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
         get(conn, ~p"/~/feeds/new"),
         post(conn, ~p"/~/feeds", feed: @valid_attrs),
         get(conn, ~p"/~/feeds/#{feed}/edit"),
+        post(conn, ~p"/~/feeds/#{feed}/email"),
+        post(conn, ~p"/~/feeds/#{feed}/refresh"),
         put(conn, ~p"/~/feeds/#{feed}", feed: @valid_attrs),
         delete(conn, ~p"/~/feeds/#{feed}")
       ],

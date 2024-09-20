@@ -9,6 +9,7 @@ defmodule Changelog.ObanWorkers.MailDeliverer do
     Episode,
     EpisodeGuest,
     EpisodeRequest,
+    Feed,
     Mailer,
     NewsItem,
     NewsItemComment,
@@ -173,6 +174,13 @@ defmodule Changelog.ObanWorkers.MailDeliverer do
     Person
     |> Repo.get(id)
     |> Email.sign_in()
+    |> Mailer.deliver()
+  end
+
+  def feed_links(%{"feed" => id}) do
+    Feed
+    |> Repo.get(id)
+    |> Email.feed_links()
     |> Mailer.deliver()
   end
 

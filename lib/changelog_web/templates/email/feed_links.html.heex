@@ -1,0 +1,20 @@
+<tr>
+  <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+    <p><%= greeting(@person) %></p>
+
+    <p>Pick a link to add <em><%= @feed.name %></em> feed to your favorite podcast app!</p>
+
+    <ul>
+      <li><a href={feed_app_url(@feed, "castros://subscribe/")}>Castro</a></li>
+      <li><a href={feed_app_url(@feed, "overcast://x-callback-url/add?url=", false)}>Overcast</a></li>
+      <li><a href={feed_app_url(@feed, "downcast://")}>Downcast</a></li>
+      <li><a href={feed_app_url(@feed, "pktc://subscribe/")}>Pocket Casts</a></li>
+      <li><a href={feed_app_url(@feed, "podcastaddict://")}>Podcast Addict</a></li>
+      <li><a href={feed_app_url(@feed, "podcast://")}>Apple Podcasts</a></li>
+    </ul>
+
+    <p>Or copy/paste <%= link("this RSS feed", to: url(~p"/feed/#{@feed.slug}")) %> into any other app.</p>
+
+    <p>💚, Logbot</p>
+  </td>
+</tr>
