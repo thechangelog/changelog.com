@@ -144,6 +144,15 @@ do-it:
     eval "$(just asdf-shell)"
     just contribute
 
+# Tag Kaizen $version with $episode & $discussion at $commit (recording date)
+[private]
+tag-kaizen version episode discussion commit:
+    git tag --force --sign \
+        --message="Recorded as 🎧 <https://changelog.com/friends/{{ episode }}>" \
+        --message="Discussed in https://github.com/thechangelog/changelog.com/discussions/{{ discussion }}" \
+        kaizen.{{ version }} {{ commit }}
+    git push --force origin kaizen.{{ version }}
+
 # https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
 
 BOLD := "$(tput bold)"
