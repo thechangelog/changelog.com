@@ -4,7 +4,7 @@ defmodule Changelog.ObanWorkers.SocialPoster do
   """
   use Oban.Worker
 
-  alias Changelog.{Bsky, Episode, Repo, Social, Slack}
+  alias Changelog.{Bsky, Episode, Repo, Social, Slack, Zulip}
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"episode_id" => episode_id}}) do
@@ -13,6 +13,7 @@ defmodule Changelog.ObanWorkers.SocialPoster do
     post_bsky_new_episode_message(episode)
     post_social_new_episode_message(episode)
     post_slack_new_episode_message(episode)
+    post_zulip_new_episode_message(episode)
 
     :ok
   end
@@ -25,6 +26,8 @@ defmodule Changelog.ObanWorkers.SocialPoster do
     message = Slack.Messages.new_episode(episode)
     Slack.Client.message("#main", message)
   end
+
+  defp post_zulip_new_episode_message(episode), do: Zulip.post(episode)
 
   def queue(episode = %Episode{}) do
     %{"episode_id" => episode.id} |> new() |> Oban.insert()

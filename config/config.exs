@@ -36,6 +36,8 @@ config :changelog,
   snap_token: System.get_env("SNAP_TOKEN"),
   typesense_url: System.get_env("TYPESENSE_URL"),
   typesense_api_key: System.get_env("TYPESENSE_API_KEY"),
+  zulip_user: System.get_env("ZULIP_USER"),
+  zulip_api_key: System.get_env("ZULIP_API_KEY"),
   # 60 = one minute, 3600 = one hour, 86,400 = one day, 604,800 = one week, 31,536,000 = one year
   cdn_cache_control_s3:
     System.get_env(
