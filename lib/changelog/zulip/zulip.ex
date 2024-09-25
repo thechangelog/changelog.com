@@ -16,15 +16,14 @@ defmodule Changelog.Zulip do
     """
 
     case Client.post_message(channel, topic, content) do
-      %{"result" => "success"} -> cross_post(episode, topic)
+      %{"result" => "success"} -> cross_post(episode, channel, topic)
       _else -> nil
     end
   end
 
-  defp cross_post(episode, topic) do
-    channel = "general"
+  defp cross_post(episode, channel, topic) do
     content = "#{EpisodeView.podcast_name_and_number(episode)}! Discuss 👉 #**#{channel}>#{topic}**"
 
-    Client.post_message(channel, "new episodes", content)
+    Client.post_message("general", "new episodes", content)
   end
 end
