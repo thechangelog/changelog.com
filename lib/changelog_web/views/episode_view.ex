@@ -8,6 +8,7 @@ defmodule ChangelogWeb.EpisodeView do
     HtmlKit,
     ListKit,
     NewsItem,
+    Podcast,
     Subscription,
     StringKit,
     UrlKit

@@ -1,7 +1,7 @@
 <article class="news_item">
   <header class="news_item-header">
     <p class="news_item-source">
-      <% slug = if @episode.podcast.slug == "podcast", do: "interviews", else: @episode.podcast.slug %>
+      <% slug = Podcast.slug_with_interviews_special_case(@episode.podcast) %>
       <%= link to: ~p"/#{slug}",
         title: @episode.podcast.name,
         class: "news_item-source-image news_item-source-image--episode" do %>

@@ -227,6 +227,10 @@ defmodule Changelog.Podcast do
 
   def is_publishing(podcast), do: podcast.status == :publishing
 
+  def slug_with_interviews_special_case(podcast) do
+    if is_interviews(podcast), do: "interviews", else: podcast.slug
+  end
+
   def published_episode_count(%{slug: "master"}), do: Repo.count(Episode.published())
 
   def published_episode_count(podcast) do

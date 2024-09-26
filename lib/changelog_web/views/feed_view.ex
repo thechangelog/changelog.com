@@ -99,7 +99,7 @@ defmodule ChangelogWeb.FeedView do
 
   # Exists to special-case /interviews
   def podcast_url(podcast) do
-    slug = if Podcast.is_interviews(podcast), do: "interviews", else: podcast.slug
+    slug = Podcast.slug_with_interviews_special_case(podcast)
     url(~p"/#{slug}")
   end
 

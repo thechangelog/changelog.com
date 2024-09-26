@@ -1,13 +1,13 @@
 defmodule Changelog.Zulip do
 
   alias Changelog.Zulip.Client
-  alias Changelog.Episode
+  alias Changelog.{Episode, Podcast}
   alias ChangelogWeb.EpisodeView
 
   def post(episode = %Episode{}) do
     episode = Episode.preload_all(episode)
 
-    channel = episode.podcast.slug
+    channel = Podcast.slug_with_interviews_special_case(episode.podcast)
     topic = "#{episode.slug}: #{episode.title}"
     content = """
     #{episode.summary}
