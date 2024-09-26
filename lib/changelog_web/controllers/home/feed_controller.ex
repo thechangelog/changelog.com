@@ -31,6 +31,7 @@ defmodule ChangelogWeb.Home.FeedController do
     case Repo.insert(changeset) do
       {:ok, feed} ->
         Repo.update(Feed.file_changeset(feed, feed_params))
+        FeedUpdater.queue(feed)
 
         conn
         |> put_flash(:success, "Your new feed has been created! 👏")

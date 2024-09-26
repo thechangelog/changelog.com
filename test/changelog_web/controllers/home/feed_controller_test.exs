@@ -2,10 +2,21 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
   use ChangelogWeb.ConnCase
   use Changelog.EmailCase
 
-  alias Changelog.Feed
+  import Mock
+
+  alias Changelog.{Feed, ObanWorkers}
 
   @valid_attrs %{name: "My Custom Feed", starts_at: "2024-01-01"}
   @invalid_attrs %{name: ""}
+
+  setup_with_mocks(
+    [
+      {ObanWorkers.FeedUpdater, [], [queue: fn _ -> :ok end]},
+    ],
+    assigns
+  ) do
+    assigns
+  end
 
   @tag :as_inserted_member
   test "renders the index page with no feeds", %{conn: conn} do
@@ -30,8 +41,9 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
   test "creates feed and redirects", %{conn: conn} do
     conn = post(conn, ~p"/~/feeds", feed: @valid_attrs)
 
-    assert redirected_to(conn) == ~p"/~/feeds"
     assert count(Feed) == 1
+    assert called(ObanWorkers.FeedUpdater.queue(:_))
+    assert redirected_to(conn) == ~p"/~/feeds"
   end
 
   @tag :as_inserted_member
@@ -57,8 +69,19 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
 
     conn = put(conn, ~p"/~/feeds/#{feed}", feed: @valid_attrs)
 
-    assert redirected_to(conn) == ~p"/~/feeds"
     assert count(Feed) == 1
+    assert called(ObanWorkers.FeedUpdater.queue(:_))
+    assert redirected_to(conn) == ~p"/~/feeds"
+  end
+
+  @tag :as_inserted_member
+  test "refreshes feed and redirects", %{conn: conn} do
+    feed = insert(:feed, owner: conn.assigns.current_user)
+
+    conn = post(conn, ~p"/~/feeds/#{feed}/refresh")
+
+    assert called(ObanWorkers.FeedUpdater.queue(:_))
+    assert redirected_to(conn) == ~p"/~/feeds"
   end
 
   @tag :as_inserted_member
@@ -67,6 +90,7 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
 
     conn = put(conn, ~p"/~/feeds/#{feed}", feed: @invalid_attrs)
 
+    refute called(ObanWorkers.FeedUpdater.queue(:_))
     assert html_response(conn, 200) =~ ~r/error/
   end
 

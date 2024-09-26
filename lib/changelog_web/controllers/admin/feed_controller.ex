@@ -32,6 +32,7 @@ defmodule ChangelogWeb.Admin.FeedController do
     case Repo.insert(changeset) do
       {:ok, feed} ->
         Repo.update(Feed.file_changeset(feed, feed_params))
+        FeedUpdater.queue(feed)
 
         conn
         |> put_flash(:result, "success")
@@ -54,6 +55,7 @@ defmodule ChangelogWeb.Admin.FeedController do
 
     case Repo.update(changeset) do
       {:ok, feed} ->
+      FeedUpdater.queue(feed)
         params = replace_next_edit_path(params, ~p"/admin/feeds/#{feed}/edit")
 
         conn
