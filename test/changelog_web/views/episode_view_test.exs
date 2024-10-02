@@ -6,6 +6,7 @@ defmodule ChangelogWeb.EpisodeViewTest do
   alias Changelog.Episode
 
   test "megabytes" do
+    assert megabytes(%Episode{audio_bytes: nil}) == 0
     assert megabytes(%Episode{audio_bytes: 1000}) == 0
     assert megabytes(%Episode{audio_bytes: 1_000_000}) == 1
     assert megabytes(%Episode{audio_bytes: 68_530_176}) == 69

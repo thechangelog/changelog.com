@@ -168,8 +168,8 @@ defmodule ChangelogWeb.EpisodeView do
   end
 
   def megabytes(episode, type \\ "audio") do
-    bytes = Map.get(episode, String.to_existing_atom("#{type}_bytes"), 0)
-    round(bytes / 1000 / 1000)
+    bytes = Map.get(episode, String.to_existing_atom("#{type}_bytes"))
+    round((bytes || 0) / 1000 / 1000)
   end
 
   def number(episode) do
