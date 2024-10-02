@@ -43,7 +43,7 @@
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("eye", to: Routes.admin_person_path(@conn, :show, person)) %>
           <%= AdminHelpers.icon_link("edit", to: Routes.admin_person_path(@conn, :edit, person)) %>
-          <%= AdminHelpers.icon_link("slack", to: Routes.admin_person_path(@conn, :slack, person), title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+          <%= AdminHelpers.icon_link("chat", to: Routes.admin_person_path(@conn, :zulip, person), title: "Invite to Zulip", method: :post, data: [confirm: "Are you sure?"]) %>
           <%= AdminHelpers.icon_link("trash", to: Routes.admin_person_path(@conn, :delete, person, next: "back"), method: :delete, data: [confirm: "Are you sure?"]) %>
         </div>
       </td>

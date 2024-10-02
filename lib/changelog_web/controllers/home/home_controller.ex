@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, StringKit, Subscription}
+  alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, StringKit, Subscription, Zulip}
 
   plug(RequireUser, "except from email links" when action not in [:opt_out])
   plug :preload_current_user_extras
@@ -105,6 +105,26 @@ defmodule ChangelogWeb.HomeController do
     |> redirect(to: ~p"/~")
   end
 
+  def zulip(conn = %{assigns: %{current_user: me}}, _params) do
+    {updated_user, flash} = case Zulip.user_id(me) do
+      {:ok, _id} ->
+        {me, "Your email already has an account. We'll see you in there! 💬"}
+      {:error, nil} ->
+        case Zulip.invite(me) do
+          %{"ok" => true} ->
+            {set_zulip_id(me), "Invite sent! Check your email 🎯"}
+
+          %{"ok" => false, "msg" => error} ->
+            {me, "Hmm, Zulip is saying '#{error}' 🤔"}
+        end
+    end
+
+    conn
+    |> assign(:current_user, updated_user)
+    |> put_flash(:success, flash)
+    |> redirect(to: ~p"/~")
+  end
+
   def opt_out(conn = %{method: "GET"}, %{"token" => token, "type" => type, "id" => id}) do
     conn
     |> assign(:token, token)
@@ -158,6 +178,10 @@ defmodule ChangelogWeb.HomeController do
       {:ok, person} = Repo.update(Person.slack_changes(person, "pending"))
       person
     end
+  end
+
+  defp set_zulip_id(person) do
+    person
   end
 
   defp preload_current_user_extras(conn = %{assigns: %{current_user: me}}, _) do

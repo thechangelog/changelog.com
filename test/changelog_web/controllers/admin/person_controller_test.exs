@@ -5,7 +5,7 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
   import Mock
 
-  alias Changelog.{Person, Slack}
+  alias Changelog.{Person, Slack, Zulip}
 
   @valid_attrs %{name: "Joe Blow", email: "joe@blow.com", handle: "joeblow"}
   @invalid_attrs %{name: "", email: "noname@nope.com"}
@@ -137,6 +137,18 @@ defmodule ChangelogWeb.Admin.PersonControllerTest do
 
       assert redirected_to(conn) == Routes.admin_person_path(conn, :index)
       assert called(Slack.Client.invite(person.email))
+    end
+  end
+
+  @tag :as_admin
+  test "invites to zulip", %{conn: conn} do
+    person = insert(:person)
+
+    with_mock(Zulip, invite: fn _ -> %{"ok" => true} end) do
+      conn = post(conn, ~p"/admin/people/#{person.id}/zulip")
+
+      assert redirected_to(conn) == ~p"/admin/people"
+      assert called(Zulip.invite(:_))
     end
   end
 

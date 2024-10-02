@@ -12,21 +12,35 @@ defmodule Changelog.Zulip.Client do
   end
 
   def process_request_headers(headers) do
-    username = Application.get_env(:changelog, :zulip_user)
-    password = Application.get_env(:changelog, :zulip_api_key)
-    auth = Base.encode64("#{username}:#{password}")
-    [
-      {"authorization", "Basic #{auth}"},
-      {"content-type", "application/x-www-form-urlencoded"} | headers]
+    [{"content-type", "application/x-www-form-urlencoded"} | headers]
   end
 
-  def handle({:ok, %{status_code: 200, body: body}}), do: body
-  def handle({:ok, %{status_code: 400, body: body}}), do: handle({:error, %{reason: body["msg"]}})
-  def handle({:error, %{reason: reason}}), do: %{"ok" => false, "error" => "#{reason}"}
+  def handle({:ok, %{status_code: 200, body: body}}), do: Map.merge(%{"ok" => true}, body)
+  def handle({:ok, %{status_code: status, body: body}}) when status >= 400, do: handle({:error, %{reason: body["msg"]}})
+  def handle({:error, %{reason: reason}}), do: %{"ok" => false, "msg" => "#{reason}"}
 
   def get_message(message_id) do
+    headers = with_bot_headers()
+
     "/messages/#{message_id}"
-    |> get()
+    |> get(headers)
+    |> handle()
+  end
+
+  def get_user(email) do
+    headers = with_bot_headers()
+
+    "/users/#{email}"
+    |> get(headers)
+    |> handle()
+  end
+
+  def post_invite(email) do
+    params = ~s(invitee_emails=#{email}&stream_ids=[]&include_realm_default_subscriptions=true)
+    headers = with_admin_headers()
+
+    "/invites"
+    |> post(params, headers)
     |> handle()
   end
 
@@ -35,8 +49,27 @@ defmodule Changelog.Zulip.Client do
     topic = URI.encode_www_form(topic)
     text = URI.encode_www_form(content)
 
+    params = ~s(type=stream&to=#{channel}&topic=#{topic}&content=#{text})
+    headers = with_bot_headers()
+
     "/messages"
-    |> post(~s(type=stream&to=#{channel}&topic=#{topic}&content=#{text}))
+    |> post(params, headers)
     |> handle()
+  end
+
+  defp with_admin_headers(additional_headers \\ []) do
+    username = Application.get_env(:changelog, :zulip_admin_user)
+    password = Application.get_env(:changelog, :zulip_admin_api_key)
+    auth = Base.encode64("#{username}:#{password}")
+
+    [{"authorization", "Basic #{auth}"} | additional_headers]
+  end
+
+  defp with_bot_headers(additional_headers \\ []) do
+    username = Application.get_env(:changelog, :zulip_bot_user)
+    password = Application.get_env(:changelog, :zulip_bot_api_key)
+    auth = Base.encode64("#{username}:#{password}")
+
+    [{"authorization", "Basic #{auth}"} | additional_headers]
   end
 end

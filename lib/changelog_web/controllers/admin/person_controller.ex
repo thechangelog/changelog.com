@@ -11,13 +11,14 @@ defmodule ChangelogWeb.Admin.PersonController do
     Person,
     Podcast,
     Slack,
+    Zulip,
     Subscription
   }
 
   alias Changelog.ObanWorkers.MailDeliverer
 
   plug :assign_person
-       when action in [:show, :edit, :update, :delete, :slack, :news, :comments, :masq]
+       when action in [:show, :edit, :update, :delete, :slack, :zulip, :news, :comments, :masq]
 
   plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
@@ -221,6 +222,20 @@ defmodule ChangelogWeb.Admin.PersonController do
           set_slack_id_to_pending(person)
           "success"
 
+        _else ->
+          "failure"
+      end
+
+    conn
+    |> put_flash(:result, flash)
+    |> redirect_next(params, ~p"/admin/people")
+  end
+
+  def zulip(conn = %{assigns: %{person: person}}, params) do
+    flash =
+      case Zulip.invite(person.email) do
+        %{"ok" => true} ->
+          "success"
         _else ->
           "failure"
       end

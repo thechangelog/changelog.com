@@ -97,6 +97,7 @@ defmodule ChangelogWeb.Router do
     get "/people/:id/news", PersonController, :news, as: :person
     get "/people/:id/comments", PersonController, :comments, as: :person
     post "/people/:id/slack", PersonController, :slack, as: :person
+    post "/people/:id/zulip", PersonController, :zulip, as: :person
     post "/people/:id/masq", PersonController, :masq, as: :person
 
     resources "/podcasts", PodcastController do
@@ -191,6 +192,7 @@ defmodule ChangelogWeb.Router do
     post "/~/nope/:token/:type/:id", HomeController, :opt_out
 
     post "/~/slack", HomeController, :slack
+    post "/~/zulip", HomeController, :zulip
     post "/~/subscribe", HomeController, :subscribe
     post "/~/unsubscribe", HomeController, :unsubscribe
 
