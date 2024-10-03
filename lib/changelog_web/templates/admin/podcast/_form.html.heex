@@ -210,6 +210,12 @@
     <%= AdminHelpers.error_message(f, :clips_url) %>
   </div>
 
+  <div class={"field #{AdminHelpers.error_class(f, :zulip_url)}"}>
+    <%= label(f, :zulip_url, "Zulip URL") %>
+    <%= text_input(f, :zulip_url) %>
+    <%= AdminHelpers.error_message(f, :zulip_url) %>
+  </div>
+
   <div class="ui hidden divider"></div>
   <div class="ui equal width stackable grid">
   <%= if !AdminHelpers.is_persisted(f.data) do %>

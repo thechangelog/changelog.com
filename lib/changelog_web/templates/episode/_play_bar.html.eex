@@ -9,10 +9,10 @@
         class: "toolbar_item toolbar_item--button playbar playbar_play") %>
   <% end %>
 
-<%= if @item do %>
+<%= if @episode.podcast.zulip_url do %>
   <%= link("Discuss",
       title: "Discuss this episode",
-      to: Routes.news_item_path(@conn, :show, NewsItem.slug(@item)),
+      to: @episode.podcast.zulip_url,
       class: "toolbar_item toolbar_item--button playbar_discuss") %>
 <% end %>
 

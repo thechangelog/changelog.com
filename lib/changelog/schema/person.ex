@@ -55,6 +55,7 @@ defmodule Changelog.Person do
     field :mastodon_handle, :string
     field :twitter_handle, :string
     field :slack_id, :string
+    field :zulip_id, :string
     field :website, :string
     field :bio, :string
     field :location, :string
@@ -117,6 +118,9 @@ defmodule Changelog.Person do
 
   def in_slack(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.slack_id))
   def not_in_slack(query \\ __MODULE__), do: from(q in query, where: is_nil(q.slack_id))
+
+  def in_zulip(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.zulip_id))
+  def not_in_zulip(query \\ __MODULE__), do: from(q in query, where: is_nil(q.zulip_id))
 
   def joined(query \\ __MODULE__), do: from(a in query, where: not is_nil(a.joined_at))
   def never_confirmed(query \\ __MODULE__), do: from(q in query, where: is_nil(q.joined_at))
@@ -286,10 +290,6 @@ defmodule Changelog.Person do
       signed_in_at: now_in_seconds(),
       joined_at: person.joined_at || now_in_seconds()
     })
-  end
-
-  def slack_changes(person, slack_id) do
-    change(person, %{slack_id: slack_id})
   end
 
   def refresh_auth_token(person, expires_in \\ 60 * 24) do

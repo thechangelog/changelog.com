@@ -33,7 +33,7 @@
   <%= if Policies.Admin.Person.edit(@current_user, @person) do %>
     <%= AdminHelpers.icon_link("edit", to: ~p"/admin/people/#{@person}/edit?next=#{next}", title: "Edit") %>
   <% end %>
-    <%= AdminHelpers.icon_link("slack", to: ~p"/admin/people/#{@person}/slack", title: "Invite to Slack", method: :post, data: [confirm: "Are you sure?"]) %>
+    <%= AdminHelpers.icon_link("zulip", to: ~p"/admin/people/#{@person}/zulip", title: "Invite to Zulip", method: :post, data: [confirm: "Are you sure?"]) %>
   <%= if Policies.Admin.Person.masq(@current_user, @person) do %>
     <%= AdminHelpers.icon_link("user secret", to: ~p"/admin/people/#{@person}/masq", title: "Masquarade", method: :post, data: [confirm: "Do you want to use the site as this user?"]) %>
   <% end %>

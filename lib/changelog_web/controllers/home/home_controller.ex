@@ -1,7 +1,7 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Fastly, NewsItem, Person, Podcast, Slack, StringKit, Subscription, Zulip}
+  alias Changelog.{Fastly, NewsItem, Person, Podcast, StringKit, Subscription, Zulip}
 
   plug(RequireUser, "except from email links" when action not in [:opt_out])
   plug :preload_current_user_extras
@@ -86,41 +86,21 @@ defmodule ChangelogWeb.HomeController do
     send_resp(conn, 200, "")
   end
 
-  def slack(conn = %{assigns: %{current_user: me}}, _params) do
-    {updated_user, flash} =
-      case Slack.Client.invite(me.email) do
-        %{"ok" => true} ->
-          {set_slack_id(me), "Invite sent! Check your email 🎯"}
-
-        %{"ok" => false, "error" => "already_in_team"} ->
-          {set_slack_id(me), "You're on the team! We'll see you in there ✊"}
-
-        %{"ok" => false, "error" => error} ->
-          {me, "Hmm, Slack is saying '#{error}' 🤔"}
-      end
-
-    conn
-    |> assign(:current_user, updated_user)
-    |> put_flash(:success, flash)
-    |> redirect(to: ~p"/~")
-  end
-
   def zulip(conn = %{assigns: %{current_user: me}}, _params) do
-    {updated_user, flash} = case Zulip.user_id(me) do
+    flash = case Zulip.user_id(me) do
       {:ok, _id} ->
-        {me, "Your email already has an account. We'll see you in there! 💬"}
+        "Your email already has an account. We'll see you in there! 💬"
       {:error, nil} ->
         case Zulip.invite(me) do
           %{"ok" => true} ->
-            {set_zulip_id(me), "Invite sent! Check your email 🎯"}
+            "Invite sent! Check your email 🎯"
 
           %{"ok" => false, "msg" => error} ->
-            {me, "Hmm, Zulip is saying '#{error}' 🤔"}
+            "Hmm, Zulip is saying '#{error}' 🤔"
         end
     end
 
     conn
-    |> assign(:current_user, updated_user)
     |> put_flash(:success, flash)
     |> redirect(to: ~p"/~")
   end
@@ -169,19 +149,6 @@ defmodule ChangelogWeb.HomeController do
     end
 
     render(conn, :opted_out)
-  end
-
-  defp set_slack_id(person) do
-    if person.slack_id do
-      person
-    else
-      {:ok, person} = Repo.update(Person.slack_changes(person, "pending"))
-      person
-    end
-  end
-
-  defp set_zulip_id(person) do
-    person
   end
 
   defp preload_current_user_extras(conn = %{assigns: %{current_user: me}}, _) do

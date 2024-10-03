@@ -35,6 +35,14 @@ defmodule Changelog.Zulip.Client do
     |> handle()
   end
 
+  def get_users do
+    headers = with_bot_headers()
+
+    "/users"
+    |> get(headers)
+    |> handle()
+  end
+
   def post_invite(email) do
     params = ~s(invitee_emails=#{email}&stream_ids=[]&include_realm_default_subscriptions=true)
     headers = with_admin_headers()

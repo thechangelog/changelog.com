@@ -91,7 +91,9 @@
 
   <footer class="news_item-footer">
     <span class="news_item-footer-item">
-      <%= link("Discuss", to: ~p"/#{@episode.podcast.slug}/#{@episode.slug}/discuss") %>
+    <%= if @episode.podcast.zulip_url do %>
+      <%= link("Discuss", to: @episode.podcast.zulip_url) %>
+    <% end %>
       &bull; <%= link("Share",
           title: "Share this episode",
           to: {:javascript, "void(0);"},

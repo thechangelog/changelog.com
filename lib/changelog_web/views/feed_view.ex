@@ -7,7 +7,13 @@ defmodule ChangelogWeb.FeedView do
   def discussion_link(nil), do: ""
 
   def discussion_link(episode = %Episode{}) do
-    url(~p"/#{episode.podcast.slug}/#{episode.slug}/discuss") |> discussion_link()
+    link = if episode.podcast.zulip_url do
+      episode.podcast.zulip_url
+    else
+      url(~p"/#{episode.podcast.slug}/#{episode.slug}/discuss")
+    end
+
+    discussion_link(link)
   end
 
   def discussion_link(post = %Post{}), do: discussion_link(post.news_item)
@@ -18,7 +24,7 @@ defmodule ChangelogWeb.FeedView do
 
   def discussion_link(url) when is_binary(url) do
     content_tag(:p) do
-      content_tag(:a, "Leave us a comment", href: url)
+      content_tag(:a, "Join the discussion", href: url)
     end
     |> safe_to_string()
   end

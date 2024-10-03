@@ -215,11 +215,9 @@ defmodule ChangelogWeb.Admin.PersonController do
     flash =
       case Slack.Client.invite(person.email) do
         %{"ok" => true} ->
-          set_slack_id_to_pending(person)
           "success"
 
         %{"ok" => false, "error" => "already_in_team"} ->
-          set_slack_id_to_pending(person)
           "success"
 
         _else ->
@@ -271,13 +269,6 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> Map.delete("host")
       |> Map.delete("editor")
     end
-  end
-
-  defp set_slack_id_to_pending(person = %{slack_id: id}) when not is_nil(id), do: person
-
-  defp set_slack_id_to_pending(person) do
-    {:ok, person} = Repo.update(Person.slack_changes(person, "pending"))
-    person
   end
 
   defp handle_welcome_email(person, params) do

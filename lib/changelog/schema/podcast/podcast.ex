@@ -40,6 +40,7 @@ defmodule Changelog.Podcast do
     field :riverside_url, :string
     field :youtube_url, :string
     field :clips_url, :string
+    field :zulip_url, :string
 
     field :download_count, :float
     field :reach_count, :integer
@@ -89,6 +90,7 @@ defmodule Changelog.Podcast do
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
       youtube_url: "https://www.youtube.com/changelog",
       clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreJ1p9RXR6Z667mrMyHXAeH",
+      zulip_url: "https://changelog.zulipchat.com",
       cover: true,
       active_hosts: [],
       retired_hosts: []
@@ -114,6 +116,7 @@ defmodule Changelog.Podcast do
       spotify_url: "https://open.spotify.com/show/5bBki72YeKSLUqyD94qsuJ",
       youtube_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYrf9nHWFF1dQsk-X5cghL6UH",
       clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreumc6MQV7C8FiRuaMczhjK",
+      zulip_url: "https://changelog.zulipchat.com",
       cover: true,
       active_hosts: Person.with_ids([1, 2]) |> Person.newest_first() |> Repo.all()
     }
@@ -144,7 +147,7 @@ defmodule Changelog.Podcast do
     podcast
     |> cast(
       attrs,
-      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle mastodon_token twitter_handle apple_url spotify_url riverside_url youtube_url clips_url recorded_live partner position)a
+      ~w(name slug status vanity_domain schedule_note welcome description extended_description keywords mastodon_handle mastodon_token twitter_handle apple_url spotify_url riverside_url youtube_url clips_url zulip_url recorded_live partner position)a
     )
     |> validate_required([:name, :slug, :status])
     |> validate_format(:vanity_domain, Regexp.http(), message: Regexp.http_message())

@@ -55,6 +55,10 @@
             <td><%= @members[:slack] |> SharedHelpers.comma_separated() %></td>
           </tr>
           <tr>
+            <td>Members in Zulip</td>
+            <td><%= @members[:zulip] |> SharedHelpers.comma_separated() %></td>
+          </tr>
+          <tr>
             <td>Total members</td>
             <td><%= @members[:total] |> SharedHelpers.comma_separated() %></td>
           </tr>

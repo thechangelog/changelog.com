@@ -115,6 +115,7 @@ defmodule ChangelogWeb.Admin.PageController do
     %{
       today: Repo.count(Person.joined_today()),
       slack: Repo.count(Person.in_slack()),
+      zulip: Repo.count(Person.in_zulip()),
       spam: Repo.count(Person.spammy()),
       total: Repo.count(Person.joined())
     }
