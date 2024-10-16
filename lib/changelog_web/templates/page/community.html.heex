@@ -29,7 +29,7 @@
     </header>
 
     <div class="marketing-section-content-people">
-      <div class="avatar_list avatar_list--full">
+      <div class="avatar_list avatar_list--full avatar_list--left">
       <%= for person <- @active do %>
         <%= link to: PersonView.profile_path(person), class: "avatar_list-item avatar_list-item--light", title: person.name do %>
           <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
@@ -45,7 +45,7 @@
     </header>
 
     <div class="marketing-section-content-people">
-      <div class="avatar_list avatar_list--full">
+      <div class="avatar_list avatar_list--full avatar_list--left">
       <%= for person <- @retired do %>
         <%= link to: PersonView.profile_path(person), class: "avatar_list-item avatar_list-item--light", title: person.name do %>
           <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>

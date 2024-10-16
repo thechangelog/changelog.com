@@ -1,11 +1,14 @@
 .avatar_list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
-  justify-content: left;
+  &--left {
+    justify-content: left;
 
-  @media (max-width: $smartphone) {
-    justify-content: center;
+    @media (max-width: $smartphone) {
+      justify-content: center;
+    }
   }
 
   margin-left: -5px;
