@@ -68,3 +68,15 @@ jobs:
           SLACK_USERNAME: "GitHub Actions"
           SLACK_FOOTER: "Just got shipped to https://changelog.com"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: "Announce deploy in #kaizen Zulip..."
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        uses: zulip/github-actions-zulip/send-message@v1
+        with:
+          api-key: ${{ secrets.ZULIP_BOT_API_KEY }}
+          email: "logbot-bot@changelog.zulipchat.com"
+          organization-url: "https://changelog.zulipchat.com"
+          to: "kaizen"
+          type: "stream"
+          topic: "Code deploys"
+          content: "${{ github.actor }} just successfully deployed [${{ github.sha }}](https://github.com/thechangelog/changelog.com/commit/${{ github.sha }})"
