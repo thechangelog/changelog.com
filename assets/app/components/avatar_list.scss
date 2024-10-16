@@ -1,7 +1,13 @@
 .avatar_list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+
+  justify-content: left;
+
+  @media (max-width: $smartphone) {
+    justify-content: center;
+  }
+
   margin-left: -5px;
   margin-right: -5px;
 
@@ -52,7 +58,7 @@
     }
 
     .avatar_list--full & p {
-      max-width: 110px; // Allows full names to auto wrap within a constrained width
+      max-width: 112px; // Allows full names to auto wrap within a constrained width
       padding: 0 0 0 15px;
       font-size: 1em;
       font-weight: 500;
@@ -64,6 +70,16 @@
 
     &:hover p {
       color: $white;
+    }
+  }
+
+  &-item--light {
+    p {
+      background: inherit;
+      color: $dark-grey;
+    }
+    &:hover p {
+      color: $green;
     }
   }
 }

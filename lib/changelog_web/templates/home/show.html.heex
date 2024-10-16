@@ -35,7 +35,7 @@
 
         <div class="account_ctas-item-info-buttons">
           <%= link("Request Invite", to: ~p"/~/zulip", method: :post) %>
-          <%= link("Launch Zulip", to: "https://changelog.zulipchat.com", target: "_blank") %>
+          <%= link("Launch Zulip", to: Application.get_env(:changelog, :zulip_url), target: "_blank") %>
         </div>
       </div>
     </div>

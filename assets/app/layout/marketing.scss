@@ -28,16 +28,12 @@
     .button_large {
       min-width: $min-width-button;
       min-width: var(--min-width-button);
-      flex: 1 0 0;
-    }
-    //
-    // .page-page-weekly &,
-    // .page-page-nightly & {
-    //   margin: 0;
-    // }
 
-    .button_large {
       margin: 10px;
+
+      @media (min-width: $tablet) {
+        flex: 1 0 0;
+      }
     }
   }
   p.button_note {
@@ -282,6 +278,11 @@
         margin-top: 80px;
       }
 
+      &-people {
+        margin: $padding-extra-large auto $padding-extra-extra-large auto;
+        max-width: 1024px;
+      }
+
       &-image {
         display: none;
         padding: $padding-large;
@@ -410,31 +411,6 @@
           font-size: 1em;
           line-height: 1.25em;
         }
-      }
-    }
-  }
-
-  // Map
-  &-map {
-    display: block;
-    height: auto;
-    margin: 0 auto;
-    max-width: 1200px;
-    overflow: hidden;
-    width: 100%;
-
-    img {
-      display: block;
-      margin: 0 auto;
-      width: 97%;
-    }
-
-    @media (min-width: $tablet) {
-      padding: 0 $padding-large;
-
-      img {
-        margin: 0;
-        width: 100%;
       }
     }
   }

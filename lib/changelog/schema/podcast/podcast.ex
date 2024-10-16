@@ -90,7 +90,7 @@ defmodule Changelog.Podcast do
       spotify_url: "https://open.spotify.com/show/0S1h5K7jm2YvOcM7y1ZMXY",
       youtube_url: "https://www.youtube.com/changelog",
       clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreJ1p9RXR6Z667mrMyHXAeH",
-      zulip_url: "https://changelog.zulipchat.com",
+      zulip_url: Application.get_env(:changelog, :zulip_url),
       cover: true,
       active_hosts: [],
       retired_hosts: []
@@ -116,7 +116,7 @@ defmodule Changelog.Podcast do
       spotify_url: "https://open.spotify.com/show/5bBki72YeKSLUqyD94qsuJ",
       youtube_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYrf9nHWFF1dQsk-X5cghL6UH",
       clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreumc6MQV7C8FiRuaMczhjK",
-      zulip_url: "https://changelog.zulipchat.com",
+      zulip_url: Application.get_env(:changelog, :zulip_url),
       cover: true,
       active_hosts: Person.with_ids([1, 2]) |> Person.newest_first() |> Repo.all()
     }
@@ -366,10 +366,11 @@ defmodule Changelog.Podcast do
         stat.agents
         |> Enum.filter(fn {_name, data} -> String.match?(data["raw"], ~r/subscribers/) end)
         |> Enum.map(fn {name, data} ->
-          subs = case Regex.named_captures(~r/(?<subs>\d+) subscribers/, data["raw"]) do
-            %{"subs" => count} -> String.to_integer(count)
-            _else -> 0
-          end
+          subs =
+            case Regex.named_captures(~r/(?<subs>\d+) subscribers/, data["raw"]) do
+              %{"subs" => count} -> String.to_integer(count)
+              _else -> 0
+            end
 
           {name, subs}
         end)

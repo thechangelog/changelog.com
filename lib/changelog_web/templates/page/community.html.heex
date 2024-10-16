@@ -2,19 +2,63 @@
   <section class="marketing-section marketing-section--intro">
     <header class="marketing-section-header">
       <h1>Changelog Developer Community</h1>
-      <p><%= members_count() |> SharedHelpers.comma_separated() %> developers from all over the world get a backstage pass to everything we do. Access to our Zulip community, exclusive community member only features & more.</p>
+      <p><%= members_count() |> SharedHelpers.comma_separated() %> developers from all over the world get a backstage pass to everything we do: including access to our Zulip chat, exclusive community member only features & more.</p>
 
-      <%= render("_community_join_button.html", assigns) %>
+      <%= if @current_user do %>
+        <div class="marketing-button_group">
+          <%= link("My Dashboard", to: ~p"/~", class: "button_large") %>
+          <%= link("Launch Zulip", to: Application.get_env(:changelog, :zulip_url), class: "button_large", rel: "external") %>
+        </div>
+        <p class="button_note"><code>Welcome back, it's good to be $HOME!</code></p>
+      <% else %>
+        <div class="marketing-button_group">
+          <%= link("Join the Community", to: ~p"/join", class: "button_large") %>
+          <%= link("View our Zulip", to: Application.get_env(:changelog, :zulip_url), class: "button_large", rel: "external") %>
+        </div>
+        <p class="button_note">By joining you agree to this community's <%= link "Code of Conduct", to: Routes.page_path(@conn, :coc) %>.</p>
+      <% end %>
     </header>
   </section>
 
   <a id="community" class="anchor"></a>
   <section class="marketing-section">
+
+    <header class="marketing-section-header">
+      <h2>Meet your hosts! The faces behind the voices 🎙️</h2>
+      <p>From data science to software engineering to product management, Changelog podcast hosts have wide-ranging backgrounds & a shared love of deep conversation.</p>
+    </header>
+
+    <div class="marketing-section-content-people">
+      <div class="avatar_list avatar_list--full">
+      <%= for person <- @active do %>
+        <%= link to: PersonView.profile_path(person), class: "avatar_list-item avatar_list-item--light", title: person.name do %>
+          <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
+          <p><%= person.name %></p>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+
+    <header class="marketing-section-header">
+      <h2>Former hosts, forever community members 🫡</h2>
+      <p>When you podcast as long as we have (since '09), you make a lot of friends along the way. You'll hear these amazing folks in our back catalog & every so often as return guests.</p>
+    </header>
+
+    <div class="marketing-section-content-people">
+      <div class="avatar_list avatar_list--full">
+      <%= for person <- @retired do %>
+        <%= link to: PersonView.profile_path(person), class: "avatar_list-item avatar_list-item--light", title: person.name do %>
+          <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), person.name, width: 50, height: 50) %>
+          <p><%= person.name %></p>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+
     <header class="marketing-section-header">
       <i><%= SharedHelpers.lazy_image(url(~p"/images/content/community/zulip-icon-circle.svg"), "Zulip Circle Icon", width: 60, height: 60) %></i>
-      <h2>There are no imposters&nbsp;here.</h2>
+      <h2>There are no imposters here 💚</h2>
       <p>Everyone is welcome. You are not an imposter. No matter who you are or where you are on your developer journey &mdash; this community is a safe place for you to hang your hat & call home. All you have to do is take the first step.</p>
-
     </header>
 
     <div class="marketing-section-content marketing-section-content--slack">

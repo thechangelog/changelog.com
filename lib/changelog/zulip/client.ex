@@ -1,7 +1,7 @@
 defmodule Changelog.Zulip.Client do
   use HTTPoison.Base
 
-  def process_url(url), do: "https://changelog.zulipchat.com/api/v1#{url}"
+  def process_url(url), do: Application.get_env(:changelog, :zulip_url) <> "/api/v1#{url}"
 
   def process_response_body(body) do
     try do
@@ -16,7 +16,10 @@ defmodule Changelog.Zulip.Client do
   end
 
   def handle({:ok, %{status_code: 200, body: body}}), do: Map.merge(%{"ok" => true}, body)
-  def handle({:ok, %{status_code: status, body: body}}) when status >= 400, do: handle({:error, %{reason: body["msg"]}})
+
+  def handle({:ok, %{status_code: status, body: body}}) when status >= 400,
+    do: handle({:error, %{reason: body["msg"]}})
+
   def handle({:error, %{reason: reason}}), do: %{"ok" => false, "msg" => "#{reason}"}
 
   def get_message(message_id) do

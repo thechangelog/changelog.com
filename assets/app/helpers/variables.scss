@@ -3,47 +3,48 @@ $black: #101820;
 $half-black: rgba($black, 0.5);
 $white: #ffffff;
 $half-white: rgba($white, 0.5);
-$green: #59B287;
+$green: #59b287;
 $light-green: #ddffdb;
 $light-yellow: #fffedb;
-$yellow: #C4A731;
-$light-blue: #9095C5;
-$blue: #2D3589;
+$yellow: #c4a731;
+$light-blue: #9095c5;
+$blue: #2d3589;
 $lightest-grey: #f5f5f5;
 $light-grey: #e6e5e6;
 $medium-grey-alt: #98a2ad;
 $medium-grey: #878b8f;
-$dark-grey: #1A232C;
-$red: #FC4C02;
+$dark-grey: #1a232c;
+$red: #fc4c02;
 $light-red: lighten($red, 20%);
-$blue-grey: #222C36;
+$blue-grey: #222c36;
 
 // Highlight – Used for Sponsor news items
 $highlight: #fafafa;
 
 // Podcasts - Sometimes we wanna loop through 'em
-$podcasts: podcast, founderstalk, gotime, jsparty, practicalai, backstage, brainscience, shipit, master;
+$podcasts: podcast, founderstalk, gotime, jsparty, practicalai, backstage,
+  brainscience, shipit, master;
 
 // Podcast Colors
-$podcast: #9E978E;
+$podcast: #9e978e;
 $podcast-transparent: rgba(darken($podcast, 45%), 0.6);
 
-$founderstalk: #3CDBC0;
+$founderstalk: #3cdbc0;
 $founderstalk-transparent: rgba(darken($founderstalk, 40%), 0.3);
 
-$gotime: #59CBE8;
+$gotime: #59cbe8;
 $gotime-transparent: rgba(darken($gotime, 50%), 0.3);
 
-$jsparty: #FFCD00;
+$jsparty: #ffcd00;
 $jsparty-transparent: rgba(darken($jsparty, 40%), 0.4);
 
-$practicalai: #4C5FAA;
+$practicalai: #4c5faa;
 $practicalai-transparent: rgba(darken($practicalai, 50%), 0.3);
 
-$backstage: #FC4C02;
+$backstage: #fc4c02;
 $backstage-transparent: rgba(darken($backstage, 30%), 0.6);
 
-$brainscience: #F9423A;
+$brainscience: #f9423a;
 $brainscience-transparent: rgba(darken($brainscience, 30%), 0.6);
 
 // Borders
@@ -54,9 +55,10 @@ $base-border-radius: 3px;
 $body-copy-color: $black;
 $root-font-size: 16px;
 $content-fallback: Arial, sans-serif;
-$content: 'Sana Sans', $content-fallback;
-$display: 'Helvetica Condensed', 'Helvetica Narrow', 'Arial Narrow', 'Arial', sans-serif;
-$code: 'Roboto Mono', Courier, monospace;
+$content: "Sana Sans", $content-fallback;
+$display: "Helvetica Condensed", "Helvetica Narrow", "Arial Narrow", "Arial",
+  sans-serif;
+$code: "Roboto Mono", Courier, monospace;
 
 // Roboto Mono - Weight Key
 // --
@@ -87,6 +89,7 @@ $padding-small: calc(16px / $root-font-size * 1rem);
 $padding-medium: calc(20px / $root-font-size * 1rem);
 $padding-large: calc(26px / $root-font-size * 1rem);
 $padding-extra-large: calc(54px / $root-font-size * 1rem);
+$padding-extra-extra-large: calc(82px / $root-font-size * 1rem);
 
 // Elements – Update if changes are made to these components
 $header-height: 63px;
