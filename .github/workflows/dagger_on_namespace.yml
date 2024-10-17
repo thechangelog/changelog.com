@@ -59,16 +59,6 @@ jobs:
           cd magefiles
           go run main.go -w ../ cd
 
-      - name: "Announce deploy in #dev Slack..."
-        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          MSG_MINIMAL: "commit,actions url"
-          SLACK_CHANNEL: dev
-          SLACK_USERNAME: "GitHub Actions"
-          SLACK_FOOTER: "Just got shipped to https://changelog.com"
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
       - name: "Announce deploy in #kaizen Zulip..."
         if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         uses: zulip/github-actions-zulip/send-message@v1
@@ -79,4 +69,7 @@ jobs:
           to: "kaizen"
           type: "stream"
           topic: "Code deploys"
-          content: "${{ github.actor }} just successfully deployed [${{ github.sha }}](https://github.com/thechangelog/changelog.com/commit/${{ github.sha }})"
+          content: |
+            ${{ github.actor }} just successfully deployed [${{ github.sha::0:7 }}](https://github.com/thechangelog/changelog.com/commit/${{ github.sha }})
+
+            ${{ github.event.commits[0].message }}
