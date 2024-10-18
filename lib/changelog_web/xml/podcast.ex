@@ -37,7 +37,7 @@ defmodule ChangelogWeb.Xml.Podcast do
         {"itunes:author", nil, "Changelog Media"},
         {"itunes:owner", nil, Xml.itunes_owner()},
         {"itunes:keywords", nil, podcast.keywords},
-        {"itunes:category", nil, Xml.itunes_category()},
+        Xml.itunes_category(),
         Xml.itunes_sub_category(podcast),
         {"podcast:funding", %{url: "https://changelog.com/++"},
          "Support our work by joining Changelog++"},

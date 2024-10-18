@@ -7,8 +7,8 @@ defmodule ChangelogWeb.Xml do
 
   def generate(document), do: XmlBuilder.generate(document)
 
-  def itunes_category() do
-    [{"itunes:category", %{text: "Software How-To"}}, {"itunes:category", %{text: "Tech News"}}]
+  def itunes_category do
+    [{"itunes:category", %{text: "Technology"}}]
   end
 
   def itunes_sub_category(%{slug: "news"}) do
