@@ -75,6 +75,6 @@ jobs:
           type: "stream"
           topic: "Code deploys"
           content: |
-            ${{ github.actor }} just successfully deployed [${{ env.SHORT_SHA }}](https://github.com/thechangelog/changelog.com/commit/${{ github.sha }})
+            ${{ github.actor }} just successfully deployed [${{ env.SHORT_SHA }}](https://github.com/thechangelog/changelog.com/commit/${{ github.sha }}):
 
-            ${{ github.event.commits[0].message }}
+            > ${{ github.event.commits[0].message }}
