@@ -197,7 +197,9 @@ defmodule Changelog.Notifier do
     for subscription <- podcast.subscriptions do
       MailDeliverer.queue("episode_published", %{
         "subscription" => subscription.id,
-        "episode" => episode.id
+        "episode" => episode.id,
+        # lower than default priority (0) so transactionals send first
+        "priority" => 1
       })
     end
   end
