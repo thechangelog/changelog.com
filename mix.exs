@@ -49,7 +49,7 @@ defmodule Changelog.Mixfile do
       {:oban, "~> 2.15"},
       {:oban_web, "~> 2.10.2", repo: "oban", only: @oban_envs},
       {:timex, "~> 3.0"},
-      {:scrivener_ecto, "~> 2.0"},
+      {:scrivener_ecto, "~> 3.0"},
       {:cmark, "~> 0.6"},
       {:floki, "~> 0.36"},
       {:waffle_ecto, "~> 0.0"},
