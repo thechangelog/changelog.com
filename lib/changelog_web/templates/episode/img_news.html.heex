@@ -7,9 +7,10 @@
     <title><%= title_with_guest_focused_subtitle_and_podcast_aside(@episode) %></title>
     <link rel="stylesheet" href={url(~p"/css/img.css")}>
     <style>
+    <% {w, h} = if @shape == "square", do: {960, 960}, else: {1200, 630} %>
     .news-container {
-      width: <%= @width %>px;
-      height: <%= @height %>px;
+      width: <%= w %>px;
+      height: <%= h %>px;
     }
     </style>
   </head>
@@ -29,7 +30,9 @@
         <% end %>
         </ul>
       </div>
+    <%= if @shape != "square" do %>
       <div class="news-fade"></div>
+    <% end %>
     </div>
   </body>
 </html>

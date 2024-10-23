@@ -33,13 +33,11 @@ defmodule ChangelogWeb.EpisodeController do
       |> Episode.preload_all()
       |> Repo.get_by!(slug: slug)
 
-    width = Map.get(params, "w", "1200")
-    height = Map.get(params, "h", "630")
+    shape = Map.get(params, "shape", "rectangle")
 
     conn
     |> assign(:episode, episode)
-    |> assign(:width, width)
-    |> assign(:height, height)
+    |> assign(:shape, shape)
     |> render(:img_news, layout: false)
   end
 
