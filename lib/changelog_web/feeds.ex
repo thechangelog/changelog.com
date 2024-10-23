@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Feeds do
   use ChangelogWeb, :verified_routes
 
-  alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, PodPing, Post, Repo}
+  alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, Post, Repo}
+  alias Changelog.ObanWorkers.OvercastPinger
   alias ChangelogWeb.Xml
 
   @doc """
@@ -44,14 +45,15 @@ defmodule ChangelogWeb.Feeds do
   end
 
   defp notify_services(feed_or_slug) do
-    feed_url =
+    {feed_url, ping_url} =
       case feed_or_slug do
-        %Feed{slug: slug} -> url(~p"/feeds/#{slug}")
-        slug -> url(~p"/#{slug}/feed")
+        %Feed{slug: slug} -> {url(~p"/feeds/#{slug}"), url(~p"/feeds/")}
+        slug -> {url(~p"/#{slug}/feed"), url(~p"/#{slug}/feed")}
       end
 
     Fastly.purge(feed_url)
-    PodPing.overcast(feed_url)
+    # give Fastly two minutes to complete purge
+    OvercastPinger.queue(ping_url, schedule_in: 120)
   end
 
   @doc """
