@@ -45,9 +45,12 @@
               <div class="tooltip-arrow"></div>
               <div class="tooltip-wrap">
                 <ul class="tooltip-list">
-                  <%= if Policies.Admin.Page.index(@current_user) do %>
-                    <li><%= link("Admin", to: ~p"/admin") %></li>
-                  <% end %>
+                <%= if Policies.Admin.Page.index(@current_user) do %>
+                  <li><%= link("Admin", to: ~p"/admin") %></li>
+                <% end %>
+                <%= if Policies.Feed.index(@current_user) do %>
+                  <li><%= link("My Feeds", to: ~p"/~/feeds") %></li>
+                <% end %>
                 <%= if @current_user.public_profile do %>
                   <li><%= link("My Profile", to: PersonView.profile_path(@current_user)) %></li>
                 <% end %>
