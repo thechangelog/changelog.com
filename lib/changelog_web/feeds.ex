@@ -17,7 +17,7 @@ defmodule ChangelogWeb.Feeds do
     :ok
   end
 
-  def refresh(slug) do
+  def refresh(slug) when is_binary(slug) do
     content = generate(slug)
     upload(content, slug)
     notify_services(slug)

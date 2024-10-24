@@ -16,8 +16,9 @@ defmodule Changelog.ObanWorkers.FeedUpdater do
   end
 
   def perform(%Job{args: %{"id" => id}}) do
-    feed = Repo.get(Feed, id)
-    ChangelogWeb.Feeds.refresh(feed)
+    if feed = Repo.get(Feed, id) do
+      ChangelogWeb.Feeds.refresh(feed)
+    end
 
     :ok
   end
