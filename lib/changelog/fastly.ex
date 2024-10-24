@@ -15,7 +15,8 @@ defmodule Changelog.Fastly do
     Podcast,
     Post,
     Sponsor,
-    Topic
+    Topic,
+    UrlKit
   }
 
   alias ChangelogWeb.{
@@ -134,8 +135,14 @@ defmodule Changelog.Fastly do
 
   def purge(url) do
     auth = Application.get_env(:changelog, :fastly_token)
-    %{path: path, host: host} = URI.parse(url)
-    Logger.info("Fastly: Purging #{url}")
-    HTTP.request(:purge, endpoint(path), "", [{"Host", host}, {"Fastly-Key", auth}])
+    url = UrlKit.sans_scheme(url)
+
+    case HTTP.post(endpoint("/purge/#{url}"), "", [{"Fastly-Key", auth}]) do
+      {:ok, %{status_code: 200, body: body}} -> Jason.decode(body)
+      {:ok, %{body: body}} ->
+        {:ok, details} = Jason.decode(body)
+        Sentry.capture_message("Fastly purge failing", extra: details)
+        {:error, details}
+    end
   end
 end
