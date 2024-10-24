@@ -53,7 +53,7 @@ defmodule ChangelogWeb.Feeds do
 
     Fastly.purge(feed_url)
     # give Fastly two minutes to complete purge
-    OvercastPinger.queue(ping_url, schedule_in: 120)
+    OvercastPinger.queue(ping_url, schedule_in: {2, :minutes})
   end
 
   @doc """

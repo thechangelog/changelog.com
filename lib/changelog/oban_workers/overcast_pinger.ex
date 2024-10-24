@@ -15,10 +15,9 @@ defmodule Changelog.ObanWorkers.OvercastPinger do
     end
   end
 
-  def queue(url, args) do
+  def queue(url, opts) do
     %{"url" => url}
-    |> Map.merge(args)
-    |> new()
+    |> new(opts)
     |> Oban.insert()
   end
 end
