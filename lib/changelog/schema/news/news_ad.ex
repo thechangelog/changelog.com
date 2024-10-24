@@ -18,7 +18,7 @@ defmodule Changelog.NewsAd do
     field :delete, :boolean, virtual: true
 
     belongs_to :sponsorship, NewsSponsorship
-    has_many :news_issue_ads, NewsIssueAd, foreign_key: :ad_id, on_delete: :delete_all
+    has_many :news_issue_ads, NewsIssueAd, foreign_key: :ad_id
     has_many :issues, through: [:news_issue_ads, :issue]
 
     timestamps()

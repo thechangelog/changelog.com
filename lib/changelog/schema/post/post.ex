@@ -26,7 +26,7 @@ defmodule Changelog.Post do
     belongs_to :author, Person
     belongs_to :editor, Person
 
-    has_many :post_topics, PostTopic, on_delete: :delete_all
+    has_many :post_topics, PostTopic
     has_many :topics, through: [:post_topics, :topic]
 
     timestamps()

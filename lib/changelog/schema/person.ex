@@ -77,17 +77,17 @@ defmodule Changelog.Person do
     has_many :memberships, Membership
     has_one :active_membership, Membership, where: [status: {:in, Membership.active_statuses()}]
 
-    has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
+    has_many :podcast_hosts, PodcastHost
 
-    has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
+    has_many :episode_hosts, EpisodeHost
     has_many :host_episodes, through: [:episode_hosts, :episode]
 
-    has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
+    has_many :episode_guests, EpisodeGuest
     has_many :guest_episodes, through: [:episode_guests, :episode]
 
-    has_many :authored_posts, Post, foreign_key: :author_id, on_delete: :delete_all
+    has_many :authored_posts, Post, foreign_key: :author_id
 
-    has_many :sponsor_reps, SponsorRep, on_delete: :delete_all
+    has_many :sponsor_reps, SponsorRep
     has_many :sponsors, through: [:sponsor_reps, :sponsor]
 
     has_many :authored_news_items, NewsItem, foreign_key: :author_id, on_delete: :nilify_all
@@ -95,8 +95,8 @@ defmodule Changelog.Person do
     has_many :submitted_news_items, NewsItem, foreign_key: :submitter_id, on_delete: :nilify_all
 
     has_many :comments, NewsItemComment, foreign_key: :author_id
-    has_many :subscriptions, Subscription, where: [unsubscribed_at: nil], on_delete: :delete_all
-    has_many :episode_requests, EpisodeRequest, foreign_key: :submitter_id, on_delete: :delete_all
+    has_many :subscriptions, Subscription, where: [unsubscribed_at: nil]
+    has_many :episode_requests, EpisodeRequest, foreign_key: :submitter_id
 
     has_many :feeds, Feed, foreign_key: :owner_id
 

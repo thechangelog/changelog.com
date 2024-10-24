@@ -11,9 +11,9 @@ defmodule Changelog.NewsIssue do
     field :published, :boolean, default: false
     field :published_at, :utc_datetime
 
-    has_many :news_issue_ads, NewsIssueAd, foreign_key: :issue_id, on_delete: :delete_all
+    has_many :news_issue_ads, NewsIssueAd, foreign_key: :issue_id
     has_many :ads, through: [:news_issue_ads, :ad]
-    has_many :news_issue_items, NewsIssueItem, foreign_key: :issue_id, on_delete: :delete_all
+    has_many :news_issue_items, NewsIssueItem, foreign_key: :issue_id
     has_many :items, through: [:news_issue_items, :item]
 
     timestamps()

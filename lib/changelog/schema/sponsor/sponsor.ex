@@ -15,10 +15,10 @@ defmodule Changelog.Sponsor do
     field :dark_logo, Files.DarkLogo.Type
     field :light_logo, Files.LightLogo.Type
 
-    has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
-    has_many :news_sponsorships, NewsSponsorship, on_delete: :delete_all
+    has_many :episode_sponsors, EpisodeSponsor
+    has_many :news_sponsorships, NewsSponsorship
 
-    has_many :sponsor_reps, SponsorRep, on_delete: :delete_all
+    has_many :sponsor_reps, SponsorRep
     has_many :reps, through: [:sponsor_reps, :person]
 
     timestamps()

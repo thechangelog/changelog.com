@@ -82,15 +82,15 @@ defmodule Changelog.Episode do
     belongs_to :podcast, Podcast
     belongs_to :episode_request, EpisodeRequest, foreign_key: :request_id
 
-    has_many :episode_hosts, EpisodeHost, on_delete: :delete_all
+    has_many :episode_hosts, EpisodeHost
     has_many :hosts, through: [:episode_hosts, :person]
-    has_many :episode_guests, EpisodeGuest, on_delete: :delete_all
+    has_many :episode_guests, EpisodeGuest
     has_many :guests, through: [:episode_guests, :person]
-    has_many :episode_topics, EpisodeTopic, on_delete: :delete_all
+    has_many :episode_topics, EpisodeTopic
     has_many :topics, through: [:episode_topics, :topic]
-    has_many :episode_sponsors, EpisodeSponsor, on_delete: :delete_all
+    has_many :episode_sponsors, EpisodeSponsor
     has_many :sponsors, through: [:episode_sponsors, :sponsor]
-    has_many :episode_stats, EpisodeStat, on_delete: :delete_all
+    has_many :episode_stats, EpisodeStat
 
     timestamps()
   end

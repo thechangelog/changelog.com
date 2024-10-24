@@ -12,11 +12,11 @@ defmodule Changelog.Topic do
 
     field :icon, Files.Icon.Type
 
-    has_many :episode_topics, EpisodeTopic, on_delete: :delete_all
+    has_many :episode_topics, EpisodeTopic
     has_many :episodes, through: [:episode_topics, :episode]
-    has_many :news_item_topics, NewsItemTopic, on_delete: :delete_all
+    has_many :news_item_topics, NewsItemTopic
     has_many :news_items, through: [:news_item_topics, :news_item]
-    has_many :post_topics, PostTopic, on_delete: :delete_all
+    has_many :post_topics, PostTopic
     has_many :posts, through: [:post_topics, :post]
 
     timestamps()

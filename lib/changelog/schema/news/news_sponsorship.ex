@@ -10,7 +10,7 @@ defmodule Changelog.NewsSponsorship do
     field :click_count, :integer, default: 0
 
     belongs_to :sponsor, Sponsor
-    has_many :ads, NewsAd, foreign_key: :sponsorship_id, on_delete: :delete_all
+    has_many :ads, NewsAd, foreign_key: :sponsorship_id
 
     timestamps()
   end

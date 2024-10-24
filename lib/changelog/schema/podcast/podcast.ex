@@ -51,12 +51,12 @@ defmodule Changelog.Podcast do
 
     field :cover, Files.Cover.Type
 
-    has_many :episodes, Episode, on_delete: :delete_all
-    has_many :episode_requests, EpisodeRequest, on_delete: :delete_all
-    has_many :podcast_topics, PodcastTopic, on_delete: :delete_all
+    has_many :episodes, Episode
+    has_many :episode_requests, EpisodeRequest
+    has_many :podcast_topics, PodcastTopic
     has_many :topics, through: [:podcast_topics, :topic]
 
-    has_many :podcast_hosts, PodcastHost, on_delete: :delete_all
+    has_many :podcast_hosts, PodcastHost
     has_many :hosts, through: [:podcast_hosts, :person]
 
     has_many :active_podcast_hosts, PodcastHost, where: [retired: false]
