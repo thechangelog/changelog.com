@@ -1,8 +1,6 @@
 defmodule Changelog.Zulip do
-
-  alias Changelog.Zulip.Client
+  alias Changelog.Zulip.{Client, Messages}
   alias Changelog.{Episode, Person, Podcast}
-  alias ChangelogWeb.EpisodeView
 
   def invite(person = %Person{}) do
     Client.post_invite(person.email)
@@ -13,13 +11,10 @@ defmodule Changelog.Zulip do
 
     channel = Podcast.slug_with_interviews_special_case(episode.podcast)
     topic = "#{episode.slug}: #{episode.title}"
-    content = """
-    #{episode.summary}
 
-    🔗 #{EpisodeView.share_url(episode)}
-    """
+    message = Messages.new_episode(episode)
 
-    case Client.post_message(channel, topic, content) do
+    case Client.post_message(channel, topic, message) do
       %{"ok" => true} -> cross_post(episode, channel, topic)
       _else -> nil
     end
@@ -33,8 +28,8 @@ defmodule Changelog.Zulip do
   end
 
   defp cross_post(episode, channel, topic) do
-    content = "#{EpisodeView.podcast_name_and_number(episode)}! Discuss 👉 #**#{channel}>#{topic}**"
+    message = Messages.cross_post(episode, channel, topic)
 
-    Client.post_message("general", "new episodes", content)
+    Client.post_message("general", "new episodes", message)
   end
 end
