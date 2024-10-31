@@ -39,7 +39,13 @@
 
 <div class="ui basic segment">
   <div class="ui twelve wide column">
-    <div class="chart" data-chart={chart_data(@podcast)}></div>
+    <div class="chart" data-chart={day_chart_data(@podcast)}></div>
+  </div>
+</div>
+
+<div class="ui basic segment">
+  <div class="ui twelve wide column">
+    <div class="chart" data-chart={month_chart_data(@podcast)}></div>
   </div>
 </div>
 
@@ -59,7 +65,7 @@
     <%= for sub <- @subscriptions do %>
       <tr>
         <td>
-          <%= link to: Routes.admin_person_path(@conn, :show, sub.person) do %>
+          <%= link to: ~p"/admin/people/#{sub.person}" do %>
             <%= if Changelog.Faker.name_fake?(sub.person.name) do %>
               <%= sub.person.email %>
             <% else %>

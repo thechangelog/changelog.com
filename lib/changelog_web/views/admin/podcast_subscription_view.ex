@@ -5,7 +5,37 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
   alias ChangelogWeb.PersonView
   alias ChangelogWeb.Admin.SharedView
 
-  def chart_data(podcast) do
+  def day_chart_data(podcast) do
+    stats =
+      Enum.map(30..0, fn i ->
+        start_date = Timex.today() |> Timex.shift(days: -i)
+        start_time = start_date |> Timex.to_datetime() |> Timex.beginning_of_day()
+        end_time = start_date |> Timex.to_datetime() |> Timex.end_of_day()
+
+        subs = Subscription.subscribed_count(podcast, start_time, end_time)
+        unsubs = Subscription.unsubscribed_count(podcast, start_time, end_time)
+
+        %{date: start_date, subs: subs, unsubs: unsubs}
+      end)
+
+    data = %{
+      title: "Subs by Day",
+      categories: Enum.map(stats, &day_chart_category/1),
+      series: [
+        %{name: "Subs", data: Enum.map(stats, &round(&1.subs))},
+        %{name: "Unsubs", data: Enum.map(stats, & &1.unsubs)}
+      ]
+    }
+
+    Jason.encode!(data)
+  end
+
+  defp day_chart_category(stat) do
+    {:ok, date} = Timex.format(stat.date, "{M}/{D}")
+    date
+  end
+
+  def month_chart_data(podcast) do
     this_month = Timex.today() |> Timex.beginning_of_month()
 
     stats =
@@ -22,7 +52,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
 
     data = %{
       title: "Subs by Month",
-      categories: Enum.map(stats, &chart_category/1),
+      categories: Enum.map(stats, &month_chart_category/1),
       series: [
         %{name: "Subs", data: Enum.map(stats, & &1.subs)},
         %{name: "Unsubs", data: Enum.map(stats, & &1.unsubs)}
@@ -32,7 +62,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
     Jason.encode!(data)
   end
 
-  defp chart_category(stat) do
+  defp month_chart_category(stat) do
     {:ok, date} = Timex.format(stat.date, "{Mshort} {YY}")
     date
   end
