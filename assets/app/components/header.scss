@@ -372,7 +372,7 @@ body[class*="live"],
     display: none;
     margin-left: 10px;
 
-    @include breakpoint(desktop) {
+    @include breakpoint(940px) {
       display: block;
     }
 

@@ -18,16 +18,12 @@
             <li class={"header-nav-list-item #{SharedHelpers.active_class(@conn, ["page-community", "person-join"])}"}>
               <%= link("Community", to: ~p"/community", title: "Changelog Community") %>
             </li>
-          <%= if !@current_user do %>
-            <li class={"header-nav-list-item #{SharedHelpers.active_class(@conn, ["person-subscribe"])}"}>
-              <%= link("Subscribe", to: ~p"/subscribe") %>
+            <li class="header-nav-list-item">
+              <%= link("Merch", to: "https://merch.changelog.com", title: "Changelog Merch") %>
             </li>
-          <% end %>
-          <%= if SharedHelpers.controller_action_combo(@conn) != "page-ten" do %>
             <li class="header-nav-list-item header-nav-list-item--ten">
               <%= link("Changelog++", to: ~p"/++", title: "Join Changelog++") %>
             </li>
-          <% end %>
           </ul>
 
           <div class="header-nav-secondary">
@@ -91,13 +87,11 @@
       <div class="mobile_nav-main-inner">
         <p class="mobile_nav-logo"><%= link("Changelog", to: "/", title: "Go $HOME") %></p>
         <ul class="mobile_nav-list">
-          <li class="mobile_nav-list-item"><%= link("Podcasts", to: ~p"/podcasts") %></li>
+          <li class="mobile_nav-list-item"><%= link("News", to: ~p"/news") %></li>
+          <li class="mobile_nav-list-item"><%= link("Merch", to: "https://merch.changelog.com") %></li>
           <li class="mobile_nav-list-item"><%= link("Beats", to: ~p"/beats") %></li>
-          <li class="mobile_nav-list-item"><%= link("Posts", to: ~p"/posts") %></li>
+          <li class="mobile_nav-list-item"><%= link("Podcasts", to: ~p"/podcasts") %></li>
           <li class="mobile_nav-list-item"><%= link("Community", to: ~p"/community") %></li>
-        <%= if !@current_user do %>
-          <li class="mobile_nav-list-item"><%= link("Subscribe", to: ~p"/subscribe") %></li>
-        <% end %>
           <li class="mobile_nav-list-item"><%= link("Changelog++", to: ~p"/++", title: "Join Changelog++") %></li>
           <li class="mobile_nav-list-item"><%= link("Submit News", to: ~p"/news/submit") %></li>
         </ul>
