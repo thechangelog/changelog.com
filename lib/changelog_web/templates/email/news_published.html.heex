@@ -44,11 +44,14 @@
                       <tbody>
                         <tr>
                           <td class="header" align="center">
-                            <img class="spacer-10" src={url(~p"/images/email/spacer_1.gif")}>
-                            <p class="last-of-type"><%= link("View on Web", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}"), title: "View this newsletter in your web browser") %>
-                              &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
-                              <%= link("Audio Edition", to: EpisodeView.audio_url(@episode), title: "Direct link to the audio") %>
-                              &nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;&nbsp;
+                            <p><%= link("Web View", to: url(~p"/#{@episode.podcast.slug}/#{@episode.slug}"), title: "View this newsletter in your web browser") %>
+                              &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                              <%= link("Audio", to: EpisodeView.audio_url(@episode), title: "Direct link to the audio") %>
+                              &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                              <%= link("Submit", to: url(~p"/news/submit"), title: "Submit news for coverage") %>
+                              &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                              <%= link("Merch", to: "https://merch.changelog.com", title: "Visit our Merch shop") %>
+                              &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                               <%= link("Changelog++", to: url(~p"/++"), title: "It's better!") %>
                             </p>
                           </td>

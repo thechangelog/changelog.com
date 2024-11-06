@@ -7,13 +7,13 @@ $open-sans: "Open Sans", Helvetica, Arial, Calibri, sans-serif;
 $roboto-mono: "Roboto Mono", Menlo, "Courier New", Courier, monospace;
 
 // Inter weights
-$open-sans-regular:    400;
-$open-sans-bold:       500;
+$open-sans-regular: 400;
+$open-sans-bold: 500;
 $open-sans-extra-bold: 700;
 
 // Roboto weights
-$roboto-mono-regular:  400;
-$roboto-mono-bold:     700;
+$roboto-mono-regular: 400;
+$roboto-mono-bold: 700;
 
 // Colors
 $white: #ffffff;
@@ -43,18 +43,18 @@ body {
 
 @media (max-width: 700px) {
   .hide-on-mobile {
-    display:none !important
+    display: none !important;
   }
   .show-on-mobile {
-    display:block !important
+    display: block !important;
   }
   .last-of-type-on-mobile {
-    margin-bottom:0 !important
+    margin-bottom: 0 !important;
   }
 }
 
 .last-of-type {
-  margin-bottom: 0 !important
+  margin-bottom: 0 !important;
 }
 
 .meta {
@@ -71,21 +71,26 @@ body {
     padding: 0 1em;
   }
 
-  input[type=email] {
+  input[type="email"] {
     max-width: 100px;
   }
 
   input::placeholder {
     color: $dark-grey;
-    opacity: .75;
+    opacity: 0.75;
   }
 }
 
 .content {
   margin-bottom: 32px;
-  &:last-of-type { margin-bottom: 0 !important; }
+  &:last-of-type {
+    margin-bottom: 0 !important;
+  }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     color: $black;
 
     a {
@@ -140,7 +145,8 @@ body {
       color: $black;
     }
   }
-  p, li {
+  p,
+  li {
     font-size: 17px;
     line-height: 1.6;
     bold {
@@ -155,12 +161,13 @@ body {
     }
     @media (max-width: 700px) {
       img {
-        max-width:100%;
+        max-width: 100%;
         margin: 10px 0;
       }
     }
   }
-  p code, li code {
+  p code,
+  li code {
     background-color: #f8f8f8;
     border: 1px solid #eaeaea;
     border-radius: 3px;
@@ -189,7 +196,8 @@ body {
     }
   }
 
-  ul, ol {
+  ul,
+  ol {
     margin: 30px 0;
     padding-left: 20px;
   }
@@ -197,7 +205,8 @@ body {
     margin: 0 0 15px 0;
   }
 
-  code, pre {
+  code,
+  pre {
     margin: 0;
     padding: 0;
   }
@@ -205,7 +214,9 @@ body {
     display: block;
     width: 100%;
     margin: 0 0 20px 0;
-    code { display: block; }
+    code {
+      display: block;
+    }
   }
   code {
     display: inline-block;
@@ -215,11 +226,12 @@ body {
     font-size: 15px;
     padding: 15px;
   }
-
 }
 
 @media (max-width: 700px) {
-  table { width: 100%; }
+  table {
+    width: 100%;
+  }
 }
 
 .header {
@@ -236,8 +248,7 @@ body {
   p {
     font-size: 12px;
     line-height: 1.5;
-    margin: 0 0 20px 0;
-    padding: 0 40px
+    margin: 15px 0;
   }
 }
 
@@ -254,12 +265,25 @@ body {
     font-size: 13px;
     line-height: 1.5;
     margin: 0 0 20px 0;
-    padding: 0 40px
+    padding: 0 40px;
   }
 }
 
-.spacer-10 { display:block; height: 10px; width: 1px; }
-.spacer-20 { display:block; height: 20px; width: 1px; }
+.spacer-10 {
+  display: block;
+  height: 10px;
+  width: 1px;
+}
+.spacer-15 {
+  display: block;
+  height: 15px;
+  width: 1px;
+}
+.spacer-20 {
+  display: block;
+  height: 20px;
+  width: 1px;
+}
 
 @media (prefers-color-scheme: dark) {
   body {
@@ -278,7 +302,10 @@ body {
   }
 
   .content {
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       color: $off-white;
 
       a {
@@ -296,13 +323,15 @@ body {
       }
     }
 
-    p code, li code {
+    p code,
+    li code {
       background-color: #333333;
       border: 1px solid #212121;
     }
   }
 
-  .footer, .header {
+  .footer,
+  .header {
     color: $off-white;
 
     a {
@@ -313,6 +342,8 @@ body {
       }
     }
 
-    @media (max-width: 700px) { background-color: $dark-grey; }
+    @media (max-width: 700px) {
+      background-color: $dark-grey;
+    }
   }
 }
