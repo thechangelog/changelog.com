@@ -8,9 +8,8 @@ defmodule Changelog.Zulip.Messages do
 
   def new_episode(episode) do
     [
-      episode.summary,
-      chapters(episode.audio_chapters),
-      "🔗 #{EpisodeView.share_url(episode)}"
+      "#{episode.summary} 🔗 #{EpisodeView.share_url(episode)}",
+      chapters(episode.audio_chapters)
     ]
     |> ListKit.compact_join("\n\n")
   end
