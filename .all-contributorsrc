@@ -440,6 +440,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "zamai",
+      "name": "Alex Zamai",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10281047?v=4",
+      "profile": "https://github.com/zamai",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github",
