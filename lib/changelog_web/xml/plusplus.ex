@@ -29,7 +29,7 @@ defmodule ChangelogWeb.Xml.Plusplus do
         {:description, nil, "Thank you for subscribing to Changelog++!"},
         {"itunes:author", nil, "Changelog Media"},
         {"itunes:block", nil, "yes"},
-        {"itunes:explicit", nil, "no"},
+        {"itunes:explicit", nil, "false"},
         {"itunes:summary", nil, "Thank you for subscribing to Changelog++!"},
         {"itunes:image", %{href: url(~p"/images/podcasts/plusplus-original.png")}},
         Enum.map(episodes, fn episode -> item(podcast, episode) end)
@@ -51,7 +51,7 @@ defmodule ChangelogWeb.Xml.Plusplus do
        {"itunes:episodeType", nil, episode.type},
        {"itunes:image", %{href: EpisodeView.cover_url(episode)}},
        {"itunes:duration", nil, duration(episode)},
-       {"itunes:explicit", nil, "no"},
+       {"itunes:explicit", nil, "false"},
        Enum.map(episode.hosts, fn p -> Xml.person(p, "host") end),
        Enum.map(episode.guests, fn p -> Xml.person(p, "guest") end),
        Xml.transcript(episode),
