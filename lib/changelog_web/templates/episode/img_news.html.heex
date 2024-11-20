@@ -25,8 +25,8 @@
         <h1 class="news-heading display-3xl"><%= NewsView.title(@episode) %></h1>
 
         <ul class="news-articles sans-xl">
-        <%= for headline <- NewsView.headlines(@episode) do %>
-            <li><%= headline %></li>
+        <%= for {emoji, headline} <- NewsView.headlines(@episode) do %>
+          <li><%= emoji %>&nbsp;&nbsp;<%= headline %></li>
         <% end %>
         </ul>
       </div>

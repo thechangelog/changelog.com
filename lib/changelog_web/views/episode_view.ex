@@ -224,33 +224,36 @@ defmodule ChangelogWeb.EpisodeView do
     case length(participants) do
       1 ->
         cond do
-          subtitle_length < 50 -> "sans-xl"
-          subtitle_length < 70 -> "sans-lg"
-          subtitle_length < 80 -> "sans-md"
-          true -> "sans-sm"
+          subtitle_length <= 50 -> "sans-xxl"
+          subtitle_length <= 70 -> "sans-xl"
+          subtitle_length <= 80 -> "sans-l"
+          true -> "sans-md"
         end
 
       2 ->
         cond do
-          subtitle_length < 40 -> "sans-xl"
-          subtitle_length < 60 -> "sans-lg"
-          subtitle_length < 70 -> "sans-md"
+          subtitle_length <= 45 -> "sans-xxl"
+          subtitle_length <= 50 -> "sans-xl"
+          subtitle_length <= 55 -> "sans-lg"
+          subtitle_length <= 60 -> "sans-md"
           true -> "sans-sm"
         end
 
       3 ->
         cond do
-          subtitle_length < 30 -> "sans-xl"
-          subtitle_length < 50 -> "sans-lg"
-          subtitle_length < 60 -> "sans-md"
+          subtitle_length <= 40 -> "sans-xxl"
+          subtitle_length <= 45 -> "sans-xl"
+          subtitle_length <= 50 -> "sans-lg"
+          subtitle_length <= 55 -> "sans-md"
           true -> "sans-sm"
         end
 
       4 ->
         cond do
-          subtitle_length < 28 -> "sans-xl"
-          subtitle_length < 48 -> "sans-lg"
-          subtitle_length < 58 -> "sans-md"
+          subtitle_length <= 30 -> "sans-xxl"
+          subtitle_length <= 35 -> "sans-xl"
+          subtitle_length <= 40 -> "sans-lg"
+          subtitle_length <= 45 -> "sans-md"
           true -> "sans-sm"
         end
 

@@ -3,6 +3,10 @@ defmodule ChangelogWeb.NewsView do
 
   alias Changelog.{Regexp, StringKit}
 
+  @doc """
+  Returns a list of tuples, each one representing a headline (sans the lede).
+  The first element is the representative emoji, the second the headline text.
+  """
   def headlines(episode) do
     content = episode.email_content || ""
     subject = episode.email_subject || ""
@@ -15,6 +19,11 @@ defmodule ChangelogWeb.NewsView do
     |> Enum.map(&String.trim_leading(&1, "## "))
     |> Enum.map(&String.trim_leading(&1, "### "))
     |> Enum.reject(fn s -> String.contains?(s, first) end)
+    |> Enum.map(fn s ->
+      [emoj | rest] = String.split(s, " ")
+
+      {emoj, Enum.join(rest, " ")}
+    end)
   end
 
   def title(%{email_subject: subject, title: title}) do
