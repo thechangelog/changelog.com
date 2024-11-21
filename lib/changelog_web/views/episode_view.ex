@@ -241,10 +241,10 @@ defmodule ChangelogWeb.EpisodeView do
 
       3 ->
         cond do
-          subtitle_length <= 40 -> "sans-xxl"
-          subtitle_length <= 45 -> "sans-xl"
-          subtitle_length <= 50 -> "sans-lg"
-          subtitle_length <= 55 -> "sans-md"
+          subtitle_length <= 37 -> "sans-xxl"
+          subtitle_length <= 42 -> "sans-xl"
+          subtitle_length <= 47 -> "sans-lg"
+          subtitle_length <= 52 -> "sans-md"
           true -> "sans-sm"
         end
 
