@@ -40,9 +40,10 @@ npm-debug.log*
 /import/cookies.yml
 /cover
 
-# User-specific environment variables, maybe even secrets
-.envrc
+# User-specific environment variables
 .env.user
+# Secret variables
+.envrc.secrets
 
 # Local config files, host-specific
 .config
