@@ -33,11 +33,6 @@ imagemagick: brew
     @[ -d $(brew --prefix)/opt/imagemagick ] \
     || brew install imagemagick
 
-[private]
-check-postgres-envs:
-    @(grep -q postgresql@16 <<< $PATH) \
-    || (echo "{{ REDB }}{{ WHITE }}Postgres 16 not present in PATH.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}direnv allow{{ RESET }}" && exit 127)
-
 export OP_ACCOUNT := "changelog.1password.com"
 
 # Create .envrc.secrets with credentials from 1Password
@@ -46,14 +41,14 @@ envrc-secrets:
     op inject --in-file envrc.secrets.op --out-file .envrc.secrets
 
 [private]
-postgres: brew
-    @[ -d $(brew --prefix)/opt/postgresql@16 ] \
-    || brew install postgresql@16
-
-[private]
 gpg: brew
     @[ -d $(brew --prefix)/opt/gpg ] \
     || brew install gpg
+
+[private]
+icu4c: brew
+    @brew --prefix icu4c 1> /dev/null 2>&1 \
+    || brew install icu4c pkg-config
 
 # https://tldp.org/LDP/abs/html/exitcodes.html
 [private]
@@ -68,9 +63,9 @@ asdf-shell: brew
 
 # Install all system dependencies
 [group('contributor')]
-install: asdf brew imagemagick postgres gpg
+install: asdf brew imagemagick gpg icu4c
     @awk '{ system("asdf plugin-add " $1) }' < .tool-versions
-    @asdf install
+    @PKG_CONFIG_PATH="$(brew --prefix icu4c)/lib/pkgconfig:$PKG_CONFIG_PATH" asdf install
 
 export ELIXIR_ERL_OPTIONS := if os() == "linux" { "+fnu" } else { "" }
 
@@ -91,25 +86,25 @@ deps: add-oban-pro-repo
 [private]
 pg_ctl:
     @which pg_ctl >/dev/null \
-    || (echo "{{ REDB }}{{ WHITE }}Postgres 16 is not installed.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}just install{{ RESET }}" && exit 127)
+    || (echo "{{ REDB }}{{ WHITE }}Postgres is not installed.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}just install{{ RESET }}" && exit 127)
 
 # Start Postgres server
 [group('contributor')]
-postgres-up: pg_ctl check-postgres-envs
+postgres-up: pg_ctl
     @(pg_ctl status | grep -q "is running") || pg_ctl start
 
 # Stop Postgres server
 [group('contributor')]
-postgres-down: pg_ctl check-postgres-envs
+postgres-down: pg_ctl
     @(pg_ctl status | grep -q "no server running") || pg_ctl stop
 
 [private]
-postgres-db db: check-postgres-envs
+postgres-db db:
     @(psql --list --quiet --tuples-only | grep -q {{ db }}) \
     || createdb {{ db }}
 
-export DB_USER := `whoami`
-
+export PGUSER := "postgres"
+export DB_USER := PGUSER
 
 # Delete & replace changelog_dev with a prod db dump
 [confirm("This DELETEs and REPLACEs changelog_dev with the prod db dump. Are you sure that you want to continue?")]
