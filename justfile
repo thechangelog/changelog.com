@@ -33,19 +33,22 @@ imagemagick: brew
     @[ -d $(brew --prefix)/opt/imagemagick ] \
     || brew install imagemagick
 
-PGPATH := "PATH=$(brew --prefix)/opt/postgresql@16/bin:" + env_var("PATH")
-PGDATA := "PGDATA=$(brew --prefix)/var/postgresql@16"
-PG := PGPATH + " " + PGDATA
+export OP_ACCOUNT := "changelog.1password.com"
 
-[private]
-postgres: brew
-    @[ -d $(brew --prefix)/opt/postgresql@16 ] \
-    || brew install postgresql@16
+# Create .envrc.secrets with credentials from 1Password
+[group('team')]
+envrc-secrets:
+    op inject --in-file envrc.secrets.op --out-file .envrc.secrets
 
 [private]
 gpg: brew
     @[ -d $(brew --prefix)/opt/gpg ] \
     || brew install gpg
+
+[private]
+icu4c: brew
+    @brew --prefix icu4c 1> /dev/null 2>&1 \
+    || brew install icu4c pkg-config
 
 # https://tldp.org/LDP/abs/html/exitcodes.html
 [private]
@@ -59,63 +62,103 @@ asdf-shell: brew
     @echo "source $(brew --prefix)/opt/asdf/libexec/asdf.sh"
 
 # Install all system dependencies
-install: asdf brew imagemagick postgres gpg
+[group('contributor')]
+install: asdf brew imagemagick gpg icu4c
     @awk '{ system("asdf plugin-add " $1) }' < .tool-versions
-    @asdf install
+    @PKG_CONFIG_PATH="$(brew --prefix icu4c)/lib/pkgconfig:$PKG_CONFIG_PATH" asdf install
 
 export ELIXIR_ERL_OPTIONS := if os() == "linux" { "+fnu" } else { "" }
 
+# Add Oban Pro repository
+[group('team')]
+add-oban-pro-repo:
+    [ -n "$OBAN_LICENSE_KEY" ] \
+    && [ -n "$OBAN_KEY_FINGERPRINT" ] \
+    && mix hex.repo add oban https://getoban.pro/repo --fetch-public-key $OBAN_KEY_FINGERPRINT --auth-key $OBAN_LICENSE_KEY
+
 # Get app dependencies
-deps:
+[group('contributor')]
+deps: add-oban-pro-repo
     mix local.hex --force
     mix deps.get --only dev
     mix deps.get --only test
 
 [private]
 pg_ctl:
-    @{{ PG }} which pg_ctl >/dev/null \
-    || (echo "Please install Postgres using: {{ BOLD }}just install{{ RESET }}" && exit 127)
+    @which pg_ctl >/dev/null \
+    || (echo "{{ REDB }}{{ WHITE }}Postgres is not installed.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}just install{{ RESET }}" && exit 127)
 
 # Start Postgres server
+[group('contributor')]
 postgres-up: pg_ctl
-    @({{ PG }} pg_ctl status | grep -q "is running") || {{ PG }} pg_ctl start
+    @(pg_ctl status | grep -q "is running") || pg_ctl start
 
 # Stop Postgres server
+[group('contributor')]
 postgres-down: pg_ctl
-    @({{ PG }} pg_ctl status | grep -q "no server running") || {{ PG }} pg_ctl stop
+    @(pg_ctl status | grep -q "no server running") || pg_ctl stop
 
 [private]
 postgres-db db:
-    @({{ PG }} psql --list --quiet --tuples-only | grep -q {{ db }}) \
-    || {{ PG }} createdb {{ db }}
+    @(psql --list --quiet --tuples-only | grep -q {{ db }}) \
+    || createdb {{ db }}
 
-export DB_USER := `whoami`
+export PGUSER := "postgres"
+export DB_USER := PGUSER
+
+# Delete & replace changelog_dev with a prod db dump
+[confirm("This DELETEs and REPLACEs changelog_dev with the prod db dump. Are you sure that you want to continue?")]
+[group('team')]
+restore-dev-db-from-prod format="c": changelog_dev
+    @echo "\n{{ GREEN }}🛬 Dumping prod db...{{ RESET }}"
+    [ -f $DB_PROD_DBNAME.{{ format }}.sql ] \
+    || time PGSSLMODE=require PGPASSWORD=$(op read op://changelog/neon/password) pg_dump \
+        --format={{ format }} --verbose \
+        --host=$DB_PROD_HOST \
+        --username=$DB_PROD_USERNAME \
+        --dbname=$DB_PROD_DBNAME > $DB_PROD_DBNAME.{{ format }}.sql
+    @echo "\n{{ GREEN }}🛫 Recreating {{ CHANGELOG_DEV_DB }} from prod dump{{ RESET }}..."
+    dropdb {{ CHANGELOG_DEV_DB }}
+    createdb {{ CHANGELOG_DEV_DB }}
+    time pg_restore \
+        --format=c --verbose \
+        --dbname={{ CHANGELOG_DEV_DB }} \
+        --exit-on-error \
+        --no-owner \
+        --no-privileges < $DB_PROD_DBNAME.{{ format }}.sql
+    @echo "\n{{ GREEN }}⚡️ Warm up the query planner...{{ RESET }} https://www.postgresql.org/docs/current/sql-analyze.html..."
+    time psql --dbname={{ CHANGELOG_DEV_DB }} --command "ANALYZE VERBOSE;"
+
 
 [private]
 changelog_test: postgres-up (postgres-db "changelog_test")
 
 # Run app tests
+[group('contributor')]
 test: changelog_test
     mix test
 
+CHANGELOG_DEV_DB := "changelog_dev"
 [private]
-changelog_dev: postgres-up (postgres-db "changelog_dev")
+changelog_dev: postgres-up (postgres-db CHANGELOG_DEV_DB)
     mix ecto.setup
 
 [private]
 yarn:
     @which yarn >/dev/null \
-    || (echo "Please install Node.js & Yarn using: {{ BOLD }}just install{{ RESET }}" && exit 127)
+    || (echo "{{ REDB }}{{ WHITE }}Yarn is not installed.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}just install{{ RESET }}" && exit 127)
 
 [private]
 assets: yarn
     cd assets && yarn install
 
 # Run app in dev mode
+[group('contributor')]
 dev: changelog_dev assets
     mix phx.server
 
 # Setup everything needed for your first contribution
+[group('contributor')]
 contribute: install
     #!/usr/bin/env bash
     eval "$(just asdf-shell)"
@@ -145,7 +188,7 @@ do-it:
     just contribute
 
 # Tag Kaizen $version with $episode & $discussion at $commit (recording date)
-[private]
+[group('team')]
 tag-kaizen version episode discussion commit:
     git tag --force --sign \
         --message="Recorded as 🎧 <https://changelog.com/friends/{{ episode }}>" \

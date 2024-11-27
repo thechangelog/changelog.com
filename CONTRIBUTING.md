@@ -91,14 +91,21 @@ We are using [`just`](https://github.com/casey/just) to manage `brew` & `asdf` w
 Once you have [`just` installed](https://github.com/casey/just?tab=readme-ov-file#installation), running `just` in the root of this repository will produce the following output:
 
 ```console
+just --list
 Available recipes:
-    contribute    # Setup everything needed for your first contribution
-    deps          # Get app dependencies
-    dev           # Run app in dev mode
-    install       # Install all system dependencies
-    postgres-down # Stop Postgres server
-    postgres-up   # Start Postgres server
-    test          # Run app tests
+    [contributor]
+    contribute                                   # Setup everything needed for your first contribution
+    deps                                         # Get app dependencies
+    dev                                          # Run app in dev mode
+    install                                      # Install all system dependencies
+    postgres-down                                # Stop Postgres server
+    postgres-up                                  # Start Postgres server
+    test                                         # Run app tests
+
+    [team]
+    envrc-secrets                                # Create .envrc.secrets with credentials from 1Password
+    restore-dev-db-from-prod format="c"          # Delete & replace changelog_dev with a prod db dump
+    tag-kaizen version episode discussion commit # Tag Kaizen $version with $episode & $discussion at $commit (recording date)
 ```
 
 The only command that you need to run is `just contribute`.
