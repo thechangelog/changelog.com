@@ -11,9 +11,9 @@ fmt:
 [private]
 brew:
     @which brew >/dev/null \
-    || (echo {{ GREEN }}🍺 Installing Homebrew...{{ RESET }} \
+    || (echo {{ _MAGENTA }}🍺 Installing Homebrew...{{ _RESET }} \
         && NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-        && echo {{ REDB }}{{ WHITE }} 👆 You must follow NEXT STEPS above before continuing 👆 {{ RESET }})
+        && echo {{ _REDB }}{{ _WHITE }} 👆 You must follow NEXT STEPS above before continuing 👆 {{ _RESET }})
 
 [private]
 brew-linux-shell:
@@ -33,8 +33,6 @@ imagemagick: brew
     @[ -d $(brew --prefix)/opt/imagemagick ] \
     || brew install imagemagick
 
-export OP_ACCOUNT := "changelog.1password.com"
-
 # Create .envrc.secrets with credentials from 1Password
 [group('team')]
 envrc-secrets:
@@ -47,7 +45,7 @@ gpg: brew
 
 [private]
 icu4c: brew
-    @brew --prefix icu4c 1> /dev/null 2>&1 \
+    @[ -d "$(brew --prefix icu4c)/lib/pkgconfig" ] \
     || brew install icu4c pkg-config
 
 # https://tldp.org/LDP/abs/html/exitcodes.html
@@ -55,7 +53,7 @@ icu4c: brew
 asdf:
     @which asdf >/dev/null \
     || (brew install asdf \
-        && echo {{ REDB }}{{ WHITE }} 👆 You must follow CAVEATS above before continuing 👆 {{ RESET }})
+        && echo {{ _REDB }}{{ _WHITE }} 👆 You must follow CAVEATS above before continuing 👆 {{ _RESET }})
 
 [private]
 asdf-shell: brew
@@ -69,16 +67,16 @@ install: asdf brew imagemagick gpg icu4c
 
 export ELIXIR_ERL_OPTIONS := if os() == "linux" { "+fnu" } else { "" }
 
-# Add Oban Pro repository
+# Add Oban Pro hex repository
 [group('team')]
-add-oban-pro-repo:
+add-oban-pro-hex-repo:
     [ -n "$OBAN_LICENSE_KEY" ] \
     && [ -n "$OBAN_KEY_FINGERPRINT" ] \
     && mix hex.repo add oban https://getoban.pro/repo --fetch-public-key $OBAN_KEY_FINGERPRINT --auth-key $OBAN_LICENSE_KEY
 
 # Get app dependencies
 [group('contributor')]
-deps: add-oban-pro-repo
+deps: add-oban-pro-hex-repo
     mix local.hex --force
     mix deps.get --only dev
     mix deps.get --only test
@@ -86,7 +84,7 @@ deps: add-oban-pro-repo
 [private]
 pg_ctl:
     @which pg_ctl >/dev/null \
-    || (echo "{{ REDB }}{{ WHITE }}Postgres is not installed.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}just install{{ RESET }}" && exit 127)
+    || (echo "{{ _REDB }}{{ _WHITE }}Postgres is not installed.{{ _RESET }} To fix this, run: {{ _GREENB }}just install{{ _RESET }}" && exit 127)
 
 # Start Postgres server
 [group('contributor')]
@@ -103,32 +101,82 @@ postgres-db db:
     @(psql --list --quiet --tuples-only | grep -q {{ db }}) \
     || createdb {{ db }}
 
-export PGUSER := "postgres"
-export DB_USER := PGUSER
-
 # Delete & replace changelog_dev with a prod db dump
 [confirm("This DELETEs and REPLACEs changelog_dev with the prod db dump. Are you sure that you want to continue?")]
 [group('team')]
 restore-dev-db-from-prod format="c": changelog_dev
-    @echo "\n{{ GREEN }}🛬 Dumping prod db...{{ RESET }}"
+    @echo "\n{{ _MAGENTA }}🛬 Dumping prod db...{{ _RESET }}"
     [ -f $DB_PROD_DBNAME.{{ format }}.sql ] \
     || time PGSSLMODE=require PGPASSWORD=$(op read op://changelog/neon/password) pg_dump \
         --format={{ format }} --verbose \
         --host=$DB_PROD_HOST \
         --username=$DB_PROD_USERNAME \
         --dbname=$DB_PROD_DBNAME > $DB_PROD_DBNAME.{{ format }}.sql
-    @echo "\n{{ GREEN }}🛫 Recreating {{ CHANGELOG_DEV_DB }} from prod dump{{ RESET }}..."
-    dropdb {{ CHANGELOG_DEV_DB }}
-    createdb {{ CHANGELOG_DEV_DB }}
+    @echo "\n{{ _MAGENTA }}🛫 Recreating {{ _CHANGELOG_DEV_DB }} from prod dump...{{ _RESET }}"
+    dropdb {{ _CHANGELOG_DEV_DB }}
+    createdb {{ _CHANGELOG_DEV_DB }}
     time pg_restore \
         --format=c --verbose \
-        --dbname={{ CHANGELOG_DEV_DB }} \
+        --dbname={{ _CHANGELOG_DEV_DB }} \
         --exit-on-error \
         --no-owner \
         --no-privileges < $DB_PROD_DBNAME.{{ format }}.sql
-    @echo "\n{{ GREEN }}⚡️ Warm up the query planner...{{ RESET }} https://www.postgresql.org/docs/current/sql-analyze.html..."
-    time psql --dbname={{ CHANGELOG_DEV_DB }} --command "ANALYZE VERBOSE;"
+    @echo "\n{{ _MAGENTA }}⚡️ Warm up the query planner...{{ _RESET }} https://www.postgresql.org/docs/current/sql-analyze.html"
+    time psql --dbname={{ _CHANGELOG_DEV_DB }} --command "ANALYZE VERBOSE;"
 
+[private]
+neon *ARGS: npm
+    @which neonctl >/dev/null \
+    || (echo {{ _MAGENTA }}🧪 Installing neonctl...{{ _RESET }} \
+        && npm install -g neonctl && echo {{ _MAGENTA }}neonctl{{ _RESET }} && neonctl --version)
+    {{ if ARGS != "" { "neonctl " + ARGS } else { "neonctl" } }}
+
+[private]
+npm:
+    @which npm >/dev/null \
+    || (echo "{{ _REDB }}{{ _WHITE }}NPM is not installed.{{ _RESET }} To fix this, run: {{ _GREENB }}just install{{ _RESET }}" && exit 127)
+
+_NEON_DB_BRANCH := env_var("USER") + "-" + datetime("%Y-%m-%d")
+
+# Create a new branch off the prod db
+[group('team')]
+neon-create-branch:
+    @echo "\n{{ _MAGENTA }}🔒 Checking Neon auth...{{ _RESET }}"
+    just neon projects get $NEON_PROJECT_ID || just neon auth
+
+    @echo "\n{{ _MAGENTA }}🌲 Creating Neon prod db branch...{{ _RESET }}"
+    just neon branches get --project-id=$NEON_PROJECT_ID {{ _NEON_DB_BRANCH }} \
+    || just neon branches create --project-id=$NEON_PROJECT_ID --name={{ _NEON_DB_BRANCH }}
+
+    @echo "\n{{ _MAGENTA }}⚡️ Warm up the query planner...{{ _RESET }} https://www.postgresql.org/docs/current/sql-analyze.html"
+    time psql "$(just neon-branch-connection-string {{ _NEON_DB_BRANCH }})" --command "ANALYZE VERBOSE;"
+
+    @echo "\n{{ _MAGENTA }}💡 To use this Neon db branch in with your local dev app, run: {{ _RESET }}{{ _GREENB }}just dev-with-neon-branch {{ _NEON_DB_BRANCH }}{{ _RESET }}"
+
+# Show $branch connection details
+[group('team')]
+neon-branch-connection branch *ARGS:
+    @just neon connection-string {{ branch }} --project-id=$NEON_PROJECT_ID \
+        --role-name=$DB_PROD_USERNAME --database-name=$DB_PROD_DBNAME --extended --output=yaml {{ ARGS }}
+
+[private]
+neon-branch-connection-string branch:
+    @just neon-branch-connection {{ branch }} \
+    | awk '/connection_string:/ { print $2 }'
+
+# List prod db branches
+[group('team')]
+neon-branches: (neon "branches list --project-id=$NEON_PROJECT_ID")
+
+[private]
+neon-connection-convert-to-env:
+    #!/usr/bin/env bash
+    awk '
+        /^host:/ {gsub(/^host: /, ""); print "export DB_HOST=" $0}
+        /^role:/ {gsub(/^role: /, ""); print "export DB_USER=" $0}
+        /^password:/ {gsub(/^password: /, ""); print "export DB_PASS=" $0}
+        /^database:/ {gsub(/^database: /, ""); print "export DB_NAME=" $0}
+    '
 
 [private]
 changelog_test: postgres-up (postgres-db "changelog_test")
@@ -138,15 +186,16 @@ changelog_test: postgres-up (postgres-db "changelog_test")
 test: changelog_test
     mix test
 
-CHANGELOG_DEV_DB := "changelog_dev"
+_CHANGELOG_DEV_DB := env_var("CHANGELOG_DEV_DB")
+
 [private]
-changelog_dev: postgres-up (postgres-db CHANGELOG_DEV_DB)
+changelog_dev: postgres-up (postgres-db _CHANGELOG_DEV_DB)
     mix ecto.setup
 
 [private]
 yarn:
     @which yarn >/dev/null \
-    || (echo "{{ REDB }}{{ WHITE }}Yarn is not installed.{{ RESET }} To fix this, run: {{ GREENB }}{{ WHITE }}just install{{ RESET }}" && exit 127)
+    || (echo "{{ _REDB }}{{ _WHITE }}Yarn is not installed.{{ _RESET }} To fix this, run: {{ _GREENB }}just install{{ _RESET }}" && exit 127)
 
 [private]
 assets: yarn
@@ -155,6 +204,14 @@ assets: yarn
 # Run app in dev mode
 [group('contributor')]
 dev: changelog_dev assets
+    mix phx.server
+
+# Run app in dev mode with $branch
+[group('team')]
+dev-with-neon-branch branch: assets
+    #!/usr/bin/env bash
+    eval "$(just neon-branch-connection {{ branch }} \
+    | just neon-connection-convert-to-env)"
     mix phx.server
 
 # Setup everything needed for your first contribution
@@ -198,24 +255,24 @@ tag-kaizen version episode discussion commit:
 
 # https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
 
-BOLD := "$(tput bold)"
-RESET := "$(tput sgr0)"
-BLACK := "$(tput bold)$(tput setaf 0)"
-RED := "$(tput bold)$(tput setaf 1)"
-GREEN := "$(tput bold)$(tput setaf 2)"
-YELLOW := "$(tput bold)$(tput setaf 3)"
-BLUE := "$(tput bold)$(tput setaf 4)"
-MAGENTA := "$(tput bold)$(tput setaf 5)"
-CYAN := "$(tput bold)$(tput setaf 6)"
-WHITE := "$(tput bold)$(tput setaf 7)"
-BLACKB := "$(tput bold)$(tput setab 0)"
-REDB := "$(tput setab 1)$(tput setaf 0)"
-GREENB := "$(tput setab 2)$(tput setaf 0)"
-YELLOWB := "$(tput setab 3)$(tput setaf 0)"
-BLUEB := "$(tput setab 4)$(tput setaf 0)"
-MAGENTAB := "$(tput setab 5)$(tput setaf 0)"
-CYANB := "$(tput setab 6)$(tput setaf 0)"
-WHITEB := "$(tput setab 7)$(tput setaf 0)"
+_BOLD := "$(tput bold)"
+_RESET := "$(tput sgr0)"
+_BLACK := "$(tput bold)$(tput setaf 0)"
+_RED := "$(tput bold)$(tput setaf 1)"
+_GREEN := "$(tput bold)$(tput setaf 2)"
+_YELLOW := "$(tput bold)$(tput setaf 3)"
+_BLUE := "$(tput bold)$(tput setaf 4)"
+_MAGENTA := "$(tput bold)$(tput setaf 5)"
+_CYAN := "$(tput bold)$(tput setaf 6)"
+_WHITE := "$(tput bold)$(tput setaf 7)"
+_BLACKB := "$(tput bold)$(tput setab 0)"
+_REDB := "$(tput setab 1)$(tput setaf 0)"
+_GREENB := "$(tput setab 2)$(tput setaf 0)"
+_YELLOWB := "$(tput setab 3)$(tput setaf 0)"
+_BLUEB := "$(tput setab 4)$(tput setaf 0)"
+_MAGENTAB := "$(tput setab 5)$(tput setaf 0)"
+_CYANB := "$(tput setab 6)$(tput setaf 0)"
+_WHITEB := "$(tput setab 7)$(tput setaf 0)"
 
 # just actions-runner
 # DEBIAN_FRONTEND=noninteractive sudo apt install -y curl
