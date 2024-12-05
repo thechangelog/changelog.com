@@ -31,7 +31,3 @@ jobs:
         run: |
           cd magefiles
           go run main.go -w ../ ci
-
-      # TODO: run this in Dagger
-      # https://github.com/rtCamp/action-slack-notify/blob/v2.2.0/main.go
-      # - name: "Announce deploy in #dev Slack..."
