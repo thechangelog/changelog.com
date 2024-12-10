@@ -6,7 +6,7 @@ defmodule Changelog.PostNewsItem do
 
   def insert(post, logger) do
     %NewsItem{
-      type: :link,
+      type: :post,
       object_id: Post.object_id(post),
       url: PostView.url(post, :show),
       headline: post.title,
