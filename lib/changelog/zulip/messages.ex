@@ -8,16 +8,20 @@ defmodule Changelog.Zulip.Messages do
 
   def new_episode(episode) do
     [
-      "#{episode.summary} 🔗 #{EpisodeView.share_url(episode)}",
-      chapters(episode.audio_chapters)
+      summary(episode),
+      chapters(episode)
     ]
     |> ListKit.compact_join("\n\n")
   end
 
-  def chapters(nil), do: nil
-  def chapters([]), do: nil
+  def summary(episode) do
+    "#{episode.summary} 🔗 #{episode_url(episode)}"
+  end
 
-  def chapters(chapters, padding \\ 2) do
+  def chapters(%{audio_chapters: nil}), do: nil
+  def chapters(%{audio_chapters: []}), do: nil
+
+  def chapters(episode = %{audio_chapters: chapters}, padding \\ 2) do
     numbers =
       chapters
       |> Enum.with_index(1)
@@ -60,8 +64,16 @@ defmodule Changelog.Zulip.Messages do
       |> Enum.map(fn {chapter, index} ->
         [
           pad(Enum.at(numbers, index), numbers_length),
-          pad(Enum.at(starts, index), starts_length),
-          linkify(pad(Enum.at(titles, index), titles_length), chapter.title, chapter.link_url),
+          linkify(
+            pad(Enum.at(starts, index), starts_length),
+            Enum.at(starts, index),
+            episode_url(episode, chapter.starts_at)
+          ),
+          linkify(
+            pad(Enum.at(titles, index), titles_length),
+            chapter.title,
+            chapter.link_url
+          ),
           pad(Enum.at(runs, index), runs_length)
         ]
         |> Enum.join("|")
@@ -71,6 +83,14 @@ defmodule Changelog.Zulip.Messages do
     |> List.flatten()
     |> Enum.map(&"|#{&1}|")
     |> Enum.join("\n")
+  end
+
+  defp episode_url(episode, starts_at \\ nil) do
+    if starts_at do
+      EpisodeView.share_url(episode) <> "#t=#{round(starts_at)}"
+    else
+      EpisodeView.share_url(episode)
+    end
   end
 
   defp linkify(string, _title, nil), do: string
