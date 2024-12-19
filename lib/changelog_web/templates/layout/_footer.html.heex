@@ -9,8 +9,18 @@
 
       <ul class="footer-primary-list footer-primary-list--social">
         <li>
-          <a href="https://twitter.com/changelog" title="Changelog on Twitter">
-            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-twitter-black.svg"), "Twitter Icon", width: 20, height: 20) %>
+          <a href="https://www.youtube.com/changelog" title="Changelog on YouTube">
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-youtube-black.svg"), "YouTube Icon", width: 20, height: 20) %>
+          </a>
+        </li>
+        <li>
+          <a href="https://bsky.app/profile/changelog.com" title="Changelog on Bluesky">
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-bsky-black.svg"), "Bluesky Icon", width: 20, height: 20) %>
+          </a>
+        </li>
+        <li>
+          <a href="https://x.com/changelog" title="Changelog on X">
+            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-x-black.svg"), "X Icon", width: 20, height: 20) %>
           </a>
         </li>
         <li>
@@ -26,11 +36,6 @@
         <li>
           <a href="https://github.com/thechangelog" title="Changelog on GitHub">
             <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-github-black.svg"), "GitHub Icon", width: 20, height: 20) %>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.youtube.com/changelog" title="Changelog on YouTube">
-            <%= SharedHelpers.lazy_image(url(~p"/images/icons/icon-youtube-black.svg"), "YouTube Icon", width: 20, height: 20) %>
           </a>
         </li>
         <li>
@@ -62,25 +67,28 @@
     <div class="footer-nav-list">
       <h4>Social</h4>
       <ul>
-        <li><%= link("Twitter", to: "https://twitter.com/changelog", title: "Changelog on Twitter") %></li>
-        <li><%= link("Mastodon", to: "https://changelog.social", title: "Changelog on Mastodon") %></li>
-        <li><%= link("LinkedIn", to: "https://linkedin.com/company/changelog", title: "Changelog on LinkedIn") %></li>
+        <li><%= link("TwiX", to: "https://twitter.com/changelog", title: "Changelog on Twitter") %></li>
         <li><%= link("GitHub", to: "https://github.com/thechangelog", title: "Changelog on GitHub") %></li>
-        <li><%= link("YouTube", to: "https://www.youtube.com/changelog", title: "Changelog on YouTube") %></li>
-        <li><%= link("Instagram", to: "https://www.instagram.com/changelog_", title: "Changelog on Instagram") %></li>
         <li><%= link("TikTok", to: "https://www.tiktok.com/@changelog.com", title: "Changelog on TikTok") %></li>
+        <li><%= link("YouTube", to: "https://www.youtube.com/changelog", title: "Changelog on YouTube") %></li>
+        <li><%= link("Bluesky", to: "https://bsky.app/profile/changelog.com", title: "Changelog on Bluesky") %></li>
+        <li><%= link("LinkedIn", to: "https://linkedin.com/company/changelog", title: "Changelog on LinkedIn") %></li>
+        <li><%= link("Mastodon", to: "https://changelog.social", title: "Changelog on Mastodon") %></li>
+        <li><%= link("Instagram", to: "https://www.instagram.com/changelog_", title: "Changelog on Instagram") %></li>
+
       </ul>
     </div>
     <div class="footer-nav-list">
       <h4>Community</h4>
       <ul>
+        <li><%= link("Join", to: ~p"/community", title: "Join the community") %></li>
+        <li><%= link("Zulip", to: Application.get_env(:changelog, :zulip_url), title: "Sign in to Zulip") %></li>
         <li><%= link("Merch Shop", to: "https://merch.changelog.com", title: "Changelog's Merch Shop") %></li>
-        <li><%= link("Join the Community", to: ~p"/community", title: "Join the community") %></li>
         <li><%= link("Code of Conduct", to: ~p"/coc", title: "Read the code of conduct") %></li>
-        <li><%= link("Sign in to Slack", to: "https://changelog.slack.com", title: "Sign in to Slack") %></li>
+
         <li>---</li>
-        <li><%= link("Request Episode", to: ~p"/request", title: "Request an episode") %></li>
         <li><%= link("Submit News", to: ~p"/news/submit", title: "Submit news") %></li>
+        <li><%= link("Request Episode", to: ~p"/request", title: "Request an episode") %></li>
       </ul>
     </div>
     <div class="footer-nav-list">
@@ -88,15 +96,15 @@
       <ul>
         <li><%= link("Beats", to: ~p"/beats", title: "Changelog Beats") %></li>
         <li><%= link("Posts", to: ~p"/posts", title: "Changelog Posts") %></li>
-        <li><%= link("Changelog Nightly", to: ~p"/nightly", title: "Changelog Nightly") %></li>
-        <li><%= link("Sponsor", to: ~p"/sponsor", title: "Sponsor Changelog") %></li>
         <li><%= link("Search", to: ~p"/search", title: "Search Changelog") %></li>
+        <li><%= link("Nightly", to: ~p"/nightly", title: "Changelog Nightly") %></li>
+        <li><%= link("Sponsor", to: ~p"/sponsor", title: "Sponsor Changelog") %></li>
         <li><%= link("Guest Guide", to: ~p"/guest", title: "Changelog Guest Guide") %></li>
         <li><a href="https://github.com/thechangelog/changelog.com" title="Changelog.com source code">View Source</a></li>
         <li>---</li>
+        <li><a href="/privacy" title="Privacy Policy">Privacy Policy</a></li>
         <li><a href="https://github.com/thechangelog/changelog.com/issues/new" title="Report a Changelog.com issue">Report an Issue</a></li>
         <li><a href="/terms" title="Terms & Conditions">Terms &amp; Conditions</a></li>
-        <li><a href="/privacy" title="Privacy Policy">Privacy Policy</a></li>
         <li>---</li>
         <li><a href="https://status.changelog.com" title="Changelog.com services status">Status</a></li>
       </ul>

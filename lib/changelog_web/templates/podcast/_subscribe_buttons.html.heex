@@ -16,11 +16,14 @@
     <%= link("Pocket Casts", to: subscribe_on_pocket_casts_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--pocket-casts", title: "Subscribe on Pocket Casts") %>
   <% end %>
     <%= link("Android", to: subscribe_on_android_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--android", title: "Subscribe on Android") %>
+    <%= if @podcast.bsky_handle do %>
+      <%= link("Bluesky", to: SharedHelpers.bsky_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--bsky", title: "Follow us on Bluesky") %>
+    <% end %>
   <%= if @podcast.mastodon_handle do %>
     <%= link("Mastodon", to: SharedHelpers.mastodon_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--mastodon", title: "Follow us on Mastodon") %>
   <% end %>
   <%= if @podcast.twitter_handle do %>
-    <%= link("Twitter", to: SharedHelpers.twitter_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--twitter", title: "Follow us on Twitter") %>
+    <%= link("X", to: SharedHelpers.x_url(@podcast), class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--x", title: "Follow us on X") %>
   <% end %>
   </div>
 </div>

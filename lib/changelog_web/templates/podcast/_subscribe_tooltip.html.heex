@@ -4,12 +4,14 @@
     <ul class="tooltip-list">
       <li class="tooltip-list-heading">Subscribe</li>
       <li><%= link("Direct (RSS)", to: subscribe_via_rss_url(@podcast)) %></li>
+      <li><%= link("Email", to: ~p"/subscribe/#{@podcast.slug}", title: "Subscribe via Email") %></li>
     <%= if @podcast.apple_url do %>
-      <li><%= link("Apple Podcasts", to: subscribe_on_apple_url(@podcast)) %></li>
+      <li><%= link("Apple", to: subscribe_on_apple_url(@podcast)) %></li>
     <% end %>
     <%= if @podcast.spotify_url do %>
       <li><%= link("Spotify", to: subscribe_on_spotify_url(@podcast)) %></li>
     <% end %>
+      <li><%= link("Android", to: subscribe_on_android_url(@podcast)) %></li>
     <%= if @podcast.youtube_url do %>
       <li><%= link("YouTube", to: subscribe_on_youtube_url(@podcast)) %></li>
     <% end %>
@@ -17,14 +19,15 @@
       <li><%= link("Overcast", to: subscribe_on_overcast_url(@podcast)) %></li>
       <li><%= link("Pocket Casts", to: subscribe_on_pocket_casts_url(@podcast)) %></li>
     <% end %>
-      <li><%= link("Android", to: subscribe_on_android_url(@podcast)) %></li>
     <%= if @podcast.mastodon_handle do %>
       <li><%= link("Mastodon", to: SharedHelpers.mastodon_url(@podcast.mastodon_handle)) %></li>
     <% end %>
-    <%= if @podcast.twitter_handle do %>
-      <li><%= link("Twitter", to: SharedHelpers.twitter_url(@podcast.twitter_handle)) %></li>
+    <%= if @podcast.bsky_handle do %>
+      <li><%= link("Bluesky", to: SharedHelpers.bsky_url(@podcast.bsky_handle)) %></li>
     <% end %>
-      <li><%= link("Email", to: ~p"/subscribe/#{@podcast.slug}", title: "Subscribe via Email") %></li>
+    <%= if @podcast.twitter_handle do %>
+      <li><%= link("TwiX", to: SharedHelpers.x_url(@podcast.twitter_handle)) %></li>
+    <% end %>
     </ul>
     <div class="tooltip-footer">
       <%= link("Request Episode", to: ~p"/request/#{@podcast.slug}") %>

@@ -54,6 +54,7 @@ defmodule Changelog.Person do
     field :linkedin_handle, :string
     field :mastodon_handle, :string
     field :twitter_handle, :string
+    field :bsky_handle, :string
     field :slack_id, :string
     field :zulip_id, :string
     field :website, :string
@@ -215,7 +216,7 @@ defmodule Changelog.Person do
 
   def admin_insert_changeset(person, attrs \\ %{}) do
     allowed = ~w(name email handle github_handle linkedin_handle mastodon_handle
-      twitter_handle bio website location admin host editor
+      twitter_handle bsky_handle bio website location admin host editor
       public_profile approved)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
@@ -232,7 +233,7 @@ defmodule Changelog.Person do
 
   def insert_changeset(person, attrs \\ %{}) do
     allowed = ~w(name email handle github_handle linkedin_handle mastodon_handle
-      twitter_handle bio website location public_profile)a
+      twitter_handle bsky_handle bio website location public_profile)a
 
     changeset_with_allowed_attrs(person, attrs, allowed)
   end
@@ -271,6 +272,7 @@ defmodule Changelog.Person do
     |> unique_constraint(:linkedin_handle)
     |> unique_constraint(:mastodon_handle)
     |> unique_constraint(:twitter_handle)
+    |> unique_constraint(:bsky_handle)
   end
 
   defp validate_handle_allowed(changeset) do

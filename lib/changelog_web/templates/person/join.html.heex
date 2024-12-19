@@ -1,7 +1,7 @@
 <article class="auth">
   <h1 class="auth-header">Join the community</h1>
   <%= form_for @changeset, Routes.person_path(@conn, :join), [id: "join", class: "form form--full_width", multipart: true], fn f -> %>
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :name) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :name)}"}>
       <div class="form-element">
         <label>Name<span>*</span></label>
         <%= text_input(f, :name, placeholder: "Grace Hopper", autofocus: true, required: true) %>
@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :email) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :email)}"}>
       <div class="form-element">
         <label>Email<span>*</span></label>
         <%= email_input(f, :email, placeholder: "grace@hopper.com", required: true, autocapitalize: "none") %>
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :handle) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :handle)}"}>
       <div class="form-element">
         <label>Username / Handle<span>*</span></label>
         <%= text_input(f, :handle, placeholder: "gracehopper", required: true, autocapitalize: "none", pattern: "^[a-z|0-9|_|-]+$") %>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= PublicHelpers.error_class(f, :avatar) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :avatar)}"}>
         <label>Avatar</label>
         <%= file_input(f, :avatar) %>
         <%= PublicHelpers.error_message(f, :avatar) %>
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :github_handle) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :github_handle)}"}>
       <div class="form-element">
         <label>GitHub Handle</label>
         <div class="form-element-preppended_field">
@@ -47,18 +47,29 @@
       </div>
     </div>
 
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :twitter_handle) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :linkedin_handle)}"}>
       <div class="form-element">
-        <label>Twitter Handle</label>
+        <label>LinkedIn Handle</label>
         <div class="form-element-preppended_field">
-          <span>twitter.com/</span>
-          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <span>linkedin.com/in/</span>
+          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
         </div>
-        <%= PublicHelpers.error_message(f, :twitter_handle) %>
+        <%= PublicHelpers.error_message(f, :linkedin_handle) %>
       </div>
     </div>
 
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :twitter_handle) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :bsky_handle)}"}>
+      <div class="form-element">
+        <label>Bluesky Handle</label>
+        <div class="form-element-preppended_field">
+          <span>bsky.app/profile/</span>
+          <%= text_input(f, :bsky_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
+        <%= PublicHelpers.error_message(f, :bsky_handle) %>
+      </div>
+    </div>
+
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :twitter_handle)}"}>
       <div class="form-element">
         <label>Mastodon Handle</label>
         <div class="form-element-preppended_field">
@@ -69,14 +80,14 @@
       </div>
     </div>
 
-    <div class="form-element_wrap <%= PublicHelpers.error_class(f, :linkedin_handle) %>">
+    <div class={"form-element_wrap #{PublicHelpers.error_class(f, :twitter_handle)}"}>
       <div class="form-element">
-        <label>LinkedIn Handle</label>
+        <label>X Handle</label>
         <div class="form-element-preppended_field">
-          <span>linkedin.com/in/</span>
-          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <span>x.com/</span>
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
         </div>
-        <%= PublicHelpers.error_message(f, :linkedin_handle) %>
+        <%= PublicHelpers.error_message(f, :twitter_handle) %>
       </div>
     </div>
 

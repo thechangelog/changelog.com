@@ -36,15 +36,22 @@
       <%= AdminHelpers.error_message(f, :twitter_handle) %>
     </div>
 
+    <div class={"field #{AdminHelpers.error_class(f, :bsky_handle)}"}>
+      <%= label(f, :bsky_handle, "On Bluesky") %>
+      <%= text_input(f, :bsky_handle, placeholder: "changelog.com") %>
+    </div>
+  </div>
+
+  <div class="two fields">
     <div class={"field #{AdminHelpers.error_class(f, :mastodon_handle)}"}>
       <%= label(f, :mastodon_handle, "On Mastodon") %>
       <%= text_input(f, :mastodon_handle, placeholder: "changelog@changelog.social") %>
     </div>
-  </div>
 
-  <div class={"field #{AdminHelpers.error_class(f, :mastodon_token)}"}>
-    <%= label(f, :mastodon_token, "Mastodon API Token") %>
-    <%= text_input(f, :mastodon_token) %>
+    <div class={"field #{AdminHelpers.error_class(f, :mastodon_token)}"}>
+      <%= label(f, :mastodon_token, "Mastodon API Token") %>
+      <%= text_input(f, :mastodon_token) %>
+    </div>
   </div>
 
   <div class="two fields">

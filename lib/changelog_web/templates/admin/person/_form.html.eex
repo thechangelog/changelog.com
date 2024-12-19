@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="three fields">
+  <div class="four fields">
     <div class="field <%= AdminHelpers.error_class(f, :github_handle) %>">
       <%= label(f, :github_handle, "GitHub Handle") %>
       <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none", mask: "slug") %>
@@ -44,6 +44,12 @@
       <%= label(f, :mastodon_handle, "Mastodon Handle") %>
       <%= text_input(f, :mastodon_handle, placeholder: "gracehopper@changelog.social", autocapitalize: "none", mask: "slug") %>
       <%= AdminHelpers.error_message(f, :mastodon_handle) %>
+    </div>
+
+    <div class="field <%= AdminHelpers.error_class(f, :bsky_handle) %>">
+      <%= label(f, :bsky_handle, "Bluesky Handle") %>
+      <%= text_input(f, :bsky_handle, placeholder: "gracehopper", autocapitalize: "none", mask: "slug") %>
+      <%= AdminHelpers.error_message(f, :bsky_handle) %>
     </div>
   </div>
 

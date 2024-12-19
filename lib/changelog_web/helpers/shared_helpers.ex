@@ -28,6 +28,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
 
   def action_name(conn), do: Controller.action_name(conn)
 
+  def bsky_url(nil), do: ""
+  def bsky_url(%{bsky_handle: nil}), do: ""
+  def bsky_url(%{bsky_handle: handle}), do: bsky_url(handle)
+  def bsky_url(handle), do: "https://bsky.app/profile/#{handle}"
+
   def comma_separated(number) do
     number
     |> Integer.to_charlist()
@@ -200,6 +205,11 @@ defmodule ChangelogWeb.Helpers.SharedHelpers do
       link(domain_name(model.website), to: model.website, rel: "external")
     end
   end
+
+  def x_url(nil), do: ""
+  def x_url(%{twitter_handle: nil}), do: ""
+  def x_url(%{twitter_handle: handle}), do: x_url(handle)
+  def x_url(handle) when is_binary(handle), do: "https://x.com/#{handle}"
 
   def word_count(nil), do: 0
 

@@ -15,13 +15,13 @@
     <input type="hidden" name="from" value="profile">
 
     <div class="form-element_wrap form-element_wrap--2">
-      <div class="form-element <%= PublicHelpers.error_class(f, :name) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :name)}"}>
         <label>Name<span>*</span></label>
         <%= text_input(f, :name, placeholder: "Grace Hopper") %>
         <%= PublicHelpers.error_message(f, :name) %>
       </div>
 
-      <div class="form-element <%= PublicHelpers.error_class(f, :handle) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :handle)}"}>
         <label>Username / Handle<span>*</span></label>
         <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
         <%= PublicHelpers.error_message(f, :handle) %>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="form-element_wrap form-element_wrap--2">
-      <div class="form-element <%= PublicHelpers.error_class(f, :avatar) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :avatar)}"}>
         <label>Avatar</label>
         <%= file_input(f, :avatar) %>
         <%= PublicHelpers.error_message(f, :avatar) %>
@@ -38,12 +38,12 @@
 
       <div class="form-element">
         <%= SharedHelpers.maybe_lazy_image(@conn, PersonView.avatar_url(@changeset.data), @changeset.data.name, width: 67, height: 67) %>
-        <p class="form-element-note"><%= if @changeset.data.avatar, do: "This image was uploaded to changelog.com", else: "This image is loaded from Gravatar" %>
+        <p class="form-element-note"><%= if @changeset.data.avatar, do: "This image was uploaded to changelog.com", else: "This image is loaded from Gravatar" %></p>
       </div>
     </div>
 
-    <div class="form-element_wrap form-element_wrap--3">
-      <div class="form-element <%= PublicHelpers.error_class(f, :github_handle) %>">
+    <div class="form-element_wrap form-element_wrap--2">
+      <div class={"form-element #{PublicHelpers.error_class(f, :github_handle)}"}>
         <label>GitHub Handle</label>
         <div class="form-element-preppended_field">
           <span>github.com/</span>
@@ -52,16 +52,7 @@
         <%= PublicHelpers.error_message(f, :github_handle) %>
       </div>
 
-      <div class="form-element <%= PublicHelpers.error_class(f, :twitter_handle) %>">
-        <label>Twitter Handle</label>
-        <div class="form-element-preppended_field">
-          <span>twitter.com/</span>
-          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
-        </div>
-        <%= PublicHelpers.error_message(f, :twitter_handle) %>
-      </div>
-
-      <div class="form-element <%= PublicHelpers.error_class(f, :linkedin_handle) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :linkedin_handle)}"}>
         <label>LinkedIn Handle</label>
         <div class="form-element-preppended_field">
           <span>linked.com/in/</span>
@@ -71,8 +62,28 @@
       </div>
     </div>
 
+    <div class="form-element_wrap form-element_wrap--2">
+      <div class={"form-element {PublicHelpers.error_class(f, :twitter_handle)}"}>
+        <label>X Handle</label>
+        <div class="form-element-preppended_field">
+          <span>x.com/</span>
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
+        <%= PublicHelpers.error_message(f, :twitter_handle) %>
+      </div>
+
+      <div class={"form-element {PublicHelpers.error_class(f, :bsky_handle)}"}>
+        <label>Bluesky Handle</label>
+        <div class="form-element-preppended_field">
+          <span>bsky.app/profile/</span>
+          <%= text_input(f, :bsky_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        </div>
+        <%= PublicHelpers.error_message(f, :bsky_handle) %>
+      </div>
+    </div>
+
     <div class="form-element_wrap form-element_wrap--3">
-      <div class="form-element <%= PublicHelpers.error_class(f, :mastodon_handle) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :mastodon_handle)}"}>
         <label>Mastodon Handle</label>
         <div class="form-element-preppended_field">
           <span>@</span>
@@ -81,13 +92,13 @@
         <%= PublicHelpers.error_message(f, :mastodon_handle) %>
       </div>
 
-      <div class="form-element <%= PublicHelpers.error_class(f, :location) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :location)}"}>
         <label>Location</label>
         <%= text_input(f, :location, placeholder: "New York, New York") %>
         <%= PublicHelpers.error_message(f, :location) %>
       </div>
 
-      <div class="form-element <%= PublicHelpers.error_class(f, :website) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :website)}"}>
         <label>Website URL</label>
         <%= text_input(f, :website, placeholder: "https://gracehopper.com", autocapitalize: "none") %>
         <%= PublicHelpers.error_message(f, :website) %>
@@ -95,7 +106,7 @@
     </div>
 
     <div class="form-element_wrap">
-      <div class="form-element <%= PublicHelpers.error_class(f, :bio) %>">
+      <div class={"form-element #{PublicHelpers.error_class(f, :bio)}"}>
         <label>Bio</label>
         <%= textarea(f, :bio) %>
         <%= PublicHelpers.error_message(f, :bio) %>
@@ -104,7 +115,7 @@
     </div>
 
     <div class="form-checklist">
-      <div class="form-checklist-item <%= PublicHelpers.error_class(f, :public_profile) %>">
+      <div class={"form-checklist-item #{PublicHelpers.error_class(f, :public_profile)}"}>
       <%= if Changelog.Policies.Person.profile(@current_user, @current_user) do %>
         <label>
           <%= checkbox(f, :public_profile) %>
