@@ -1,4 +1,4 @@
-<header class="show-header">
+  <header class="show-header">
   <h2 class="visually_hidden"><%= @podcast.name %></h2>
   <div class="show-header-inner">
 
@@ -41,7 +41,7 @@
       </div>
 
       <%= if Enum.any?(@podcast.active_hosts) do %>
-      <div class="show-header-hosts avatar_list <%= if length(@podcast.active_hosts) < 4, do: 'avatar_list--full' %>">
+      <div class="show-header-hosts avatar_list <%= if length(@podcast.active_hosts) < 4, do: "avatar_list--full" %>">
       <%= for person <- @podcast.active_hosts do %>
         <%= link to: PersonView.profile_path(person), class: "avatar_list-item", title: person.name do %>
           <%= SharedHelpers.lazy_image(PersonView.avatar_url(person), "Host Avatar", width: 60, height: 60) %>

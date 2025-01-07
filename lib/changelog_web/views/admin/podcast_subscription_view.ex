@@ -7,7 +7,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
 
   def day_chart_data(podcast) do
     stats =
-      Enum.map(30..0, fn i ->
+      Enum.map(30..0//-1, fn i ->
         start_date = Timex.today() |> Timex.shift(days: -i)
         start_time = start_date |> Timex.to_datetime() |> Timex.beginning_of_day()
         end_time = start_date |> Timex.to_datetime() |> Timex.end_of_day()
@@ -39,7 +39,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionView do
     this_month = Timex.today() |> Timex.beginning_of_month()
 
     stats =
-      Enum.map(11..0, fn i ->
+      Enum.map(11..0//-1, fn i ->
         start_date = Timex.shift(this_month, months: -i)
         start_time = start_date |> Timex.to_datetime() |> Timex.beginning_of_day()
         end_time = start_date |> Timex.end_of_month() |> Timex.to_datetime() |> Timex.end_of_day()

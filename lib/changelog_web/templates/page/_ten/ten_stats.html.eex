@@ -1,4 +1,4 @@
-<%# TODO: Increment stats when scrolled into view %>
+<% # TODO: Increment stats when scrolled into view %>
 <div class="ten-stats">
   <div class="ten-stats-item">
     <h3 class="ten-stats-heading">

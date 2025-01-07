@@ -27,8 +27,8 @@ defmodule ChangelogWeb.AlbumView do
 
   def header_art_attrs(album) do
     %{
-      src: art_url(album, 'full'),
-      srcset: "#{art_url(album, 'full')} 3000w, #{art_url(album, '512')} 440w",
+      src: art_url(album, "full"),
+      srcset: "#{art_url(album, "full")} 3000w, #{art_url(album, "512")} 440w",
       sizes: "(min-width:880px) 490w, 440w",
       alt: "#{album.name} Album Artwork"
     }

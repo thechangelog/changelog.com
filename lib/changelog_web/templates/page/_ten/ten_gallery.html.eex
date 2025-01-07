@@ -16,7 +16,7 @@
   <a class="js-lightbox" href='<%= url(~p"/images/content/ten/photos/ten-photo-12.jpg") %>' data-gallery="gallery"  data-type="image">
     <img class="ten-gallery-image" src='<%= url(~p"/images/content/ten/photos/ten-photo-12-thumb.jpg") %>' alt="" />
   </a>
-  <%# Hidden photos that only appear in the gallery %>
+  <% # Hidden photos that only appear in the gallery %>
   <a href='<%= url(~p"/images/content/ten/photos/ten-photo-21.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery" data-type="image"></a>
   <a href='<%= url(~p"/images/content/ten/photos/ten-photo-1.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>
   <a href='<%= url(~p"/images/content/ten/photos/ten-photo-4.jpg") %>' class="visually_hidden js-lightbox" data-gallery="gallery"  data-type="image"></a>

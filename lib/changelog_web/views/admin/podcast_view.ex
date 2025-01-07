@@ -19,7 +19,7 @@ defmodule ChangelogWeb.Admin.PodcastView do
   end
 
   def position_options do
-    1..Repo.count(Podcast.public())
+    Range.new(1, Repo.count(Podcast.public()), 1)
   end
 
   def subscribers_count(%{subscribers: nil}), do: 0

@@ -1,4 +1,4 @@
-<%#= invisible wrapper div so JS handles this like the reply forms %>
+<% #= invisible wrapper div so JS handles this like the reply forms %>
 <div class="js-comment">
   <%= form_for @changeset,
     Routes.news_item_comment_path(@conn, :create),

@@ -14,7 +14,7 @@
       <p class="button_note">Or call us at 888-974-CHLG (2454)</p>
     </header>
 
-    <%# render("_marketing_slider.html", assigns) %>
+    <% # render("_marketing_slider.html", assigns) %>
   </section>
 
   <section class="marketing-section">

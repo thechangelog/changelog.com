@@ -1,10 +1,10 @@
-<%# TODO: Consider omitting default site footer for this page %>
+<% # TODO: Consider omitting default site footer for this page %>
 
 <article class="ten">
   <header class="ten-section ten-hero">
     <div class="ten-section-inner">
       <h1 class="ten-hero-logo">
-        <%# TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
+        <% # TODO: Add fallback logo and display based on a "cssmask" Modernizr check %>
         <div class="ten-hero-logo-background"></div>
         <div class="ten-hero-logo-main">
           <%= render("_ten/ten_year_logo.html", assigns) %>

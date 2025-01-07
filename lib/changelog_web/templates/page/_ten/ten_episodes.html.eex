@@ -1,5 +1,5 @@
 <div class="ten-episodes">
-  <%# Ten years of Changelog https://changelog.com/backtage/9 %>
+  <% # Ten years of Changelog https://changelog.com/backtage/9 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -21,7 +21,7 @@
     </a>
   </div>
 
-  <%# A protocol for dying https://changelog.com/podcast/205 (edited) %>
+  <% # A protocol for dying https://changelog.com/podcast/205 (edited) %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -43,7 +43,7 @@
     </a>
   </div>
 
- <%# Creating the Go programming language https://changelog.com/gotime/100 %>
+ <% # Creating the Go programming language https://changelog.com/gotime/100 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -65,7 +65,7 @@
     </a>
   </div>
 
-  <%# 99 practical bottles of OOP https://changelog.com/podcast/225 %>
+  <% # 99 practical bottles of OOP https://changelog.com/podcast/225 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -87,7 +87,7 @@
     </a>
   </div>
 
-  <%# Exposing the deception of DeepFakes https://changelog.com/practicalai/49 %>
+  <% # Exposing the deception of DeepFakes https://changelog.com/practicalai/49 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -109,7 +109,7 @@
     </a>
   </div>
 
-  <%# A call for kindness in open source https://changelog.com/podcast/318 %>
+  <% # A call for kindness in open source https://changelog.com/podcast/318 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -131,7 +131,7 @@
     </a>
   </div>
 
-  <%# Websites should work without JS. Yep? Nope? https://changelog.com/jsparty/87 %>
+  <% # Websites should work without JS. Yep? Nope? https://changelog.com/jsparty/87 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -153,7 +153,7 @@
     </a>
   </div>
 
-  <%# Why SQLite succeeded as a database https://changelog.com/podcast/201 %>
+  <% # Why SQLite succeeded as a database https://changelog.com/podcast/201 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -175,7 +175,7 @@
     </a>
   </div>
 
-  <%# Danielle Morrill on starting over from zero https://changelog.com/founderstalk/53 %>
+  <% # Danielle Morrill on starting over from zero https://changelog.com/founderstalk/53 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -197,7 +197,7 @@
     </a>
   </div>
 
-  <%# The beginnings of Microsoft Azure https://changelog.com/podcast/298 %>
+  <% # The beginnings of Microsoft Azure https://changelog.com/podcast/298 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -219,7 +219,7 @@
     </a>
   </div>
 
-  <%# Humans and habits https://changelog.com/brainscience/3 %>
+  <% # Humans and habits https://changelog.com/brainscience/3 %>
   <div class="ten-episodes-item">
     <a
       role="button"
@@ -241,7 +241,7 @@
     </a>
   </div>
 
-  <%# All things text mode https://changelog.com/podcast/340 %>
+  <% # All things text mode https://changelog.com/podcast/340 %>
   <div class="ten-episodes-item">
     <a
       role="button"

@@ -1,8 +1,8 @@
 1password-cli 2.29.0
 dagger 0.6.4
 direnv 2.34.0
-elixir 1.16.3
-erlang 26.2.5
+elixir 1.18.1-otp-27
+erlang 27.2
 flyctl 0.2.65
 golang 1.22.4
 nodejs 20.14.0

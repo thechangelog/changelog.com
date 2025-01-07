@@ -1,20 +1,20 @@
 <figure class="richtext-figure js-mini-player">
   <div
     class="richtext_player js-mini-player"
-    data-title="<%#= @title %>"
-    data-audio="<%#= @audio %>"
-    data-duration="<%#= @duration %>"
+    data-title="<% #= @title %>"
+    data-audio="<% #= @audio %>"
+    data-duration="<% #= @duration %>"
   >
-    <a href="<%#= @audio %>" class="richtext_player-button richtext_player-button--play js-player-play-button"></a>
+    <a href="<% #= @audio %>" class="richtext_player-button richtext_player-button--play js-player-play-button"></a>
     <form class="richtext_player-slider">
       <div class="range_slider">
         <div class="range_slider-range_wrap">
-          <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="<%#= @duration %>"/>
+          <input class="range_slider-range js-player-scrubber" type="range" value="0" min="0" max="<% #= @duration %>"/>
           <div class="range_slider-range-track js-player-track"></div>
         </div>
       </div>
     </form>
-    <output class="richtext_player-time"><span class="js-player-current">0:00</span> / <span class="js-player-duration"><%#= TimeView.duration(@duration) %> 9:99</span></output>
+    <output class="richtext_player-time"><span class="js-player-current">0:00</span> / <span class="js-player-duration"><% #= TimeView.duration(@duration) %> 9:99</span></output>
   </div>
   <figcaption>This independent workforce survey reveals new insights into freelancing in America. Key findings: Freelancers earned an estimated $1 trillion this year, are highly motivated, growing.</figcaption>
 </figure>

@@ -3,7 +3,7 @@
   <nav class="subnav">
     <ul class="subnav-list">
       <!-- <li class="subnav-list-item">
-        <%#= link("New", to: "/", title: "Recent News") %>
+        <% #= link("New", to: "/", title: "Recent News") %>
       </li> -->
       <li class="subnav-list-item <%= SharedHelpers.active_class(@conn, [~r/\Anews_item-top\z/, "news_item-top_week"]) %>">
         <%= link("This Week", to: Routes.news_item_path(@conn, :top_week), title: "Top developer news this week") %>

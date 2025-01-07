@@ -26,7 +26,7 @@ defmodule ChangelogWeb.Admin.PodcastSubscriptionControllerTest do
       ],
       fn conn ->
         assert html_response(conn, 302)
-        assert conn.halted()
+        assert conn.halted
       end
     )
   end

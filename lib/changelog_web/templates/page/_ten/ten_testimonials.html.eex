@@ -1,4 +1,4 @@
-<%# NOTE: Testimonials support Twitter, Facebook, and Instagram icons %>
+<% # NOTE: Testimonials support Twitter, Facebook, and Instagram icons %>
 
 <div class="ten-testimonials">
   <div class="ten-testimonials-slider js-slider">
