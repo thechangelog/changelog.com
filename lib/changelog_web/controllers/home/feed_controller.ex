@@ -108,7 +108,7 @@ defmodule ChangelogWeb.Home.FeedController do
 
   defp assign_podcasts(conn, _params) do
     podcasts =
-      Podcast.active()
+      Podcast.public()
       |> Podcast.by_position()
       |> Repo.all()
 
