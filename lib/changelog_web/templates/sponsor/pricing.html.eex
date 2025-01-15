@@ -59,13 +59,6 @@
  for examples.</li>
     </ul>
 
-    <a id="conferences" class="anchor"></a>
-    <h2>Conference partnering</h2>
-
-    <p>We love to partner with conferences and community leaders! We have several options on how we can support and partner with you. We can come in as a media partner to help promote your event, bring a live show to the conference, cover the hallway track, speak with featured speakers on our podcasts, or other creative ways we can be involved.</p>
-
-    <p>Email <a href="mailto:adam@changelog.com">adam@changelog.com</a> so we can talk through your details and goals.</p>
-
     <hr>
 
     <a id="practicalai" class="anchor"></a>
@@ -109,5 +102,15 @@
       <li>Your logo, link, and copy will appear on the episode pages of the shows you sponsor</li>
       <li><%= link "Review previous episodes", to: "https://fallthrough.transistor.fm" %></li>
     </ul>
+
+    <hr>
+
+    <a id="conferences" class="anchor"></a>
+    <h2>Conference partnering</h2>
+
+    <p>We love to partner with conferences and community leaders. We have several options we can discuss on how we can support and partner with you and your community. We can come in as a media partner to help promote your event, bring a live show to the conference, cover the hallway track, speak with featured speakers on our podcasts, or other creative ways we can get involved.</p>
+
+    <p>Email <a href="mailto:adam@changelog.com">adam@changelog.com</a> so we can talk through your details and goals.</p>
+
   </div>
 </article>
