@@ -59,12 +59,19 @@
  for examples.</li>
     </ul>
 
+    <a id="conferences" class="anchor"></a>
+    <h2>Conference partnering</h2>
+
+    <p>We love to partner with conferences and community leaders! We have several options on how we can support and partner with you. We can come in as a media partner to help promote your event, bring a live show to the conference, cover the hallway track, speak with featured speakers on our podcasts, or other creative ways we can be involved.</p>
+
+    <p>Email <a href="mailto:adam@changelog.com">adam@changelog.com</a> so we can talk through your details and goals.</p>
+
     <hr>
 
     <a id="practicalai" class="anchor"></a>
     <h2>Practical AI</h2>
 
-    <p>Practical AI takes you on a journey into the world of AI from the lens of expert AI practitioners implementing and deploying AI at scale. This podcast is focused on making artificial intelligence practical, productive, and accessible to every developer. Hosted by <%= link "Daniel Whitenack", to: "/person/dwhitena" %> and <%= link "Chris Benson", to: "/person/chris" %></p>
+    <p>Practical AI takes you on a journey into the world of AI from the lens of expert AI practitioners implementing and deploying AI at scale. This podcast is focused on making artificial intelligence practical, productive, and accessible to every developer. Hosted by <%= link "Daniel Whitenack", to: "/person/dwhitena" %> and <%= link "Chris Benson", to: "/person/chris" %>.</p>
 
     <p><strong>What's the reach?</strong> We ship one (1) episode weekly that reaches 35,000 to 45,000 AI developers weekly.</p>
 
@@ -84,99 +91,23 @@
 
     <hr>
 
-    <a id="jsparty" class="anchor"></a>
-    <h2>JS Party</h2>
+    <a id="fallthrough" class="anchor"></a>
+    <h2>Fallthrough</h2>
 
-    <p>JS Party is weekly podcast that features an expert panel of JavScript developers as well as special guests that discuss the latest in JavaScript and the web platform. Front-enders around the globe tune in to JS Party to keep up with the direction and capabilities of the web platform.</p>
+    <p>Fallthrough is a software, technology, and computing podcast covering content from the perspective of the Go community. Hosted by <%= link "Kris Brandow", to: "/person/skriptble" %>, <%= link "Matthew Sanabria", to: "/person/sudomateo" %>, <%= link "Ian Wester-Lopshire", to: "/person/ianlopshire" %>, and <%= link "Dylan Bourque", to: "/person/dylanbourque" %>.</p>
 
-    <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 15,000 to 20,000 web developers weekly.</p>
+    <p><strong>What's the reach?</strong> They ship one (1) episode every week that reaches 1,000 to 2,000 developers weekly.</p>
 
-    <p><strong>Who will you reach?</strong> JavaScript developers, frontend/backend/fullstack developers, framework and library creators, mobile app developers (using React Native, Vue Native, Ionic), engineering leadership (CTOs and tech leads), and open source contributors.</p>
-
-    <ul>
-      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
-      <li><mark>$1,200 per episode</mark></li>
-      <li>Four (4) week minimum with an estimated reach between 60,000 to 80,000</li>
-      <li>Reaches an average 8,000 to 15,000 listens per episode</li>
-      <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
-      <li><%= link "Review previous episodes", to: "/jsparty" %>
-    </ul>
-
-    <hr>
-
-    <a id="shipit" class="anchor"></a>
-    <h2>Ship It</h2>
-
-    <p>Ship It features deep discussions with experts exploring everything that happens after <code>git push</code>. We explore topics like cloud/infra/tech choices, deployment strategies, continuous integration, automated testing, observability and monitoring &mdash; providing listeners with a comprehensive understanding of the software development lifecycle beyond code submission. Hosted by <%= link "Justin Garrison", to: "/person/jgarr" %> and <%= link "Autumn Nash", to: "/person/autumn808" %>.</p>
-
-    <p><strong>What's the reach?</strong> We ship one (1) episode weekly that reaches 8,000 to 12,000 developers weekly</p>
-
-    <p><strong>Who will you reach?</strong> Operations and SRE type folks, CTOs and Director/VP of Engineering, software developers and engineers, engineering leadership and decision-makers who drive the infrastructure/tech stack and direction of their organization.</p>
+    <p><strong>Who will you reach?</strong> Systems developers and devs who either write Go daily or those who are "Go curious", distributed systems experts, cloud infrastructure professionals, microservices specialists, Kubernetes practitioners and decision-makers, SRE and DevOps engineers, engineering leadership (CTOs and tech leads), and open source contributors.</p>
 
     <ul>
       <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
-      <li><mark>$1,200 per episode</mark></li>
-      <li>Four (4) week minimum with an estimated reach between 36,000 to 48,000</li>
-      <li>Reaches an average 9,000 to 12,000 listens per episode</li>
-      <li>Reaches an average 40,000 listens per month, podcast-wide</li>
+      <li><mark>$200 per episode</mark></li>
+      <li>Four (4) week minimum with an estimated reach between 4,000 to 8,000</li>
+      <li>Reaches an average 1,000 to 2,000 listens per episode</li>
       <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li>Your link will be included in the show notes delivered to podcast clients and RSS feed</li>
-      <li><%= link "Review previous episodes", to: "/shipit" %>
+      <li>Your logo, link, and copy will appear on the episode pages of the shows you sponsor</li>
+      <li><%= link "Review previous episodes", to: "https://fallthrough.transistor.fm" %></li>
     </ul>
-
-    <hr>
-
-    <a id="founderstalk" class="anchor"></a>
-    <h2>Founders Talk</h2>
-
-    <p>Founders Talk is hosted by our Editor-in-Chief Adam Stacoviak. This show features in-depth one-on-one conversations with tech founders and CEOs. They share their journey, discuss lessons learned, and the struggles they go through to build and run their product and business.</p>
-
-    <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 6,500 to 10,000 developers weekly.</p>
-
-    <p><strong>Who will you reach?</strong> Entrepreneurs, startup founders, CEOs, and makers from various industries, including those who are interested in company growth strategies, product development, and overcoming challenges. The audience also includes individuals passionate about entrepreneurial journeys, leadership strategies, and the stories behind successful companies.</p>
-
-    <ul>
-      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
-      <li><mark>$1,200 per episode</mark></li>
-      <li>Four (4) week minimum with an estimated reach between 26,000 to 36,000</li>
-      <li>Reaches an average 6,500 to 10,000 listens per episode</li>
-      <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li><%= link "Review previous episodes", to: "/founderstalk" %>
- for examples.</li>
-    </ul>
-
-    <hr>
-
-    <a id="gotime" class="anchor"></a>
-    <h2>Go Time</h2>
-
-    <p>Go Time is the #1 podcast for Go developers! Every week a rotating panel of Go experts are joined by special guests and members of the community to discuss distributed systems, cloud infrastructure, microservices, Kubernetes...oh, and also Go!</p>
-
-    <p><strong>What's the reach?</strong> We ship one (1) episode every week that reaches 15,000 to 22,000 Go developers (and Go-curious) weekly.</p>
-
-    <p><strong>Who will you reach?</strong> Go developers and devs who are "Go curious", distributed systems experts, cloud infrastructure professionals, microservices specialists, Kubernetes practitioners and decision-makers, SRE and DevOps engineers, engineering leadership (CTOs and tech leads), and open source contributors.</p>
-
-    <ul>
-      <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
-      <li><mark>$1,200 per episode</mark></li>
-      <li>Four (4) week minimum with an estimated reach between 62,000 to 88,000</li>
-      <li>Reaches an average 15,000 to 22,000 listens per episode</li>
-      <li>We will produce conversational ad spots and feature them in either the pre-roll or mid-roll slots of this show</li>
-      <li>Your logo and link will appear on the episode pages of the shows you sponsor</li>
-      <li><%= link "Review previous episodes", to: "/gotime" %>
-    </ul>
-
-    <hr>
-
-    <a id="conferences" class="anchor"></a>
-    <h2>Conference partnering</h2>
-
-    <p>We love to partner with conferences and community leaders! We have several options on how we can support and partner with you. We can come in as a media partner to help promote your event, bring a live show to the conference, cover the hallway track, speak with featured speakers on our podcasts, or other creative ways we can be involved.</p>
-
-    <p>Email <a href="mailto:adam@changelog.com">adam@changelog.com</a> so we can talk through your details and goals.</p>
   </div>
 </article>
