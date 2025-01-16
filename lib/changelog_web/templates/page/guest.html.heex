@@ -24,7 +24,8 @@
           <li>Good starter mic 1: <a href="https://www.bhphotovideo.com/c/product/1103930-REG/blue_836213002070_yeti_usb_microphone_black.html" title="Blue Yeti at B&H">Blue Yeti</a></li>
           <li>Good starter mic 2: <a href="https://www.razer.com/streaming-microphones/razer-seiren-mini/" title="Razer Seiren Mini">Razer Seiren Mini</a></li>
           <li>Good pro mic: <a href="https://www.bhphotovideo.com/c/product/225820-REG/Shure_SM7B_SM7B_Cardioid_Dynamic.html" title="Shure SM7B at B&H">Shure SM7B</a></li>
-          <li>Good last resort mic: <a href="https://www.apple.com/shop/product/MMTN2AM/A/earpods-with-lightning-connector" title="Wired EarPods at Apple">Wired EarPods</a></li>
+          <li>Good last resort mic 1: <a href="https://www.apple.com/shop/product/MMTN2AM/A/earpods-with-lightning-connector" title="Wired EarPods at Apple">Wired EarPods</a></li>
+          <li>Good last resort mic 2: M-based Mac onboard mic</li>
           <li><mark>Not good</mark> mic: Wireless AirPods (bad audio quality)</li>
         </ul>
       </li>
@@ -60,12 +61,12 @@
     <h3>Concerning video</h3>
 
     <p>
-    <%= if @podcast.recorded_live do %>
-      We record video and stream the show live to <a href="https://youtube.com/changelog" title="Changelog's YouTube">our YouTube channel</a>. The video is also used for
+    <%= if Podcast.is_a_changelog_pod(@podcast) do %>
+      This is also a video podcast that will be posted to our <a href="https://youtube.com/changelog">YouTube channel</a>! In addition to full video, we'll also be
     <% else %>
-      We record video, but we don't ship the entire show as a video. It's just used for
+      We record video, but we don't ship the entire show as a video. It's justed used for
     <% end %>
-    sharing clips and highlights to <a href="https://youtube.com/changelog">YouTube</a>, <a href="https://www.tiktok.com/@changelog.com">TikTok</a>, and <a href="https://www.instagram.com/changelog_">Instagram</a>. Things you'll need to prepare for this:
+    sharing clips and highlights to <a href="https://youtube.com/changelog">Shorts</a>, <a href="https://www.tiktok.com/@changelog.com">TikTok</a>, and <a href="https://www.instagram.com/changelog_">Instagram</a>. Things you'll need to prepare for this:
     </p>
 
     <ul>
