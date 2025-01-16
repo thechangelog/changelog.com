@@ -34,14 +34,21 @@
   </div>
 
 <%= if f.data.published do %>
-  <div class="field">
-    <label for="socialize_url">
-      Socialize URL
-    <%= if f.data.socialize_url do %>
-      <a href={f.data.socialize_url} class="field-action" rel="external">(go to there)</a>
-    <% end %>
-    </label>
-    <%= text_input(f, :socialize_url, placeholder: "https://changelog.social/@changelog/109926145715676533") %>
+  <div class="two fields">
+    <div class={"five wide field #{AdminHelpers.error_class(f, :youtube_id)}"}>
+      <%= label(f, :youtube_id, "YouTube ID") %>
+      <%= text_input(f, :youtube_id, placeholder: "dQw4w9WgXcQ", mask: "slug") %>
+  </div>
+
+    <div class="eleven wide field">
+      <label for="socialize_url">
+        Socialize URL
+      <%= if f.data.socialize_url do %>
+        <a href={f.data.socialize_url} class="field-action" rel="external">(go to there)</a>
+      <% end %>
+      </label>
+      <%= text_input(f, :socialize_url, placeholder: "https://changelog.social/@changelog/109926145715676533") %>
+    </div>
   </div>
 <% end %>
 
@@ -514,20 +521,6 @@
       <div class="ui tiny icon button js-copy-chapter-data" title="Copy data from matching chapters above">
         <i class="copy icon"></i>
       </div>
-    </div>
-  </div>
-
-  <div class="two fields">
-    <div class="inline field">
-      <div class="ui toggle checkbox">
-        <%= checkbox(f, :recorded_live, class: "hidden") %>
-        <label>Recorded Live</label>
-      </div>
-    </div>
-
-    <div class={"inline field #{if !f.data.recorded_live, do: "hidden"} #{AdminHelpers.error_class(f, :youtube_id)}"}>
-      <%= text_input(f, :youtube_id, placeholder: "dQw4w9WgXcQ", mask: "slug") %>
-      <%= label(f, :youtube_id, "YouTube ID") %>
     </div>
   </div>
 
