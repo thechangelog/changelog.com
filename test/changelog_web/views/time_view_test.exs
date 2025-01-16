@@ -80,6 +80,10 @@ defmodule ChangelogWeb.TimeViewTest do
       assert seconds("10:00:00") == 36_000
     end
 
+    test "when duration is hour, minutes, seconds, and milliseconds" do
+      assert seconds("01:35:10:70") == 5711
+    end
+
     test "when duration has fraction of a sentence" do
       assert seconds("59.17") == 59
       assert seconds("01:35:10.70") == 5711

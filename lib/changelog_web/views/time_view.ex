@@ -87,10 +87,20 @@ defmodule ChangelogWeb.TimeView do
 
   def seconds(duration) do
     case String.split(duration, ":") do
-      [h, m, s] -> to_seconds(:hours, h) + to_seconds(:minutes, m) + to_seconds(s)
-      [m, s] -> to_seconds(:minutes, m) + to_seconds(s)
-      [s] -> to_seconds(s)
-      _ -> 0
+      [h, m, s, ms] ->
+        to_seconds(:hours, h) + to_seconds(:minutes, m) + to_seconds(s) + to_seconds(:ms, ms)
+
+      [h, m, s] ->
+        to_seconds(:hours, h) + to_seconds(:minutes, m) + to_seconds(s)
+
+      [m, s] ->
+        to_seconds(:minutes, m) + to_seconds(s)
+
+      [s] ->
+        to_seconds(s)
+
+      _ ->
+        0
     end
   end
 
@@ -139,6 +149,7 @@ defmodule ChangelogWeb.TimeView do
 
   defp to_seconds(:hours, str), do: string_to_rounded_integer(str) * 3600
   defp to_seconds(:minutes, str), do: string_to_rounded_integer(str) * 60
+  defp to_seconds(:ms, str), do: round(string_to_rounded_integer(str) / 60)
   defp to_seconds(str), do: string_to_rounded_integer(str)
 
   defp string_to_rounded_integer(str) do
