@@ -116,7 +116,7 @@ restore-dev-db-from-prod format="c": changelog_dev
     dropdb {{ _CHANGELOG_DEV_DB }}
     createdb {{ _CHANGELOG_DEV_DB }}
     time pg_restore \
-        --format=c --verbose \
+        --format={{ format }} --verbose \
         --dbname={{ _CHANGELOG_DEV_DB }} \
         --exit-on-error \
         --no-owner \
