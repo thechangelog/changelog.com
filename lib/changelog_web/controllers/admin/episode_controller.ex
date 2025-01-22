@@ -103,6 +103,23 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:news_episodes, news_episodes)
   end
 
+  def youtube(conn = %{method: "POST"}, %{"csv" => csv}, _podcast) do
+    data = Changelog.Kits.MarkerKit.to_youtube(csv)
+    json(conn, %{markers: data})
+  end
+
+  def youtube(conn, _params, podcast) do
+    episodes =
+      podcast
+      |> assoc(:episodes)
+      |> Episode.newest_first()
+      |> Episode.limit(50)
+
+    conn
+    |> assign(:episodes, episodes)
+    |> render(:youtube)
+  end
+
   def performance(conn, %{"ids" => ids}, podcast) do
     stats =
       podcast

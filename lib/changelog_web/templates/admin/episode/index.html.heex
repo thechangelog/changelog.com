@@ -7,11 +7,12 @@
 
   <div class="actions right">
     <div class="ui basic buttons">
+      <%= AdminHelpers.icon_link("youtube", to: ~p"/admin/podcasts/#{@podcast.slug}/youtube", title: "YouTube Stuff") %>
       <%= AdminHelpers.icon_link("eye", to: ~p"/#{@podcast.slug}", title: "View Public", rel: "external") %>
       <%= AdminHelpers.icon_link("edit", to: ~p"/admin/podcasts/#{@podcast.slug}/edit", title: "Edit") %>
     </div>
 
-    <span class="ui calendar" data-scheduled="<%= Jason.encode!(Enum.map(@drafts, &(&1.recorded_at))) %>" >
+    <span class="ui calendar" data-scheduled={Jason.encode!(Enum.map(@drafts, &(&1.recorded_at)))}>
       <button class="ui basic icon button" title="View Schedule"><i class="calendar icon"></i></button>
     </span>
 
@@ -59,7 +60,7 @@
 
 <%= if Enum.any?(@episodes) do %>
 <div class="ui basic segment">
-  <div class="performance-chart" data-source="<%= Routes.admin_podcast_performance_path(@conn, :performance, @podcast.slug, ids: Enum.map(@episodes, &(&1.id))) %>"></div>
+  <div class="performance-chart" data-source={Routes.admin_podcast_performance_path(@conn, :performance, @podcast.slug, ids: Enum.map(@episodes, &(&1.id)))}></div>
 
   <h2 class="ui header">Published</h2>
   <%= render("_table.html", Map.merge(assigns, %{status: :published, podcast: @podcast, episodes: @episodes, actions: false})) %>

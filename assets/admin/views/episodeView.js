@@ -90,6 +90,55 @@ export default class EpisodeView {
     });
   }
 
+  youtube() {
+    let $csvFileDropZone = $(".js-csv-file");
+    let outputTextArea = document.querySelector(".js-description-output");
+
+    $csvFileDropZone
+      .on("dragover", function (event) {
+        event.preventDefault();
+        $csvFileDropZone.addClass("secondary");
+      })
+      .on("dragleave", function (event) {
+        $csvFileDropZone.removeClass("secondary");
+        event.preventDefault();
+      })
+      .on("drop", async function (event) {
+        event.preventDefault();
+        $csvFileDropZone.removeClass("transition").addClass("loading");
+
+        let file = event.originalEvent.dataTransfer.items[0];
+
+        if (file.type.match(/text\/csv/)) {
+          let reader = new FileReader();
+
+          reader.onload = async function (e) {
+            let response = await fetch(window.location.href, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                "x-csrf-token": document
+                  .querySelector("meta[name='csrf-token']")
+                  .getAttribute("content")
+              },
+              body: JSON.stringify({ csv: e.target.result })
+            });
+            let output = await response.json();
+
+            outputTextArea.value = output.markers;
+            $csvFileDropZone.removeClass("loading");
+
+            outputTextArea.dispatchEvent(new Event("autosize:update"));
+            outputTextArea.select();
+          };
+
+          reader.readAsText(file.getAsFile());
+        } else {
+          $csvFileDropZone.removeClass("secondary");
+        }
+      });
+  }
+
   show() {
     let clipboard = new Clipboard(".clipboard.button", {
       target: function (trigger) {

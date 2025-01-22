@@ -6,6 +6,7 @@ defmodule Changelog.Policies.Admin.Episode do
   def create(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def index(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def performance(actor, podcast), do: index(actor, podcast)
+  def youtube(actor, podcast), do: index(actor, podcast)
   def show(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def update(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)
   def delete(actor, podcast), do: is_admin(actor) || is_host(actor, podcast)

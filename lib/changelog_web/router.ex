@@ -103,6 +103,9 @@ defmodule ChangelogWeb.Router do
     resources "/podcasts", PodcastController do
       resources "/episodes", EpisodeController
       get "/performance", EpisodeController, :performance, as: :performance
+      get "/youtube", EpisodeController, :youtube, as: :youtube
+      post "/youtube", EpisodeController, :youtube, as: :youtube
+
       post "/episodes/:id/publish", EpisodeController, :publish, as: :episode
       post "/episodes/:id/unpublish", EpisodeController, :unpublish, as: :episode
       post "/episodes/:id/transcript", EpisodeController, :transcript, as: :episode
@@ -117,6 +120,7 @@ defmodule ChangelogWeb.Router do
 
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
     end
+
     get "/podcasts/:id/agents", PodcastController, :agents
 
     post "/podcasts/:id/feed", PodcastController, :feed, as: :podcast

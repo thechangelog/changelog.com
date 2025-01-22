@@ -119,26 +119,29 @@ defmodule ChangelogWeb.Admin.PodcastController do
   end
 
   def agents(conn = %{assigns: %{podcast: podcast}}, params) do
-    stat = if params["date"] do
-      podcast
-      |> assoc(:feed_stats)
-      |> FeedStat.on_date(params["date"])
-      |> FeedStat.limit(1)
-      |> Repo.one()
-    else
-      podcast
-      |> assoc(:feed_stats)
+    stat =
+      if params["date"] do
+        podcast
+        |> assoc(:feed_stats)
+        |> FeedStat.on_date(params["date"])
+        |> FeedStat.limit(1)
+        |> Repo.one()
+      else
+        podcast
+        |> assoc(:feed_stats)
+        |> FeedStat.newest_first()
+        |> FeedStat.limit(1)
+        |> Repo.one()
+      end
+
+    prev =
+      FeedStat.previous_to(stat)
       |> FeedStat.newest_first()
       |> FeedStat.limit(1)
       |> Repo.one()
-    end
 
-    prev = FeedStat.previous_to(stat)
-      |> FeedStat.newest_first()
-      |> FeedStat.limit(1)
-      |> Repo.one()
-
-    next = FeedStat.next_after(stat)
+    next =
+      FeedStat.next_after(stat)
       |> FeedStat.newest_last()
       |> FeedStat.limit(1)
       |> Repo.one()
