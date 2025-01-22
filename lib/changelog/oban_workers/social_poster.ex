@@ -10,10 +10,12 @@ defmodule Changelog.ObanWorkers.SocialPoster do
   def perform(%Oban.Job{args: %{"episode_id" => episode_id}}) do
     episode = Episode |> Repo.get(episode_id) |> Episode.preload_all()
 
-    post_bsky_new_episode_message(episode)
-    post_social_new_episode_message(episode)
-    post_slack_new_episode_message(episode)
-    post_zulip_new_episode_message(episode)
+    if Changelog.Podcast.is_a_changelog_pod(episode.podcast) do
+      post_bsky_new_episode_message(episode)
+      post_social_new_episode_message(episode)
+      post_slack_new_episode_message(episode)
+      post_zulip_new_episode_message(episode)
+    end
 
     :ok
   end

@@ -191,11 +191,12 @@ defmodule Changelog.NotifierTest do
       {Social, [], [post: fn _ -> true end]},
       {Zulip, [], [post: fn _ -> true end]}
     ]) do
-      :ok
+      podcast = insert(:podcast, slug: "news")
+      episode = insert(:published_episode, podcast: podcast)
+      {:ok, episode: episode}
     end
 
-    test "when episode has no guests" do
-      episode = insert(:published_episode)
+    test "when episode has no guests", %{episode: episode} do
       item = episode |> episode_news_item() |> insert()
       Notifier.notify(item)
 
@@ -209,10 +210,9 @@ defmodule Changelog.NotifierTest do
       assert called(Zulip.post(:_))
     end
 
-    test "when episode has guests but none of them have 'thanks' set" do
+    test "when episode has guests but none of them have 'thanks' set", %{episode: episode} do
       g1 = insert(:person)
       g2 = insert(:person)
-      episode = insert(:published_episode)
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
       insert(:episode_guest, episode: episode, person: g2, thanks: false)
       item = episode |> episode_news_item() |> insert()
@@ -228,11 +228,10 @@ defmodule Changelog.NotifierTest do
       assert called(Zulip.post(:_))
     end
 
-    test "when episode has guests and some of them have 'thanks' set" do
+    test "when episode has guests and some of them have 'thanks' set", %{episode: episode} do
       g1 = insert(:person)
       g2 = insert(:person)
       g3 = insert(:person)
-      episode = insert(:published_episode)
       insert(:episode_guest, episode: episode, person: g1, thanks: false)
       eg1 = insert(:episode_guest, episode: episode, person: g2, thanks: true)
       eg2 = insert(:episode_guest, episode: episode, person: g3, thanks: true)
