@@ -2,7 +2,7 @@ defmodule ChangelogWeb.EpisodeController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Episode, NewsItem, Podcast, Subscription}
-  alias ChangelogWeb.{Email, LiveView, TimeView, Xml}
+  alias ChangelogWeb.{Email, EpisodeView, LiveView, TimeView, Xml}
 
   plug :assign_podcast
 
@@ -245,6 +245,15 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> put_flash(:success, "You're no longer subscribed. Resubscribe any time 🤗")
     |> redirect(to: ~p"/#{podcast.slug}/#{episode.slug}")
+  end
+
+  def yt(conn, %{"slug" => slug}, podcast) do
+    episode =
+      assoc(podcast, :episodes)
+      |> Episode.preload_podcast()
+      |> Repo.get_by!(slug: slug)
+
+    redirect(conn, external: EpisodeView.yt_url(episode))
   end
 
   defp assign_podcast(conn, _) do

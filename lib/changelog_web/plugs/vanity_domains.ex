@@ -36,8 +36,7 @@ defmodule ChangelogWeb.Plug.VanityDomains do
   end
 
   defp determine_destination(%{slug: "podcast"}, ["sotl"]) do
-    "https://changelog.typeform.com/to/yjHJiFlv"
-    # "https://changelog.fm/571"
+    changelog_destination(["topic", "sotl"])
   end
 
   defp determine_destination(%{slug: "podcast"}, ["edu"]) do

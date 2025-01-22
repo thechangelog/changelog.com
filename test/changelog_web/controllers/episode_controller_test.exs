@@ -313,6 +313,26 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     end
   end
 
+  describe "yt" do
+    test "redirects to podcast youtube URL when episodes does not have id", %{conn: conn} do
+      p = insert(:podcast, youtube_url: "https://www.youtube.com/changelog")
+      e = insert(:episode, podcast: p)
+
+      conn = get(conn, ~p"/#{p.slug}/#{e.slug}/yt")
+
+      assert_redirected_to(conn, "https://www.youtube.com/changelog")
+    end
+
+    test "redirects to episode youtube URL when episodes has id", %{conn: conn} do
+      p = insert(:podcast, youtube_url: "https://www.youtube.com/changelog")
+      e = insert(:episode, podcast: p, youtube_id: "8675309")
+
+      conn = get(conn, ~p"/#{p.slug}/#{e.slug}/yt")
+
+      assert_redirected_to(conn, "https://youtu.be/8675309")
+    end
+  end
+
   describe "time" do
     test "404 when episode is not recorded live", %{conn: conn} do
       p = insert(:podcast)

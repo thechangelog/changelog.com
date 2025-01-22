@@ -298,6 +298,10 @@ defmodule ChangelogWeb.EpisodeView do
     Github.Source.new("transcripts", episode).repo_url
   end
 
+  def yt_url(%{youtube_id: id}) when not is_nil(id), do: "https://youtu.be/#{id}"
+
+  def yt_url(%{podcast: podcast}), do: podcast.youtube_url
+
   defp chapters_json(chapters) do
     chapters
     |> Enum.with_index()
