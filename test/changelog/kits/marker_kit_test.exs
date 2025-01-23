@@ -23,5 +23,15 @@ defmodule Changelog.MarkerKitTest do
 
       assert MarkerKit.to_youtube(csv) == String.trim(desired)
     end
+
+    test "works for Iterviews 625" do
+      [csv, desired] =
+        "/markers/interviews-625.csv"
+        |> fixtures_path()
+        |> File.read!()
+        |> String.split("---")
+
+      assert MarkerKit.to_youtube(csv) == String.trim(desired)
+    end
   end
 end

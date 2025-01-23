@@ -1,6 +1,6 @@
 defmodule Changelog.Kits.MarkerKit do
   alias ChangelogWeb.TimeView
-  NimbleCSV.define(CsvParser, separator: "\t", escape: "\"")
+  NimbleCSV.define(CsvParser, separator: "\t", escape: "\\")
 
   # Name	Start	Duration	Time Format	Type	Description
   def to_youtube(string) do
