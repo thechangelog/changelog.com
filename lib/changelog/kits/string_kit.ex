@@ -65,6 +65,15 @@ defmodule Changelog.StringKit do
   end
 
   @doc """
+  Removes Markdown-style descriptions from a link. Opposite of `md_delinkify`
+  """
+  def md_bare_linkify(string) do
+    regex = ~r/\[(.*?)\]\((.*?)\)/
+
+    Regex.replace(regex, string, "\\2")
+  end
+
+  @doc """
   Converts 'bare' mentions to Markdown-style links for further processing
   """
   def mentions_linkify(string, []), do: string

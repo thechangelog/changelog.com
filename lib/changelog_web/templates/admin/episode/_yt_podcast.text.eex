@@ -1,0 +1,25 @@
+<%= SharedHelpers.md_to_text(@episode.summary) %>
+
+SUBSCRIBE:
+
+RSS: https://changelog.fm/rss
+Apple: https://changelog.fm/apple
+Spotify: https://changelog.fm/spotify
+Android: https://changelog.fm/android
+Overcast: https://changelog.fm/overcast
+Email: https://changelog.fm/email
+X: https://x.com/changelog
+Bluesky: https://bsky.app/profile/changelog.com
+Mastodon: https://changelog.social/@changelog
+
+SPONSORS:
+<%= for sponsor <- @episode.episode_sponsors do %>
+<%= sponsor.title %> - <%= sponsor.description |> SharedHelpers.md_to_text() %> <%= sponsor.link_url %>
+<% end %>
+LINKS:
+
+<%= @episode.notes |> Changelog.StringKit.md_bare_linkify() %>
+
+CHAPTERS:
+
+<%= @chapters %>

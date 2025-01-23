@@ -92,6 +92,7 @@ export default class EpisodeView {
 
   youtube() {
     let $csvFileDropZone = $(".js-csv-file");
+    let $selectInput = $(".js-episode-select input");
     let outputTextArea = document.querySelector(".js-description-output");
 
     $csvFileDropZone
@@ -121,11 +122,14 @@ export default class EpisodeView {
                   .querySelector("meta[name='csrf-token']")
                   .getAttribute("content")
               },
-              body: JSON.stringify({ csv: e.target.result })
+              body: JSON.stringify({
+                id: $selectInput.val(),
+                csv: e.target.result
+              })
             });
-            let output = await response.json();
+            let json = await response.json();
 
-            outputTextArea.value = output.markers;
+            outputTextArea.value = json.output;
             $csvFileDropZone.removeClass("loading");
 
             outputTextArea.dispatchEvent(new Event("autosize:update"));

@@ -1,0 +1,7 @@
+Moar links worth your attention! 👉 <%= EpisodeView.share_url(@episode) %>
+
+<%= SharedHelpers.md_to_text(@episode.summary) %>
+
+CHAPTERS:
+<%= for chapter <- @episode.audio_chapters do %>
+<%= TimeView.duration(chapter.starts_at) %> <%= chapter.title %><% end %>

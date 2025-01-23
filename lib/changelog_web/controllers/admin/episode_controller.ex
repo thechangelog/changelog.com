@@ -103,9 +103,22 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:news_episodes, news_episodes)
   end
 
-  def youtube(conn = %{method: "POST"}, %{"csv" => csv}, _podcast) do
-    data = Changelog.Kits.MarkerKit.to_youtube(csv)
-    json(conn, %{markers: data})
+  def youtube(conn = %{method: "POST"}, %{"csv" => csv, "id" => id}, podcast) do
+    episode = assoc(podcast, :episodes) |> Episode.preload_sponsors() |> Repo.get_by(id: id)
+    chapters = Changelog.Kits.MarkerKit.to_youtube(csv)
+
+    text =
+      if episode do
+        Phoenix.View.render_to_string(
+          ChangelogWeb.Admin.EpisodeView,
+          "_yt_#{podcast.slug}.text",
+          %{episode: episode, chapters: chapters}
+        )
+      else
+        chapters
+      end
+
+    json(conn, %{output: String.trim(text)})
   end
 
   def youtube(conn, _params, podcast) do
@@ -114,6 +127,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
       |> assoc(:episodes)
       |> Episode.newest_first()
       |> Episode.limit(50)
+      |> Repo.all()
 
     conn
     |> assign(:episodes, episodes)

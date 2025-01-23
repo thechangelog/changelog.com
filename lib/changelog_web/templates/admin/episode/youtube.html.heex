@@ -12,22 +12,36 @@
 
 <div class="ui basic segment text container">
   <form class="ui form">
+    <div class="field">
+      <div class="ui selection dropdown js-episode-select">
+        <input type="hidden" name="episode">
+        <i class="dropdown icon"></i>
+        <div class="default text">Select an episode</div>
+        <div class="menu">
+        <%= for episode <- @episodes do %>
+          <div class="item" data-value={episode.id}><%= numbered_title(episode) %></div>
+        <% end %>
+
+        </div>
+      </div>
+    </div>
+
     <div class="ui padded segment js-csv-file">
       <div class="ui icon message">
           <i class="file audio icon"></i>
           <div class="content">
             <div class="header">
-              Drop a markered .CSV file here to get a YouTube description
+              Select an episode & drop a markered .CSV file here
             </div>
           </div>
       </div>
     </div>
 
     <div class="ui padded segment">
-    <div class="field">
-      <label>Output</label>
-      <textarea class="js-description-output" rows="1"></textarea>
+      <div class="field">
+        <label>Description</label>
+        <textarea class="js-description-output" rows="1"></textarea>
+        </div>
       </div>
-    </div>
   </form>
 </div>

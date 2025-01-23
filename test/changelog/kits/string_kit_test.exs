@@ -165,6 +165,27 @@ defmodule Changelog.StringKitTest do
     end
   end
 
+  describe "md_bare_linkify/1" do
+    test "it leaves strings with no links in them alone" do
+      raw = "this has zero ! links."
+      assert StringKit.md_bare_linkify(raw) == raw
+    end
+
+    test "it works with a single link in there" do
+      a = "This has [one](http://test.com) link and that's it"
+      b = "This has http://test.com link and that's it"
+
+      assert StringKit.md_bare_linkify(a) == b
+    end
+
+    test "it works with multiple links in there" do
+      a = "This has [two](http://test.com) links and that's [all](http://www.com)."
+      b = "This has http://test.com links and that's http://www.com."
+
+      assert StringKit.md_bare_linkify(a) == b
+    end
+  end
+
   describe "mentions_linkify/1" do
     test "it no-ops when no mentions to linkify" do
       raw = ~s{Yo here is my _super cool_ thing}
