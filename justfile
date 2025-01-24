@@ -81,9 +81,11 @@ build-runtime-image:
 # Add Oban Pro hex repository
 [group('team')]
 add-oban-pro-hex-repo:
-    [ -n "$OBAN_LICENSE_KEY" ] \
-    && [ -n "$OBAN_KEY_FINGERPRINT" ] \
-    && mix hex.repo add oban https://getoban.pro/repo --fetch-public-key $OBAN_KEY_FINGERPRINT --auth-key $OBAN_LICENSE_KEY
+    #!/usr/bin/env bash
+    if [ -n "$OBAN_LICENSE_KEY" ] && [ -n "$OBAN_KEY_FINGERPRINT" ]
+    then
+        mix hex.repo add oban https://getoban.pro/repo --fetch-public-key $OBAN_KEY_FINGERPRINT --auth-key $OBAN_LICENSE_KEY
+    fi
 
 # Get app dependencies
 [group('contributor')]
