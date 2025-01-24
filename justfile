@@ -67,6 +67,17 @@ install: asdf brew imagemagick gpg icu4c
 
 export ELIXIR_ERL_OPTIONS := if os() == "linux" { "+fnu" } else { "" }
 
+# Upgrade $component=<erlang|elixir|nodejs>
+[group('contributor')]
+upgrade component:
+    asdf install {{ component }} latest
+    asdf local {{ component }} latest
+
+# Builds our runtime image: https://github.com/thechangelog/changelog.com/pkgs/container/changelog-runtime
+[group('contributor')]
+build-runtime-image:
+    cd magefiles && go run main.go -w ../ image:runtime
+
 # Add Oban Pro hex repository
 [group('team')]
 add-oban-pro-hex-repo:

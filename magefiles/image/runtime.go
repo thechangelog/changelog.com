@@ -59,6 +59,8 @@ func (image *Image) Runtime() *Image {
 	return image.
 		Elixir().
 		WithAptPackages().
+		WithCACertificates().
+		WithElixirDeps().
 		WithGit().
 		WithImagemagick().
 		WithCmarkPrerequisites().
@@ -74,7 +76,13 @@ func (image *Image) Elixir() *Image {
 		From(image.ElixirImageRef()).
 		WithExec([]string{
 			"mix", "--version",
-		}).
+		})
+
+	return image
+}
+
+func (image *Image) WithElixirDeps() *Image {
+	image.container = image.container.
 		WithExec([]string{
 			"echo", "Install local rebar...",
 		}).
@@ -107,6 +115,18 @@ func (image *Image) WithAptPackages() *Image {
 		}).
 		WithExec([]string{
 			"apt-get", "update",
+		})
+
+	return image
+}
+
+func (image *Image) WithCACertificates() *Image {
+	image.container = image.container.
+		WithExec([]string{
+			"apt-get", "install", "--yes", "ca-certificates",
+		}).
+		WithExec([]string{
+			"ls", "/etc/ssl/certs",
 		})
 
 	return image

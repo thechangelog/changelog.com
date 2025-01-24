@@ -126,11 +126,11 @@ When the above succeeds, this is the end-result that you can expect to see on ma
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Run e.g. `asdf install erlang latest:26`
-    - If a new version gets installed, run `asdf local erlang <INSTALLED_VERSION>`
-2. Repeat previous step for Elixir & Node.js
+1. Run `just upgrade erlang elixir nodejs`
+    - You can also upgrade one at a time, e.g. `just upgrade erlang`
+2. Ensure the runtime image builds locally: `just build-runtime-image`
+    - If [the combination of Erlang, Elixir & Ubuntu do not exist](https://github.com/thechangelog/changelog.com/issues/539), you will need to update the Ubuntu version in `magefiles/tools/main.go` e.g. [PR#?]()
 3. Commit & push to check that image builds successfully in GitHub Actions
-    - _Alternatively_, build the image locally via: `$(cd magefiles && go run main.go -w ../ image:runtime)`
 
 After you confirm that the image builds successfully:
 1. Update `.devcontainer/docker-compose.yml` with new image tag
