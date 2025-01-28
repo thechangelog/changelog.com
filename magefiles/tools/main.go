@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/thechangelog/changelog.com/magefiles/sysexit"
@@ -24,7 +25,7 @@ func CurrentVersions() *Versions {
 		toolVersions: toolVersions(),
 		Ubuntu: Ubuntu{
 			// https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-noble
-			Short: "noble-20240429",
+			Short: "noble-20241015",
 			Long:  "24.04 LTS (Noble Numbat)",
 		},
 	}
@@ -33,7 +34,9 @@ func CurrentVersions() *Versions {
 // https://github.com/elixir-lang/elixir/releases
 // asdf list all elixir
 func (v *Versions) Elixir() string {
-	return v.toolVersions["elixir"]
+	elixirVersion := v.toolVersions["elixir"]
+	elixirVersionSemVer := regexp.MustCompile(`^(\d+\.\d+\.\d+)`)
+	return elixirVersionSemVer.FindString(elixirVersion)
 }
 
 // https://github.com/erlang/otp/releases
