@@ -5,6 +5,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     Episode,
     EpisodeRequest,
     Fastly,
+    Membership,
     NewsItem,
     NewsItemComment,
     Newsletters,
@@ -61,6 +62,12 @@ defmodule ChangelogWeb.Admin.PersonController do
       |> EpisodeRequest.preload_all()
       |> Repo.all()
 
+    memberships =
+      person
+      |> assoc(:memberships)
+      |> Membership.newest_first()
+      |> Repo.all()
+
     subscriptions =
       person
       |> assoc(:subscriptions)
@@ -108,6 +115,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> assign(:person, person)
     |> assign(:episodes, episodes)
     |> assign(:episode_requests, episode_requests)
+    |> assign(:memberships, memberships)
     |> assign(:subscriptions, subscriptions)
     |> assign(:published, published)
     |> assign(:declined, declined)

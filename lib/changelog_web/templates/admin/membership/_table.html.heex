@@ -1,7 +1,10 @@
+<% # sometimes this table is rendered within a specific person context, sometimes not %>
 <table class="ui celled striped table">
   <thead>
     <tr>
+    <%= if !assigns[:person] do %>
       <th>Person</th>
+    <% end %>
       <th>Status</th>
       <th>Started At</th>
       <th>Last Changed At</th>
@@ -14,6 +17,7 @@
   <tbody>
   <%= for membership <- @memberships do %>
     <tr>
+    <%= if !assigns[:person] do %>
       <td>
         <%= link to: ~p"/admin/people/#{membership.person}", title: membership.person.name, data: [popup: true] do %>
           <img class="ui avatar image" src={PersonView.avatar_url(membership.person)}>
@@ -21,12 +25,12 @@
         <%= membership.person.name %>
         (<%= membership.person.handle %>)
       </td>
+    <% end %>
       <td><%= status_label(membership) %></td>
       <td><%= AdminHelpers.ts(membership.started_at) %></td>
       <td><%= AdminHelpers.ts(last_changed_at(membership)) %></td>
       <td class="center aligned">
         <div class="ui small basic buttons">
-          <%= AdminHelpers.icon_link("eye", to: Routes.admin_membership_path(@conn, :show, membership)) %>
           <%= AdminHelpers.icon_link("stripe s", to: stripe_url(membership), rel: "external", title: "View in Stripe") %>
         <%= if membership.supercast_id do %>
           <%= AdminHelpers.icon_link("podcast", to: supercast_url(membership), rel: "external", title: "View in Supercast") %>

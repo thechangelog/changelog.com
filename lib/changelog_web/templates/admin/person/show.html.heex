@@ -53,6 +53,13 @@
 <% end %>
 </div>
 
+<%= if Enum.any?(@memberships) do %>
+<div class="ui basic segment">
+  <h2 class="ui header">Membership History</h2>
+  <%= render(MembershipView, "_table.html", assigns) %>
+</div>
+<% end %>
+
 <%= if Enum.any?(@feeds) do %>
 <div class="ui basic segment">
   <h2 class="ui header">Feeds</h2>
