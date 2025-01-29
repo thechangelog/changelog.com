@@ -76,7 +76,7 @@ defmodule ChangelogWeb.Xml.Feed do
 
   defp enclosure(feed, episode) do
     {url, bytes} =
-      if feed.plusplus do
+      if feed.plusplus && episode.plusplus_file do
         {EpisodeView.plusplus_url(episode), episode.plusplus_bytes}
       else
         {EpisodeView.audio_url(episode), episode.audio_bytes}
