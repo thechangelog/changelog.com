@@ -62,8 +62,9 @@ defmodule ChangelogWeb do
   def admin_view do
     quote do
       use Phoenix.View, root: "lib/changelog_web/templates", namespace: ChangelogWeb
-      use Phoenix.HTML
+      use PhoenixHTMLHelpers
 
+      import Phoenix.HTML
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 
       alias ChangelogWeb.Router.Helpers, as: Routes
@@ -103,9 +104,10 @@ defmodule ChangelogWeb do
         root: "lib/changelog_web/templates",
         namespace: ChangelogWeb,
         pattern: "**/*"
+      use PhoenixHTMLHelpers
 
-      use Phoenix.HTML
-
+      import Phoenix.HTML
+      import Phoenix.HTML.Form
       import Phoenix.Component
       import Phoenix.Controller,
         only: [current_url: 1, get_flash: 1, get_flash: 2, view_module: 1]

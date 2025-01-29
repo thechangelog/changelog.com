@@ -41,7 +41,7 @@
       <label>Title Format</label>
       <%= text_input(f, :title_format, placeholder: "{title}") %>
       <%= PublicHelpers.error_message(f, :title_format) %>
-      <p class="form-element-note">Leave this empty if you just want {title}. Available Fields: {title}, {subtitle}, {podcast}, {number}</p>
+      <p class="form-element-note">Leave this empty if you just want &lbrace;title&rbrace;. Available Fields: &lbrace;title&rbrace;, &lbrace;subtitle&rbrace;, &lbrace;podcast&rbrace;, &lbrace;number&rbrace;</p>
     </div>
 
     <div class={"form-element #{PublicHelpers.error_class(f, :starts_on)}"}>
@@ -58,22 +58,22 @@
       <p>&nbsp;</p>
 
       <p>
-        <strong>Format</strong>: {title}<br/>
+        <strong>Format</strong>: &lbrace;title&rbrace;<br/>
         <strong>Result</strong>: The man behind the Sandwich
       </p>
 
       <p>
-        <strong>Format</strong>: {title} ({subtitle})<br/>
+        <strong>Format</strong>: &lbrace;title&rbrace; (&lbrace;subtitle&rbrace;)<br/>
         <strong>Result</strong>: The man behind the Sandwich (featuring Adam Lisagor)
       </p>
 
       <p>
-        <strong>Format</strong>: {podcast}: {title}<br/>
+        <strong>Format</strong>: &lbrace;podcast&rbrace;: &lbrace;title&rbrace;<br/>
         <strong>Result</strong>: Changelog Interviews: The man behind the Sandwich
       </p>
 
       <p>
-        <strong>Format</strong>: {title} ({podcast} #{number})<br/>
+        <strong>Format</strong>: &lbrace;title&rbrace; (&lbrace;podcast&rbrace; #&lbrace;number&rbrace;)<br/>
         <strong>Result</strong>: The man behind the Sandwich (Changelog Interviews #601)
       </p>
 

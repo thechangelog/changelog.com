@@ -1,5 +1,5 @@
 defmodule ChangelogWeb.Helpers.PublicHelpers do
-  use Phoenix.HTML
+  use PhoenixHTMLHelpers
 
   alias Changelog.{Person, Regexp}
 

@@ -1,5 +1,6 @@
 defmodule ChangelogWeb.Helpers.AdminHelpers do
-  use Phoenix.HTML
+  use PhoenixHTMLHelpers
+
   import Phoenix.Component, only: [sigil_H: 2]
 
   alias Changelog.{Repo, StringKit}

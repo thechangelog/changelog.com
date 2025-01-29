@@ -1,11 +1,6 @@
 defmodule Changelog.Mixfile do
   use Mix.Project
 
-  @oban_envs [:prod]
-  if System.get_env("OBAN_LICENSE_KEY") do
-    @oban_envs [:dev, :prod]
-  end
-
   def project do
     [
       app: :changelog,
@@ -42,12 +37,13 @@ defmodule Changelog.Mixfile do
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.3"},
-      {:phoenix_live_view, "~> 0.20.2"},
+      {:phoenix_html, "~> 4.2"},
+      {:phoenix_html_helpers, "~> 1.0"},
+      {:phoenix_live_view, "~> 1.0.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:plug_cowboy, "~> 2.5"},
-      {:oban, "~> 2.15"},
-      {:oban_web, "~> 2.10.2", repo: "oban", only: @oban_envs},
+      {:oban, "~> 2.19"},
+      {:oban_web, "~> 2.11"},
       {:timex, "~> 3.0"},
       {:scrivener_ecto, "~> 3.0"},
       {:cmark, "~> 0.6"},
@@ -59,7 +55,7 @@ defmodule Changelog.Mixfile do
       {:gen_smtp, "~> 1.0"},
       {:httpoison, "~> 2.2.1", override: true},
       {:jason, "~> 1.0"},
-      {:con_cache, "~> 1.0.0"},
+      {:con_cache, "~> 1.1.1"},
       {:ex_aws, "~> 2.2"},
       {:ex_aws_s3, "~> 2.3"},
       {:nimble_csv, "~> 1.2.0"},
@@ -82,10 +78,12 @@ defmodule Changelog.Mixfile do
       {:opentelemetry_exporter, "~> 1.0"},
       {:opentelemetry, "~> 1.0"},
       {:opentelemetry_api, "~> 1.0"},
-      {:opentelemetry_cowboy, "~> 0.3.0"},
+      {:opentelemetry_cowboy, "~> 1.0"},
       {:opentelemetry_ecto, "~> 1.0"},
       {:opentelemetry_oban, "~> 1.0"},
-      {:opentelemetry_phoenix, "~> 1.0"}
+      {:opentelemetry_phoenix, "~> 2.0"},
+      # only necessary until https://github.com/open-telemetry/opentelemetry-erlang-contrib/issues/428 closes
+      {:opentelemetry_semantic_conventions, "~> 1.27", override: true}
     ]
   end
 
@@ -99,8 +97,7 @@ defmodule Changelog.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"],
-      "deps.get_dev": ["deps.unlock oban_web oban_met", "deps.get --only dev"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

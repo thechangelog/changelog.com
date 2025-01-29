@@ -1,5 +1,5 @@
 defmodule ChangelogWeb.Helpers.SharedHelpers do
-  use Phoenix.HTML
+  use PhoenixHTMLHelpers
 
   alias Changelog.StringKit
   alias Changelog.{ListKit, Regexp}
