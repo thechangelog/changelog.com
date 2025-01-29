@@ -26,6 +26,7 @@ defmodule ChangelogWeb.Home.FeedController do
   end
 
   def create(conn = %{assigns: %{current_user: user}}, %{"feed" => feed_params}) do
+    feed_params = apply_plusplus_policy(user, feed_params)
     changeset = Feed.insert_changeset(%Feed{owner_id: user.id}, feed_params)
 
     case Repo.insert(changeset) do
@@ -50,7 +51,8 @@ defmodule ChangelogWeb.Home.FeedController do
     render(conn, :edit, feed: feed, changeset: changeset)
   end
 
-  def update(conn = %{assigns: %{feed: feed}}, params = %{"feed" => feed_params}) do
+  def update(conn = %{assigns: %{current_user: user, feed: feed}}, params = %{"feed" => feed_params}) do
+    feed_params = apply_plusplus_policy(user, feed_params)
     changeset = Feed.update_changeset(feed, feed_params)
 
     case Repo.update(changeset) do
@@ -90,6 +92,14 @@ defmodule ChangelogWeb.Home.FeedController do
     conn
     |> put_flash(:success, "Your feed is being rebuilt as we speak 🥂")
     |> redirect_next(params, ~p"/~/feeds")
+  end
+
+  defp apply_plusplus_policy(user, params) do
+    if Policies.Feed.plusplus(user) do
+      params
+    else
+      Map.put(params, "plusplus", false)
+    end
   end
 
   defp preload_current_user_extras(conn = %{assigns: %{current_user: me}}, _) do

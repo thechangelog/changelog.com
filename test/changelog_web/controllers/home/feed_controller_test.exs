@@ -74,6 +74,17 @@ defmodule ChangelogWeb.HomeFeedControllerTest do
     assert redirected_to(conn) == ~p"/~/feeds"
   end
 
+  @tag :as_inserted_user
+  test "does not set plusplus when against policy", %{conn: conn} do
+    feed = insert(:feed, plusplus: false, owner: conn.assigns.current_user)
+
+    put(conn, ~p"/~/feeds/#{feed}", feed: Map.merge(@valid_attrs, %{plusplus: true}))
+
+    feed = Repo.get(Feed, feed.id)
+
+    assert feed.plusplus == false
+  end
+
   @tag :as_inserted_member
   test "refreshes feed and redirects", %{conn: conn} do
     feed = insert(:feed, owner: conn.assigns.current_user)

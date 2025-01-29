@@ -12,6 +12,8 @@ defmodule Changelog.Policies.Feed do
   def update(actor, feed), do: edit(actor, feed)
   def delete(actor, feed), do: edit(actor, feed)
 
+  def plusplus(actor), do: is_admin_or_active_member(actor)
+
   defp is_admin_or_active_member(actor) do
     is_admin(actor) || is_active_member(actor)
   end

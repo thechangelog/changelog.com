@@ -103,11 +103,14 @@
   <div class="form-checklist">
     <div class={"form-checklist-item #{PublicHelpers.error_class(f, :plusplus)}"}>
       <label>
-        <%= checkbox(f, :plusplus) %>
+        <%= checkbox(f, :plusplus, disabled: !Policies.Feed.plusplus(@current_user)) %>
         <span class="form-checklist-item-box"></span>
         <span class="form-checklist-item-text">This feed should contain Changelog++ (ad-free, extended) audio</span>
       </label>
     </div>
+  <%= if !Policies.Feed.plusplus(@current_user) do %>
+    <p class="form-element-note">Only available to <%= link("Changelog++", to: ~p"/++") %> members.</p>
+  <% end %>
 
     <div class={"form-checklist-item #{PublicHelpers.error_class(f, :autosub)}"}>
       <label>
