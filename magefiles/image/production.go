@@ -65,6 +65,8 @@ func (image *Image) ProductionClean() *Image {
 	image = image.
 		Elixir().
 		WithAptPackages().
+		WithCACertificates().
+		WithElixirDeps().
 		WithGit().
 		WithImagemagick().
 		WithOnePassword().
