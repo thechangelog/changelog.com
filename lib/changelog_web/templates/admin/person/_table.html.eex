@@ -23,6 +23,7 @@
         <%= if person.admin do %>
           <div class="ui tiny blue basic label">Admin</div>
         <% end %>
+        <%= plusplus_label(person) %>
         <%= if String.length(person.bio || "") > 500 do %>
           <div class="ui tiny yellow basic label">Long Bio</div>
         <% end %>

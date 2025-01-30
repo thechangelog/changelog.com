@@ -77,6 +77,7 @@ defmodule ChangelogWeb.Admin.SearchController do
       or_where: ilike(q.handle, ^"%#{q}%"),
       or_where: ilike(q.email, ^"%#{q}%")
     )
+    |> Person.preload_active_membership()
     |> Repo.all()
   end
 

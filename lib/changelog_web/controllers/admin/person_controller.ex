@@ -38,6 +38,7 @@ defmodule ChangelogWeb.Admin.PersonController do
         _else -> Person
       end
       |> Person.newest_first()
+      |> Person.preload_active_membership()
       |> Repo.paginate(params)
 
     conn

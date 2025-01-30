@@ -360,6 +360,9 @@ defmodule Changelog.Person do
     |> Repo.count()
   end
 
+  def preload_active_membership(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :active_membership)
+  def preload_active_membership(person), do: Repo.preload(person, :active_membership)
+
   def preload_subscriptions(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :subscriptions)
   def preload_subscriptions(person), do: Repo.preload(person, :subscriptions)
 

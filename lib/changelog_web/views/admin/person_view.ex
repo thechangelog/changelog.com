@@ -38,4 +38,12 @@ defmodule ChangelogWeb.Admin.PersonView do
     end)
     |> Enum.join("")
   end
+
+  def plusplus_label(person) do
+    if person.active_membership do
+    link(to: ~p"/admin/memberships/#{person.active_membership}/edit") do
+      content_tag(:span, "++", class: "ui tiny blue label")
+    end
+    end
+  end
 end
