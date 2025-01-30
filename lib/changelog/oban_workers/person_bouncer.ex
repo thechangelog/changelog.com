@@ -1,4 +1,4 @@
-defmodule Changelog.ObanWorkers.Bouncer do
+defmodule Changelog.ObanWorkers.PersonBouncer do
   @moduledoc """
   This module defines the Oban worker for getting hard bounces/spam from CM and
   deleting the associated people records from the system
