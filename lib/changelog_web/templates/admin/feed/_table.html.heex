@@ -23,6 +23,7 @@
       <%= link to: ~p"/admin/people/#{feed.owner}", title: feed.owner.name, data: [popup: true] do %>
         <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(feed.owner)}> <%= feed.owner.name %>
       <% end %>
+      <%= Admin.PersonView.plusplus_label(feed.owner) %>
       </td>
     <% end %>
       <td>

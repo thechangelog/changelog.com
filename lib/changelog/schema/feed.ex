@@ -57,8 +57,8 @@ defmodule Changelog.Feed do
     |> preload_owner()
   end
 
-  def preload_owner(query = %Ecto.Query{}), do: Ecto.Query.preload(query, :owner)
-  def preload_owner(feed), do: Repo.preload(feed, :owner)
+  def preload_owner(query = %Ecto.Query{}), do: Ecto.Query.preload(query, owner: :active_membership)
+  def preload_owner(feed), do: Repo.preload(feed, owner: :active_membership)
 
   def refresh!(feed) do
     # using update_all to avoid auto `updated_at` change

@@ -15,5 +15,6 @@
 <div class="ui basic segment">
 <%= if Enum.any?(@page.entries) do %>
   <%= render("_table.html", Map.merge(assigns, %{feeds: @page.entries})) %>
+  <%= render(Admin.SharedView, "_pagination.html", assigns) %>
 <% end %>
 </div>

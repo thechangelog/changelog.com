@@ -14,7 +14,7 @@ defmodule ChangelogWeb.Admin.FeedController do
       Feed
       |> Feed.newest_first()
       |> Feed.preload_all()
-      |> Repo.paginate(params)
+      |> Repo.paginate(Map.put(params, :page_size, 100))
 
     conn
     |> assign(:page, page)
