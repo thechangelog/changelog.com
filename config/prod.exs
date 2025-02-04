@@ -72,6 +72,8 @@ config :changelog, Oban,
        {"00 3 * * *", Changelog.ObanWorkers.ZulipImporter},
        # 3:30am daily
        {"30 3 * * *", Changelog.ObanWorkers.PersonBouncer},
+       # 3:45am daily
+       {"45 3 * * *", Changelog.ObanWorkers.FeedBouncer},
        # 4am daily
        {"00 4 * * *", Changelog.ObanWorkers.EpisodeStatsProcessor},
        # 4:45am daily
