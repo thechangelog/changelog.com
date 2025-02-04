@@ -47,6 +47,7 @@ defmodule Changelog.Zulip.Client do
   end
 
   def post_invite(email) do
+    email = URI.encode_www_form(email)
     params = ~s(invitee_emails=#{email}&stream_ids=[]&include_realm_default_subscriptions=true)
     headers = with_admin_headers()
 
