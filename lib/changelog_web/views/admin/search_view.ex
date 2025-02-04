@@ -2,7 +2,6 @@ defmodule ChangelogWeb.Admin.SearchView do
   use ChangelogWeb, :admin_view
 
   alias Changelog.{EpisodeSponsor, Faker, NewsItem, Repo}
-  alias ChangelogWeb.Endpoint
 
   alias ChangelogWeb.Admin.{
     TopicView,
@@ -86,7 +85,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{
       id: episode.id,
       title: EpisodeView.numbered_title(episode),
-      url: Routes.admin_podcast_episode_path(Endpoint, :show, episode.podcast.slug, episode.slug)
+      url: ~p"/admin/podcasts/#{episode.podcast.slug}/episodes/#{episode.slug}"
     }
   end
 
@@ -94,7 +93,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{
       id: news_item.id,
       title: news_item.headline,
-      url: Routes.admin_news_item_path(Endpoint, :edit, news_item)
+      url: ~p"/admin/news/items/#{news_item}"
     }
   end
 
@@ -103,7 +102,7 @@ defmodule ChangelogWeb.Admin.SearchView do
       id: news_source.id,
       title: news_source.name,
       image: NewsSourceView.icon_url(news_source),
-      url: Routes.admin_news_source_path(Endpoint, :edit, news_source)
+      url: ~p"/admin/news/sources/#{news_source}"
     }
   end
 
@@ -121,7 +120,7 @@ defmodule ChangelogWeb.Admin.SearchView do
       extended_title: "#{title} #{description}",
       description: description,
       image: PersonView.avatar_url(person),
-      url: Routes.admin_person_path(Endpoint, :edit, person)
+      url: ~p"/admin/people/#{person}"
     }
   end
 
@@ -130,7 +129,7 @@ defmodule ChangelogWeb.Admin.SearchView do
       id: podcast.id,
       title: podcast.name,
       image: PodcastView.cover_url(podcast, :small),
-      url: Routes.admin_podcast_path(Endpoint, :edit, podcast.slug)
+      url: ~p"/admin/podcasts/#{podcast.slug}"
     }
   end
 
@@ -138,7 +137,7 @@ defmodule ChangelogWeb.Admin.SearchView do
     %{
       id: post.id,
       title: post.title,
-      url: Routes.admin_post_path(Endpoint, :edit, post)
+      url: ~p"/admin/posts/#{post}"
     }
   end
 
@@ -161,7 +160,7 @@ defmodule ChangelogWeb.Admin.SearchView do
       id: sponsor.id,
       title: sponsor.name,
       image: SponsorView.avatar_url(sponsor, :small),
-      url: Routes.admin_sponsor_path(Endpoint, :show, sponsor),
+      url: ~p"/admin/sponsors/#{sponsor}",
       extras: extras
     }
   end
@@ -171,7 +170,7 @@ defmodule ChangelogWeb.Admin.SearchView do
       id: topic.id,
       title: topic.name,
       image: TopicView.icon_url(topic),
-      url: Routes.admin_topic_path(Endpoint, :edit, topic.slug)
+      url: ~p"/admin/topics/#{topic.slug}"
     }
   end
 end
