@@ -44,13 +44,15 @@
       <td><%= AdminHelpers.ts(feed.refreshed_at) %></td>
       <td><%= TimeView.hacker_date(feed.starts_on) %></td>
       <td><%= link(length(feed.agents), to: ~p"/admin/feeds/#{feed}/agents") %></td>
+    <%= if length(feed.podcast_ids) > 6 do %>
+      <td>All</td>
+    <% else %>
       <td class="ui mini images">
-      <%= for podcast <- @podcasts do %>
-        <%= if Enum.member?(feed.podcast_ids, podcast.id) do %>
+      <%= for podcast <- Enum.filter(@podcasts, fn p -> Enum.member?(feed.podcast_ids, p.id) end) do %>
         <img class="ui middle aligned image" src={PodcastView.cover_url(podcast, :small)}>
-        <% end %>
       <% end %>
       </td>
+    <% end %>
       <td class="center aligned">
         <div class="ui small basic buttons">
           <%= AdminHelpers.icon_link("refresh", to: ~p"/admin/feeds/#{feed}/refresh", method: :post, title: "Refresh Feed") %>
