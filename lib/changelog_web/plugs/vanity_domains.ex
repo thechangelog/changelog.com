@@ -57,6 +57,11 @@ defmodule ChangelogWeb.Plug.VanityDomains do
     end
   end)
 
+  # game show forms-related redirects
+  defp determine_destination(%{slug: "podcast"}, ["feud"]) do
+    "https://changelog.typeform.com/to/liRyvIRN"
+  end
+
   defp determine_destination(pod = %{slug: "gotime"}, ["gs"]) do
     determine_destination(pod, ["games"])
   end
