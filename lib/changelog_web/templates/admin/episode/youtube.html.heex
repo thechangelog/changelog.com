@@ -11,21 +11,21 @@
 </div>
 
 <div class="ui basic segment text container">
-  <form class="ui form">
+  <%= form_tag ~p"/admin/podcasts/#{@podcast.slug}/youtube", class: "ui form" do %>
     <div class="field">
       <div class="ui selection dropdown js-episode-select">
-        <input type="hidden" name="episode">
+        <input type="hidden" name="episode_id">
         <i class="dropdown icon"></i>
         <div class="default text">Select an episode</div>
         <div class="menu">
         <%= for episode <- @episodes do %>
           <div class="item" data-value={episode.id}><%= numbered_title(episode) %></div>
         <% end %>
-
         </div>
       </div>
     </div>
 
+  <%= if !Podcast.is_news(@podcast) do %>
     <div class="ui padded segment js-csv-file">
       <div class="ui icon message">
           <i class="file audio icon"></i>
@@ -36,12 +36,28 @@
           </div>
       </div>
     </div>
+  <% end %>
 
     <div class="ui padded segment">
       <div class="field">
         <label>Description</label>
         <textarea class="js-description-output" rows="1"></textarea>
+      </div>
+    </div>
+
+    <div class="ui padded segment hidden js-youtube-id">
+      <p>Or quickly link it to a YouTube video</p>
+
+      <div class="two fields">
+        <div class={"inline field"}>
+          <label>YouTube ID:</label>
+          <input type="text", placeholder="dQw4w9WgXcQ" name="youtube_id" mask="slug" required/>
+        </div>
+
+        <div class="field">
+          <%= AdminHelpers.submit_button(:primary, "Save") %>
         </div>
       </div>
-  </form>
+    </div>
+  <% end %>
 </div>

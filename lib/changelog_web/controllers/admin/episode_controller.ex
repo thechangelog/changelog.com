@@ -103,7 +103,24 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> assign(:news_episodes, news_episodes)
   end
 
-  def youtube(conn = %{method: "POST"}, %{"csv" => csv, "id" => id}, podcast) do
+  def youtube(conn = %{method: "POST"}, %{"episode_id" => id, "youtube_id" => yt}, podcast) do
+    episode = assoc(podcast, :episodes) |> Repo.get_by(id: id)
+    changeset = Episode.admin_changeset(episode, %{youtube_id: yt})
+
+    case Repo.update(changeset) do
+      {:ok, _episode} ->
+        conn
+        |> put_flash(:result, "success")
+        |> redirect(to: ~p"/admin/podcasts/#{podcast.slug}/episodes")
+
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:result, "failure")
+        |> redirect(to: ~p"/admin/podcasts/#{podcast.slug}/youtube")
+    end
+  end
+
+  def youtube(conn = %{method: "POST"}, %{"csv" => csv, "episode_id" => id}, podcast) do
     episode = assoc(podcast, :episodes) |> Episode.preload_sponsors() |> Repo.get_by(id: id)
     chapters = Changelog.Kits.MarkerKit.to_youtube(csv)
 

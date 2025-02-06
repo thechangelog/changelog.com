@@ -95,6 +95,33 @@ export default class EpisodeView {
     let $selectInput = $(".js-episode-select input");
     let outputTextArea = document.querySelector(".js-description-output");
 
+    $selectInput.on("change", (_event) => {
+      $(".js-youtube-id").removeClass("hidden");
+    });
+
+    // When there's no CSV drop zone, submit without it
+    if (!$csvFileDropZone.length) {
+      $selectInput.on("change", async (_event) => {
+        let response = await fetch(window.location.href, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-csrf-token": document
+              .querySelector("meta[name='csrf-token']")
+              .getAttribute("content")
+          },
+          body: JSON.stringify({
+            episode_id: $selectInput.val(),
+            csv: "" // blank csv because it's ignored anyway
+          })
+        });
+        let json = await response.json();
+
+        outputTextArea.value = json.output;
+        outputTextArea.dispatchEvent(new Event("autosize:update"));
+      });
+    }
+
     $csvFileDropZone
       .on("dragover", function (event) {
         event.preventDefault();
@@ -123,7 +150,7 @@ export default class EpisodeView {
                   .getAttribute("content")
               },
               body: JSON.stringify({
-                id: $selectInput.val(),
+                episode_id: $selectInput.val(),
                 csv: e.target.result
               })
             });
@@ -133,7 +160,6 @@ export default class EpisodeView {
             $csvFileDropZone.removeClass("loading");
 
             outputTextArea.dispatchEvent(new Event("autosize:update"));
-            outputTextArea.select();
           };
 
           reader.readAsText(file.getAsFile());

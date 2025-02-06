@@ -14,10 +14,11 @@ defmodule ChangelogWeb.Admin.EpisodeView do
   def megabytes(episode), do: EpisodeView.megabytes(episode)
   def megabytes(episode, type), do: EpisodeView.megabytes(episode, type)
   def numbered_title(episode), do: EpisodeView.numbered_title(episode)
+  def yt_url(episode), do: EpisodeView.yt_url(episode)
 
   def agents(episode_stats) when is_list(episode_stats) do
     episode_stats
-    |> Enum.map(&(&1.demographics["agents"]))
+    |> Enum.map(& &1.demographics["agents"])
     # remove (raw) duplicates, adding up download counts along the way
     |> Enum.reduce(%{}, fn map, acc ->
       Map.merge(acc, map, fn _k, v1, v2 -> v1 + v2 end)
@@ -30,8 +31,12 @@ defmodule ChangelogWeb.Admin.EpisodeView do
     # remove (id'd) duplicates, adding download counts and accumulating raw user agents
     |> Enum.reduce(%{}, fn map, acc ->
       Map.merge(acc, map, fn _k, v1, v2 ->
-        %{"type" => v1["type"], "count" => v1["count"] + v2["count"], "raw" => v1["raw"] ++ v2["raw"]}
-        end)
+        %{
+          "type" => v1["type"],
+          "count" => v1["count"] + v2["count"],
+          "raw" => v1["raw"] ++ v2["raw"]
+        }
+      end)
     end)
     |> Enum.filter(fn {_name, data} -> data["type"] != "bot" end)
   end

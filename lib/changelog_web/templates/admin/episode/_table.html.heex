@@ -84,6 +84,9 @@
     <% end %>
       <td class="right aligned">
         <div class="ui small basic buttons">
+        <%= if episode.youtube_id do %>
+          <%= AdminHelpers.icon_link("youtube", to: yt_url(episode), rel: "external", title: "View on YT") %>
+        <% end %>
         <%= if Episode.is_published(episode) do %>
           <%= AdminHelpers.icon_link("line chart", to: ~p"/admin/podcasts/#{podcast.slug}/episodes/#{episode.slug}", title: "View Stats") %>
           <%= AdminHelpers.icon_link("refresh", to: ~p"/admin/podcasts/#{podcast.slug}/episodes/#{episode.slug}/transcript", method: :post, title: "Refresh Transcript") %>
