@@ -26,8 +26,8 @@
 
     <ul>
       <li>We offer pre-roll and mid-roll sponsorships for this podcast</li>
-      <li><mark>$2,500 per week</mark> &mdash; two (2) episodes per week</li>
-      <li>Four (4) week minimum with an estimated reach between 160,000 to 320,000</li>
+      <li><mark>$3,000 per week</mark> &mdash; two (2) episodes per week</li>
+      <li>Four (4) week minimum with an estimated reach between 200,000 to 280,000</li>
       <li>Reaches an average 20,000 to 25,000 listens per episode (30-45 days)</li>
       <li>Reaches an average 35,000 to 40,000 listens per episode (long tail)</li>
       <li>Reaches an average 100,000 listens per month, podcast-wide</li>
@@ -51,9 +51,11 @@
 
     <ul>
       <li>Changelog News is a podcast + newsletter that ships on Mondays</li>
+      <li><%= link "YouTube", to: "https://www.youtube.com/changelog" %>, <%= link "Podcast", to: "/news" %>, and <%= link "Newsletter", to: "/news" %></li>
       <li>Each week we feature one brand on the podcast and the newsletter</li>
-      <li><mark>$1,500 per week (no minimums)</mark> &mdash; $1,250 per week if you bundle with The Changelog</li>
-      <li>Reaches an average 20,000 to 30,000 listens per episode</li>
+      <li><mark>$1,500 per week (no minimums)</mark></li>
+      <li>Reaches an average 20,000 to 30,000 listens per episode on the podcast feed</li>
+      <li>Reaches an average 1,200 to 1,500 views on YouTube</li>
       <li>The newsletter reaches 22,000+ subscribers with a 51.35% open rate</li>
       <li><%= link "Review previous episodes", to: "/news" %>
  for examples.</li>
