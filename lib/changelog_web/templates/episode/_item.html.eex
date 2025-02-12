@@ -24,6 +24,16 @@
         <span>Play</span>
     <% end %>
 
+    <%= if @episode.youtube_id do %>
+      <%= link title: "Watch Episode",
+          to: yt_url(@episode),
+          data: [youtube: @episode.youtube_id],
+          role: "button",
+          class: "news_item-toolbar-video_button" do %>
+          <span>Watch</span>
+      <% end %>
+    <% end %>
+
     <div class="news_item-toolbar-item news_item-toolbar-meta">
       <div class="news_item-toolbar-meta-item news_item-toolbar-meta-item__featuring">
       <% {main_participants, additional_participants} = @episode |> Episode.participants() |> Enum.split(5) %>

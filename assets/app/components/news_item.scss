@@ -229,7 +229,7 @@
     &-video_button,
     &-image_button,
     &-meta {
-      margin-right: math.div($base-spacing, 2);
+      margin-right: math.div($base-spacing, 3);
     }
 
     &-play_button,
@@ -262,7 +262,7 @@
     }
 
     &-video_button {
-      background-image: url("../images/icons/toolbar-play.svg");
+      background-image: url("../images/icons/icon-youtube-black.svg");
       &.is-active {
         background-image: url("../images/icons/toolbar-close.svg");
       }

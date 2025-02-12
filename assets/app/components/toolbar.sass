@@ -1,3 +1,6 @@
+$height: 65px
+$width: 650px
+
 .toolbar
     background: $white
     border-top: 2px solid $green
@@ -45,8 +48,7 @@
     // Some toolbars scroll horizontally on mobile (like a quick swipe scroll)
     &_scroll-wrap
         // Setting a height here to fix weird hover issue
-        height: 65px
-        $width: 600px
+        height: $height
 
         @media (min-width: ($width + 30))
             max-width: 100%
@@ -78,7 +80,7 @@
         min-height: 20px
         line-height: 1em
 
-        @media (min-width: ($smartphone + 50))
+        @media (min-width: ($width + 30))
             background-position: left 3px
             font-size: 1.125em
             // Should be 20px but we have to account for no descendars (all uppercase)
