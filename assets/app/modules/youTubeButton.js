@@ -4,20 +4,35 @@ export default class YouTubeButton {
   constructor(el) {
     this.el = u(el);
     this.videoId = this.el.attr("data-youtube");
+    this.origTitle = this.el.attr("title");
+    this.origText = this.el.text();
+    this.hideText = this.el.attr("data-hide") || "Hide Video";
+
+    if (this.el.attr("data-container")) {
+      this.container = u(this.el.attr("data-container"));
+      this.beforeMe = this.container.find(".js-video-before-me");
+    } else {
+      this.container = this.el.closest(".news_item");
+      this.beforeMe = this.container.find(".news_item-content");
+    }
+
     el.removeAttribute("data-youtube");
-    this.item = this.el.closest(".news_item");
+
+    this.el.handle("click", () => {
+      this.toggleShowHide();
+    });
+
     this.load();
-    this.el.handle("click", () => { this.toggleShowHide(); })
   }
 
   load() {
-    let container =  document.createElement("div");
+    let container = document.createElement("div");
     container.className = "news_item-video is-hidden";
     let iframe = document.createElement("iframe");
     iframe.src = `https://www.youtube.com/embed/${this.videoId}?autoplay=1&rel=0&origin=https://changelog.com`;
     iframe.setAttribute("frameborder", "0");
     container.appendChild(iframe);
-    this.item.append(container);
+    this.beforeMe.before(container);
     this.show();
   }
 
@@ -31,13 +46,19 @@ export default class YouTubeButton {
 
   show() {
     this.isActive = true;
-    this.item.find(".news_item-video").removeClass("is-hidden");
-    this.el.addClass("is-active").attr("title", "Hide Video").text("Hide Video");
+    this.container.find(".news_item-video").removeClass("is-hidden");
+    this.el
+      .addClass("is-active")
+      .attr("title", this.hideText)
+      .text(this.hideText);
   }
 
   hide() {
     this.isActive = false;
-    this.item.find(".news_item-video").remove();
-    this.el.removeClass("is-active").attr("title", "Hide Video").text("Play Video");
+    this.container.find(".news_item-video").remove();
+    this.el
+      .removeClass("is-active")
+      .attr("title", this.origTitle)
+      .text(this.origText);
   }
 }

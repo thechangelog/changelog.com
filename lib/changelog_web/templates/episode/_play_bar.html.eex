@@ -13,6 +13,8 @@
   <%= link("Watch",
       title: "Watch this episode",
       to: yt_url(@episode),
+      data: [youtube: @episode.youtube_id, hide: "Hide", container: ".js-video-container"],
+      role: "button",
       class: "toolbar_item toolbar_item--button playbar_watch") %>
 <% end %>
 

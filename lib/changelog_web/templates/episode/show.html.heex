@@ -36,8 +36,8 @@
     <%= link("All Episodes", to: Routes.podcast_path(@conn, :show, @episode.podcast.slug), class: "episode-header-all_episodes_button") %>
   </header>
 
-  <div class="episode-body">
-    <div class="episode-body-summary">
+  <div class="episode-body js-video-container">
+    <div class="episode-body-summary js-video-before-me">
       <% dark_logo_sponsorships = sponsorships_with_dark_logo(@episode) %>
       <%= if Enum.any?(dark_logo_sponsorships) do %>
         <aside class="episode-body-summary-sponsors">
