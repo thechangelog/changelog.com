@@ -78,6 +78,11 @@ upgrade component:
 build-runtime-image:
     cd magefiles && go run main.go -w ../ image:runtime
 
+# Run the CI part exactly as GitHub Actions runs it
+[group('contributor')]
+ci:
+    cd magefiles && go run main.go -w ../ ci
+
 # Add Oban Pro hex repository
 [group('team')]
 add-oban-pro-hex-repo:
@@ -149,6 +154,7 @@ npm:
     @which npm >/dev/null \
     || (echo "{{ _REDB }}{{ _WHITE }}NPM is not installed.{{ _RESET }} To fix this, run: {{ _GREENB }}just install{{ _RESET }}" && exit 127)
 
+[private]
 _NEON_DB_BRANCH := env_var("USER") + "-" + datetime("%Y-%m-%d")
 
 # Create a new branch off the prod db
@@ -199,6 +205,7 @@ changelog_test: postgres-up (postgres-db "changelog_test")
 test: changelog_test
     mix test
 
+[private]
 _CHANGELOG_DEV_DB := env_var("CHANGELOG_DEV_DB")
 
 [private]
@@ -237,6 +244,16 @@ contribute: install
     just dev
 
 [private]
+_APP_PROD_INSTANCE := env("APP_PROD_INSTANCE")
+
+# Make production deployment resilient to a single region failure
+[group('team')]
+prod-region-resilient:
+    echo "💡 https://status.changelog.com/incident/513790"
+    cd fly.io/{{ _APP_PROD_INSTANCE }} \
+    && flyctl scale count 2 --max-per-region 1 --region iad,ewr
+
+[private]
 actions-runner:
     docker run --interactive --tty \
         --volume=changelog-linuxbrew:/home/linuxbrew/.linuxbrew \
@@ -268,23 +285,41 @@ tag-kaizen version episode discussion commit:
 
 # https://linux.101hacks.com/ps1-examples/prompt-color-using-tput/
 
+[private]
 _BOLD := "$(tput bold)"
+[private]
 _RESET := "$(tput sgr0)"
+[private]
 _BLACK := "$(tput bold)$(tput setaf 0)"
+[private]
 _RED := "$(tput bold)$(tput setaf 1)"
+[private]
 _GREEN := "$(tput bold)$(tput setaf 2)"
+[private]
 _YELLOW := "$(tput bold)$(tput setaf 3)"
+[private]
 _BLUE := "$(tput bold)$(tput setaf 4)"
+[private]
 _MAGENTA := "$(tput bold)$(tput setaf 5)"
+[private]
 _CYAN := "$(tput bold)$(tput setaf 6)"
+[private]
 _WHITE := "$(tput bold)$(tput setaf 7)"
+[private]
 _BLACKB := "$(tput bold)$(tput setab 0)"
+[private]
 _REDB := "$(tput setab 1)$(tput setaf 0)"
+[private]
 _GREENB := "$(tput setab 2)$(tput setaf 0)"
+[private]
 _YELLOWB := "$(tput setab 3)$(tput setaf 0)"
+[private]
 _BLUEB := "$(tput setab 4)$(tput setaf 0)"
+[private]
 _MAGENTAB := "$(tput setab 5)$(tput setaf 0)"
+[private]
 _CYANB := "$(tput setab 6)$(tput setaf 0)"
+[private]
 _WHITEB := "$(tput setab 7)$(tput setaf 0)"
 
 # just actions-runner
