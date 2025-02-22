@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Sep.%202%2C%202024-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Feb.%2022%2C%202025-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -21,21 +21,19 @@ graph TD
         registry(( fab:fa-github ghcr.io )):::link
         click registry "https://github.com/orgs/thechangelog/packages"
 
-        chat(( fab:fa-slack Slack )):::link
-        click chat "https://changelog.slack.com/archives/C03SA8VE2"
+        chat(( fab:fa-z Zulip )):::link
+        click chat "https://changelog.zulipchat.com/#narrow/channel/455097-kaizen/topic/Code.20deploys"
 
         repo -.-> |.github/workflows/ship_it.yml| cicd
         cicd --> |magefiles/magefiles.go| automation
         
-        cicd --> |success #dev| chat
+        cicd --> |success #kaizen code| chat
     end
     
     repo -.- |fly.io/changelog-2024-01-12| app
     
     registry --> |ghcr.io/changelog/changelog-prod| app
     runner --> |flyctl deploy| app
-        
-    repo -.- |fly.io/dagger-engine-2024-03-28| dagger010
 
     repo -.- |fly.io/pghero-2024-03-27| pghero
 
@@ -43,11 +41,9 @@ graph TD
     subgraph Fly.io
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
-
-        dagger010([ fa:fa-project-diagram Dagger Engine v0.10 2024-03-28 ]):::link
-        click dagger010 "https://fly.io/apps/dagger-engine-2024-03-28"
             
-        app(( fab:fa-phoenix-framework App changelog-2024-01-12.fly.dev )):::link
+        
+        app(( fab:fa-phoenix-framework IAD & EWR changelog-2024-01-12.fly.dev )):::link
         style app fill:#488969;
         click app "https://fly.io/apps/changelog-2024-01-12"
 
@@ -57,7 +53,6 @@ graph TD
         grafana[ fa:fa-columns Grafana fly-metrics.net ]:::link
         click grafana "https://fly-metrics.net"
         grafana -.- |metrics| app
-        grafana -.- |metrics| dagger010
         grafana -.- |metrics| pghero
     end
 
@@ -141,7 +136,7 @@ graph TD
 ```
 
 > [!TIP]
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWHlv2zYU_yqEihUtEEk-4nPrhqzp0qHYFsw7gMXDQEnPkhaJ1EgqiRfnu-9R1EE5VrvmD0em3v1-76AfnZBH4KydL74giVKFXPv-jjNF70HyHLyQ574EKsJky2JBi4T8crllBP_CjEp5CTuSpeyWSCX4LaxfzFbBZLk4M1_d-zRSyXpaPHxpeMwnqnqLSslLghJASXMqy8AouErV-zIwh_pPQMEfH8mOBusddeNUJWVAVAJhQlkMGY_99kmbS56e1uu1NqoTEWZpeFsJIluncdNIqjwclrZ1tsySk4bRjY-maEvCVIQZuCHy3tZGk4tQpZwRl2yStCDfK7Ld_jlgjZb1udb4tJIv_XsubncZv5e-REV_pcrb55m2tdHRPdFS8Zxqtpvtto0iz1AsuaRxDIJccbK5_ED8IVM7EZ9tcJDxwM-pVCDwXwy7NAPZPXkx70dYQJwiePavXh0lPE5C4aWcvH49mF3DedpELmLZt7Og4S2aIY8ynFDV6ZYZEpFN9TmoWLNYSjv_K26TNqyf9A4dfzuabi6Wv72bHHuNyHQ992ty8IzRpzN8qFDTxyNxNdvp2B6s1J3CRscvyzAEKcmLCO4OlUuGClhkl25jKDnssj2mo_PWnYwm5-5o7I4nqLUo-lx1aipVdSb9E5BxC8Eji12UjCE-KzZUGKqMRFBkfG_RfMS4qIK3CyxOGdQGTt3J8kDMm9F41GThGW8RJyB4x7Q4EHPUcGAXu6Z0g7Xe9s1Gq0wCTkXU-XXU4b6rCDvz0euH_aPpKjEWDJBrffJ0REHevME4VNpq_zuC1qFXN3V7Qpa_IVRulFLUmje1_q4KBrkbeeMR6UJC_hyCdyvZwnjtKdogB4Nsd6OjjlQUXYkVCQeWPrg7tBE06MlFUZBTsPK0VoTnqUqUap-BFkwQ-tn6xflyuZqvvnzWyJDgtBenFPZr1GS_DW8MObmO3-NRF8XFcBQN94DyZ1jra8b07SijjeaQZ2XOJLkyxwQluTkokYbSY6DIUBevxfRtsDntjDXEVUnUNEdFd5rEqqyPEzbV1HYZ86hT9NWbCunXXKpYgBYaiHvzuo6j7gjm8Ki0fgTOPAV6XWlLA-natEVU0YBKIDlNGQkEZWGC1ZXmFNvTcA2gCLvF4wjmGWDMamU6jX5dcBJnjcaSK3nJInc5n4_OV8u5b3Rhgw6Ee09ZBCJlsStzvSctlufz5Xi26ucdtfLxxy3HtoUGUrS87289TOrXCg5G2LNod3HD6pM4EsGTVmMy_bdrKSAkZ64-Rdubnedn06QHg1c3cSt8GS8jj1ka_ZVcJrs7XkqWUfDjxPAczWZrDakmAhJJl7M1aUXppqdnn9uW86FWf-zTp0cR0qk0x8g10-vzRZhp1vE_Cz_OkA2EotuBzZeqO-qA38KejK9xS8bGGB33PRPdmuXkAjIuatZqCWnKu-EwEKm_WbU98F5PyJ7d5lJgOPRzazVuICzd7TW8Y31JIL_sC5DAELuvX3dV7nq1As18IM0to9Xw7iGEolp367i131tNIRVuKHDeojlMLxgnQ9QxWlGSFYPOHK6GlKX_UrNZd9nLAUenn0pZYtF-U1f3m9l8jqNl0gTTcqRTc7BUWg69vfzR2hZybIkxeDvcjXEU6ARhW9mlcSkAjRN3Ke5j_iL-EIQfNh-uLvf__Lr4vrwU51O4Ol4nKhH2fIWHG9K_FA2u9kh7Ejv13ef59G7VXuCaUwrWn_JhxG70h3ekvqNqN8pTbeji9423mXbEyC9vmlWB3ktrMdCvGrmtzMqdl9oAg15NdKikWHn4KdDxpUGapaoOG7ePWngFZUzecwZ7dCE4ja0eoxXIMvWShrPfHnQf17fe7ugvXiAYIQM9G_d-gvfuPry0J0pgf0Nf-HPjq0jY_p6gsZzXMMaFCadUDFbU7OWyWjePUvNWd-1dRgV4P08ssFVX-DZHYUtlpcrQWIgs8GYENih2ANEnhFQkhtAbkNTCAPPfX5aNAS8NuwWFHzhLMRLYqo68_RYUXlk3Cm9w9pZJVSmbaZjRPe69seBlUb_x_l_NGWK7F53g7o--vLWzBSduAzjoFOAsluTXQs-q4Ttqx29jtGLygspVqZrLqgKa--PpdDqa-DWftFuBJQs7n-l9Dd2hwtIAbZ8Qc_S_6CwsfoLShNGCgnPm5CBwX4qctfOoX2wdlYAurzU-RlTcaseekE7vFps9C521EiWcOWWBdQqX5u7UHBaU_cG5_dVZPzoPzhqvO1NvMV3NF7PVbDWZLednzt5ZLxfebLRcjueL0Wq2XM0mT2fOv5WAsTeejyYrPJ6frxbj1eT8zMFxg378YH6Oq36Ve_oPk-hbCQ)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWAtv27YW_iuEihUtEEl-v7bei67eTYtiW1BvGLB4GCjpWNIskbok1cSJ8993KOpBOfa6BkUqUed9vvNgHp2QR-CsnG--IYlShVz5_o4zRe9A8hy8kOe-BCrCZMtiQYuE_LLeMoI_YUalXMOOZCnbE6kE38PqxXQZjBbzK_Pq3qWRSlbj4v5bw2N-o6p3qJS8JCgBlDSnsgyMgutUvS8Dc6h_BBT88ZHsaLDaUTdOVVIGRCUQJpTFkPHYb5-0ueTpabVaaaM6EWGWhvtKENk6jZtGUuXhZWlbZ8ssOWkY3fpoirYkTEWYgRsi7742mrwNVcoZcckmSQvyQZHt9o8L1mhZX2uNTyv50r_jYr_L-J30JSr6M1XeIc-0rY2O7omWiudUs91ut20UeYZiyZrGMQhyzclm_ZH4l0ztRHy1wUHGAz-nUoHA_2LYpRnI7smLeT_CAuIUwXN49eok4XESCi_l5PXri9k1nOdN5CKWfTsLGu7RDHmS4YSqTvcD-b3MMJEXlWpyS2Hn-4Pm018r7S8YFYLfVd8ZZP5kOh0s5-6epg_AfMWLNPR1SXijQQRFxg_yNCqIXNdz_0OOnnHqPAKOFar6eCWuZjsf-6OV2nPY6fhlGYYgJXlhbCa6axwr9w01sMgu8cZgctxlB0xbFxl3NBhN3MHQHY5Qe1H0ueoUVirrjPtnoOUWgkcWuygxrMKwocJQZcTEsaa5YFQRJyB4bdHYHc2PxBw1HNipbijdYD23vdFwRlQmAaci6mw66WL_qwi7UKLF94dH0zliLAogN_rk6YSCvHmDPlTaLP-eZ8aq76LoAFskHFh67-4EzUFDhHx4u8ZG-8Nvn8i5FHjanwg-n0O4VIcMtHiCcMlWLyaLxXK2_PZZc0CCrgLq-OChPJvzPq5NtF_d1h01hpzcxO_xiHQ5IX9cKj7DfUH5s9z2NWOSdpTRRnPIszJnklybY4KS3ByUSEPpMVDkUmesxfRtsDntntwQVxCsaU6SfJ6kAWVbaOZRR_67NxVgbrhUsQCkjQJxZz7X4dFFYQ5PEPoTcOYp0JO9Ua_p2mxEVNGASiA5TRkJBGVhgiBNc4oVejEpWoTdEXFa8QwwFLUynR0fof4XhEpiW9YQcSUvWeQuZrPBZLmY-UYX9qpAuHeURSBSFrsy1yvFfDGZLYbTZT-dqJUP_9lyrH40kKLlfX_rvlp_VnA0wp5Fu4sblpbE6QGetOrbtKDWhAKE5MzVp2h7sx58Mn3qYvDqPmaFL-Nl5DFLo7-Ui2T3mZeSZRT8ODE8JwPDmthVU0Qi6XK2Iq0o3UL1GHDbKj3W6k99-nI3RjqV5hi5poF_vQjT0Dv-Z-HHVryBUHTronmpWp8O-B4OZHiDCyV2vei0nZno1ixn5_WwqFmred1UbcNhIFK_WSV74bseND27zf5sOPRzazUOY5buDhresd6nyS-HAiQwxO7r112Vu16tQDMfSbOQtxp-uA-hqDbDOm7te6sppMINBY4tNIfpGXs2RB2jFSVZMejM4RZFWfpAzRLaZS-HKKV-KmWJRfvfurrfTGcznBijJpiWI52ao6XScujd-idr6ObYEmPwdrhGYofXCcK2skvjUgAaJz6nuJr48_hjEH7cfLxeH_7_6_xDuRaTMVyfTuVKhD084f6W9O8PF7dgpD2Lnfqa8Hw0t2rf4rZQCtYf5mHEbvUv70R9R9UuVefa0NvfNt5m3BEjv7xt9gB6J615rz81cluZlTsvtQEGvZroWEmx8vBzoONLgzRLVR02bh-18ArKmLznDA7oQnAeWz1GK5Bl6iUNZ7896D6uL4jd0Z-8QDBCBno2HvwEr6h9eGlPlMD-hr7w58ZXkbD9PUNjOa9hjHsQTqkYrKjZO1q1tZ2k5p3u2ruMCvA-jSywVbfdNkdhS2WlytBYiCwydMYGxQ4g-oKQisQQehcktTDA_Pd3TmPAS8NuQeFHzlKMBLaqE2-_B4W3u43C-5S9PFJVymYaZvQAwo0FL4v6i_fvas4Q273oDHd_9OWtnS04cRvAQacAZ7EkvxZ6Vl2-0nX8NkYrJi-oXJXaVXPxBZr7w_F4PBj5NZ-0W4ElCzuf6X0N3bHC0gXaPiHm6F_RWVj8AqUJowUF58rJQeC-FDkr51F_2Dp4XdbltcLHiIq9duwJ6fRusTmw0FkpUcKVUxZYp7BOKcIhbw4Lyn7n3H51Vo_OvbNyR1NvvFxM57PhcDoYLebLK-fgrCYzb7lcDvHfYDwdTcazpyvnoRIw9Aaz6XIwHkzH8-FospxOrhwcN-jHj-YvV9UfsK4cBFecOJjuTMLT342nIgg)
 
 Let's dig into how all the above pieces fit together.
 
@@ -174,9 +169,10 @@ Fastly (cdn.changelog.com)
 Cloudflare R2 (changelog.place)
 ````
 
-The production instance of our application is running on Fly.io. All
-https://changelog.com requests are served via Fastly. Each Fastly request gets
-proxied to our application instance via the Fly.io Proxy.
+The production instance of our application is running on Fly.io, as 2 instances
+spread across 2 regions: IAD & EWR. All https://changelog.com requests are
+served via Fastly. Each Fastly request gets proxied to our application instance
+via the Fly.io Proxy.
 
 ```
 Fastly (changelog.com)
@@ -281,7 +277,7 @@ you very much!
 2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2023-12-17,2024-01-12}`
 3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2024-01-12`
 4. Update the app name in e.g. `fly.toml` to match the newly created app
-5. From within the app directory, set a few secrets required by the app to work correctly while testing
+5. Set the few secrets required by the app to work correctly before promoting to live
 
         flyctl secrets set --stage \
             OP_SERVICE_ACCOUNT_TOKEN="$(op read op://changelog/op/credential --account changelog.1password.com --cache)" \
@@ -291,6 +287,10 @@ you very much!
 6. Deploy the latest app image from <https://github.com/thechangelog/changelog.com/pkgs/container/changelog-prod>
 
         flyctl deploy --vm-size performance-4x --image <LATEST_IMAGE_SHA>
+
+7. Ensure that the app is scaled across multiple regions & is resilient to a single region failure:
+
+        just prod-region-resilient
 
 
 ## How to branch the production db instance?
