@@ -7,31 +7,33 @@ defmodule ChangelogWeb.Plug.Redirects do
   alias ChangelogWeb.RedirectController, as: Redirect
   import ChangelogWeb.Plug.Conn
 
-  @external %{
-    "/sentry" => "https://sentry.io/from/changelog/",
-    "/square" => "https://developer.squareup.com/",
-    "/tailscale" =>
-      "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog",
-    "/reactpodcast" => "https://reactpodcast.simplecast.com",
-    "/store" => "https://merch.changelog.com"
-  }
+  @external [
+    {"/sentry", "https://sentry.io/from/changelog/"},
+    {"/square", "https://developer.squareup.com/"},
+    {"/tailscale",
+     "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog"},
+    {"/reactpodcast", "https://reactpodcast.simplecast.com"},
+    {"/store", "https://merch.changelog.com"},
+    {"/practicalai", "https://practicalai.fm"},
+    {~r/\A\/practicalai\/(\d+)\z/, "https://practicalai.fm/*"}
+  ]
 
-  @internal %{
-    "/rss" => "/feed",
-    "/podcast/rss" => "/podcast/feed",
-    "/feed.js" => "/feed",
-    "/reactpodcast/feed" => "/jsparty/feed",
-    "/team" => "/about",
-    "/changeloggers" => "/about",
-    "/membership" => "/++",
-    "/sponsorship" => "/sponsor",
-    "/soundcheck" => "/guest",
-    "/submit" => "/news/submit",
-    "/blog" => "/posts",
-    "/weekly" => "/news",
-    "/weekly/archive" => "/news",
-    "/weekly/unsubscribed" => "/news"
-  }
+  @internal [
+    {"/rss", "/feed"},
+    {"/podcast/rss", "/podcast/feed"},
+    {"/feed.js", "/feed"},
+    {"/reactpodcast/feed", "/jsparty/feed"},
+    {"/team", "/about"},
+    {"/changeloggers", "/about"},
+    {"/membership", "/++"},
+    {"/sponsorship", "/sponsor"},
+    {"/soundcheck", "/guest"},
+    {"/submit", "/news/submit"},
+    {"/blog", "/posts"},
+    {"/weekly", "/news"},
+    {"/weekly/archive", "/news"},
+    {"/weekly/unsubscribed", "/news"}
+  ]
 
   def init(opts), do: opts
 
@@ -61,7 +63,7 @@ defmodule ChangelogWeb.Plug.Redirects do
   defp internal_redirect(conn = %{halted: true}), do: conn
 
   defp internal_redirect(conn = %{request_path: path}) do
-    if destination = Map.get(@internal, path, false) do
+    if destination = Enum.find_value(@internal, &determine_destination(&1, path)) do
       conn |> Redirect.call(to: destination) |> Plug.Conn.halt()
     else
       conn
@@ -87,10 +89,28 @@ defmodule ChangelogWeb.Plug.Redirects do
   end
 
   defp external_redirect(conn = %{request_path: path}) do
-    if destination = Map.get(@external, path, false) do
+    if destination = Enum.find_value(@external, &determine_destination(&1, path)) do
       conn |> Redirect.call(external: destination) |> Plug.Conn.halt()
     else
       conn
+    end
+  end
+
+  defp determine_destination({%Regex{} = pattern, destination}, path) do
+    case Regex.run(pattern, path, capture: :all_but_first) do
+      [captured] ->
+        String.replace(destination, "*", captured)
+
+      nil ->
+        nil
+    end
+  end
+
+  defp determine_destination({pattern, destination}, path) do
+    if pattern == path do
+      destination
+    else
+      nil
     end
   end
 end

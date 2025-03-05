@@ -32,6 +32,14 @@ defmodule ChangelogWeb.RedirectsTest do
     [
       path: "/rss",
       location: "/feed"
+    ],
+    [
+      path: "/practicalai",
+      location: "https://practicalai.fm"
+    ],
+    [
+      path: "/practicalai/340",
+      location: "https://practicalai.fm/340"
     ]
   ]
 
