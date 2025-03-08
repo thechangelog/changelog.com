@@ -23,23 +23,28 @@ defmodule ChangelogWeb.RedirectsTest do
   @redirects [
     [
       path: "/sentry",
-      location: "https://sentry.io/from/changelog/"
+      location: "https://sentry.io/from/changelog/",
+      type: 302
     ],
     [
       path: "/1000?utm=yo",
-      location: "/podcast/1000?utm=yo"
+      location: "/podcast/1000?utm=yo",
+      type: 302
     ],
     [
       path: "/rss",
-      location: "/feed"
+      location: "/feed",
+      type: 301
     ],
     [
       path: "/practicalai",
-      location: "https://practicalai.fm"
+      location: "https://practicalai.fm",
+      type: 301
     ],
     [
       path: "/practicalai/340",
-      location: "https://practicalai.fm/340"
+      location: "https://practicalai.fm/340",
+      type: 301
     ]
   ]
 
@@ -74,17 +79,17 @@ defmodule ChangelogWeb.RedirectsTest do
 
   test "changelog hosts" do
     for redirect <- @redirects do
-      [path: path, location: location] = redirect
+      [path: path, location: location, type: type] = redirect
 
       for host <- @changelog_hosts do
-        assert_redirect(http_conn(host, path), location)
+        assert_redirect(http_conn(host, path), location, type)
       end
     end
   end
 
   test "vanity hosts" do
     for redirect <- @redirects do
-      [path: path, location: _] = redirect
+      [path: path, location: _location, type: _type] = redirect
 
       for host <- @vanity_hosts do
         assert_redirect(http_conn(host, path), nil, nil)

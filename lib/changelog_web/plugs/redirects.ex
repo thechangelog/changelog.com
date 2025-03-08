@@ -8,31 +8,34 @@ defmodule ChangelogWeb.Plug.Redirects do
   import ChangelogWeb.Plug.Conn
 
   @external [
-    {"/sentry", "https://sentry.io/from/changelog/"},
-    {"/square", "https://developer.squareup.com/"},
+    {"/sentry", "https://sentry.io/from/changelog/", 302},
+    {"/square", "https://developer.squareup.com/", 302},
     {"/tailscale",
-     "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog"},
-    {"/reactpodcast", "https://reactpodcast.simplecast.com"},
-    {"/store", "https://merch.changelog.com"},
-    {"/practicalai", "https://practicalai.fm"},
-    {~r/\A\/practicalai\/(\d+)\z/, "https://practicalai.fm/*"}
+     "https://tailscale.com/?utm_source=sponsorship&utm_medium=podcast&utm_campaign=changelog&utm_term=changelog",
+     302},
+    {"/reactpodcast", "https://reactpodcast.simplecast.com", 301},
+    {"/store", "https://merch.changelog.com", 302},
+    {"/practicalai", "https://practicalai.fm", 301},
+    {"/practicalai/feed",
+     "https://feeds.transistor.fm/practical-ai-machine-learning-data-science-llm", 301},
+    {~r/\A\/practicalai\/(\d+)\z/, "https://practicalai.fm/*", 301}
   ]
 
   @internal [
-    {"/rss", "/feed"},
-    {"/podcast/rss", "/podcast/feed"},
-    {"/feed.js", "/feed"},
-    {"/reactpodcast/feed", "/jsparty/feed"},
-    {"/team", "/about"},
-    {"/changeloggers", "/about"},
-    {"/membership", "/++"},
-    {"/sponsorship", "/sponsor"},
-    {"/soundcheck", "/guest"},
-    {"/submit", "/news/submit"},
-    {"/blog", "/posts"},
-    {"/weekly", "/news"},
-    {"/weekly/archive", "/news"},
-    {"/weekly/unsubscribed", "/news"}
+    {"/rss", "/feed", 301},
+    {"/podcast/rss", "/podcast/feed", 301},
+    {"/feed.js", "/feed", 301},
+    {"/reactpodcast/feed", "/jsparty/feed", 301},
+    {"/team", "/about", 302},
+    {"/changeloggers", "/about", 302},
+    {"/membership", "/++", 302},
+    {"/sponsorship", "/sponsor", 302},
+    {"/soundcheck", "/guest", 302},
+    {"/submit", "/news/submit", 302},
+    {"/blog", "/posts", 302},
+    {"/weekly", "/news", 302},
+    {"/weekly/archive", "/news", 302},
+    {"/weekly/unsubscribed", "/news", 302}
   ]
 
   def init(opts), do: opts
@@ -63,10 +66,15 @@ defmodule ChangelogWeb.Plug.Redirects do
   defp internal_redirect(conn = %{halted: true}), do: conn
 
   defp internal_redirect(conn = %{request_path: path}) do
-    if destination = Enum.find_value(@internal, &determine_destination(&1, path)) do
-      conn |> Redirect.call(to: destination) |> Plug.Conn.halt()
-    else
-      conn
+    case Enum.find_value(@internal, &determine_destination(&1, path)) do
+      {destination, type} ->
+        conn
+        |> Plug.Conn.put_status(type)
+        |> Redirect.call(to: destination)
+        |> Plug.Conn.halt()
+
+      nil ->
+        conn
     end
   end
 
@@ -89,26 +97,31 @@ defmodule ChangelogWeb.Plug.Redirects do
   end
 
   defp external_redirect(conn = %{request_path: path}) do
-    if destination = Enum.find_value(@external, &determine_destination(&1, path)) do
-      conn |> Redirect.call(external: destination) |> Plug.Conn.halt()
-    else
-      conn
+    case Enum.find_value(@external, &determine_destination(&1, path)) do
+      {destination, type} ->
+        conn
+        |> Plug.Conn.put_status(type)
+        |> Redirect.call(external: destination)
+        |> Plug.Conn.halt()
+
+      nil ->
+        conn
     end
   end
 
-  defp determine_destination({%Regex{} = pattern, destination}, path) do
+  defp determine_destination({%Regex{} = pattern, destination, type}, path) do
     case Regex.run(pattern, path, capture: :all_but_first) do
       [captured] ->
-        String.replace(destination, "*", captured)
+        {String.replace(destination, "*", captured), type}
 
       nil ->
         nil
     end
   end
 
-  defp determine_destination({pattern, destination}, path) do
+  defp determine_destination({pattern, destination, type}, path) do
     if pattern == path do
-      destination
+      {destination, type}
     else
       nil
     end
