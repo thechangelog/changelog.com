@@ -17,4 +17,12 @@ defmodule Changelog.HTTPTest do
     assert {:ok, _body} = HTTP.get("https://cdn.changelog.com")
     assert %{body: _} = HTTP.get!("https://cdn.changelog.com")
   end
+
+  test "we can make HTTP requests to shopify API" do
+    assert {:ok, _body} =
+             HTTP.get("https://changelog.myshopify.com", [],
+               hackney: [pool: :shopify],
+               ssl: [{:versions, [:"tlsv1.2"]}]
+             )
+  end
 end

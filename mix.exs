@@ -54,6 +54,8 @@ defmodule Changelog.Mixfile do
       {:swoosh, "~> 1.16"},
       {:gen_smtp, "~> 1.0"},
       {:httpoison, "~> 2.2.1", override: true},
+      # pinned to 1.21 until https://github.com/benoitc/hackney/issues/766 closes
+      {:hackney, "1.21.0"},
       {:jason, "~> 1.0"},
       {:con_cache, "~> 1.1.1"},
       {:ex_aws, "~> 2.2"},
