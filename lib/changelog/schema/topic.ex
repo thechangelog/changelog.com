@@ -24,6 +24,14 @@ defmodule Changelog.Topic do
 
   def with_icon(query \\ __MODULE__), do: from(q in query, where: not is_nil(q.icon))
 
+  def with_episodes(query \\ __MODULE__) do
+    from(q in query,
+      distinct: true,
+      left_join: ep in assoc(q, :episode_topics),
+      where: not is_nil(ep.id)
+    )
+  end
+
   def with_news_items(query \\ __MODULE__) do
     from(q in query,
       distinct: true,

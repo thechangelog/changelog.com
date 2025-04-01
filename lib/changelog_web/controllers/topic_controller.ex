@@ -6,9 +6,8 @@ defmodule ChangelogWeb.TopicController do
   def index(conn, params) do
     page =
       Topic
-      |> Topic.with_news_items()
+      |> Topic.with_episodes()
       |> order_by([q], asc: q.name)
-      |> Topic.preload_news_items()
       |> Repo.paginate(Map.put(params, :page_size, 1000))
 
     render(conn, :index, topics: page.entries, page: page)
