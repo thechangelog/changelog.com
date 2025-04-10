@@ -26,14 +26,14 @@ defmodule ChangelogWeb.PageController do
       |> PodcastHost.newest_last()
       |> Ecto.Query.preload(:person)
       |> Repo.all()
-      |> Enum.map(&(&1.person))
+      |> Enum.map(& &1.person)
 
     retired =
       PodcastHost.retired_host_or_podcast()
       |> PodcastHost.newest_last()
       |> Ecto.Query.preload(:person)
       |> Repo.all()
-      |> Enum.map(&(&1.person))
+      |> Enum.map(& &1.person)
       |> ListKit.exclude(active)
 
     conn
@@ -90,20 +90,20 @@ defmodule ChangelogWeb.PageController do
       display: "standalone",
       description: "News and podcasts for developers",
       icons: [
-          %{
-              src: url(~p"/android-chrome-192x192.png"),
-              sizes: "192x192",
-              type: "image/png"
-          },
-          %{
-              src: url(~p"/android-chrome-512x512.png"),
-              sizes: "512x512",
-              type: "image/png"
-          }
+        %{
+          src: url(~p"/android-chrome-192x192.png"),
+          sizes: "192x192",
+          type: "image/png"
+        },
+        %{
+          src: url(~p"/android-chrome-512x512.png"),
+          sizes: "512x512",
+          type: "image/png"
+        }
       ],
       theme_color: "#ffffff",
       background_color: "#ffffff"
-      })
+    })
   end
 
   def plusplus(conn, _params) do

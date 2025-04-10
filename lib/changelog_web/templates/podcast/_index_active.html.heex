@@ -1,13 +1,24 @@
 <section class="show_list">
   <header class="show_list-header">
-    <h2>World-class podcasts for developers</h2>
-    <p><%= link("The Changelog", to: "/podcast", title: "The Changelog podcast") %> podcast is software's best weekly news brief (Mondays), deep technical interviews (Wednesdays) &amp; talk show (Fridays).</p>
-    <p class="show_list-header-master_cta"><a href="/news" title="Subscribe to Changelog News"><strong>Get the Changelog News[letter]!</strong> "<em>So good I consider it a competitive advantage</em>"</a></p>
-    <p>But that's not all! We produce other great shows about AI, web development, open source, software engineering & running it in production.</p>
+    <h2>Software's best weekly news brief, deep technical interviews, and weekend talk show.</h2>
+    <p>✨ <%= link("The Changelog", to: "/podcast", title: "View The Changelog") %> ✨ podcast combines three awesome shows into one easy subscription.</p>
   </header>
+
   <div class="show_list-shows">
   <%= for podcast <- active_podcasts_for_index(@podcasts) do %>
-    <%= render(__MODULE__, "_summary.html", podcast: podcast) %>
+    <article class="show_list-shows-item">
+      <div class="show_list-shows-item-wrap">
+        <%= link(to: ~p"/#{Podcast.slug_with_interviews_special_case(podcast)}", class: "show_list-shows-item-art", title: "View #{podcast.name}") do %>
+          <%= SharedHelpers.lazy_image(cover_url(podcast, :medium), "#{podcast.name} Artwork", width: 220, height: 220) %>
+        <% end %>
+        <div class="show_list-shows-item-content">
+          <div class="show_list-shows-item-content-heading">
+            <h2><a href={~p"/#{Podcast.slug_with_interviews_special_case(podcast)}"}><%= publish_day(podcast) %></a></h2>
+          </div>
+          <%= podcast.description %>
+        </div>
+      </div>
+    </article>
   <% end %>
   </div>
 </section>

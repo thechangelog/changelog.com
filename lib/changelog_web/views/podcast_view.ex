@@ -6,12 +6,7 @@ defmodule ChangelogWeb.PodcastView do
   alias Changelog.Files.Cover
 
   def active_podcasts_for_index(podcasts) do
-    pods =
-      podcasts
-      |> Enum.reject(&Podcast.is_a_changelog_pod/1)
-      |> Enum.filter(&Podcast.is_active/1)
-
-    List.flatten([Podcast.changelog(), pods, Podcast.master(), Podcast.plusplus()])
+    List.flatten([Enum.filter(podcasts, &Podcast.is_a_changelog_pod/1), Podcast.plusplus()])
   end
 
   def inactive_podcasts_for_index(podcasts) do
@@ -91,6 +86,15 @@ defmodule ChangelogWeb.PodcastView do
   def feed_url(podcast) do
     slug = Podcast.slug_with_interviews_special_case(podcast)
     url(~p"/#{slug}/feed")
+  end
+
+  def publish_day(podcast) do
+    case podcast.slug do
+      "news" -> "Mondays"
+      "podcast" -> "Wednesdays"
+      "friends" -> "Fridays"
+      _else -> ""
+    end
   end
 
   def published_episode_count(podcast), do: Podcast.published_episode_count(podcast)

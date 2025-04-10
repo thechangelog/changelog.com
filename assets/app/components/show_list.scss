@@ -1,13 +1,13 @@
 .show_list {
   background: $black;
   color: $white;
-  padding: 40px 0;
+  padding-top: 40px;
 
   @include breakpoint(mobile) {
-    padding: 50px 0;
+    padding-top: 50px 0;
   }
   @include breakpoint(tablet) {
-    padding: 60px 0;
+    padding-top: 60px 0;
   }
 
   & + & {
@@ -80,15 +80,23 @@
 
       // Size ramp
       flex: 0 100%;
-      @include breakpoint(tiny) { flex: 0 50%; }
-      @include breakpoint(mobile) { flex: 0 33.3333%; }
-      @include breakpoint(desktop) { flex: 0 25%; }
+      @include breakpoint(tiny) {
+        flex: 0 50%;
+      }
+      @include breakpoint(mobile) {
+        flex: 0 33.3333%;
+      }
+      @include breakpoint(desktop) {
+        flex: 0 25%;
+      }
 
       &-wrap {
         margin: 0 auto;
         max-width: 300px;
 
-        @include breakpoint(tiny) { max-width: 220px }
+        @include breakpoint(tiny) {
+          max-width: 220px;
+        }
       }
 
       &-art {
@@ -124,7 +132,9 @@
             line-height: 1.375em;
             margin: 0 1em 0 0;
 
-            a { color: $white; }
+            a {
+              color: $white;
+            }
           }
 
           button {
@@ -138,7 +148,9 @@
             transition: background 0.2s ease-in-out;
             width: $size;
 
-            &:hover { background: darken($green, 10%); }
+            &:hover {
+              background: darken($green, 10%);
+            }
 
             &:before,
             &:after {
@@ -159,7 +171,9 @@
         }
 
         &-hosts {
-          a:hover { text-decoration: underline; }
+          a:hover {
+            text-decoration: underline;
+          }
         }
 
         h3,

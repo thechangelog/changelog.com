@@ -2,8 +2,8 @@ defmodule ChangelogWeb.PodcastControllerTest do
   use ChangelogWeb.ConnCase
 
   test "getting the podcasts index", %{conn: conn} do
-    p1 = insert(:podcast)
-    p2 = insert(:podcast)
+    p1 = insert(:podcast, slug: "news")
+    p2 = insert(:podcast, slug: "friends")
 
     conn = get(conn, Routes.podcast_path(conn, :index))
 
