@@ -22,6 +22,14 @@ defmodule Changelog.EpisodeStat do
 
   def on_date(query \\ __MODULE__, date), do: from(q in query, where: q.date == ^date)
 
+  def on_active_podcasts(query \\ __MODULE__) do
+    from(q in query,
+      left_join: p in Podcast,
+      on: [id: q.podcast_id],
+      where: p.status == ^:publishing
+    )
+  end
+
   def on_full_episodes(query \\ __MODULE__) do
     from(q in query,
       left_join: e in Episode,
@@ -61,6 +69,7 @@ defmodule Changelog.EpisodeStat do
 
     __MODULE__
     |> between(older_date, newer_date)
+    |> on_active_podcasts()
     |> on_full_episodes()
     |> sum_downloads()
     |> Repo.one()
@@ -82,6 +91,7 @@ defmodule Changelog.EpisodeStat do
   def date_range_episode_downloads({older_date, newer_date}, minimum) do
     __MODULE__
     |> between(older_date, newer_date)
+    |> on_active_podcasts()
     |> on_full_episodes()
     |> sum_episode_downloads()
     |> Repo.all()
