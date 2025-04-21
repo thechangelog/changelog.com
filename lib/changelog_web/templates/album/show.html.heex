@@ -18,6 +18,8 @@
       </div>
 
     </div>
+
+    <%= link("All Beats", to: ~p"/beats", class: "episode-header-all_episodes_button") %>
   </header>
 
   <a id="feed" class="anchor"></a>
@@ -26,7 +28,7 @@
       style="border-radius:12px"
       src={spotify_embed_url(@album)}
       width="100%"
-      height="1024"
+      height={spotify_embed_height(@album)}
       frameBorder="0"
       allowfullscreen=""
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"

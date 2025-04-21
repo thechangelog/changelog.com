@@ -13,7 +13,7 @@ defmodule Changelog.Album do
   ]
 
   def all do
-    [theme_songs(), next_level(), dance_party()]
+    [theme_songs(), next_level(), dance_party(), after_party()]
   end
 
   def get_by_slug(slug) do
@@ -68,6 +68,22 @@ defmodule Changelog.Album do
       youtube_id: "OLAK5uy_lYViVKgbHykFiWAkEpXR4NHJzpoEf8ERM",
       bandcamp_url:
         "https://breakmastercylinder.bandcamp.com/album/changelog-beats-volumes-2-dance-party"
+    }
+  end
+
+  def after_party do
+    %__MODULE__{
+      name: "After Party",
+      slug: "after-party",
+      volume: "03",
+      tagline: "For endless flow state",
+      description:
+        "Featuring beloved tracks from our outros, ad rolls & transitions... An entire album of chill beats for you to flow to 🧘",
+      apple_id: "1808778721",
+      spotify_id: "6Quu0kNFIUe71ph7D7AA4U",
+      amazon_id: "B0F4Z1L3BJ",
+      youtube_id: "OLAK5uy_n1rFikCIU0DKftqv7I6FlTqxvmh4LxU-o",
+      bandcamp_url: ""
     }
   end
 end

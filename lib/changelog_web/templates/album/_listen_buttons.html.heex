@@ -1,24 +1,10 @@
 <div class="show-header-subscribe">
   <div class="show-header-subscribe-buttons">
-    <%= link("Spotify",
-      to: spotify_url(@album),
-      class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--spotify",
-      title: "Listen on Spotify") %>
-    <%= link("Apple Music",
-      to: apple_music_url(@album),
-      class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--apple-music",
-      title: "Listen on Apple Music") %>
-    <%= link("Amazon Music",
-      to: amazon_music_url(@album),
-      class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--amazon-music",
-      title: "Listen on Amazon Music") %>
-    <%= link("YouTube Music",
-      to: youtube_music_url(@album),
-      class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--youtube-music",
-      title: "Listen on YouTube Music") %>
-    <%= link("Bandcamp",
-      to: @album.bandcamp_url,
-      class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--bandcamp",
-      title: "Buy on Bandcamp") %>
+  <%= for {name, url} <- listen_links(@album) do %>
+    <%= link(name,
+      to: url,
+      class: "show-header-subscribe-buttons-item show-header-subscribe-buttons-item--#{StringKit.dasherize(name)}",
+      title: "Listen on #{name}") %>
+  <% end %>
   </div>
 </div>

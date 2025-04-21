@@ -1,15 +1,15 @@
-@import 'basic';
-@import 'article';
-@import 'episode';
-@import 'live';
-@import 'live-upcoming';
-@import 'marketing';
-@import 'search';
-@import 'show';
-@import 'sponsor_story';
-@import 'ten';
-@import 'topic';
-@import 'topics';
+@import "basic";
+@import "article";
+@import "episode";
+@import "live";
+@import "live-upcoming";
+@import "marketing";
+@import "search";
+@import "show";
+@import "sponsor_story";
+@import "ten";
+@import "topic";
+@import "topics";
 
 // Sticky Footer
 body {
@@ -31,7 +31,9 @@ body {
   min-height: calc(100vh - #{($header-height + $footer-height)});
 
   // Pages that should have black backgrounds
-  .page-page-ten & {
+  .page-page-ten &,
+  .page-album-index &,
+  .page-album-show & {
     background-color: $black;
   }
 
@@ -60,7 +62,7 @@ body {
       width: 100%;
       left: 0;
       right: 0;
-      content: '';
+      content: "";
       z-index: -1;
       background-color: rgba($black, 0.1);
     }
