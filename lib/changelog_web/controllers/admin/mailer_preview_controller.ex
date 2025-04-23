@@ -29,21 +29,41 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
     render(conn, :index, previews: previews)
   end
 
-  def show(conn = %{assigns: %{current_user: me}}, params = %{"id" => id}) do
-    email = apply(__MODULE__, String.to_existing_atom("#{id}_email"), [me])
+  def show(conn = %{assigns: %{current_user: me}}, params) do
+    id = Map.get(params, "id")
+    extra = Map.get(params, "extra")
+    format = Map.get(params, "format", "html")
+    mailer = String.to_existing_atom("#{id}_email")
+
+    email =
+      if extra do
+        apply(__MODULE__, mailer, [me, extra])
+      else
+        apply(__MODULE__, mailer, [me])
+      end
 
     conn
     |> put_layout(false)
     |> assign(:email, email)
+    |> assign(:extra, extra)
     |> assign(:mailer, id)
-    |> assign(:format, Map.get(params, "format", "html"))
+    |> assign(:format, format)
     |> render(:show)
   end
 
-  def send(conn = %{assigns: %{current_user: me}}, %{"id" => id}) do
-    __MODULE__
-    |> apply(String.to_existing_atom("#{id}_email"), [me])
-    |> Mailer.deliver()
+  def send(conn = %{assigns: %{current_user: me}}, params) do
+    id = Map.get(params, "id")
+    extra = Map.get(params, "extra")
+    mailer = String.to_existing_atom("#{id}_email")
+
+    email =
+      if extra do
+        apply(__MODULE__, mailer, [me, extra])
+      else
+        apply(__MODULE__, mailer, [me])
+      end
+
+    Mailer.deliver(email)
 
     conn
     |> put_flash(:result, :success)
@@ -141,6 +161,16 @@ defmodule ChangelogWeb.Admin.MailerPreviewController do
       Episode.with_podcast_slug("news")
       |> Episode.limit(1)
       |> Episode.newest_first()
+      |> Episode.preload_all()
+      |> Repo.one()
+
+    Email.episode_published(known_subscription(person), episode)
+  end
+
+  def news_published_email(person, issue) do
+    episode =
+      Episode.with_podcast_slug("news")
+      |> Episode.with_slug(issue)
       |> Episode.preload_all()
       |> Repo.one()
 

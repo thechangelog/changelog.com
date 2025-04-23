@@ -4,7 +4,7 @@
     <div class="sub header">For your previewing pleasure</div>
   </h1>
 
-  <div class="ui ordered large list">
+  <div class="ui middle aligned relaxed large selection list">
   <%= for preview <- @previews do %>
     <div class="item"><%= link(preview, to: ~p"/admin/mailers/#{preview}") %></div>
   <% end %>

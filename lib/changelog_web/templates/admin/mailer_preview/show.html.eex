@@ -69,7 +69,7 @@
     <% end %>
 
       <dt>To:</dt>
-      <dd><%= email_addresses(@email) %> [<%= link("send", to: ~p"/admin/mailers/#{@mailer}/send") %>]</dd>
+      <dd><%= email_addresses(@email) %> [<%= link("send", to: send_to_path(@mailer, @extra)) %>]</dd>
 
       <dt>Subject:</dt>
       <dd><strong><%= @email.subject %></strong></dd>
