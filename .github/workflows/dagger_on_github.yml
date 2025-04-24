@@ -48,6 +48,18 @@ jobs:
           cd magefiles
           go run main.go -w ../ cd
 
+      - name: Set short commit SHA
+        run: |
+          shorty=$(git rev-parse --short ${{ github.sha }})
+          echo "SHORT_SHA=$shorty" >> $GITHUB_ENV
+
+      - name: Format commit list
+        id: format_commits
+        run: |
+          echo "log<<EOF" >> $GITHUB_OUTPUT
+          echo '${{ toJson(github.event.commits) }}' | jq -r '.[] | "- \(.message) (\(.id[0:7]))"' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: "Announce deploy in #kaizen Zulip..."
         if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         uses: zulip/github-actions-zulip/send-message@v1
@@ -61,4 +73,4 @@ jobs:
           content: |
             ${{ github.actor }} just successfully deployed [${{ env.SHORT_SHA }}](https://github.com/thechangelog/changelog.com/commit/${{ github.sha }}):
 
-            > ${{ github.event.commits[0].message }}
+            ${{ steps.format_commits.outputs.log }}
