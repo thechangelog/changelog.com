@@ -2,6 +2,10 @@
   <div class="tooltip-arrow"></div>
   <div class="tooltip-wrap">
     <ul class="tooltip-list">
+      <li class="tooltip-list-heading">Buy</li>
+    <%= for {name, url} <- buy_links(@album) do %>
+      <li><%= link(name, to: url) %></li>
+    <% end %>
       <li class="tooltip-list-heading">Listen</li>
     <%= for {name, url} <- listen_links(@album) do %>
       <li><%= link(name, to: url) %></li>

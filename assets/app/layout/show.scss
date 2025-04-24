@@ -234,7 +234,7 @@
 
         &-item {
           height: 30px;
-          margin: 0 8px 12px;
+          margin: 0 8px;
           padding: 4px 0 0 30px;
           background-size: 30px 30px;
           background-repeat: no-repeat;
@@ -274,6 +274,9 @@
           }
           &--bandcamp {
             background-image: url("../images/icons/podcast_icon-bandcamp.png");
+          }
+          &--direct {
+            background-image: url("../images/icons/podcast_icon-direct.png");
           }
           &--overcast {
             background-image: url("../images/icons/podcast_icon-overcast.png");

@@ -22,6 +22,10 @@ defmodule ChangelogWeb.AlbumView do
       do: album.bandcamp_url
   end
 
+  def merch_url(album) do
+    "https://merch.changelog.com/products/#{album.slug}"
+  end
+
   def header_art_attrs(album) do
     %{
       src: art_url(album, "full"),
@@ -31,13 +35,20 @@ defmodule ChangelogWeb.AlbumView do
     }
   end
 
+  def buy_links(album) do
+    [
+      {"Direct", merch_url(album)},
+      {"Bandcamp", bandcamp_url(album)}
+    ]
+    |> Enum.reject(fn {_name, url} -> is_nil(url) end)
+  end
+
   def listen_links(album) do
     [
       {"Spotify", spotify_url(album)},
       {"Apple Music", apple_music_url(album)},
       {"Amazon Music", amazon_music_url(album)},
-      {"YouTube Music", youtube_music_url(album)},
-      {"Bandcamp", bandcamp_url(album)}
+      {"YouTube Music", youtube_music_url(album)}
     ]
     |> Enum.reject(fn {_name, url} -> is_nil(url) end)
   end
