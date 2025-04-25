@@ -1,3 +1,6 @@
+<%= @episode.email_teaser %>
+
+
 <%= @episode.email_content %>
 
 <%= if @person do %>
