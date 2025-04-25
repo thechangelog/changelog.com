@@ -56,17 +56,18 @@
       <dt>Format:</dt>
     <%= case @format do %>
     <% "html" -> %>
-      <dd>HTML [<a href="<%= SharedHelpers.current_path(@conn, %{format: "text"}) %>">see text</a>]</dd>
+      <dd>HTML [<a href={SharedHelpers.current_path(@conn, %{format: "text"})}>see text</a>]</dd>
     <% "text" -> %>
-      <dd>Text [<a href="<%= SharedHelpers.current_path(@conn, %{format: "html"}) %>">see html</a>]</dd>
+      <dd>Text [<a href={SharedHelpers.current_path(@conn, %{format: "html"})}>see html</a>]</dd>
     <% end %>
+
+    <%= for {k, v} <- @email.headers do %>
+      <dt>Header:</dt>
+      <dd><%= k %>: <%= v %></dd>
+    <% end %>
+
       <dt>From:</dt>
       <dd><%= format_email_address(@email.from) %></dd>
-
-    <%= if reply_to(@email) do %>
-      <dt>Reply-To:</dt>
-      <dd><%= reply_to(@email) %></dd>
-    <% end %>
 
       <dt>To:</dt>
       <dd><%= email_addresses(@email) %> [<%= link("send", to: send_to_path(@mailer, @extra)) %>]</dd>
@@ -76,6 +77,6 @@
     </dl>
   </header>
 
-  <iframe seamless srcdoc="<%= iframe_content(@email, @format) %>"></iframe>
+  <iframe seamless srcdoc={iframe_content(@email, @format)}></iframe>
 </body>
 </html>

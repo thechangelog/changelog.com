@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Email do
   import Swoosh.Email
 
   alias Changelog.{EpisodeGuest, EpisodeRequest, Feed, NewsItem, Podcast}
-  alias ChangelogWeb.{EpisodeView, EmailView}
+  alias ChangelogWeb.{EpisodeView, EmailView, PersonView}
 
   # Comment related emails
   def comment_mention(person, comment) do
@@ -109,15 +109,19 @@ defmodule ChangelogWeb.Email do
 
   # Podcast related emails
   def episode_published(subscription, episode) do
-    {email, subject, template} = if Podcast.is_news(episode.podcast) do
-      {email_from_news(), episode.email_subject, :news_published}
-    else
-      subject = EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
-      {styled_email(), subject, :episode_published}
-    end
+    {email, subject, template} =
+      if Podcast.is_news(episode.podcast) do
+        {email_from_news(), episode.email_subject, :news_published}
+      else
+        subject = EpisodeView.title_with_guest_focused_subtitle_and_podcast_aside(episode)
+        {styled_email(), subject, :episode_published}
+      end
+
+    unsub_url = PersonView.opt_out_url(subscription.person, "podcast", episode.podcast.slug)
 
     email
     |> header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug}")
+    |> header("List-Unsubscribe", unsub_url)
     |> to(subscription.person)
     |> subject(subject)
     |> assign(:subscription, subscription)
