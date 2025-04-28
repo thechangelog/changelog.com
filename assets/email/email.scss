@@ -199,6 +199,12 @@ body {
   ul,
   ol {
     margin: 30px 0;
+
+    // we don't want this on nested lists
+    & ul,
+    & ol {
+      margin: 0;
+    }
   }
   ul {
     padding-left: 20px;
@@ -207,7 +213,7 @@ body {
     padding-left: 25px;
   }
   li {
-    margin: 0 0 10px 0;
+    margin: 10px 0;
   }
 
   code,
