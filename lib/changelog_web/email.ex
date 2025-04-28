@@ -117,7 +117,12 @@ defmodule ChangelogWeb.Email do
         {styled_email(), subject, :episode_published}
       end
 
-    unsub_url = PersonView.opt_out_url(subscription.person, "podcast", episode.podcast.slug)
+    unsub_url =
+      if subscription.person do
+        PersonView.opt_out_url(subscription.person, "podcast", episode.podcast.slug)
+      else
+        ""
+      end
 
     email
     |> header("X-CMail-GroupName", "#{episode.podcast.name} #{episode.slug}")
