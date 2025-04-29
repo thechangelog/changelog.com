@@ -83,7 +83,8 @@ defmodule Changelog.Album do
       spotify_id: "6Quu0kNFIUe71ph7D7AA4U",
       amazon_id: "B0F4Z1L3BJ",
       youtube_id: "OLAK5uy_n1rFikCIU0DKftqv7I6FlTqxvmh4LxU-o",
-      bandcamp_url: ""
+      bandcamp_url:
+        "https://breakmastercylinder.bandcamp.com/album/changelog-beats-volumes-3-after-party"
     }
   end
 end
