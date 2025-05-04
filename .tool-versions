@@ -1,10 +1,10 @@
-1password-cli 2.29.0
+1password-cli 2.30.3
 dagger 0.6.4
-direnv 2.34.0
+direnv 2.36.0
 elixir 1.18.2-otp-27
 erlang 27.2.1
-flyctl 0.2.65
-golang 1.22.4
-nodejs 23.6.1
+flyctl 0.3.114
+golang 1.22.12
+nodejs 23.11.0
 yarn 1.22.22
-postgres 16.5
+postgres 16.8
