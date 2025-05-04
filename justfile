@@ -106,6 +106,11 @@ deps: add-oban-pro-hex-repo
     mix deps.get --only dev
     mix deps.get --only test
 
+# Clean all app dependencies
+[group('contributor')]
+clean-deps:
+  rm -fr _build deps
+
 [private]
 pg_ctl:
     @which pg_ctl >/dev/null \

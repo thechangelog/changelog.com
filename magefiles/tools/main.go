@@ -25,7 +25,7 @@ func CurrentVersions() *Versions {
 		toolVersions: toolVersions(),
 		Ubuntu: Ubuntu{
 			// https://hub.docker.com/r/hexpm/elixir/tags?page=1&ordering=last_updated&name=ubuntu-noble
-			Short: "noble-20241015",
+			Short: "noble-20250404",
 			Long:  "24.04 LTS (Noble Numbat)",
 		},
 	}

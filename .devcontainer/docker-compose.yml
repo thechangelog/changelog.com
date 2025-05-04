@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   devcontainer:
-    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.16.3-erlang-v26.2.5-nodejs-v20.14.0
+    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.18.3-erlang-v27.3.3-nodejs-v22.15.0
     volumes:
       - ../:/workspace
     network_mode: service:db
@@ -17,7 +15,7 @@ services:
 
   db:
     # https://hub.docker.com/_/postgres
-    image: postgres:16.1
+    image: postgres:16.8
     ports:
       - "4000:4000"
       - "5432:5432"
@@ -31,13 +29,13 @@ services:
 
   typesense:
     # https://hub.docker.com/r/typesense/typesense
-    image: typesense/typesense:0.25.2
+    image: typesense/typesense:28.0
     restart: on-failure
     ports:
       - "8108:8108"
     volumes:
       - typesense-data:/data
-    command: '--data-dir /data --api-key=xyz --enable-cors'
+    command: "--data-dir /data --api-key=xyz --enable-cors"
 
 volumes:
   postgres-data:

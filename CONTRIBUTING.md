@@ -80,9 +80,9 @@ Create a new pull request via https://github.com/thechangelog/changelog.com
 
 You will need to have the following system dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v16
-- [Elixir](https://elixir-lang.org/install.html) v1.16
-- [Erlang/OTP](https://www.erlang.org/downloads) v26 - usually installed as an Elixir dependency
-- [Node.js](https://nodejs.org/en/download/) v20 LTS - [latest-v20.x](https://nodejs.org/download/release/latest-v20.x/)
+- [Elixir](https://elixir-lang.org/install.html) v1.18
+- [Erlang/OTP](https://www.erlang.org/downloads) v27 - usually installed as an Elixir dependency
+- [Node.js](https://nodejs.org/en/download/) v22 LTS - [latest-v22.x](https://nodejs.org/download/release/latest-v22.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
 - [Golang](https://go.dev/doc/install) v1.22 - if you want to run CI locally
 
@@ -129,7 +129,7 @@ When the above succeeds, this is the end-result that you can expect to see on ma
 1. Run `just upgrade erlang elixir nodejs`
     - You can also upgrade one at a time, e.g. `just upgrade erlang`
 2. Ensure the runtime image builds locally: `just build-runtime-image`
-    - If [the combination of Erlang, Elixir & Ubuntu do not exist](https://github.com/thechangelog/changelog.com/issues/539), you will need to update the Ubuntu version in `magefiles/tools/main.go` e.g. [PR#?]()
+    - If [the combination of Erlang, Elixir & Ubuntu do not exist](https://github.com/thechangelog/changelog.com/issues/539), you will need to update the Ubuntu version in `magefiles/tools/main.go` e.g. [PR#541](https://github.com/thechangelog/changelog.com/pull/541/files#diff-245dd83948b4397e5cde73c6df536d84210c91729167b8df4df696199ceeb023R28)
 3. Commit & push to check that image builds successfully in GitHub Actions
 
 After you confirm that the image builds successfully:
@@ -137,9 +137,7 @@ After you confirm that the image builds successfully:
 2. Ensure that Elixir minor version in `mix.exs` is accurate
 3. Update Elixir, Erlang/OTP & Node.js version in `CONTRIBUTING.md` (this file)
 
-Commit and push everything, then wait for all GitHub Actions checks to go green
-✅ . At this point, one of the maintainers will review, approve & merge this
-change. Thank you very much!
+Commit and push everything, then wait for all GitHub Actions checks to go green ✅ . At this point, one of the maintainers will review, approve & merge this change. Thank you very much!
 
 ## Using GitHub Codespaces
 
