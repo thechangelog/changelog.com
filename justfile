@@ -86,6 +86,10 @@ build-runtime-image:
 ci:
     cd magefiles && go run main.go -w ../ ci
 
+[private]
+cd:
+    cd magefiles && go run main.go -w ../ cd
+
 # Add Oban Pro hex repository
 [group('team')]
 add-oban-pro-hex-repo:

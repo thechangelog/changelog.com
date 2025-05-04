@@ -50,7 +50,7 @@ func (image *Image) flyctl() *Image {
 
 func (image *Image) app() *Image {
 	image.container = image.container.
-		WithMountedFile("fly.toml", image.dag.Host().Directory("fly.io/changelog-2024-01-12").File("fly.toml"))
+		WithMountedFile("fly.toml", image.dag.Host().Directory("fly.io/"+image.Env("APP_PROD_INSTANCE").Value()).File("fly.toml"))
 
 	return image
 }

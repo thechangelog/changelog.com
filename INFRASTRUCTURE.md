@@ -6,7 +6,7 @@ This diagram shows the current changelog.com setup:
 %% https://fontawesome.com/search
 graph TD
     classDef link stroke:#59b287,stroke-width:3px;
-    
+
     %% Code & assets
     subgraph GitHub
         repo{{ fab:fa-github thechangelog/changelog.com }}:::link
@@ -14,7 +14,7 @@ graph TD
 
         cicd[/ fa:fa-circle-check GitHub Action - Ship It \]:::link
         click cicd "https://github.com/thechangelog/changelog.com/actions/workflows/ship_it.yml"
-        
+
         automation[\ fab:fa-golang Dagger Go SDK /]:::link
         click automation "https://github.com/thechangelog/changelog.com/blob/master/magefiles/magefiles.go"
 
@@ -26,12 +26,12 @@ graph TD
 
         repo -.-> |.github/workflows/ship_it.yml| cicd
         cicd --> |magefiles/magefiles.go| automation
-        
+
         cicd --> |success #kaizen code| chat
     end
-    
+
     repo -.- |fly.io/changelog-2024-01-12| app
-    
+
     registry --> |ghcr.io/changelog/changelog-prod| app
     runner --> |flyctl deploy| app
 
@@ -41,8 +41,8 @@ graph TD
     subgraph Fly.io
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
-            
-        
+
+
         app(( fab:fa-phoenix-framework IAD & EWR changelog-2024-01-12.fly.dev )):::link
         style app fill:#488969;
         click app "https://fly.io/apps/changelog-2024-01-12"
@@ -96,7 +96,7 @@ graph TD
     subgraph Fastly
         apex[ changelog.com ]:::link
         click apex "https://changelog.com"
-        
+
         subgraph Ashburn
             cdn[ cdn.changelog.com ]
         end
@@ -112,7 +112,7 @@ graph TD
     click observability "https://ui.honeycomb.io/changelog/datasets/changelog_opentelemetry/home"
     app -.-> |traces| observability
     logs -.-> |logs| observability
-    
+
     %% Object storage
     apex ==> |https| proxy
     subgraph Cloudflare.R2
@@ -273,25 +273,41 @@ you very much!
 
 ## How to create a new app instance?
 
-1. Start by creating a new app, e.g. `flyctl apps create changelog-2024-01-12 --org changelog`
-2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2023-12-17,2024-01-12}`
-3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2024-01-12`
+1. Start by creating a new app, e.g. `flyctl apps create changelog-2025-05-05 --org changelog`
+2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2024-01-12,2025-05-05}`
+3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2025-05-05`
 4. Update the app name in e.g. `fly.toml` to match the newly created app
 5. Set the few secrets required by the app to work correctly before promoting to live
 
         flyctl secrets set --stage \
             OP_SERVICE_ACCOUNT_TOKEN="$(op read op://changelog/op/credential --account changelog.1password.com --cache)" \
-            R2_FEEDS_BUCKET=changelog-feeds-dev \
-            URL_HOST=changelog-2024-01-12.fly.dev
+            STATIC_URL_HOST=cdn2.changelog.com \
+            URL_HOST=changelog-2025-05-05.fly.dev
 
 6. Deploy the latest app image from <https://github.com/thechangelog/changelog.com/pkgs/container/changelog-prod>
 
         flyctl deploy --vm-size performance-4x --image <LATEST_IMAGE_SHA>
 
-7. Ensure that the app is scaled across multiple regions & is resilient to a single region failure:
+## How to promote a new app instance to production?
+
+1. Update `APP_PROD_INSTANCE` in `.envrc` to match the newly created app name, e.g. `changelog-2025-05-05`
+
+        direnv allow
+        env | rg APP_PROD_INSTANCE
+
+2. Ensure that the app is scaled across multiple regions & is resilient to a single region failure:
 
         just prod-region-resilient
 
+3. Unset the following app secrets
+
+        flyctl secrets unset STATIC_URL_HOST URL_HOST
+
+4. Update the app origin in the CDN with the new app instance URL, e.g. `https://changelog-2025-05-05.fly.dev`
+
+5. Update the previous app instance reference everywhere in this repository - starting with the diagrams in this file.
+
+6. Update [`APP_PROD_INSTANCE` in GitHub Actions](https://github.com/thechangelog/changelog.com/settings/variables/actions/APP_PROD_INSTANCE)
 
 ## How to branch the production db instance?
 
