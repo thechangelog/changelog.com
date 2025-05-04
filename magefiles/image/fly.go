@@ -31,7 +31,6 @@ func (image *Image) Deploy() *Image {
 		WithExec([]string{
 			"deploy",
 			"--image", image.ProductionImageRef(),
-			"--vm-size", "performance-4x",
 		})
 
 	return image.OK()

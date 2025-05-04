@@ -6,6 +6,9 @@ primary_region = "iad"
 kill_signal = "SIGTERM"
 kill_timeout = 30
 
+[[vm]]
+size = "performance-4x"
+
 [deploy]
 strategy = "bluegreen"
 release_command = "on.deploy"
