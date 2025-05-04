@@ -59,11 +59,14 @@ asdf:
 asdf-shell: brew
     @echo "source $(brew --prefix)/opt/asdf/libexec/asdf.sh"
 
+[private]
+MACOS_MAJOR_MINOR_VERSION := if os() == "macos" { "$(sw_vers -productVersion | cut -d. -f1,2)" } else { "" }
+
 # Install all system dependencies
 [group('contributor')]
 install: asdf brew imagemagick gpg icu4c
-    @awk '{ system("asdf plugin-add " $1) }' < .tool-versions
-    @PKG_CONFIG_PATH="$(brew --prefix icu4c)/lib/pkgconfig:$PKG_CONFIG_PATH" asdf install
+    @awk '{ system("asdf plugin add " $1) }' < .tool-versions
+    @PKG_CONFIG_PATH="$(brew --prefix)/bin/pkg-config:$(brew --prefix icu4c)/lib/pkgconfig:$(brew --prefix curl)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig" MACOSX_DEPLOYMENT_TARGET="{{ MACOS_MAJOR_MINOR_VERSION }}" asdf install
 
 export ELIXIR_ERL_OPTIONS := if os() == "linux" { "+fnu" } else { "" }
 
