@@ -103,38 +103,6 @@ func (Fly) Deploy(ctx context.Context) {
 	image.New(ctx, dag.Pipeline("🏁 DEPLOY")).Deploy()
 }
 
-// Start Dagger Engine on Fly.io
-func (Fly) DaggerStart(ctx context.Context) {
-	defer sysexit.Handle()
-
-	var dag *dagger.Client
-	var err error
-	dag, ok := ctx.Value("dag").(*dagger.Client)
-	if !ok {
-		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-		mustBeAvailable(err)
-		defer dag.Close()
-	}
-
-	image.New(ctx, dag.Pipeline("🚙 START DAGGER ENGINE")).DaggerStart()
-}
-
-// Stop Dagger Engine on Fly.io
-func (Fly) DaggerStop(ctx context.Context) {
-	defer sysexit.Handle()
-
-	var dag *dagger.Client
-	var err error
-	dag, ok := ctx.Value("dag").(*dagger.Client)
-	if !ok {
-		dag, err = dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
-		mustBeAvailable(err)
-		defer dag.Close()
-	}
-
-	image.New(ctx, dag.Pipeline("🚗 STOP DAGGER ENGINE")).DaggerStop()
-}
-
 func mustBeAvailable(err error) {
 	if err != nil {
 		panic(sysexit.Unavailable(err))
