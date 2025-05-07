@@ -277,6 +277,32 @@ defmodule Changelog.NotifierTest do
       assert_email_sent(Email.episode_published(s2, episode))
       assert_email_not_sent(Email.episode_published(s3, episode))
     end
+
+    test "when episode has no transcript subscriptions" do
+      hardcoded = insert(:person, email: "jerod@changelog.com")
+      episode = insert(:episode)
+      Notifier.notify(episode)
+
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
+
+      assert_email_sent(Email.episode_transcribed(hardcoded, episode))
+    end
+
+    test "when episode has transcript subscriptions" do
+      hardcoded = insert(:person, email: "adam@changelog.com")
+      episode = insert(:episode)
+      s1 = insert(:subscription_on_episode, episode: episode)
+      s2 = insert(:subscription_on_episode, episode: episode)
+      s3 = insert(:unsubscribed_subscription_on_episode, episode: episode)
+      Notifier.notify(episode)
+
+      assert %{success: 3, failure: 0} = Oban.drain_queue(queue: :email)
+
+      assert_email_sent(Email.episode_transcribed(hardcoded, episode))
+      assert_email_sent(Email.episode_transcribed(s1.person, episode))
+      assert_email_sent(Email.episode_transcribed(s2.person, episode))
+      assert_email_not_sent(Email.episode_transcribed(s3.person, episode))
+    end
   end
 
   describe "notify/1 with regular item" do
@@ -412,34 +438,6 @@ defmodule Changelog.NotifierTest do
     end
   end
 
-  describe "notify/1 with an episode" do
-    test "when episode has no transcript subscriptions" do
-      hardcoded = insert(:person, email: "jerod@changelog.com")
-      episode = insert(:episode)
-      Notifier.notify(episode)
-
-      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
-
-      assert_email_sent(Email.episode_transcribed(hardcoded, episode))
-    end
-
-    test "when episode has transcript subscriptions" do
-      hardcoded = insert(:person, email: "adam@changelog.com")
-      episode = insert(:episode)
-      s1 = insert(:subscription_on_episode, episode: episode)
-      s2 = insert(:subscription_on_episode, episode: episode)
-      s3 = insert(:unsubscribed_subscription_on_episode, episode: episode)
-      Notifier.notify(episode)
-
-      assert %{success: 3, failure: 0} = Oban.drain_queue(queue: :email)
-
-      assert_email_sent(Email.episode_transcribed(hardcoded, episode))
-      assert_email_sent(Email.episode_transcribed(s1.person, episode))
-      assert_email_sent(Email.episode_transcribed(s2.person, episode))
-      assert_email_not_sent(Email.episode_transcribed(s3.person, episode))
-    end
-  end
-
   describe "notify/1 with an episode request" do
     test "when episode request is declined with a message" do
       person = insert(:person, settings: %{email_on_submitted_news: true})
@@ -488,6 +486,9 @@ defmodule Changelog.NotifierTest do
 
   describe "notify/1 with a post item" do
     setup_with_mocks([
+      {Bsky, [], [post: fn _ -> true end]},
+      {Social, [], [post: fn _ -> true end]},
+      {Zulip, [], [post: fn _ -> true end]}
     ]) do
       :ok
     end
@@ -498,8 +499,11 @@ defmodule Changelog.NotifierTest do
       Notifier.notify(item)
 
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
+      assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :default)
 
       assert_no_email_sent()
+      assert called(Social.post(:_))
+      assert called(Zulip.post(:_))
     end
   end
 end

@@ -50,6 +50,7 @@ defmodule Changelog.Notifier do
 
     if NewsItem.is_post(item) do
       post = item |> NewsItem.load_object() |> Map.get(:object)
+      SocialPoster.queue(post)
     end
 
     if item.submitter == item.author do

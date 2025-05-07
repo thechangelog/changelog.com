@@ -1,6 +1,6 @@
 defmodule Changelog.Zulip do
   alias Changelog.Zulip.{Client, Messages}
-  alias Changelog.{Episode, Person, Podcast}
+  alias Changelog.{Episode, Person, Post, Podcast}
 
   def invite(person = %Person{}) do
     Client.post_invite(person.email)
@@ -18,6 +18,13 @@ defmodule Changelog.Zulip do
       %{"ok" => true} -> cross_post(episode, channel, topic)
       _else -> nil
     end
+  end
+
+  def post(post = %Post{}) do
+    post = Post.preload_all(post)
+    message = Messages.new_post(post)
+
+    Client.post_message("reading", post.title, message)
   end
 
   def user_id(person = %Person{}) do

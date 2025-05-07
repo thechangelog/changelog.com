@@ -8,7 +8,7 @@ defmodule Changelog.PostNewsItem do
     %NewsItem{
       type: :post,
       object_id: Post.object_id(post),
-      url: PostView.url(post, :show),
+      url: PostView.url(post),
       headline: post.title,
       story: post.tldr,
       published_at: post.published_at,
@@ -27,7 +27,7 @@ defmodule Changelog.PostNewsItem do
       |> change(%{
         headline: post.title,
         story: post.tldr,
-        url: PostView.url(post, :show),
+        url: PostView.url(post),
         news_item_topics: post_topics(post)
       })
       |> Repo.update!()

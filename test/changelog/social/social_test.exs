@@ -6,7 +6,7 @@ defmodule Changelog.Social.SocialTest do
   alias Changelog.Social
 
   describe "post/1" do
-    test "creates a status with applicable data" do
+    test "creates a status with applicable episode data" do
       podcast = insert(:podcast, mastodon_token: "12345")
       episode = insert(:published_episode, podcast: podcast)
 
@@ -15,6 +15,18 @@ defmodule Changelog.Social.SocialTest do
 
         assert called(Social.Client.create_status("12345", :_))
         assert Repo.get(Changelog.Episode, episode.id).socialize_url == "https://test.com"
+      end
+    end
+
+    test "creates a status with applicable post data" do
+      post = insert(:published_post)
+
+      with_mocks([
+        {Social.Client, [], [create_status: fn _, _ -> {:ok, %{}} end, default_token: fn -> "54321" end]}
+      ]) do
+        Social.post(post)
+
+        assert called(Social.Client.create_status("54321", :_))
       end
     end
   end

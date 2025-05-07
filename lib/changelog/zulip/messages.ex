@@ -1,6 +1,6 @@
 defmodule Changelog.Zulip.Messages do
   alias Changelog.ListKit
-  alias ChangelogWeb.{EpisodeView, TimeView}
+  alias ChangelogWeb.{EpisodeView, PostView, TimeView}
 
   def cross_post(episode, channel, topic) do
     "#{EpisodeView.podcast_name_and_number(episode)}! Discuss 👉 #**#{channel}>#{topic}**"
@@ -12,6 +12,14 @@ defmodule Changelog.Zulip.Messages do
       chapters(episode)
     ]
     |> ListKit.compact_join("\n\n")
+  end
+
+  def new_post(post) do
+    """
+    #{post.author.name}: #{post.tldr}
+
+    🔗 #{PostView.url(post)}
+    """
   end
 
   def summary(episode) do

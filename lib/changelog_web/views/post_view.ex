@@ -2,7 +2,7 @@ defmodule ChangelogWeb.PostView do
   use ChangelogWeb, :public_view
 
   alias Changelog.{Files, ListKit}
-  alias ChangelogWeb.{Endpoint, NewsItemView, PersonView}
+  alias ChangelogWeb.{NewsItemView, PersonView}
 
   def admin_edit_link(conn, %{admin: true}, post) do
     path = Routes.admin_post_path(conn, :edit, post, next: SharedHelpers.current_path(conn))
@@ -26,5 +26,5 @@ defmodule ChangelogWeb.PostView do
     |> length()
   end
 
-  def url(post, action \\ :show), do: Routes.post_url(Endpoint, action, post.slug)
+  def url(post), do: ~p"/posts/#{post.slug}"
 end

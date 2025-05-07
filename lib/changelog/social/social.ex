@@ -2,8 +2,8 @@ defmodule Changelog.Social do
   use ChangelogWeb, :verified_routes
 
   alias Changelog.Social.Client
-  alias Changelog.{Episode, StringKit}
-  alias ChangelogWeb.{EpisodeView, PersonView}
+  alias Changelog.{Episode, Post, StringKit}
+  alias ChangelogWeb.{EpisodeView, PersonView, PostView}
   alias ChangelogWeb.Helpers.SharedHelpers
 
   def post(episode = %Episode{}) do
@@ -31,6 +31,18 @@ defmodule Changelog.Social do
       {:ok, %{body: body}} -> Episode.socialize_url(episode, body["url"])
       {:error, response} -> {:error, response}
     end
+  end
+
+  def post(post = %Post{}) do
+    content = """
+    #{SharedHelpers.md_to_text(post.tldr)}
+
+    🔗 #{link_url(post)}
+    """
+
+    token = Client.default_token()
+
+    Client.create_status(token, content)
   end
 
   def description(episode) do
@@ -74,7 +86,8 @@ defmodule Changelog.Social do
 
   defp link_emoj, do: ~w(✨ 💫 🔗 👉 🎧) |> Enum.random()
 
-  defp link_url(episode), do: episode |> EpisodeView.share_url()
+  defp link_url(episode = %Episode{}), do: episode |> EpisodeView.share_url()
+  defp link_url(post = %Post{}), do: post |> PostView.url()
 
   defp tags(podcast) do
     case podcast.slug do
