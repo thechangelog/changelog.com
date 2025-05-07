@@ -4,16 +4,15 @@ defmodule Changelog.ObanWorkers.SocialPoster do
   """
   use Oban.Worker
 
-  alias Changelog.{Bsky, Episode, Repo, Social, Slack, Zulip}
+  alias Changelog.{Bsky, Episode, Repo, Social, Zulip}
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"episode_id" => episode_id}}) do
     episode = Episode |> Repo.get(episode_id) |> Episode.preload_all()
 
-    if Changelog.Podcast.is_a_changelog_pod(episode.podcast) || episode.podcast.slug == "jsparty" do
+    if Changelog.Podcast.is_a_changelog_pod(episode.podcast) do
       post_bsky_new_episode_message(episode)
       post_social_new_episode_message(episode)
-      post_slack_new_episode_message(episode)
       post_zulip_new_episode_message(episode)
     end
 
@@ -23,11 +22,6 @@ defmodule Changelog.ObanWorkers.SocialPoster do
   defp post_bsky_new_episode_message(episode), do: Bsky.post(episode)
 
   defp post_social_new_episode_message(episode), do: Social.post(episode)
-
-  defp post_slack_new_episode_message(episode) do
-    message = Slack.Messages.new_episode(episode)
-    Slack.Client.message("#main", message)
-  end
 
   defp post_zulip_new_episode_message(episode), do: Zulip.post(episode)
 

@@ -5,12 +5,11 @@ defmodule Changelog.NotifierTest do
 
   import Mock
 
-  alias Changelog.{Bsky, EpisodeRequest, NewsItem, Notifier, Slack, Social, Subscription, Zulip}
+  alias Changelog.{Bsky, EpisodeRequest, NewsItem, Notifier, Social, Subscription, Zulip}
   alias ChangelogWeb.Email
 
   describe "notify/1 with news item comment" do
     setup_with_mocks([
-      {Slack.Client, [], [message: fn _, _ -> true end]}
     ]) do
       :ok
     end
@@ -32,7 +31,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment has subscriber who is also commenter" do
@@ -45,7 +43,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment has no parent but 2 subscribers" do
@@ -59,7 +56,6 @@ defmodule Changelog.NotifierTest do
 
       assert_email_sent(Email.comment_subscription(sub1, comment))
       assert_email_sent(Email.comment_subscription(sub2, comment))
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment has no parents but 2 muted subscribers" do
@@ -74,7 +70,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when a comment mentions 3 people, 1 of which has mention notifications disabled" do
@@ -99,7 +94,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_email_sent(Email.comment_reply(reply.parent.author, reply))
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent is also subscribed" do
@@ -114,7 +108,6 @@ defmodule Changelog.NotifierTest do
 
       assert_email_sent(Email.comment_reply(parent, reply))
       assert_email_not_sent(Email.comment_subscription(sub, reply))
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent is subscribed and 2 mentions" do
@@ -139,7 +132,6 @@ defmodule Changelog.NotifierTest do
       assert_email_sent(Email.comment_mention(mentioned, reply))
       assert_email_not_sent(Email.comment_mention(parent, reply))
       assert_email_not_sent(Email.comment_subscription(sub, reply))
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent has notifications enabled but discussion muted" do
@@ -153,7 +145,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply and parent author has notifications disabled" do
@@ -165,7 +156,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#news-comments", :_))
     end
 
     test "when comment is a reply to own comment" do
@@ -180,14 +170,12 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#news-comments", :_))
     end
   end
 
   describe "notify/1 with episode item" do
     setup_with_mocks([
       {Bsky, [], [post: fn _ -> true end]},
-      {Slack.Client, [], [message: fn _, _ -> true end]},
       {Social, [], [post: fn _ -> true end]},
       {Zulip, [], [post: fn _ -> true end]}
     ]) do
@@ -204,7 +192,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :default)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#main", :_))
       assert called(Bsky.post(:_))
       assert called(Social.post(:_))
       assert called(Zulip.post(:_))
@@ -222,7 +209,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :default)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#main", :_))
       assert called(Bsky.post(:_))
       assert called(Social.post(:_))
       assert called(Zulip.post(:_))
@@ -244,7 +230,6 @@ defmodule Changelog.NotifierTest do
 
       assert_email_sent(Email.guest_thanks(eg1))
       assert_email_sent(Email.guest_thanks(eg2))
-      assert called(Slack.Client.message("#main", :_))
       assert called(Bsky.post(:_))
       assert called(Social.post(:_))
       assert called(Zulip.post(:_))
@@ -503,7 +488,6 @@ defmodule Changelog.NotifierTest do
 
   describe "notify/1 with a post item" do
     setup_with_mocks([
-      {Slack.Client, [], [message: fn _, _ -> true end]}
     ]) do
       :ok
     end
@@ -516,7 +500,6 @@ defmodule Changelog.NotifierTest do
       assert %{success: 0, failure: 0} = Oban.drain_queue(queue: :email)
 
       assert_no_email_sent()
-      assert called(Slack.Client.message("#main", :_))
     end
   end
 end

@@ -8,7 +8,6 @@ defmodule Changelog.Notifier do
     Podcast,
     Repo,
     Subscription,
-    Slack,
     StringKit
   }
 
@@ -51,7 +50,6 @@ defmodule Changelog.Notifier do
 
     if NewsItem.is_post(item) do
       post = item |> NewsItem.load_object() |> Map.get(:object)
-      deliver_slack_new_post_message(post)
     end
 
     if item.submitter == item.author do
@@ -91,8 +89,6 @@ defmodule Changelog.Notifier do
 
   def notify(comment = %NewsItemComment{approved: true}) do
     comment = NewsItemComment.preload_all(comment)
-
-    deliver_slack_new_comment_message(comment)
 
     # these functions all return lists of tuples where each tuple consists of:
     # {person, email_recipient (person or subscription), mailer_fn}
@@ -202,16 +198,6 @@ defmodule Changelog.Notifier do
         "priority" => 1
       })
     end
-  end
-
-  defp deliver_slack_new_comment_message(comment) do
-    message = Slack.Messages.new_comment(comment)
-    Slack.Client.message("#news-comments", message)
-  end
-
-  defp deliver_slack_new_post_message(post) do
-    message = Slack.Messages.new_post(post)
-    Slack.Client.message("#main", message)
   end
 
   defp deliver_submitter_email(nil, _item), do: false
