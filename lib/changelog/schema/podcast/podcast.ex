@@ -131,7 +131,7 @@ defmodule Changelog.Podcast do
       slug: "plusplus",
       status: :publishing,
       is_meta: true,
-      description: "Directly support our work. It's better!",
+      description: "Ditch the ads, get bonuses & directly support our work. It's better!",
       cover: true,
       active_hosts: [],
       retired_hosts: []
