@@ -50,11 +50,13 @@ jobs:
           go run main.go -w ../ cd
 
       - name: Set short commit SHA
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         run: |
           shorty=$(git rev-parse --short ${{ github.sha }})
           echo "SHORT_SHA=$shorty" >> $GITHUB_ENV
 
       - name: Format commit list
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         id: format_commits
         run: |
           echo "log<<EOF" >> $GITHUB_OUTPUT

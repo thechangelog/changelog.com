@@ -61,28 +61,32 @@ config :changelog, Changelog.Mailer,
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
-config :changelog, Oban,
-  plugins: [
-    # 12 hours
-    {Oban.Plugins.Pruner, max_age: 43_200},
-    {Oban.Plugins.Cron,
-     timezone: "US/Central",
-     crontab: [
-       # 3am daily
-       {"00 3 * * *", Changelog.ObanWorkers.ZulipImporter},
-       # 3:30am daily
-       {"30 3 * * *", Changelog.ObanWorkers.PersonBouncer},
-       # 3:45am daily
-       {"45 3 * * *", Changelog.ObanWorkers.FeedBouncer},
-       # 4am daily
-       {"00 4 * * *", Changelog.ObanWorkers.EpisodeStatsProcessor},
-       # 4:45am daily
-       {"45 4 * * *", Changelog.ObanWorkers.FeedStatsProcessor},
-       # every 3 hours
-       {"0 */3 * * *", Changelog.ObanWorkers.MembershipSyncer},
-       # 15 after every hour
-       {"15 * * * *", Changelog.ObanWorkers.SmokeTester},
-       # every minute
-       {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
-     ]}
-  ]
+if System.get_env("APP_INSTANCE") == "production" do
+  config :changelog, Oban,
+    plugins: [
+      # 12 hours
+      {Oban.Plugins.Pruner, max_age: 43_200},
+      {Oban.Plugins.Cron,
+       timezone: "US/Central",
+       crontab: [
+         # 3am daily
+         {"00 3 * * *", Changelog.ObanWorkers.ZulipImporter},
+         # 3:30am daily
+         {"30 3 * * *", Changelog.ObanWorkers.PersonBouncer},
+         # 3:45am daily
+         {"45 3 * * *", Changelog.ObanWorkers.FeedBouncer},
+         # 4am daily
+         {"00 4 * * *", Changelog.ObanWorkers.EpisodeStatsProcessor},
+         # 4:45am daily
+         {"45 4 * * *", Changelog.ObanWorkers.FeedStatsProcessor},
+         # every 3 hours
+         {"0 */3 * * *", Changelog.ObanWorkers.MembershipSyncer},
+         # 15 after every hour
+         {"15 * * * *", Changelog.ObanWorkers.SmokeTester},
+         # every minute
+         {"* * * * *", Changelog.ObanWorkers.NewsPublisher}
+       ]}
+    ]
+else
+  config :changelog, Oban, false
+end
