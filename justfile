@@ -290,7 +290,7 @@ do-it:
 [group('team')]
 tag-kaizen version episode discussion commit:
     git tag --force --sign \
-        --message="Recorded as 🎧 <https://changelog.com/friends/{{ episode }}>" \
+        --message="Recorded as ▶️ <https://changelog.com/friends/{{ episode }}>" \
         --message="Discussed in https://github.com/thechangelog/changelog.com/discussions/{{ discussion }}" \
         kaizen.{{ version }} {{ commit }}
     git push --force origin kaizen.{{ version }}
