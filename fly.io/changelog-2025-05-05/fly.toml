@@ -6,6 +6,12 @@ primary_region = "iad"
 kill_signal = "SIGTERM"
 kill_timeout = 30
 
+[env]
+# This is an experimental app instance, NOT the current production
+APP_INSTANCE = "experimental"
+URL_HOST = "pipedream.changelog.com"
+STATIC_URL_HOST = "cdn2.changelog.com"
+
 [[vm]]
 size = "performance-4x"
 

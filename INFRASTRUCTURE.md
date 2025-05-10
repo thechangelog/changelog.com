@@ -277,16 +277,16 @@ you very much!
 2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2024-01-12,2025-05-05}`
 3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2025-05-05`
 4. Update the app name in e.g. `fly.toml` to match the newly created app
-5. Set the few secrets required by the app to work correctly before promoting to live
+5. Set `APP_INSTANCE=experimental` env var in `fly.toml`
+  - Otherwise Oban and other production components will treat this app as current production
+5. Set the one secret required by the app to be able to access all other secrets
 
         flyctl secrets set --stage \
-            OP_SERVICE_ACCOUNT_TOKEN="$(op read op://changelog/op/credential --account changelog.1password.com --cache)" \
-            STATIC_URL_HOST=cdn2.changelog.com \
-            URL_HOST=changelog-2025-05-05.fly.dev
+            OP_SERVICE_ACCOUNT_TOKEN="$(op read op://changelog/op/credential --account changelog.1password.com --cache)"
 
 6. Deploy the latest app image from <https://github.com/thechangelog/changelog.com/pkgs/container/changelog-prod>
 
-        flyctl deploy --vm-size performance-4x --image <LATEST_IMAGE_SHA>
+        flyctl deploy --ha=false --image=ghcr.io/thechangelog/changelog-prod:<LATEST_IMAGE_SHA>
 
 ## How to promote a new app instance to production?
 
@@ -299,9 +299,8 @@ you very much!
 
         just prod-region-resilient
 
-3. Unset the following app secrets
-
-        flyctl secrets unset STATIC_URL_HOST URL_HOST
+3. Set `APP_INSTANCE=production` env var in `fly.toml`
+  - Remove any env variables that should not be there (e.g. `URL_HOST`, `STATIC_URL_HOST`, etc.)
 
 4. Update the app origin in the CDN with the new app instance URL, e.g. `https://changelog-2025-05-05.fly.dev`
 
