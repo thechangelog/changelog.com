@@ -1,6 +1,7 @@
 import Config
 
 port = 4000
+
 config :changelog, ChangelogWeb.Endpoint,
   http: [port: port, ip: {0, 0, 0, 0, 0, 0, 0, 0}],
   url: [host: System.get_env("HOST", "localhost")],
@@ -19,7 +20,8 @@ config :changelog, ChangelogWeb.Endpoint,
 # "CODESPACES_WEB" is manually set by devs, the other env vars are set by Codespaces automatically
 # https://docs.github.com/en/codespaces/developing-in-codespaces/default-environment-variables-for-your-codespace
 if System.get_env("CODESPACES_WEB") do
-  codespaces_host = "#{System.get_env("CODESPACE_NAME")}-#{port}.#{System.get_env("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}"
+  codespaces_host =
+    "#{System.get_env("CODESPACE_NAME")}-#{port}.#{System.get_env("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")}"
 
   config :changelog, ChangelogWeb.Endpoint,
     static_url: [host: codespaces_host, path: "/static", port: 80]
@@ -60,7 +62,8 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Serve Waffle static assets from Cloudflare R2 changelog-assets-dev, the r2.dev subdomain
 config :waffle,
-  asset_host: System.get_env("CDN_PUBLIC_HOST", "https://pub-09bcfd436e22494a8f79ac4e8cd51197.r2.dev")
+  asset_host:
+    System.get_env("CDN_PUBLIC_HOST", "https://pub-09bcfd436e22494a8f79ac4e8cd51197.r2.dev")
 
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -73,16 +76,18 @@ config :changelog, Changelog.Repo,
 
 if String.contains?(System.get_env("DB_HOST", "localhost"), "neon.tech") do
   config :changelog, Changelog.Repo,
-      ssl: true,
-      ssl_opts: [
-        # The cacertfile value implies macOS - tested on macOS 12.7.3 by @gerhard - March 28, 2024
-        cacertfile: "/etc/ssl/cert.pem",
-        # The followin also works on macOS ARM + brew install openssl@3
-        # cacertfile: "/opt/homebrew/etc/openssl@3/cert.pem",
-        verify: :verify_peer,
-        server_name_indication: String.to_charlist(System.get_env("DB_HOST", "db")),
-        customize_hostname_check: [
-          match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-        ]
+    ssl: true,
+    ssl_opts: [
+      # The cacertfile value implies macOS - tested on macOS 12.7.3 by @gerhard - March 28, 2024
+      cacertfile: "/etc/ssl/cert.pem",
+      # The followin also works on macOS ARM + brew install openssl@3
+      # cacertfile: "/opt/homebrew/etc/openssl@3/cert.pem",
+      verify: :verify_peer,
+      server_name_indication: String.to_charlist(System.get_env("DB_HOST", "db")),
+      customize_hostname_check: [
+        match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
       ]
+    ]
 end
+
+config :changelog, Oban, queues: [default: 1, audio_updater: 1, scheduled: 1, email: 1, feeds: 1]
