@@ -240,9 +240,10 @@ defmodule ChangelogWeb.Admin.PersonController do
 
   def zulip(conn = %{assigns: %{person: person}}, params) do
     flash =
-      case Zulip.invite(person.email) do
+      case Zulip.invite(person) do
         %{"ok" => true} ->
           "success"
+
         _else ->
           "failure"
       end
@@ -261,7 +262,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   end
 
   defp assign_person(conn = %{params: %{"id" => id}}, _) do
-    person = Person |> Repo.get!(id) |>Repo.preload(:active_membership)
+    person = Person |> Repo.get!(id) |> Repo.preload(:active_membership)
     assign(conn, :person, person)
   end
 
