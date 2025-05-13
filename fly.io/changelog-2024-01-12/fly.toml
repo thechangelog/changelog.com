@@ -9,8 +9,9 @@ kill_timeout = 30
 [env]
 APP_INSTANCE = "production"
 
+# https://fly.io/docs/about/pricing/
 [[vm]]
-size = "performance-4x"
+size = "performance-2x"
 
 [deploy]
 strategy = "bluegreen"

@@ -12,8 +12,9 @@ APP_INSTANCE = "experimental"
 URL_HOST = "pipedream.changelog.com"
 STATIC_URL_HOST = "cdn2.changelog.com"
 
+# https://fly.io/docs/about/pricing/
 [[vm]]
-size = "performance-4x"
+size = "performance-2x"
 
 [deploy]
 strategy = "bluegreen"
