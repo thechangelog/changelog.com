@@ -52,6 +52,7 @@ defmodule Changelog.Mixfile do
       {:ecto_enum, "~> 1.0"},
       {:hashids, "~> 2.0"},
       {:swoosh, "~> 1.16"},
+      {:premailex, "~> 0.3.20"},
       {:gen_smtp, "~> 1.0"},
       {:httpoison, "~> 2.2.1", override: true},
       # pinned to 1.21 until https://github.com/benoitc/hackney/issues/766 closes

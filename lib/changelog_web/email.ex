@@ -263,6 +263,8 @@ defmodule ChangelogWeb.Email do
   defp render(email, template) do
     assigns = Map.put(email.assigns, :email, email)
     html = Phoenix.View.render_to_string(EmailView, "#{template}.html", assigns)
+    html = Premailex.to_inline_css(html)
+
     assigns = Map.put(assigns, :layout, false)
     text = Phoenix.View.render_to_string(EmailView, "#{template}.text", assigns)
 
