@@ -4,7 +4,7 @@
 
     <p>We're prepping for your show and just plugged your info in to our system. For the best outcome, please read through our <%= link "Guest Setup Guide", to: Routes.page_url(Endpoint, :guest), title: "Guest Setup Guide" %>.</p>
 
-    <p>You can use the magic link below to tweak your profile, join our Slack, and/or check out our awesome newsletters. <em><strong>Completely optional!</strong></em></p>
+    <p>You can use the magic link below to tweak your profile, join our Zulip, and/or check out our awesome newsletters. <em><strong>Completely optional!</strong></em></p>
 
     <%= render("_sign_in_link.html", assigns) %>
 

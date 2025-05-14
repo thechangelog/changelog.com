@@ -1,6 +1,6 @@
 <ul>
   <li>Complete your profile</li>
-  <li>Gain access to our Slack</li>
+  <li>Gain access to <%= link("our Zulip", to: Application.get_env(:changelog, :zulip_url)) %></li>
   <li><%= link("Submit", to: ~p"/submit") %> news links for coverage</li>
   <li>Comment on podcast episodes</li>
   <li><%= link("Request", to: ~p"/request") %> podcast topics &amp; guests</li>
