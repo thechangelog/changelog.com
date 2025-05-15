@@ -36,6 +36,26 @@ defmodule ChangelogWeb.EmailView do
     "Hey #{label},"
   end
 
+  def news_colors(key) do
+    case key do
+      "white" -> "#ffffff"
+      "off-white" -> "#f2f2f2"
+      "black" -> "#101820"
+      "green" -> "#59b287"
+      "light-gray" -> "#f5f5f5"
+      "dark-gray" -> "#303030"
+      "medium-gray" -> "#878b8f"
+      "dark-blue" -> "#1a232c"
+    end
+  end
+
+  def news_fonts(key) do
+    case key do
+      "mono" -> ~s{Roboto Mono, Menlo, Courier New, Courier, monospace}
+      "sans" -> ~s{Open Sans, Helvetica, Arial, Calibri, sans-serif}
+    end
+  end
+
   def news_item_promotion_advice(item) do
     case item.type do
       :project -> ~s{Add "Featured on Changelog News" to the README and/or homepage}

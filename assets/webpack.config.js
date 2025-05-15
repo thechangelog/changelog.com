@@ -75,13 +75,6 @@ module.exports = [
     ]
   }),
   merge(common, {
-    entry: [__dirname + "/email/email.scss"],
-    output: {
-      path: __dirname + "/../priv/static"
-    },
-    plugins: [new MiniCssExtractPlugin({ filename: "css/email.css" })]
-  }),
-  merge(common, {
     entry: [
       __dirname + "/app/fonts.css",
       __dirname + "/app/news.css",
