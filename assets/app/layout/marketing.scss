@@ -30,10 +30,7 @@
       min-width: var(--min-width-button);
 
       margin: 10px;
-
-      @media (min-width: $tablet) {
-        flex: 1 0 0;
-      }
+      flex: 1 0 0;
     }
   }
   p.button_note {
@@ -84,6 +81,10 @@
       .marketing--community & {
         background: $black url("../images/content/community/grid.jpg") top
           center;
+        background-size: 1300px;
+      }
+      .marketing--live & {
+        background: $black url("../images/content/live/bg.jpg") top center;
         background-size: 1300px;
       }
     }
@@ -301,8 +302,7 @@
         img {
           border: 1px solid $light-grey;
           // box-shadow: 0 $base-spacing 40px 20px rgba($black, 0.2);
-          box-shadow:
-            -20px 20px 50px 0 rgba($black, 0.2),
+          box-shadow: -20px 20px 50px 0 rgba($black, 0.2),
             -60px 60px $base-spacing 0 rgba($black, 0.03);
           width: 100%;
 

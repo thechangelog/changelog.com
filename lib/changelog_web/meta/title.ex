@@ -31,10 +31,6 @@ defmodule ChangelogWeb.Meta.Title do
   defp title(%{view_module: SearchView, view_template: "search.html", query: query}),
     do: "Search results for #{query}"
 
-  # Live page
-  defp title(%{view_module: LiveView, podcast: podcast, episode: episode}),
-    do: "#{podcast.name} Live! #{episode.title}"
-
   defp title(%{view_module: LiveView}), do: "Live and upcoming shows"
 
   # News item - show
@@ -116,8 +112,8 @@ defmodule ChangelogWeb.Meta.Title do
       "index.html" ->
         "Podcasts for developers"
 
-      "weekly.html" ->
-        "Subscribe to Changelog Weekly"
+      "live.html" ->
+        "Changelog LIVE shows"
 
       "nightly.html" ->
         "Subscribe to Changelog Nightly"

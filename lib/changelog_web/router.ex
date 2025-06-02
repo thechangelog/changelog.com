@@ -239,10 +239,8 @@ defmodule ChangelogWeb.Router do
     get "/topic/:slug/news", TopicController, :news, as: :topic
     get "/topic/:slug/podcasts", TopicController, :podcasts, as: :topic
 
-    get "/live", LiveController, :index
     get "/live/ical", LiveController, :ical
     get "/live/ical/:slug", LiveController, :ical
-    get "/live/status", LiveController, :status
     get "/live/:id", LiveController, :show
 
     get "/search", SearchController, :search
@@ -260,6 +258,7 @@ defmodule ChangelogWeb.Router do
     get "/films/gophercon-2017", PageController, :films_gophercon_2017
     get "/guest", PageController, :guest
     get "/guest/:slug", PageController, :guest
+    get "/live", PageController, :live
     get "/styleguide", PageController, :styleguide
     get "/ten", PageController, :ten
     get "/privacy", PageController, :privacy
