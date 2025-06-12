@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.HomeController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Fastly, NewsItem, Person, Podcast, StringKit, Subscription, Zulip}
+  alias Changelog.{NewsItem, Person, Podcast, StringKit, Subscription, Zulip}
+  alias Changelog.ObanWorkers.ContentPurger
 
   plug(RequireUser, "except from email links" when action not in [:opt_out])
   plug :preload_current_user_extras
@@ -33,7 +34,7 @@ defmodule ChangelogWeb.HomeController do
 
     case Repo.update(changeset) do
       {:ok, person} ->
-        Fastly.purge(person)
+        ContentPurger.queue(person)
 
         conn
         |> put_flash(:success, "Your #{from} has been updated! ✨")
@@ -87,18 +88,20 @@ defmodule ChangelogWeb.HomeController do
   end
 
   def zulip(conn = %{assigns: %{current_user: me}}, _params) do
-    flash = case Zulip.user_id(me) do
-      {:ok, _id} ->
-        "Your email already has an account. We'll see you in there! 💬"
-      {:error, nil} ->
-        case Zulip.invite(me) do
-          %{"ok" => true} ->
-            "Invite sent! Check your email 🎯"
+    flash =
+      case Zulip.user_id(me) do
+        {:ok, _id} ->
+          "Your email already has an account. We'll see you in there! 💬"
 
-          %{"ok" => false, "msg" => error} ->
-            "Hmm, Zulip is saying '#{error}' 🤔"
-        end
-    end
+        {:error, nil} ->
+          case Zulip.invite(me) do
+            %{"ok" => true} ->
+              "Invite sent! Check your email 🎯"
+
+            %{"ok" => false, "msg" => error} ->
+              "Hmm, Zulip is saying '#{error}' 🤔"
+          end
+      end
 
     conn
     |> put_flash(:success, flash)

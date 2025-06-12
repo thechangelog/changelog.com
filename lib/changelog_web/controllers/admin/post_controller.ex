@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Admin.PostController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Cache, NewsQueue, Post, PostNewsItem}
-  alias Changelog.ObanWorkers.FeedUpdater
+  alias Changelog.ObanWorkers.{ContentPurger, FeedUpdater}
 
   plug :assign_post when action in [:edit, :update, :delete, :publish, :unpublish]
   plug Authorize, [Policies.Admin.Post, :post]
@@ -74,6 +74,7 @@ defmodule ChangelogWeb.Admin.PostController do
       {:ok, post} ->
         PostNewsItem.update(post)
         handle_feed_updates(post)
+        ContentPurger.queue(post)
         Cache.delete(post)
 
         conn

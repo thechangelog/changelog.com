@@ -1,7 +1,8 @@
 defmodule ChangelogWeb.Admin.NewsSourceController do
   use ChangelogWeb, :controller
 
-  alias Changelog.{Fastly, NewsSource}
+  alias Changelog.NewsSource
+  alias Changelog.ObanWorkers.ContentPurger
 
   plug :assign_source when action in [:edit, :update, :delete]
   plug Authorize, [Policies.AdminsOnly, :source]
@@ -49,7 +50,7 @@ defmodule ChangelogWeb.Admin.NewsSourceController do
 
     case Repo.update(changeset) do
       {:ok, source} ->
-        Fastly.purge(source)
+        ContentPurger.queue(source)
 
         conn
         |> put_flash(:result, "success")

@@ -3,7 +3,6 @@ defmodule ChangelogWeb.Admin.NewsItemController do
 
   alias Changelog.{
     HtmlKit,
-    Fastly,
     NewsItem,
     NewsSource,
     NewsQueue,
@@ -13,7 +12,11 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     Notifier
   }
 
-  plug :assign_item when action in [:accept, :edit, :update, :move, :decline, :move, :unpublish, :delete]
+  alias Changelog.ObanWorkers.ContentPurger
+
+  plug :assign_item
+       when action in [:accept, :edit, :update, :move, :decline, :move, :unpublish, :delete]
+
   plug Authorize, [Policies.Admin.NewsItem, :item]
   plug :scrub_params, "news_item" when action in [:create, :update]
   plug :detect_quick_form when action in [:new, :create]
@@ -140,7 +143,7 @@ defmodule ChangelogWeb.Admin.NewsItemController do
       {:ok, item} ->
         handle_status_changes(item, params)
         handle_search_update(item)
-        Fastly.purge(item)
+        ContentPurger.queue(item)
 
         conn
         |> put_flash(:result, "success")
@@ -229,7 +232,8 @@ defmodule ChangelogWeb.Admin.NewsItemController do
     end
   end
 
-  defp handle_search_update(item), do: Task.start_link(fn -> TypesenseSearch.update_item(item) end)
+  defp handle_search_update(item),
+    do: Task.start_link(fn -> TypesenseSearch.update_item(item) end)
 
   defp similar_items(nil), do: []
 
