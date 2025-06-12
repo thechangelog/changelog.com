@@ -2,7 +2,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
   use ChangelogWeb, :controller
 
   alias Changelog.{Cache, FeedStat, Podcast}
-  alias Changelog.ObanWorkers.FeedUpdater
+  alias Changelog.ObanWorkers.{ContentPurger, FeedUpdater}
 
   plug :assign_podcast when action in [:show, :edit, :update, :feed, :agents]
   plug Authorize, [Policies.Admin.Podcast, :podcast]
@@ -96,6 +96,7 @@ defmodule ChangelogWeb.Admin.PodcastController do
     case Repo.update(changeset) do
       {:ok, podcast} ->
         FeedUpdater.queue(podcast)
+        ContentPurger.queue(podcast)
         Cache.delete(podcast)
 
         params =

@@ -1,8 +1,8 @@
 defmodule ChangelogWeb.Feeds do
   use ChangelogWeb, :verified_routes
 
-  alias Changelog.{Episode, Fastly, Feed, NewsItem, Podcast, Post, Repo}
-  alias Changelog.ObanWorkers.OvercastPinger
+  alias Changelog.{Episode, Feed, NewsItem, Podcast, Post, Repo}
+  alias Changelog.ObanWorkers.{ContentPurger, OvercastPinger}
   alias ChangelogWeb.Xml
 
   @doc """
@@ -35,13 +35,13 @@ defmodule ChangelogWeb.Feeds do
     |> ExAws.request!()
   end
 
-  defp notify_services("feed"), do: Fastly.purge(url(~p"/feed"))
+  defp notify_services("feed"), do: ContentPurger.queue(url(~p"/feed"))
 
-  defp notify_services("posts"), do: Fastly.purge(url(~p"/posts/feed"))
+  defp notify_services("posts"), do: ContentPurger.queue(url(~p"/posts/feed"))
 
   defp notify_services("plusplus") do
     slug = Application.get_env(:changelog, :plusplus_slug)
-    Fastly.purge(url(~p"/plusplus/#{slug}/feed"))
+    ContentPurger.queue(url(~p"/plusplus/#{slug}/feed"))
   end
 
   defp notify_services(feed_or_slug) do
@@ -51,8 +51,8 @@ defmodule ChangelogWeb.Feeds do
         slug -> {url(~p"/#{slug}/feed"), url(~p"/#{slug}/feed")}
       end
 
-    Fastly.purge(feed_url)
-    # give Fastly two minutes to complete purge
+    ContentPurger.queue(feed_url)
+    # give purger two minutes to complete purge
     OvercastPinger.queue(ping_url, schedule_in: {2, :minutes})
   end
 
