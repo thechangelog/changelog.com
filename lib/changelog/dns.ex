@@ -21,6 +21,9 @@ defmodule Changelog.Dns do
       iex> Changelog.Dns.aaaa("nonexistent.domain")
       {:error, :nxdomain}
   """
+  def aaaa(""), do: {:ok, []}
+  def aaaa(nil), do: {:ok, []}
+
   def aaaa(hostname) when is_binary(hostname) do
     case :inet_res.lookup(String.to_charlist(hostname), :in, :aaaa) do
       [] ->

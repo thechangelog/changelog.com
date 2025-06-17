@@ -3,12 +3,13 @@ defmodule Changelog.DnsTest do
   alias Changelog.Dns
 
   describe "aaaa/1" do
-    test "returns error for non-existent domain" do
-      assert {:error, _reason} = Dns.aaaa("non-existent-domain-12345.invalid")
+    test "returns empty list when passed empty string or nil" do
+      assert Dns.aaaa("") == {:ok, []}
+      assert Dns.aaaa(nil) == {:ok, []}
     end
 
-    test "returns error for empty hostname" do
-      assert {:error, _reason} = Dns.aaaa("")
+    test "returns error for non-existent domain" do
+      assert {:error, _reason} = Dns.aaaa("non-existent-domain-12345.invalid")
     end
 
     test "handles valid IPv6 resolution" do
