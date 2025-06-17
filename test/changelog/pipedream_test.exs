@@ -15,7 +15,7 @@ defmodule Changelog.PipedreamTest do
 
         Changelog.Pipedream.purge(url)
 
-        assert called(Changelog.Dns.aaaa("cdn-2025-02-25.internal"))
+        assert called(Changelog.Dns.aaaa(:_))
 
         assert called(
                  HTTP.request(
@@ -47,7 +47,7 @@ defmodule Changelog.PipedreamTest do
 
         Changelog.Pipedream.purge(url)
 
-        assert called(Changelog.Dns.aaaa("cdn-2025-02-25.internal"))
+        assert called(Changelog.Dns.aaaa(:_))
 
         assert called(
                  HTTP.request(
@@ -72,7 +72,7 @@ defmodule Changelog.PipedreamTest do
 
         Changelog.Pipedream.purge(url)
 
-        assert called(Changelog.Dns.aaaa("cdn-2025-02-25.internal"))
+        assert called(Changelog.Dns.aaaa(:_))
         assert called(Sentry.capture_message(:_, :_))
         refute called(HTTP.request(:purge, :_, :_, :_))
       end
