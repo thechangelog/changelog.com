@@ -1,36 +1,28 @@
 <article class="article">
   <div class="richtext">
     <h1>Be our guest</h1>
-    <p>First off, <mark>thank you</mark> for joining us on
-
-    <select name="slug" onchange="location.pathname = '/guest/' + (this.value);">
-    <%= for podcast <- @active do %>
-        <option value={podcast.slug} selected={@podcast.slug == podcast.slug}><%= podcast.name %></option>
-    <% end %>
-    </select>!</p>
-
-    <p>We have a lot of fun on our shows and do our best to create an enjoyable, relaxed environment for everyone involved. Here's <mark>what you can expect:</mark></p>
+    <p>First off, <mark>thank you</mark> for joining us! We have a lot of fun on our shows and do our best to create an enjoyable, relaxed environment for everyone involved. Here's how to get set up and <mark>what to expect:</mark></p>
 
     <h2 id="before">Before we record</h2>
 
-    <h3 id="audio-concerns">Concerning audio</h3>
+    <h3 id="audio-setup">Audio setup</h3>
 
     <p>We strive for the best audio quality possible (within reason). Things you'll need to achieve this:</p>
 
-    <ul>
+    <ol>
       <li>
-        A good external microphone 🎙
+        🎙 A good external microphone
         <ul>
           <li>Good starter mic 1: <a href="https://www.bhphotovideo.com/c/product/1103930-REG/blue_836213002070_yeti_usb_microphone_black.html" title="Blue Yeti at B&H">Blue Yeti</a></li>
           <li>Good starter mic 2: <a href="https://www.razer.com/streaming-microphones/razer-seiren-mini/" title="Razer Seiren Mini">Razer Seiren Mini</a></li>
           <li>Good pro mic: <a href="https://www.bhphotovideo.com/c/product/225820-REG/Shure_SM7B_SM7B_Cardioid_Dynamic.html" title="Shure SM7B at B&H">Shure SM7B</a></li>
-          <li>Good last resort mic 1: <a href="https://www.apple.com/shop/product/MMTN2AM/A/earpods-with-lightning-connector" title="Wired EarPods at Apple">Wired EarPods</a></li>
+          <li>Good last resort mic 1: <a href="https://www.apple.com/shop/product/MMTN2AM/A/earpods-with-lightning-connector" title="Wired EarPods at Apple"><strong>Wired</strong> EarPods</a></li>
           <li>Good last resort mic 2: M-based Mac onboard mic</li>
-          <li><mark>Not good</mark> mic: Wireless AirPods (bad audio quality)</li>
+          <li><mark>Bad</mark> mic: <strong>Wireless</strong> AirPods (bad audio quality)</li>
         </ul>
       </li>
       <li>
-        A good pair of headphones 🎧
+        🎧 A good pair of headphones
         <ul>
           <li>Over-the-ear preferred</li>
           <li>Good pro headphones: <a href="https://www.bhphotovideo.com/c/product/49510-REG/Sony_MDR_7506_MDR_7506_Headphone.html" title ="Sony MDR-7506 at B&H">Sony MDR-7506</a></li>
@@ -38,42 +30,44 @@
         </ul>
       </li>
       <li>
-        A quiet place to record 🤫
+        🤫 A quiet place to record
         <ul>
           <li>Turn off nearby fans, heaters, A/C units</li>
           <li>Close nearby windows and doors</li>
         </ul>
     </li>
-      <li>A reliable internet connection 🔌</li>
-      <li>A Chromium-based browser such as <a href="https://brave.com/cha913" title="Download the Brave Browser">Brave</a>, <a href="https://www.microsoft.com/edge" title="Download Microsoft Edge">Edge</a>, or <a href="https://www.google.com/chrome/index.html" title="Download Google Chrome">Google Chrome</a> 📞</li>
-    </ul>
+      <li>🔌 A reliable internet connection</li>
+        <ul>
+        <li>Wired connections always preferrable</li>
+        <li>Wireless works with a solid signal</li>
+        <li>Please disable Dropbox, Torrents, etc.</li>
+        </ul>
+      <li>📞 A Chromium browser such as <a href="https://brave.com/cha913" title="Download the Brave Browser">Brave</a>, <a href="https://www.microsoft.com/edge" title="Download Microsoft Edge">Edge</a>, or <a href="https://www.google.com/chrome/index.html" title="Download Google Chrome">Google Chrome</a></li>
+    </ol>
 
-    <h4 id="local-recording">Creating a local audio recording</h4>
-
-    <p><a href="https://riverside.fm">Riverside</a> takes care of recording everyone's local audio. As a backup to that (because Murphy's Law), we ask that you <mark>please create a local audio recording of just your voice</mark>. Here's some videos on how to do that:</p>
-
-    <ul>
-      <li>On macOS, we suggest <a href="https://youtu.be/beEbtC7dv08?t=20">using the built-in QuickTime Player</a></li>
-      <li>On Windows, we suggest <a href="https://youtu.be/PKWzwumeY-U">using the built-in Sound Recorder</a> ("Voice Recorder" on Windows 10)</li>
-      <li>On Linux, we suggest <a href="https://youtu.be/0Lde3LThQ_E?t=54">using Audacity</a></li>
-    </ul>
-
-    <h3>Concerning video</h3>
+    <h3 id="video-setup">Video setup</h3>
 
     <p>
-    <%= if Podcast.is_a_changelog_pod(@podcast) do %>
-      This is also a video podcast that will be posted to our <a href="https://youtube.com/changelog">YouTube channel</a>! In addition to full video, we'll also be
-    <% else %>
-      We record video, but we don't ship the entire show as a video. It's justed used for
-    <% end %>
-    sharing clips and highlights to <a href="https://youtube.com/changelog">Shorts</a>, <a href="https://www.tiktok.com/@changelog.com">TikTok</a>, and <a href="https://www.instagram.com/changelog_">Instagram</a>. Things you'll need to prepare for this:
+      This is also a video podcast that will be posted to our <a href="https://youtube.com/changelog">YouTube channel</a>! In addition to full video, we'll also be sharing clips and highlights to <a href="https://youtube.com/changelog">Shorts</a>, <a href="https://www.tiktok.com/@changelog.com">TikTok</a>, and <a href="https://www.instagram.com/changelog_">Instagram</a>. Things you'll need to prepare for this:
     </p>
 
+    <ol>
+      <li>📹 A decent webcam or external video camera</li>
+      <li>💡 Good lighting so people can see you well-lit</li>
+      <li>🖼 Your face centered vertically and horizontally in the shot</li>
+    </ol>
+
+    <h3 id="local-recording">Backup setup</h3>
+
+    <p><a href="https://riverside.fm">Riverside</a> takes care of recording everyone's local audio and video. As a backup to that (because Murphy's Law), we ask that you <mark>please record a local version as well</mark>. Here's some videos on how to do that:</p>
+
     <ul>
-      <li>A decent webcam or external video camera 📹</li>
-      <li>Good enough lighting so people can see your face 💡</li>
-      <li>Your face centered vertically and horizontally in the shot 🖼</li>
+      <li>On macOS, we suggest <a href="https://youtu.be/Xey7GoqTEPE?t=60">using the built-in QuickTime Player</a></li>
+      <li>On Windows, we suggest <a href="https://youtu.be/2AU6mxF7RRw?t=107">using the built-in Camera app</a></li>
+      <li>On Linux, we suggest <a href="https://youtu.be/cQTKTN5iw7w?t=10">using OBS Studio</a></li>
     </ul>
+
+    <p><mark>Note:</mark> You will need ~10-20 GB of free disk space for this (varies by setup / show duration)</p>
 
     <h2 id="during">While we record</h2>
 
@@ -81,45 +75,31 @@
       Join Riverside via the link we provided you at the scheduled time. Here are some <em>tips and tricks</em> for a great show:
     </p>
 
-    <ul>
-    <%= if @podcast.recorded_live do %>
-      <li><mark>This show records live</mark>. 📺</li>
-      <li>We only produce the audio, but your video will be streamed as well. 📹</li>
-      <li>You can interact with listeners in
-      <%= if @podcast.slug == "gotime" do %>
-        the <%= link("Gophers Slack", to: "https://gophers.slack.com/messages/gotimefm") %>
-      <% else %>
-        our <%= link("Community Slack", to: ~p"/community") %>.
-      <% end %>
-      </li>
-    <% else %>
-    <% end %>
-      <li>Put your mobile device(s) on Airplane Mode 📳</li>
-      <li>Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome 🚰</li>
-      <li>Don't worry, we edit every episode for smoothness and listenability. 👂</li>
-      <li>Relax. Have fun. Bring your opinions 💯</li>
-    </ul>
+    <ol>
+      <li>📳 Put your mobile device(s) on Airplane Mode</li>
+      <li>🚰 Have a glass of water nearby to avoid the dreaded Dry Mouth Syndrome</li>
+      <li>👂 Don't worry, we edit every episode for smoothness and listenability</li>
+      <li>💯 Relax. Have fun. Bring your opinions</li>
+    </ol>
 
     <h2 id="after">After we record</h2>
 
-    <p>The <strike>hard</strike> <strike>intimidating</strike> talking part is over! As soon as you're able, <mark>upload your local audio file <a href="https://www.dropbox.com/request/4b4c8Hk5zMM0xlciMk6W" rel="nofollow" title="Audio upload link">right here</a></mark>. The episode will be professionally edited, produced, and transcribed. Then you will:</p>
+    <p>The <strike>hard</strike> <strike>intimidating</strike> fun part is over! As soon as you're able, <mark>upload your local audio file <a href="/upload" rel="nofollow" title="Audio upload link">right here</a></mark>. The episode will be professionally edited, produced, and transcribed. Then you will:</p>
 
-    <ul>
-      <li>Receive an email when the show is published 📥</li>
-      <li>Help share and promote the episode 🗣</li>
-    <%= if Podcast.is_a_changelog_pod(@podcast) do %>
-      <li>Get an awesome <a href="https://merch.changelog.com" title="Changelog Merch">t-shirt</a> as a thanks from us ✊</li>
-    <% else %>
-      <li>Get an awesome <a href="https://merch.changelog.com/products/changelog-sticker-pack" title="Changelog Sticker Pack">sticker pack</a> as a thanks from us ✊</li>
-    <% end %>
-    </ul>
+    <ol>
+      <li>📥 Receive an email when the show is published</li>
+      <li>🗣 Help share and promote the episode</li>
+      <li>✊ Get an awesome <a href="https://merch.changelog.com" title="Changelog Merch">t-shirt</a> as a thanks from us</li>
+    </ol>
 
-    <p>Please do <mark>share your episode</mark>. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
+    <h3 id="share">Sharing your episode</h3>
+
+    <p>Please do <mark>share your episode</mark> with your friends, co-workers, and followers. You put a lot of effort in to what you do and we want to see its impact maximized. Our guests' favorite places to share their show:</p>
 
     <ul>
       <li>Project website and/or README</li>
-      <li>Personal website, blog, and/or Medium</li>
-      <li>Twitter, Reddit, Hacker News, etc.</li>
+      <li>Personal website, blog, and/or newsletter</li>
+      <li>Reddit, Hacker News, LinkedIn, X, etc.</li>
     </ul>
 
   <%= if @episode do %>
