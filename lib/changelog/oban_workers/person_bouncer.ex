@@ -26,7 +26,17 @@ defmodule Changelog.ObanWorkers.PersonBouncer do
       |> ListKit.compact()
       |> Enum.uniq()
 
-    {deleted_count, _} = Person.with_email(bounced) |> Repo.delete_all()
+    deleted_count =
+      Person.with_email(bounced)
+      |> Repo.all()
+      |> Enum.reduce(0, fn person, acc ->
+        try do
+          Repo.delete!(person)
+          acc + 1
+        rescue
+          _error -> acc
+        end
+      end)
 
     log("Deleted #{deleted_count} people from #{length(bounced)} hard bounced emails.")
   end
@@ -38,7 +48,17 @@ defmodule Changelog.ObanWorkers.PersonBouncer do
       |> ListKit.compact()
       |> Enum.uniq()
 
-    {deleted_count, _} = Person.with_email(spam) |> Repo.delete_all()
+    deleted_count =
+      Person.with_email(spam)
+      |> Repo.all()
+      |> Enum.reduce(0, fn person, acc ->
+        try do
+          Repo.delete!(person)
+          acc + 1
+        rescue
+          _error -> acc
+        end
+      end)
 
     log("Deleted #{deleted_count} people from #{length(spam)} emails marked as spam.")
   end
@@ -47,22 +67,25 @@ defmodule Changelog.ObanWorkers.PersonBouncer do
     older_than = Timex.shift(Timex.today(), weeks: -1)
     people = Person.older_than(older_than) |> Person.needs_confirmation() |> Repo.all()
 
-    results = Enum.map(people, fn person ->
-      person = Person.preload_subscriptions(person)
+    results =
+      Enum.map(people, fn person ->
+        person = Person.preload_subscriptions(person)
 
-      if PersonView.is_subscribed(person, Newsletters.nightly()) do
-        false
-      else
-        log("Deleted #{person.id} #{person.name} (#{person.email})")
-        Repo.delete!(person)
-        true
-      end
-    end)
+        if PersonView.is_subscribed(person, Newsletters.nightly()) do
+          false
+        else
+          log("Deleted #{person.id} #{person.name} (#{person.email})")
+          Repo.delete!(person)
+          true
+        end
+      end)
 
-    true_count = results |> Enum.filter(&(&1)) |> length()
+    true_count = results |> Enum.filter(& &1) |> length()
     false_count = results |> Enum.filter(&(!&1)) |> length()
 
-    log("Deleted #{true_count} unconfirmed people older than #{older_than}. #{false_count} skipped.")
+    log(
+      "Deleted #{true_count} unconfirmed people older than #{older_than}. #{false_count} skipped."
+    )
   end
 
   defp log(message), do: EventLog.insert(message, "Bouncer")
