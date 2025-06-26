@@ -18,7 +18,8 @@ defmodule ChangelogWeb.Plug.Redirects do
     {"/practicalai", "https://practicalai.fm", 301},
     {"/practicalai/feed",
      "https://feeds.transistor.fm/practical-ai-machine-learning-data-science-llm", 301},
-    {~r/\A\/practicalai\/(\d+)\z/, "https://practicalai.fm/*", 301}
+    {~r/\A\/practicalai\/(\d+)\z/, "https://practicalai.fm/*", 301},
+    {"/upload", "https://www.dropbox.com/request/4b4c8Hk5zMM0xlciMk6W", 302}
   ]
 
   @internal [

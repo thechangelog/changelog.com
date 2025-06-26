@@ -45,6 +45,11 @@ defmodule ChangelogWeb.RedirectsTest do
       path: "/practicalai/340",
       location: "https://practicalai.fm/340",
       type: 301
+    ],
+    [
+      path: "/upload",
+      location: "https://www.dropbox.com/request/4b4c8Hk5zMM0xlciMk6W",
+      type: 302
     ]
   ]
 
