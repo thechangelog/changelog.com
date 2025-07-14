@@ -19,7 +19,13 @@ defmodule Changelog.Policies.Feed do
   end
 
   defp is_active_member(nil), do: false
-  defp is_active_member(actor), do: is_map(Map.get(actor, :active_membership))
+  defp is_active_member(actor) do
+    case Map.get(actor, :active_membership) do
+      %Ecto.Association.NotLoaded{} -> false
+      nil -> false
+      membership -> is_map(membership)
+    end
+  end
 
   defp is_owner(nil, _feed), do: false
 
