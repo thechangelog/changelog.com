@@ -78,6 +78,10 @@ defmodule ChangelogWeb.Meta.Image do
   defp get_image(%{view_module: PageView, view_template: "ten.html"}),
     do: static_image(~w[images content ten ten-year-social.jpg])
 
+  # special image for /live
+  defp get_image(%{view_module: PageView, view_template: "live.html"}),
+    do: static_image(~w[images share changelog-live.jpg])
+
   # fallback
   defp get_image(_), do: summary_image()
 
