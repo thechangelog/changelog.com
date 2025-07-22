@@ -7,7 +7,7 @@ defmodule Changelog.Pipedream do
   def host, do: Application.get_env(:changelog, :pipedream_host)
   def port, do: Application.get_env(:changelog, :pipedream_port) |> String.to_integer()
   def scheme, do: Application.get_env(:changelog, :pipedream_scheme)
-  def token, do: Application.get_env(:changelog, :pipedream_token)
+  def purge_token, do: Application.get_env(:changelog, :pipedream_purge_token)
 
   def purge(url) do
     case Changelog.Dns.aaaa(host()) do
@@ -42,11 +42,11 @@ defmodule Changelog.Pipedream do
   end
 
   defp purge_headers(url) do
-    token = token()
+    purge_token = purge_token()
     headers = [{"Host", URI.parse(url).host}]
 
-    if token do
-      headers ++ [{"Purge-Token", token}]
+    if purge_token do
+      headers ++ [{"Purge-Token", purge_token}]
     else
       headers
     end
