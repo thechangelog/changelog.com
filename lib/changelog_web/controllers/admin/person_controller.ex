@@ -4,7 +4,6 @@ defmodule ChangelogWeb.Admin.PersonController do
   alias Changelog.{
     Episode,
     EpisodeRequest,
-    Fastly,
     Membership,
     NewsItem,
     NewsItemComment,
@@ -16,7 +15,7 @@ defmodule ChangelogWeb.Admin.PersonController do
     Subscription
   }
 
-  alias Changelog.ObanWorkers.MailDeliverer
+  alias Changelog.ObanWorkers.{ContentPurger, MailDeliverer}
 
   plug :assign_person
        when action in [:show, :edit, :update, :delete, :slack, :zulip, :news, :comments, :masq]
@@ -163,7 +162,7 @@ defmodule ChangelogWeb.Admin.PersonController do
 
     case Repo.update(changeset) do
       {:ok, person} ->
-        Fastly.purge(person)
+        ContentPurger.queue(person)
 
         conn
         |> put_flash(:result, "success")
