@@ -16,8 +16,14 @@ defmodule Changelog.Pipedream do
         |> Task.async_stream(
           fn address ->
             case HTTP.request(:purge, purge_url(url, address), "", purge_headers(url)) do
-              {:ok, _response} ->
+              {:ok, %{status_code: status_code}}
+              when status_code >= 200 and status_code < 300 ->
                 :ok
+
+              {:ok, response} ->
+                Sentry.capture_message("Pipedream purge failing: Instance #{address}",
+                  extra: response
+                )
 
               {:error, response} ->
                 Sentry.capture_message("Pipedream purge failing: Instance #{address}",
