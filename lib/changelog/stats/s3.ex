@@ -22,9 +22,9 @@ defmodule Changelog.Stats.S3 do
   end
 
   def download_logs(slug, prefix, filename) do
-    {:ok, file} = File.open(filename, [:write])
+    {:ok, file} = File.open(filename, [:write, :utf8])
     logs = get_logs(slug, prefix)
-    Enum.each(logs, &(IO.write(file, &1 <> "\n")))
+    Enum.each(logs, &IO.write(file, &1 <> "\n"))
     File.close(file)
   end
 
@@ -39,6 +39,7 @@ defmodule Changelog.Stats.S3 do
     case ExAws.request!(request, config()) do
       %{body: %{is_truncated: "false", contents: contents}} ->
         accumulated ++ contents
+
       %{body: %{next_continuation_token: next, contents: contents}} ->
         list_logs(bucket, prefix, next, accumulated ++ contents)
     end
