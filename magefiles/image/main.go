@@ -77,17 +77,17 @@ func (image *Image) Publish(reference string) *Image {
 	}
 
 	githubRepo := image.Env("GITHUB_REPOSITORY")
-	// githubRef := image.Env("GITHUB_REF_NAME")
+	githubRef := image.Env("GITHUB_REF_NAME")
 
 	if githubRepo.Value() != RootRepository {
 		fmt.Printf("\n👮 Publishing only runs on %s repo\n", RootRepository)
 		return image
 	}
 
-	// if githubRef.Value() != MainBranch {
-	// 	fmt.Printf("\n👮 Publishing only runs on %s branch\n", MainBranch)
-	// 	return image
-	// }
+	if githubRef.Value() != MainBranch {
+		fmt.Printf("\n👮 Publishing only runs on %s branch\n", MainBranch)
+		return image
+	}
 
 	_, err := image.
 		WithRegistryAuth().

@@ -19,10 +19,10 @@ func (image *Image) Deploy() *Image {
 		return image
 	}
 
-	// if githubRef.Value() != MainBranch {
-	// 	fmt.Printf("\n👮 Deploys only run on %s branch\n", MainBranch)
-	// 	return image
-	// }
+	if githubRef.Value() != MainBranch {
+		fmt.Printf("\n👮 Deploys only run on %s branch\n", MainBranch)
+		return image
+	}
 
 	image.container = image.container.
 		WithExec([]string{

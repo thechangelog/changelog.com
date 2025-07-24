@@ -42,9 +42,9 @@ jobs:
           go run main.go -w ../ ci
 
       - name: "Deploy..."
-        if: ${{ github.repository == 'thechangelog/changelog.com' }}
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         env:
-          APP_PROD_INSTANCE: "changelog-2025-05-05"
+          APP_PROD_INSTANCE: "${{ vars.APP_PROD_INSTANCE }}"
           IMAGE_OWNER: "${{ vars.IMAGE_OWNER }}"
           GHCR_USERNAME: "${{ github.actor }}"
           GHCR_PASSWORD: "${{ secrets.GHCR_PASSWORD }}"
