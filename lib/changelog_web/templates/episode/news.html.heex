@@ -1,8 +1,13 @@
 <article class="issue_list-item issue_list-item--sticky">
   <%= render(SharedView, "_news_issue_meta.html", issue: @episode) %>
   <a class="play_button js-play-pause" title="Play Audio" href={audio_url(@episode)} data-title={@episode.title}>
-    <span class="mono-sm">PLAY</span>
+    <span class="mono-sm">LISTEN</span>
   </a>
+<%= if @episode.youtube_id do %>
+  <a class="watch_button" title="Watch on YouTube" href={yt_url(@episode)}>
+    <span class="mono-sm">WATCH</span>
+  </a>
+<% end %>
   <div class="progress_bar" style="--progress: 0%;"></div>
 </article>
 

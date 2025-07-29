@@ -320,12 +320,11 @@ html {
     padding: 0;
   }
 
-  & .play_button {
+  & .play_button,
+  .watch_button {
     display: inline-flex;
     align-items: flex-end;
     justify-content: center;
-    background: var(--color-green) url("../images/news/icon-play.svg") center /
-      16px 20px no-repeat;
     border-radius: 50%;
     width: 3em;
     height: 3em;
@@ -333,11 +332,29 @@ html {
     span {
       margin-bottom: -1.8em;
     }
+  }
+
+  & .play_button {
+    background: var(--color-green) url("../images/news/icon-play.svg") center /
+      16px 20px no-repeat;
 
     @media (prefers-color-scheme: dark) {
       & {
         background: var(--color-green) url("../images/news/icon-play-white.svg")
-          center no-repeat;
+          center / 16px 20px no-repeat;
+      }
+    }
+  }
+
+  & .watch_button {
+    background: var(--color-green) url("../images/news/icon-watch.svg") center /
+      16px 20px no-repeat;
+
+    @media (prefers-color-scheme: dark) {
+      & {
+        background: var(--color-green)
+          url("../images/news/icon-watch-white.svg") center / 16px 20px
+          no-repeat;
       }
     }
   }

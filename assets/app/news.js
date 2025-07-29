@@ -118,8 +118,9 @@ export default class News {
 
           if (issue.progress < rounded) {
             issue.progress = rounded;
-            issue.querySelector(".progress_bar").style =
-              `--progress: ${rounded}%`;
+            issue.querySelector(
+              ".progress_bar"
+            ).style = `--progress: ${rounded}%`;
           }
         }
       });
@@ -137,7 +138,7 @@ export default class News {
       issue.audio.pause();
       issue.classList.add("is-paused");
       issue.classList.remove("is-playing");
-      issue.button.children[0].innerText = "PLAY";
+      issue.button.children[0].innerText = "LISTEN";
     }
   }
 
