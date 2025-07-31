@@ -22,6 +22,10 @@ defmodule ChangelogWeb.FeedController do
     send_resp(conn, :not_found, "")
   end
 
+  def podcast(conn, %{"slug" => "plusplus"}) do
+    send_resp(conn, :not_found, "")
+  end
+
   def podcast(conn, %{"slug" => slug}) do
     feed = ChangelogWeb.Feeds.generate(slug)
     send_xml_resp(conn, feed)

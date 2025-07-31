@@ -62,6 +62,11 @@ defmodule ChangelogWeb.FeedControllerTest do
     end
   end
 
+  test "the plusplus feed with no extra slug doesn't exist", %{conn: conn} do
+    conn = get(conn, ~p"/plusplus/feed")
+    assert conn.status == 404
+  end
+
   test "the plusplus feed with incorrect slug doesn't exist", %{conn: conn} do
     Application.put_env(:changelog, :plusplus_slug, "8675309")
     conn = get(conn, Routes.feed_path(conn, :plusplus, "justguessing"))
