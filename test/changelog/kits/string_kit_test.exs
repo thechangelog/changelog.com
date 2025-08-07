@@ -229,4 +229,10 @@ defmodule Changelog.StringKitTest do
       assert StringKit.mentions_linkify(raw, [jerodsanto, adamstac]) == linkified
     end
   end
+
+  test "snake_case/1" do
+    assert StringKit.snake_case("The Changelog") == "the_changelog"
+    assert StringKit.snake_case("Go Time") == "go_time"
+    assert StringKit.snake_case("Hell's Kitchen!") == "hells_kitchen"
+  end
 end

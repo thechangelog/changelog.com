@@ -87,4 +87,11 @@ defmodule Changelog.StringKit do
   end
 
   def present?(string), do: !blank?(string)
+
+  def snake_case(string) do
+    string
+    |> String.downcase()
+    |> String.replace(~r/[^\w\s]/, "")
+    |> String.replace(" ", "_")
+  end
 end

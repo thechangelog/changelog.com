@@ -17,9 +17,9 @@ defmodule Changelog.Regexp do
 
   def social_message, do: "just the username, plz"
 
-  def slug, do: ~r/\A[a-z|0-9|_|-]+\z/
+  def slug, do: ~r/\A[a-z|A-Z|0-9|_|-]+\z/
 
-  def slug_message, do: "valid chars: a-z, 0-9, -, _"
+  def slug_message, do: "valid chars: a-z, A-Z, 0-9, -, _"
 
   def timestamp, do: ~r/(\d\d:)?(\d\d?:)(\d\d)(\.\d\d?)?/
 

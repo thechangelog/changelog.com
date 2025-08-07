@@ -9,6 +9,7 @@
   </h1>
 
   <div class="actions right">
+    <button class="ui right floated primary basic button js-import-modal"><i class="download icon"></i> Import</button>
   </div>
 </div>
 
@@ -84,4 +85,28 @@
 
   <%= render(SharedView, "_pagination.html", assigns) %>
 <% end %>
+</div>
+
+<div class="ui small import modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Import subscribers
+  </div>
+  <div class="content">
+    <%= form_tag ~p"/admin/podcasts/#{@podcast.slug}/subscriptions/import", id: "import", multipart: true, method: "POST", class: "ui small form" do %>
+      <div class="field">
+        <label>Context</label>
+        <input type="text" placeholder="you subscribed via Meco" name="context" required/>
+      </div>
+
+      <div class="field">
+      <label>CSV File</label>
+        <input type="file" name="data" required/>
+      </div>
+    <% end %>
+  </div>
+  <div class="actions">
+    <input type="submit" form="import" class="ui primary basic button" value="Import">
+    <div class="ui basic cancel button">Cancel</div>
+  </div>
 </div>

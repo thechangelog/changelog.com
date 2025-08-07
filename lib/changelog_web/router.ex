@@ -119,6 +119,7 @@ defmodule ChangelogWeb.Router do
       put "/episode_requests/:id/pend", EpisodeRequestController, :pend, as: :episode_request
 
       resources "/subscriptions", PodcastSubscriptionController, as: :subscription, only: [:index]
+      post "/subscriptions/import", PodcastSubscriptionController, :import, as: :subscription
     end
 
     get "/podcasts/:id/agents", PodcastController, :agents

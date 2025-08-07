@@ -1,4 +1,5 @@
 import ApexCharts from "apexcharts";
+import Modal from "components/modal";
 
 export default class PodcastSubscriptionView {
   constructor() {
@@ -11,11 +12,13 @@ export default class PodcastSubscriptionView {
   }
 
   index() {
+    new Modal(".js-import-modal", ".import.modal");
+
     let chartOptions = this.chartOptions;
 
     $(".chart").each(function (_index) {
       let data = $(this).data("chart");
-      console.log(data);
+
       let options = $.extend(chartOptions, {
         title: {
           text: data.title
