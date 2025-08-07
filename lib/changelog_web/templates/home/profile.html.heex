@@ -23,7 +23,7 @@
 
       <div class={"form-element #{PublicHelpers.error_class(f, :handle)}"}>
         <label>Username / Handle<span>*</span></label>
-        <%= text_input(f, :handle, placeholder: "gracehopper", autocapitalize: "none") %>
+        <%= text_input(f, :handle, placeholder: "gracehopper", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         <%= PublicHelpers.error_message(f, :handle) %>
       </div>
     </div>
@@ -47,7 +47,7 @@
         <label>GitHub Handle</label>
         <div class="form-element-preppended_field">
           <span>github.com/</span>
-          <%= text_input(f, :github_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= text_input(f, :github_handle, placeholder: "gracehopper", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         </div>
         <%= PublicHelpers.error_message(f, :github_handle) %>
       </div>
@@ -56,7 +56,7 @@
         <label>LinkedIn Handle</label>
         <div class="form-element-preppended_field">
           <span>linked.com/in/</span>
-          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= text_input(f, :linkedin_handle, placeholder: "gracehopper", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         </div>
         <%= PublicHelpers.error_message(f, :linkedin_handle) %>
       </div>
@@ -67,7 +67,7 @@
         <label>X Handle</label>
         <div class="form-element-preppended_field">
           <span>x.com/</span>
-          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= text_input(f, :twitter_handle, placeholder: "gracehopper", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         </div>
         <%= PublicHelpers.error_message(f, :twitter_handle) %>
       </div>
@@ -76,7 +76,7 @@
         <label>Bluesky Handle</label>
         <div class="form-element-preppended_field">
           <span>bsky.app/profile/</span>
-          <%= text_input(f, :bsky_handle, placeholder: "gracehopper", autocapitalize: "none") %>
+          <%= text_input(f, :bsky_handle, placeholder: "gracehopper", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         </div>
         <%= PublicHelpers.error_message(f, :bsky_handle) %>
       </div>
@@ -87,7 +87,7 @@
         <label>Mastodon Handle</label>
         <div class="form-element-preppended_field">
           <span>@</span>
-          <%= text_input(f, :mastodon_handle, placeholder: "gracehopper@changelog.social") %>
+          <%= text_input(f, :mastodon_handle, placeholder: "gracehopper@changelog.social", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         </div>
         <%= PublicHelpers.error_message(f, :mastodon_handle) %>
       </div>
@@ -100,7 +100,7 @@
 
       <div class={"form-element #{PublicHelpers.error_class(f, :website)}"}>
         <label>Website URL</label>
-        <%= text_input(f, :website, placeholder: "https://gracehopper.com", autocapitalize: "none") %>
+        <%= text_input(f, :website, placeholder: "https://gracehopper.com", autocomplete: "off", autocapitalize: "off", autocorrect: "off", spellcheck: "false") %>
         <%= PublicHelpers.error_message(f, :website) %>
       </div>
     </div>
