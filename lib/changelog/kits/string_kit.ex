@@ -58,6 +58,8 @@ defmodule Changelog.StringKit do
   @doc """
   Removes Markdown-style links from a string
   """
+  def md_delinkify(nil), do: md_delinkify("")
+
   def md_delinkify(string) do
     regex = ~r/\[(.*?)\]\(.*?\)/
 
@@ -67,6 +69,8 @@ defmodule Changelog.StringKit do
   @doc """
   Removes Markdown-style descriptions from a link. Opposite of `md_delinkify`
   """
+  def md_bare_linkify(nil), do: md_bare_linkify("")
+
   def md_bare_linkify(string) do
     regex = ~r/\[(.*?)\]\((.*?)\)/
 
