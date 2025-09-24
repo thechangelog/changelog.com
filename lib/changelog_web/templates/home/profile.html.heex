@@ -124,12 +124,12 @@
         </label>
       <% else %>
         <label>
-          <%= checkbox(f, :public_profile, disabled: true) %>
+          <%= checkbox(f, :public_profile, value: false, disabled: true) %>
           <span class="form-checklist-item-box"></span>
           <span class="form-checklist-item-text">I want a public profile page.</span>
         </label>
 
-        <p class="form-element-note">We have to approve something you publish first. <%= link("Submit", to: Routes.news_item_path(@conn, :new)) %> some news or <%= link("request", to: Routes.episode_request_path(@conn, :new)) %> an episode to get started.</p>
+        <p class="form-element-note">You have to be on a published episode first. <%= link("Request", to: Routes.episode_request_path(@conn, :new)) %> yourself as a guest to get started.</p>
       <% end %>
       </div>
     </div>

@@ -13,7 +13,7 @@ defmodule Changelog.Policies.PersonTest do
   end
 
   describe "profiles" do
-    test "you can't enable your own profile sans published episodes/news" do
+    test "you can't enable your own profile sans published episode" do
       with_mocks([
         {Changelog.Person, [], [episode_count: fn _ -> 0 end]},
         {Changelog.Person, [], [news_item_count: fn _ -> 0 end]}
@@ -23,7 +23,7 @@ defmodule Changelog.Policies.PersonTest do
       end
     end
 
-    test "you can enable your own profile with published episodes or news" do
+    test "you can enable your own profile with published episode" do
       with_mocks([
         {Changelog.Person, [], [episode_count: fn _ -> 1 end]},
         {Changelog.Person, [], [news_item_count: fn _ -> 0 end]}

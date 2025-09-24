@@ -29,7 +29,7 @@ defmodule ChangelogWeb.HomeController do
       if Changelog.Policies.Person.profile(me, me) do
         Person.update_changeset(me, person_params)
       else
-        Person.update_changeset(me, Map.delete(person_params, "public_profile"))
+        Person.update_changeset(me, Map.put(person_params, "public_profile", false))
       end
 
     case Repo.update(changeset) do
