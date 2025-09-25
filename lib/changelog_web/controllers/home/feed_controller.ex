@@ -5,9 +5,9 @@ defmodule ChangelogWeb.Home.FeedController do
   alias Changelog.ObanWorkers.{FeedUpdater, MailDeliverer}
 
   plug :assign_podcasts
+  plug :preload_current_user_extras
   plug :assign_feed when action in [:edit, :update, :delete, :email, :refresh]
   plug Authorize, [Policies.Feed, :feed]
-  plug :preload_current_user_extras
 
   def index(conn = %{assigns: %{current_user: me}}, _params) do
     feeds = me |> assoc(:feeds) |> Repo.all()
@@ -51,7 +51,10 @@ defmodule ChangelogWeb.Home.FeedController do
     render(conn, :edit, feed: feed, changeset: changeset)
   end
 
-  def update(conn = %{assigns: %{current_user: user, feed: feed}}, params = %{"feed" => feed_params}) do
+  def update(
+        conn = %{assigns: %{current_user: user, feed: feed}},
+        params = %{"feed" => feed_params}
+      ) do
     feed_params = apply_plusplus_policy(user, feed_params)
     changeset = Feed.update_changeset(feed, feed_params)
 
