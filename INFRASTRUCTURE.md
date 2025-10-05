@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Feb.%2022%2C%202025-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Oct.%2005%2C%202025-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
