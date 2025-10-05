@@ -7,7 +7,7 @@ kill_signal = "SIGTERM"
 kill_timeout = 30
 
 [env]
-APP_INSTANCE = "production"
+APP_INSTANCE = "production-eol-2025-10-05"
 PIPEDREAM_HOST = "cdn-2025-02-25.internal"
 
 # https://fly.io/docs/about/pricing/

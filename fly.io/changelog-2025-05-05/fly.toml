@@ -8,16 +8,11 @@ kill_timeout = 30
 
 [env]
 PIPEDREAM_HOST = "cdn-2025-02-25.internal"
-# This is not YET production - only a portion of the production traffic is currently running through this.
-# Fastly still points to changelog-2024-01-12.fly.dev, so until all traffic is routed through this new app instance, that one is the "primary" production.
-APP_INSTANCE = "pipedream-partial-production"
-# We are leaving the alternative URLs in place in case we need to roll this partial deployment back.
-# URL_HOST = "pipedream.changelog.com"
-# STATIC_URL_HOST = "cdn2.changelog.com"
+APP_INSTANCE = "production"
 
 # https://fly.io/docs/about/pricing/
 [[vm]]
-size = "performance-2x"
+size = "performance-1x"
 
 [deploy]
 strategy = "bluegreen"

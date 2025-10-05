@@ -7,6 +7,12 @@ This diagram shows the current changelog.com setup:
 graph TD
     classDef link stroke:#59b287,stroke-width:3px;
 
+    %% Secrets
+    secrets(( fa:fa-key 1Password )):::link
+    click secrets "https://changelog.1password.com/"
+    secrets -.-> |secrets| app
+    secrets -.-> |secrets| repo
+
     %% Code & assets
     subgraph GitHub
         repo{{ fab:fa-github thechangelog/changelog.com }}:::link
@@ -30,9 +36,9 @@ graph TD
         cicd --> |success #kaizen code| chat
     end
 
-    repo -.- |fly.io/changelog-2024-01-12| app
+    repo -.- |fly.io/changelog-2025-05-05| app
 
-    registry --> |ghcr.io/changelog/changelog-prod| app
+    registry ---> |ghcr.io/changelog/changelog-prod| app
     runner --> |flyctl deploy| app
 
     repo -.- |fly.io/pghero-2024-03-27| pghero
@@ -42,21 +48,18 @@ graph TD
         proxy{fa:fa-globe Proxy}
         proxy ==> |https| app
 
+        pipedream[ fa:fa-bolt changelog.com cdn.changelog.com ]:::link
+        click pipedream "https://changelog.com"
 
-        app(( fab:fa-phoenix-framework IAD & EWR changelog-2024-01-12.fly.dev )):::link
+        app(( fab:fa-phoenix-framework IAD & EWR changelog-2025-05-05.fly.dev )):::link
         style app fill:#488969;
-        click app "https://fly.io/apps/changelog-2024-01-12"
+        click app "https://fly.io/apps/changelog-2025-05-05"
 
         pghero([ fa:fa-gem PgHero 2024-03-27 ]):::link
         click pghero "https://fly.io/apps/pghero-2024-03-27"
-
-        grafana[ fa:fa-columns Grafana fly-metrics.net ]:::link
-        click grafana "https://fly-metrics.net"
-        grafana -.- |metrics| app
-        grafana -.- |metrics| pghero
     end
 
-    app <===> |Postgres| dbrw
+    app <==> |Postgres| dbrw
     pghero --> dbrw
 
     subgraph Neon.tech
@@ -77,12 +80,6 @@ graph TD
 
     end
 
-    %% Secrets
-    secrets(( fa:fa-key 1Password )):::link
-    click secrets "https://changelog.1password.com/"
-    secrets -.-> |secrets| app
-    secrets -.-> |secrets| repo
-
     %% Search
     search(( fa:fa-magnifying-glass Typesense ))
     app -..-> |search| search
@@ -92,34 +89,18 @@ graph TD
     click exceptions "https://sentry.io/organizations/changelog-media/issues/?project=5668962"
     app -..-> |exceptions| exceptions
 
-    %% CDN - https://manage.fastly.com/configure/services/7gKbcKSKGDyqU7IuDr43eG
-    subgraph Fastly
-        apex[ changelog.com ]:::link
-        click apex "https://changelog.com"
-
-        subgraph Ashburn
-            cdn[ cdn.changelog.com ]
-        end
-    end
-
     subgraph AWS.S3
         logs[ fab:fa-aws changelog-logs ]
     end
-    apex & cdn-.-> |logs| logs
-
-    %% Observability
-    observability(( fa:fa-bug Honeycomb )):::link
-    click observability "https://ui.honeycomb.io/changelog/datasets/changelog_opentelemetry/home"
-    app -.-> |traces| observability
-    logs -.-> |logs| observability
+    pipedream -..-> |logs| logs
 
     %% Object storage
-    apex ==> |https| proxy
+    proxy ==> |https| pipedream ==> app
     subgraph Cloudflare.R2
         assets[ fab:fa-cloudflare changelog-assets changelog.place ]
         feeds[ fab:fa-cloudflare changelog-feeds feeds.changelog.place ]
     end
-    cdn ==> |https| assets & feeds
+    pipedream ===> |https| assets & feeds
 
     %% Monitoring
     subgraph BetterStack
@@ -128,15 +109,20 @@ graph TD
 
         monitoring(( fa:fa-table-tennis Uptime )):::link
         click monitoring "https://uptime.betterstack.com/team/133302/monitors"
-        monitoring -....-> |monitors| apex
-        monitoring -.-> |monitors| cdn
+        monitoring -...-> |monitors| pipedream
         monitoring -.-> |monitors| proxy
         monitoring -.-> |monitors| status
     end
+
+    %% Observability
+    observability(( fa:fa-bug Honeycomb )):::link
+    click observability "https://ui.honeycomb.io/changelog/datasets/changelog_opentelemetry/home"
+    app -.-> |traces| observability
+    pipedream -.-> |logs| observability
 ```
 
 > [!TIP]
-> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWAtv27YW_iuEihUtEEl-v7bei67eTYtiW1BvGLB4GCjpWNIskbok1cSJ8993KOpBOfa6BkUqUed9vvNgHp2QR-CsnG--IYlShVz5_o4zRe9A8hy8kOe-BCrCZMtiQYuE_LLeMoI_YUalXMOOZCnbE6kE38PqxXQZjBbzK_Pq3qWRSlbj4v5bw2N-o6p3qJS8JCgBlDSnsgyMgutUvS8Dc6h_BBT88ZHsaLDaUTdOVVIGRCUQJpTFkPHYb5-0ueTpabVaaaM6EWGWhvtKENk6jZtGUuXhZWlbZ8ssOWkY3fpoirYkTEWYgRsi7742mrwNVcoZcckmSQvyQZHt9o8L1mhZX2uNTyv50r_jYr_L-J30JSr6M1XeIc-0rY2O7omWiudUs91ut20UeYZiyZrGMQhyzclm_ZH4l0ztRHy1wUHGAz-nUoHA_2LYpRnI7smLeT_CAuIUwXN49eok4XESCi_l5PXri9k1nOdN5CKWfTsLGu7RDHmS4YSqTvcD-b3MMJEXlWpyS2Hn-4Pm018r7S8YFYLfVd8ZZP5kOh0s5-6epg_AfMWLNPR1SXijQQRFxg_yNCqIXNdz_0OOnnHqPAKOFar6eCWuZjsf-6OV2nPY6fhlGYYgJXlhbCa6axwr9w01sMgu8cZgctxlB0xbFxl3NBhN3MHQHY5Qe1H0ueoUVirrjPtnoOUWgkcWuygxrMKwocJQZcTEsaa5YFQRJyB4bdHYHc2PxBw1HNipbijdYD23vdFwRlQmAaci6mw66WL_qwi7UKLF94dH0zliLAogN_rk6YSCvHmDPlTaLP-eZ8aq76LoAFskHFh67-4EzUFDhHx4u8ZG-8Nvn8i5FHjanwg-n0O4VIcMtHiCcMlWLyaLxXK2_PZZc0CCrgLq-OChPJvzPq5NtF_d1h01hpzcxO_xiHQ5IX9cKj7DfUH5s9z2NWOSdpTRRnPIszJnklybY4KS3ByUSEPpMVDkUmesxfRtsDntntwQVxCsaU6SfJ6kAWVbaOZRR_67NxVgbrhUsQCkjQJxZz7X4dFFYQ5PEPoTcOYp0JO9Ua_p2mxEVNGASiA5TRkJBGVhgiBNc4oVejEpWoTdEXFa8QwwFLUynR0fof4XhEpiW9YQcSUvWeQuZrPBZLmY-UYX9qpAuHeURSBSFrsy1yvFfDGZLYbTZT-dqJUP_9lyrH40kKLlfX_rvlp_VnA0wp5Fu4sblpbE6QGetOrbtKDWhAKE5MzVp2h7sx58Mn3qYvDqPmaFL-Nl5DFLo7-Ui2T3mZeSZRT8ODE8JwPDmthVU0Qi6XK2Iq0o3UL1GHDbKj3W6k99-nI3RjqV5hi5poF_vQjT0Dv-Z-HHVryBUHTronmpWp8O-B4OZHiDCyV2vei0nZno1ixn5_WwqFmred1UbcNhIFK_WSV74bseND27zf5sOPRzazUOY5buDhresd6nyS-HAiQwxO7r112Vu16tQDMfSbOQtxp-uA-hqDbDOm7te6sppMINBY4tNIfpGXs2RB2jFSVZMejM4RZFWfpAzRLaZS-HKKV-KmWJRfvfurrfTGcznBijJpiWI52ao6XScujd-idr6ObYEmPwdrhGYofXCcK2skvjUgAaJz6nuJr48_hjEH7cfLxeH_7_6_xDuRaTMVyfTuVKhD084f6W9O8PF7dgpD2Lnfqa8Hw0t2rf4rZQCtYf5mHEbvUv70R9R9UuVefa0NvfNt5m3BEjv7xt9gB6J615rz81cluZlTsvtQEGvZroWEmx8vBzoONLgzRLVR02bh-18ArKmLznDA7oQnAeWz1GK5Bl6iUNZ7896D6uL4jd0Z-8QDBCBno2HvwEr6h9eGlPlMD-hr7w58ZXkbD9PUNjOa9hjHsQTqkYrKjZO1q1tZ2k5p3u2ruMCvA-jSywVbfdNkdhS2WlytBYiCwydMYGxQ4g-oKQisQQehcktTDA_Pd3TmPAS8NuQeFHzlKMBLaqE2-_B4W3u43C-5S9PFJVymYaZvQAwo0FL4v6i_fvas4Q273oDHd_9OWtnS04cRvAQacAZ7EkvxZ6Vl2-0nX8NkYrJi-oXJXaVXPxBZr7w_F4PBj5NZ-0W4ElCzuf6X0N3bHC0gXaPiHm6F_RWVj8AqUJowUF58rJQeC-FDkr51F_2Dp4XdbltcLHiIq9duwJ6fRusTmw0FkpUcKVUxZYp7BOKcIhbw4Lyn7n3H51Vo_OvbNyR1NvvFxM57PhcDoYLebLK-fgrCYzb7lcDvHfYDwdTcazpyvnoRIw9Aaz6XIwHkzH8-FospxOrhwcN-jHj-YvV9UfsK4cBFecOJjuTMLT342nIgg)
+> [Continue live editing this Mermaid diagram](https://mermaid.live/edit#pako:eNqVWAlv2zYU_iuEghYNEEm-Y7vLhq7p2mLoGtQdCjQuCkp6ljRLpEBSdZw4_32Pok4fPYwAsah3fO_6-JIHy-cBWHPryRMSKZXJueuuOFN0A5Kn4Pg8dSVQ4UdLFgqaReTj9ZIR_PgJlfIaViSJ2ZpIJfga5mfjmTeYXl6YR3sTByqaD7O750tmtNDNAnwBSppnaR6ePSMrOl9Rew1b0r9ByxsuAnJ-Pp_Ptf3KZeyvKxWytCrAfkRZCAkPnX5WqhbAl1bHCbEd-3eyK592hGbZd98LyHgL90tMFHlK0EGDPvdMUl7H6k3umUP90aoPDxiTp4MKYxXlHlER1EhbmBEpeXzsBNoEqw21IjWWiuBOW9Nht-zEfnDrlun1Y-EnYPuouy5Bkxe-ijkjNllEcUbeKrJcfjmBRtv6VTQuLexLF8uyXiV8I12Jjr7GytmmSRcrzRVPqRa_XS7r7PEEzZFrGoYgyGtOFtd_E_cUxMbELwP1Eu65KZUKBP4KYRUnIJtvTsi7aAWEMTb6tmjedqHDyBdOzPfbt11Vo3kcIheh7OLMqL9GGHKvshFVje978jlPsIAnnWrxo0Nzr_X028L7GaNC8E3xnkHijsbj3uzSXtP4HpireBb7rh4FZ9ALIEv4Vu5nBTvWTJJjgjpe-V3RTd0-JbZWO577Xau0-_1t9GTu-yAlOTNYiWa2XRG2kQYWVIoVSLJbJVssVZMNe9AbjO2e_ikZotIoS2YXvsoSu0d6yc4ED1rsInLMozAQ0ZuvEmISt2d_D1EWRiC4hjOye0N7cLkj5qhFSTeULnBwa-I2mgGVkcepCBpMe3T1VyHY5BAR320fDEWEOAVAbvTJ454EubrCGApvHeyFQJxBIICmtyXVeDxRpMtyfsCc7smpKa6tHW3YA45DLM0gZBEHFt_ZK0FT0K1H3r64RuJ-9ekDOVZmR6ctgG_HJkeqbQLaPME2TOZno-l0Npk9PyAdFGiAlmXAQ3m0r7rYTVGfVWkLISU34Rs8Ik3pyZdTQ220Tzg_aKHqQmxNgob-W1HXGy5VKABLG3hiY96W5nXvmsO9RvoHOHMU6O2gwqXl6mgCqqhHJZCUxox4gjI_wl6KU4qTdDIobaJdeLw9eAIOq5zp6FzsyP_AVxLpUqfYljxngT2dTHqj2XTiGl_IIZ6wN5QFIGIW2jLVa8nldDSZ9sezbiHQK-9_HzkOKQKkiLwbb8l35WsFO2PsINlN3rA1JbI6OLI1hoYpaggZCMmZrU8Re3VdfzB0cjJ5Jd200pfwPHBYy6M7k9No9Y3nkiUU3DAyOvLUZWy4C4Wkzdmc1KY002l6tusu35Xu92MiPyRNlFNxCruaaH_dhOHdRv8g_cXyaXZZs_bp7_XqiZcNi1db3Sah3m3Jx20GEhj2wPl5Myy2U26JWnlHquW49vDqzoes2HhK__Vz7cmnwvYFsjTCYfpOObrnNoqtYspCQWcAtwTK4ntqlqsmCykEMXVjKXNs_j_KKbkaTybIXIOKAFqBNG52LZcHHfvi08JZDJuioCt5W1Eu3cgWtepX5Esr-537ofKrpXaFmVby3nsaLdIuDnUIpebB1dPY0qfNGl9hfak7fpVQAc6HQauhi829Bu3XUi3sRqZ1b2UJNnoVjf6sAIIfGClEjKBzwtKRvFx1bleD46mx0srQO85izA526V7Qf4LCxXWhcFVs319U5bIilIRuQdih4HlWvvnJ69gIt9vwiHaXPdIaZ932SKjIFQqQziT5N9PjfnpbbfRbbvNCyfGKUKUO1ez0mD63PxwOewO31JNVp3ex6OYruq8SazXTCfk9ad2MPyVpUnSMg957EsQ36sVJrEpbvH1UJ8zLQ_KGM9hikN5xkugotjMVO1Gl2eVLfbHp3mqOvvIMWQUSSAG5xY3w7_4uT-jAlMDuxbD4Ifj2aDeT3RG0LqxQxIE1VyKHCysFgdcqPloP2sTSwr92tNM5fg2oWGv3j6iTUfaZ87RSw8YNIwszk0h8yjMMBa5jiv2f1qf61lpsmV_poAlr_mDdWfP-eOr0RqPhbNQfD3qz8XR4YW3xuDd0RsPhdDIe9Ie9_njUf7yw7guvPWc6GfWGl-NL7K3L8Xg0u7CQXbG-78w_TYr_nSAu0PvFS1xAFNqbDUaP_wM097cl)
 
 Let's dig into how all the above pieces fit together.
 
@@ -145,7 +131,6 @@ Let's dig into how all the above pieces fit together.
 
 TL;DR:
 - **Front-end**
-  - Fastly
   - Fly.io Proxy
   - Cloudflare R2
 - **Application**
@@ -161,25 +146,24 @@ TL;DR:
 [Node.js](https://nodejs.org) to digest & compile static assets (CSS & JS).
 
 Static assets, including all our mp3 episodes, are stored on Cloudflare R2.
-They are served via Fastly, specifically https://cdn.changelog.com.
+They are served via Pipedream, specifically https://cdn.changelog.com.
 
 ```
-Fastly (cdn.changelog.com)
+Pipedream (cdn.changelog.com)
 ↓
 Cloudflare R2 (changelog.place)
 ````
 
 The production instance of our application is running on Fly.io, as 2 instances
 spread across 2 regions: IAD & EWR. All https://changelog.com requests are
-served via Fastly. Each Fastly request gets proxied to our application instance
-via the Fly.io Proxy.
+served via Pipedream, which is Varnish HTTP Cache behind Fly.io Proxy.
 
 ```
-Fastly (changelog.com)
-↓
 Fly.io Proxy
 ↓
-Application (changelog-2024-01-12.fly.dev)
+Pipedream (changelog.com)
+↓
+Application (changelog-2025-05-05.fly.dev)
 ```
 
 The production database - PostgreSQL - is running on Neon.tech. It is
@@ -188,7 +172,7 @@ using the replica, and since Neon.tech scales down to 0, this doesn't cost
 anything.
 
 ```
-Application (changelog-2024-01-12.fly.dev)
+Application (changelog-2025-05-05.fly.dev)
 ↓
 PostgreSQL Leader (RW)
 ↓
@@ -237,9 +221,9 @@ we are still pasting them manually.
 Since our application & database are running on Fly.io, we benefit from free
 infrastructure metrics: https://fly-metrics.net
 
-All logs from Fastly are streamed into Honeycomb.io. This allows us to ask
+All logs from Pipedream are streamed into Honeycomb.io. This allows us to ask
 unknown questions about how various HTTP clients interact with our content. It
-also helps us explore how Fastly interacts with Fly.io.
+also helps us explore how Pipedream interacts with the app.
 
 We also send app traces via OpenTelemetry to Honeycomb.io.
 
