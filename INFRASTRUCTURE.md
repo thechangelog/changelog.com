@@ -198,7 +198,9 @@ workflow jobs perspective, it is fairly standard:
     https://ghcr.io/thechangelog/changelog-prod
   - Deploys to Fly.io
 - **2/2. Notify**
-  - Notifies `#dev` channel in changelog.slack.com if **CI/CD** succeeds
+  - Notifies [`#kaizen / Code
+  deploys`](https://changelog.zulipchat.com/#narrow/channel/455097-kaizen/topic/Code.20deploys/with/543183853)
+  channel in changelog.zulipchat.com if **CI/CD** succeeds
 
 
 ## Secrets
