@@ -13,7 +13,6 @@ func (image *Image) Production() *Image {
 	productionImage := image.Runtime().
 		WithAppSrc().
 		WithProdEnv().
-		WithObanRepo().
 		WithAppDeps().
 		WithAppCompiled().
 		WithAppStaticAssets().
@@ -38,14 +37,6 @@ func (image *Image) Production() *Image {
 // I don’t think this is sufferable much longer
 // https://github.com/thechangelog/changelog.com/actions/runs/4430462525
 func (image *Image) ProductionClean() *Image {
-	if os.Getenv("OBAN_LICENSE_KEY") == "" {
-		fmt.Printf("\n👮 Building the production image requires an OBAN_LICENSE_KEY\n")
-		return image
-	}
-	if os.Getenv("OBAN_KEY_FINGERPRINT") == "" {
-		fmt.Printf("\n👮 Building the production image requires an OBAN_KEY_FINGERPRINT\n")
-		return image
-	}
 	app := image.Production().container.
 		WithExec([]string{
 			"cp", "--recursive", "--preserve=mode,ownership,timestamps", "/app", "/app.prod",
@@ -131,19 +122,6 @@ func (image *Image) WithProdEnv() *Image {
 		WithEnvVariable("MIX_ENV", "prod")
 
 	return image
-}
-
-func (image *Image) WithObanRepo() *Image {
-	OBAN_KEY_FINGERPRINT := env.Get(image.ctx, image.dag.Host(), "OBAN_KEY_FINGERPRINT").Secret()
-	OBAN_LICENSE_KEY := env.Get(image.ctx, image.dag.Host(), "OBAN_LICENSE_KEY").Secret()
-	image.container = image.container.
-		WithSecretVariable("OBAN_KEY_FINGERPRINT", OBAN_KEY_FINGERPRINT).
-		WithSecretVariable("OBAN_LICENSE_KEY", OBAN_LICENSE_KEY).
-		WithExec([]string{
-			"sh", "-c", "mix hex.repo add oban https://getoban.pro/repo --fetch-public-key $OBAN_KEY_FINGERPRINT --auth-key $OBAN_LICENSE_KEY",
-		})
-
-	return image.OK()
 }
 
 func (image *Image) WithGitAuthor() *Image {

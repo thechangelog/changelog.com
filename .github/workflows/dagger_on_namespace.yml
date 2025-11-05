@@ -34,8 +34,6 @@ jobs:
           R2_ACCESS_KEY_ID: "${{ secrets.R2_ACCESS_KEY_ID }}"
           R2_SECRET_ACCESS_KEY: "${{ secrets.R2_SECRET_ACCESS_KEY }}"
           R2_ASSETS_BUCKET: "${{ env.R2_ASSETS_BUCKET }}"
-          OBAN_KEY_FINGERPRINT: "${{ secrets.OBAN_KEY_FINGERPRINT }}"
-          OBAN_LICENSE_KEY: "${{ secrets.OBAN_LICENSE_KEY }}"
           _EXPERIMENTAL_DAGGER_RUNNER_HOST: "docker-container://dagger-0-6-4"
         run: |
           cd magefiles
@@ -53,8 +51,6 @@ jobs:
           R2_ACCESS_KEY_ID: "${{ secrets.R2_ACCESS_KEY_ID }}"
           R2_SECRET_ACCESS_KEY: "${{ secrets.R2_SECRET_ACCESS_KEY }}"
           R2_ASSETS_BUCKET: "${{ env.R2_ASSETS_BUCKET }}"
-          OBAN_KEY_FINGERPRINT: "${{ secrets.OBAN_KEY_FINGERPRINT }}"
-          OBAN_LICENSE_KEY: "${{ secrets.OBAN_LICENSE_KEY }}"
           _EXPERIMENTAL_DAGGER_RUNNER_HOST: "docker-container://dagger-0-6-4"
         run: |
           cd magefiles

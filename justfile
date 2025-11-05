@@ -90,18 +90,9 @@ ci:
 cd:
     cd magefiles && go run main.go -w ../ cd
 
-# Add Oban Pro hex repository
-[group('team')]
-add-oban-pro-hex-repo:
-    #!/usr/bin/env bash
-    if [ -n "$OBAN_LICENSE_KEY" ] && [ -n "$OBAN_KEY_FINGERPRINT" ]
-    then
-        mix hex.repo add oban https://getoban.pro/repo --fetch-public-key $OBAN_KEY_FINGERPRINT --auth-key $OBAN_LICENSE_KEY
-    fi
-
 # Get app dependencies
 [group('contributor')]
-deps: add-oban-pro-hex-repo
+deps:
     mix local.hex --force
     mix deps.get --only dev
     mix deps.get --only test
