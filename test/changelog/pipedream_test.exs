@@ -5,6 +5,14 @@ defmodule Changelog.PipedreamTest do
 
   alias Changelog.HTTP
 
+  setup do
+    Application.put_env(:changelog, :pipedream_host, "cdn.changelog.com")
+    Application.put_env(:changelog, :pipedream_port, "9000")
+    Application.put_env(:changelog, :pipedream_scheme, "http")
+    Application.put_env(:changelog, :pipedream_purge_token, nil)
+    :ok
+  end
+
   describe "purge/1" do
     test "when given a url string" do
       with_mocks([
