@@ -5,6 +5,7 @@
 /*.ez
 .DS_Store
 /.elixir_ls
+/.claude
 
 # Generate on crash by the VM
 erl_crash.dump
