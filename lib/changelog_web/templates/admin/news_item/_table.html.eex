@@ -82,7 +82,7 @@
                   Map.merge(assigns, %{item: item}),
                   item.id
                 ) %>
-            <%= AdminHelpers.icon_link("thumbs down", to: ~p"/admin/news/items/#{item}/decline?next=back", title: "Decline silently", method: :delete, data: [confirm: "Decline this item?"]) %>
+            <%= AdminHelpers.icon_link("thumbs down", to: ~p"/admin/news/items/#{item}/decline?next=back", title: "Decline silently", method: :post, data: [confirm: "Decline this item?"]) %>
             <%= AdminHelpers.modal_icon_button(
                   ChangelogWeb.Admin.NewsItemView,
                   "file text",

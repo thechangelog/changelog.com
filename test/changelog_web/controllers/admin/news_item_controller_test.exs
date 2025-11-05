@@ -179,7 +179,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
   test "declines a news item and redirects", %{conn: conn} do
     news_item = insert(:news_item)
 
-    conn = delete(conn, Routes.admin_news_item_path(conn, :decline, news_item.id))
+    conn = post(conn, Routes.admin_news_item_path(conn, :decline, news_item.id))
 
     assert redirected_to(conn) == Routes.admin_news_item_path(conn, :index)
     assert count(NewsItem) == 1
@@ -191,7 +191,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
     news_item = insert(:news_item)
 
     conn =
-      delete(conn, Routes.admin_news_item_path(conn, :decline, news_item.id), %{
+      post(conn, Routes.admin_news_item_path(conn, :decline, news_item.id), %{
         "message" => "declined because reason"
       })
 
@@ -216,7 +216,7 @@ defmodule ChangelogWeb.Admin.NewsItemControllerTest do
           news_item: @valid_attrs
         ),
         delete(conn, Routes.admin_news_item_path(conn, :delete, news_item.id)),
-        delete(conn, Routes.admin_news_item_path(conn, :decline, news_item.id))
+        post(conn, Routes.admin_news_item_path(conn, :decline, news_item.id))
       ],
       fn conn ->
         assert html_response(conn, 302)

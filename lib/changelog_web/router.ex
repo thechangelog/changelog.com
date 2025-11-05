@@ -82,7 +82,7 @@ defmodule ChangelogWeb.Router do
     end
 
     post "/news/items/:id/accept", NewsItemController, :accept, as: :news_item
-    delete "/news/items/:id/decline", NewsItemController, :decline, as: :news_item
+    post "/news/items/:id/decline", NewsItemController, :decline, as: :news_item
     post "/news/items/:id/unpublish", NewsItemController, :unpublish, as: :news_item
     post "/news/items/:id/move", NewsItemController, :move, as: :news_item
     resources "/news/comments", NewsItemCommentController, except: [:show, :new, :create]
