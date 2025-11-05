@@ -82,7 +82,7 @@
                   Map.merge(assigns, %{item: item}),
                   item.id
                 ) %>
-            <%= AdminHelpers.icon_link("thumbs down", to: ~p"/admin/news/items/#{item}/decline?next=back", title: "Decline silently", method: :post, data: [confirm: "Decline this item?"]) %>
+            <%= AdminHelpers.icon_link("thumbs down", to: ~p"/admin/news/items/#{item}/decline?next=#{SharedHelpers.current_path(@conn)}", title: "Decline silently", method: :post, data: [confirm: "Decline this item?"]) %>
             <%= AdminHelpers.modal_icon_button(
                   ChangelogWeb.Admin.NewsItemView,
                   "file text",
@@ -92,7 +92,7 @@
                   item.id
                 ) %>
           <% end %>
-          <%= if Policies.Admin.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: ~p"/admin/news/items/#{item}?next=back", title: "Delete", method: :delete, data: [confirm: "Are you sure?"]) %>
+          <%= if Policies.Admin.NewsItem.delete(@current_user, item), do: AdminHelpers.icon_link("trash", to: ~p"/admin/news/items/#{item}?next=#{SharedHelpers.current_path(@conn)}", title: "Delete", method: :delete, data: [confirm: "Are you sure?"]) %>
           </div>
         </td>
       </tr>

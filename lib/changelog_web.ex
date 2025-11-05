@@ -37,9 +37,6 @@ defmodule ChangelogWeb do
       """
       def redirect_next(conn, %{"next" => ""}, fallback), do: redirect(conn, to: fallback)
 
-      def redirect_next(conn, %{"next" => "back"}, fallback),
-        do: redirect(conn, to: ChangelogWeb.Plug.Conn.get_local_referer(conn) || fallback)
-
       def redirect_next(conn, %{"next" => next}, _fallback), do: redirect(conn, to: next)
       def redirect_next(conn, _params, fallback), do: redirect(conn, to: fallback)
 

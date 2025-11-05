@@ -4,7 +4,7 @@
     Accepting: <em><%= @item.headline %></em>
   </div>
   <div class="content">
-    <%= form_tag Routes.admin_news_item_path(@conn, :accept, @item, next: "back"), id: @form_id, class: "ui small form" do %>
+    <%= form_tag Routes.admin_news_item_path(@conn, :accept, @item, next: SharedHelpers.current_path(@conn)), id: @form_id, class: "ui small form" do %>
       <div class="field">
         <label>Featured in:</label>
         <select name="object" class="ui fluid selection dropdown">
