@@ -69,6 +69,7 @@ defmodule ChangelogWeb.NewsItemController do
       |> assign(:episode, episode)
       |> assign(:previous, previous)
       |> put_view(EpisodeView)
+      |> put_root_layout(false)
       |> render(:news, layout: {ChangelogWeb.LayoutView, "news.html"})
     rescue
       _e -> false

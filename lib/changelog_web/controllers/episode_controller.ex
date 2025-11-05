@@ -38,6 +38,7 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> assign(:episode, episode)
     |> assign(:shape, shape)
+    |> put_root_layout(false)
     |> render(:img_news, layout: false)
   end
 
@@ -49,6 +50,7 @@ defmodule ChangelogWeb.EpisodeController do
 
     conn
     |> assign(:episode, episode)
+    |> put_root_layout(false)
     |> render(:img, layout: false)
   end
 
@@ -63,12 +65,12 @@ defmodule ChangelogWeb.EpisodeController do
     source = Map.get(params, "source", "default")
 
     conn
-    |> put_layout(false)
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
     |> assign(:theme, theme)
     |> assign(:source, source)
-    |> render(:embed)
+    |> put_root_layout(false)
+    |> render(:embed, layout: false)
   end
 
   def preview(conn, %{"slug" => slug}, podcast) do
@@ -131,6 +133,7 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> assign(:podcast, podcast)
     |> assign(:episode, episode)
+    |> put_root_layout(false)
     |> render(:transcript, layout: false)
   end
 
@@ -188,6 +191,7 @@ defmodule ChangelogWeb.EpisodeController do
     conn
     |> assign(:episode, episode)
     |> assign(:email, email)
+    |> put_root_layout(false)
     |> render(:email, layout: false)
   end
 

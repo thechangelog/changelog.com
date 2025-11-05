@@ -24,6 +24,7 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:sub_count, sub_count)
     |> assign(:podcast, podcast)
     |> assign(:issues, issues)
+    |> put_root_layout(false)
     |> render(:archive, layout: {ChangelogWeb.LayoutView, "news.html"})
   end
 
@@ -63,6 +64,7 @@ defmodule ChangelogWeb.PodcastController do
     |> assign(:podcast, podcast)
     |> assign(:episode, latest)
     |> assign(:previous, previous)
+    |> put_root_layout(false)
     |> render(:news, layout: {ChangelogWeb.LayoutView, "news.html"})
   end
 
