@@ -1,29 +1,27 @@
 defmodule ChangelogWeb.AllowFramingTest do
   use ChangelogWeb.ConnCase
 
-  alias ChangelogWeb.{Plug, Router}
+  alias ChangelogWeb.Plug
 
-  setup _config do
-    conn = bypass_through(build_conn(), Router, :browser)
-
-    {:ok, %{conn: conn}}
-  end
-
-  test "deletes frame options header on embeds", %{conn: conn} do
+  test "removes frame-ancestors from CSP on embeds" do
     conn =
-      conn
-      |> get("/founderstalk/62/embed")
+      build_conn(:get, "/founderstalk/62/embed")
+      |> put_resp_header("content-security-policy", "base-uri 'self'; frame-ancestors 'self';")
       |> Plug.AllowFraming.call([])
 
-    assert get_resp_header(conn, "x-frame-options") == []
+    [csp] = get_resp_header(conn, "content-security-policy")
+    refute csp =~ "frame-ancestors"
+    assert csp =~ "base-uri 'self'"
   end
 
-  test "does not delete frame options header on other requests", %{conn: conn} do
+  test "does not modify CSP on other requests" do
     conn =
-      conn
-      |> get("/founderstalk/62")
+      build_conn(:get, "/founderstalk/62")
+      |> put_resp_header("content-security-policy", "base-uri 'self'; frame-ancestors 'self';")
       |> Plug.AllowFraming.call([])
 
-    assert get_resp_header(conn, "x-frame-options") == ["SAMEORIGIN"]
+    assert get_resp_header(conn, "content-security-policy") == [
+             "base-uri 'self'; frame-ancestors 'self';"
+           ]
   end
 end

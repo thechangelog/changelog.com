@@ -4,7 +4,7 @@ defmodule ChangelogWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: ChangelogWeb
+      use Phoenix.Controller, formats: [html: "View", json: "View"]
 
       require Logger
 
@@ -104,11 +104,13 @@ defmodule ChangelogWeb do
         root: "lib/changelog_web/templates",
         namespace: ChangelogWeb,
         pattern: "**/*"
+
       use PhoenixHTMLHelpers
 
       import Phoenix.HTML
       import Phoenix.HTML.Form
       import Phoenix.Component
+
       import Phoenix.Controller,
         only: [current_url: 1, get_flash: 1, get_flash: 2, view_module: 1]
 

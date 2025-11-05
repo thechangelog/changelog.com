@@ -7,7 +7,6 @@ defmodule ChangelogWeb.Router do
   # should be used before :browser pipeline to avoid auth and cache headers
   pipeline :public do
     plug Plug.Robots
-    plug Plug.LoadPodcasts
     plug Plug.Redirects
     plug Plug.VanityDomains
   end
@@ -21,7 +20,9 @@ defmodule ChangelogWeb.Router do
     plug :accepts, ["html", "js"]
     plug :fetch_session
     plug :fetch_live_flash
+    plug :put_root_layout, html: {ChangelogWeb.LayoutView, :app}
     plug :put_secure_browser_headers
+    plug Plug.LoadPodcasts
     plug Plug.Authenticate, repo: Changelog.Repo
     plug Plug.AllowFraming
     # must come after Plug.Authenticate
