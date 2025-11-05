@@ -6,7 +6,6 @@ import (
 
 	"dagger.io/dagger"
 	"github.com/magefile/mage/sh"
-	"github.com/thechangelog/changelog.com/magefiles/env"
 )
 
 func (image *Image) Production() *Image {
