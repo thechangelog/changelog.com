@@ -1,5 +1,5 @@
 defmodule Changelog.ObanWorkers.FeedStatsProcessor do
-  use Oban.Worker, queue: :scheduled, unique: [period: 600]
+  use Oban.Worker, queue: :scheduled, unique: [period: 1200]
 
   alias Changelog.{AgentKit, ListKit, UrlKit}
   alias Changelog.{Feed, FeedStat, Podcast, Repo}
@@ -9,7 +9,7 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
   require Logger
 
   @impl Oban.Worker
-  def timeout(_job), do: 600_000
+  def timeout(_job), do: 12_000_000
 
   @impl Oban.Worker
   def perform(%Job{args: %{"date" => date}}) do
@@ -34,14 +34,14 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     perform(%Job{args: %{"date" => Date.to_string(yesterday)}})
   end
 
-  defp process_feed(feed, date,logs) do
+  defp process_feed(feed, date, logs) do
     url = "/feeds/#{feed.slug}"
     agents = get_unique_agents_map(logs, url)
 
     if Enum.any?(agents) do
       stat =
         case Repo.get_by(Ecto.assoc(feed, :feed_stats), date: date) do
-          nil -> %FeedStat{feed_id: feed.id,date: date}
+          nil -> %FeedStat{feed_id: feed.id, date: date}
           found -> found
         end
 
@@ -52,11 +52,12 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
   end
 
   defp process_podcast(podcast, date, logs) do
-    slug = case podcast.slug do
-      "backstage" -> "master"
-      "interviews" -> "podcast"
-      other -> other
-    end
+    slug =
+      case podcast.slug do
+        "backstage" -> "master"
+        "interviews" -> "podcast"
+        other -> other
+      end
 
     url = "/#{slug}/feed"
     agents = get_unique_agents_map(logs, url)
@@ -64,7 +65,7 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     if Enum.any?(agents) do
       stat =
         case Repo.get_by(Ecto.assoc(podcast, :feed_stats), date: date) do
-          nil -> %FeedStat{podcast_id: podcast.id,date: date}
+          nil -> %FeedStat{podcast_id: podcast.id, date: date}
           found -> found
         end
 
@@ -83,7 +84,7 @@ defmodule Changelog.ObanWorkers.FeedStatsProcessor do
     |> Enum.map(fn {ua, requests} ->
       agent = AgentKit.identify(ua)
       {agent.name, %{type: agent.type, requests: length(requests), raw: ua}}
-      end)
+    end)
     |> Enum.into(%{})
   end
 
