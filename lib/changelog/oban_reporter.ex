@@ -16,7 +16,7 @@ defmodule Changelog.ObanReporter do
       |> Map.take([:id, :args, :meta, :queue, :worker, :attempt, :max_attempts])
       |> Map.merge(measure)
 
-    Sentry.capture_exception(meta.error, stacktrace: meta.stacktrace, extra: extra)
+    Sentry.capture_exception(meta.reason, stacktrace: meta.stacktrace, extra: extra)
   end
 
   def handle_event(_event, _measure, _meta, _opts), do: :ok
