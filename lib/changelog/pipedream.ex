@@ -21,12 +21,14 @@ defmodule Changelog.Pipedream do
                 :ok
 
               {:ok, response} ->
-                Sentry.capture_message("Pipedream purge failing: Instance #{address}",
+                Sentry.capture_message(
+                  "Pipedream purge failing: Url: #{url}, Instance #{address}",
                   extra: response
                 )
 
               {:error, response} ->
-                Sentry.capture_message("Pipedream purge failing: Instance #{address}",
+                Sentry.capture_message(
+                  "Pipedream purge failing: Url: #{url}, Instance #{address}",
                   extra: response
                 )
             end
@@ -36,7 +38,9 @@ defmodule Changelog.Pipedream do
         |> Stream.run()
 
       {:error, reason} ->
-        Sentry.capture_message("Pipedream purge failing: It's always DNS", extra: reason)
+        Sentry.capture_message("Pipedream purge failing: It's always DNS",
+          extra: %{message: reason}
+        )
     end
   end
 
