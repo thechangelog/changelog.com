@@ -32,12 +32,5 @@
     </span>
   <% end %>
 
-  <%= if NewsItem.is_audio(@item) do %>
-  <%= if @item.object.download_count > 0 do %>
-    <span class="news_item-toolbar-meta-item">
-      <span>🎧 <%= SharedHelpers.pretty_downloads(@item.object) %></span>
-    </span>
-  <% end %>
-  <% end %>
   </div>
 </div>

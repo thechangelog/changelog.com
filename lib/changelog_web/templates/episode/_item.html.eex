@@ -86,12 +86,6 @@
         <% end %>
         </span>
       <% end %>
-
-    <%= if @episode.download_count > 0 do %>
-      <span class="news_item-toolbar-meta-item">
-        <span>🎧 <%= SharedHelpers.pretty_downloads(@episode) %></span>
-      </span>
-    <% end %>
     </div>
   </div>
 

@@ -34,17 +34,14 @@ defmodule ChangelogWeb.EpisodeView do
 
     content_tag(:span) do
       [
-        link("🎧 #{SharedHelpers.pretty_downloads(episode)}",
+        link("[edit]",
           to: path
         )
       ]
     end
   end
 
-  def admin_edit_link(_, _, episode) do
-    if episode.download_count > 0 do
-      content_tag(:span, "🎧 #{SharedHelpers.pretty_downloads(episode)}")
-    end
+  def admin_edit_link(_, _, _episode) do
   end
 
   def audio_filename(episode) do
