@@ -36,7 +36,8 @@ defmodule ChangelogWeb.Plug.Redirects do
     {"/blog", "/posts", 302},
     {"/weekly", "/news", 302},
     {"/weekly/archive", "/news", 302},
-    {"/weekly/unsubscribed", "/news", 302}
+    {"/weekly/unsubscribed", "/news", 302},
+    {"/sponsor/media-kit", "/sponsor", 302}
   ]
 
   def init(opts), do: opts
