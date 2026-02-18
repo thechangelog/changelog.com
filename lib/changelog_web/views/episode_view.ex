@@ -56,6 +56,7 @@ defmodule ChangelogWeb.EpisodeView do
   def audio_url(episode) do
     episode
     |> audio_direct_url()
+    |> get_down_with_podscribe(Mix.env())
     |> get_down_with_op3(Mix.env())
   end
 
@@ -65,6 +66,11 @@ defmodule ChangelogWeb.EpisodeView do
     |> Files.Audio.url(:original)
     |> UrlKit.sans_cache_buster()
   end
+
+  defp get_down_with_podscribe(url, :dev), do: url
+
+  defp get_down_with_podscribe(url, _mode),
+    do: String.replace_prefix(url, "", "https://pscrb.fm/rss/p/")
 
   defp get_down_with_op3(url, :dev), do: url
 
