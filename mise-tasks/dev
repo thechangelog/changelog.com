@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#MISE description="Run app in dev mode"
+#MISE depends=["deps", "postgres:up"]
+set -euo pipefail
+
+if [[ "$(uname)" == "Linux" ]]; then
+    export ELIXIR_ERL_OPTIONS="+fnu"
+fi
+
+# Ensure dev database exists
+docker compose exec db psql -U postgres --list --quiet --tuples-only | grep -q "${CHANGELOG_DEV_DB}" \
+    || docker compose exec db createdb -U postgres "${CHANGELOG_DEV_DB}"
+
+mix ecto.setup
+
+# Install frontend assets
+cd assets && yarn install && cd ..
+
+mix phx.server

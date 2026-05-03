@@ -1,0 +1,4 @@
+#!/bin/bash
+OP_SERVICE_ACCOUNT_TOKEN="${OP_SERVICE_ACCOUNT_TOKEN:?must be set}"
+fnox exec --profile production -- mix changelog.static.upload
+fnox exec --profile production -- mix ecto.migrate

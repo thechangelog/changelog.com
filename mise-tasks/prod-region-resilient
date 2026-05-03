@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Make production deployment resilient to a single region failure"
+set -euo pipefail
+
+APP_PROD_INSTANCE="${APP_PROD_INSTANCE:?must be set}"
+
+echo "💡 https://status.changelog.com/incident/513790"
+cd "fly.io/${APP_PROD_INSTANCE}"
+flyctl scale count 2 --max-per-region 1 --region iad,ewr

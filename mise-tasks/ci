@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#MISE description="Run the full CI pipeline (build, test, publish)"
+set -euo pipefail
+
+# Step 1: Build runtime image (everything else depends on this)
+mise run docker:build-runtime
+
+# Step 2: Test + build prod in parallel
+mise run docker:test ::: docker:build-prod
+
+# Step 3: Publish (conditional on repo + branch)
+if [[ "${GITHUB_REPOSITORY:-}" == "thechangelog/changelog.com" ]] \
+&& [[ "${GITHUB_REF_NAME:-}" == "master" ]]; then
+    mise run docker:publish-runtime ::: docker:publish-prod
+else
+    echo "👮 Skipping publish (repo=${GITHUB_REPOSITORY:-}, ref=${GITHUB_REF_NAME:-})"
+fi

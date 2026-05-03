@@ -82,33 +82,14 @@ You will need to have the following system dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v16
 - [Elixir](https://elixir-lang.org/install.html) v1.18
 - [Erlang/OTP](https://www.erlang.org/downloads) v27 - usually installed as an Elixir dependency
-- [Node.js](https://nodejs.org/en/download/) v22 LTS - [latest-v22.x](https://nodejs.org/download/release/latest-v22.x/)
+- [Node.js](https://nodejs.org/en/download/) v23 - [latest-v23.x](https://nodejs.org/download/release/latest-v23.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
-- [Golang](https://go.dev/doc/install) v1.22 - if you want to run CI locally
 
-We are using [`just`](https://github.com/casey/just) to manage `brew` & `asdf` which in turn manage all app dependencies for development.
+All of the above are managed by [`mise`](https://mise.jdx.dev/), our single tool for managing tool versions, environment variables, and tasks. Secrets are managed by [`fnox`](https://fnox.jdx.dev/) backed by [1Password](https://changelog.1password.com/).
 
-Once you have [`just` installed](https://github.com/casey/just?tab=readme-ov-file#installation), running `just` in the root of this repository will produce the following output:
+Once you have [`mise` installed](https://mise.jdx.dev/getting-started.html), running `mise tasks` in the root of this repository will list all available tasks.
 
-```console
-just --list
-Available recipes:
-    [contributor]
-    contribute                                   # Setup everything needed for your first contribution
-    deps                                         # Get app dependencies
-    dev                                          # Run app in dev mode
-    install                                      # Install all system dependencies
-    postgres-down                                # Stop Postgres server
-    postgres-up                                  # Start Postgres server
-    test                                         # Run app tests
-
-    [team]
-    envrc-secrets                                # Create .envrc.secrets with credentials from 1Password
-    restore-dev-db-from-prod format="c"          # Delete & replace changelog_dev with a prod db dump
-    tag-kaizen version episode discussion commit # Tag Kaizen $version with $episode & $discussion at $commit (recording date)
-```
-
-The only command that you need to run is `just contribute`.
+The only command that you need to run is `mise run contribute`.
 As per the description, this will setup everything needed for your first contribution:
 - installs all system dependencies (Postgres, Elixir, etc.)
 - downloads app (Elixir) dependencies
@@ -116,20 +97,52 @@ As per the description, this will setup everything needed for your first contrib
 - runs app tests
 - runs app in dev mode
 
-When the above succeeds, this is the end-result that you can expect to see on macOS 12, our team's development environment of choice:
-
-<img src="changelog-local-dev-2024.png">
-
 > [!TIP]
-> 1. If you want to see what a full setup on a blank MacBook Pro looks like, you can [watch this 3 minutes-long video](https://github.com/thechangelog/changelog.com/pull/521).
-> 2. All the above works equally well on a Debian-based Linux distribution (tested on Ubuntu 22.04 & 24.04).
+> 1. All the above works equally well on a Debian-based Linux distribution (tested on Ubuntu 22.04 & 24.04).
+> 2. `mise` automatically installs all tool versions defined in `mise.toml` when you `cd` into the project directory.
+
+## How do I configure secrets? (team members only)
+
+Secrets are managed by [`fnox`](https://fnox.jdx.dev/) backed by [1Password](https://changelog.1password.com/). The `fnox.toml` file in the repo root contains only references to 1Password items — no secret values. It is safe to commit.
+
+To load secrets automatically when you enter the project directory, install the fnox-env mise plugin:
+
+```console
+mise plugin install fnox-env https://github.com/jdx/mise-env-fnox
+```
+
+Then uncomment the `_.fnox-env` line in `mise.toml`:
+
+```toml
+[env]
+_.fnox-env = { tools = true }
+```
+
+This requires `OP_SERVICE_ACCOUNT_TOKEN` to be set in your environment. Ask a team member for access.
+
+> [!NOTE]
+> External contributors do not need secrets to run the app locally. `mise run contribute` works without any 1Password access.
+
+## How to run CI locally?
+
+The CI pipeline uses Docker buildx to build container images. It runs the same `mise run ci` command that GitHub Actions uses:
+
+```console
+# Run the full CI pipeline (build runtime image, test, build prod image)
+mise run ci
+
+# Or run individual steps:
+mise run docker:build-runtime   # Build the base runtime image
+mise run docker:test            # Run tests in Docker with PostgreSQL
+mise run docker:build-prod      # Build the production image
+```
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Run `just upgrade erlang elixir nodejs`
-    - You can also upgrade one at a time, e.g. `just upgrade erlang`
-2. Ensure the runtime image builds locally: `just build-runtime-image`
-    - If [the combination of Erlang, Elixir & Ubuntu do not exist](https://github.com/thechangelog/changelog.com/issues/539), you will need to update the Ubuntu version in `magefiles/tools/main.go` e.g. [PR#541](https://github.com/thechangelog/changelog.com/pull/541/files#diff-245dd83948b4397e5cde73c6df536d84210c91729167b8df4df696199ceeb023R28)
+1. Run `mise upgrade --bump erlang elixir node`
+    - You can also upgrade one at a time, e.g. `mise upgrade --bump erlang`
+    - This updates the versions in `mise.toml` automatically
+2. Ensure the runtime image builds locally: `mise run docker:build-runtime`
 3. Commit & push to check that image builds successfully in GitHub Actions
 
 After you confirm that the image builds successfully:

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#MISE description="Setup everything needed for your first contribution"
+set -euo pipefail
+
+mise run install
+mise run deps
+mise run test
+mise run dev

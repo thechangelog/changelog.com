@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Publish production image to ghcr.io"
+set -euo pipefail
+
+source tmp/mise-prod-image.env
+
+GHCR_USERNAME="${GHCR_USERNAME:?must be set}"
+GHCR_PASSWORD="${GHCR_PASSWORD:?must be set}"
+
+echo "${GHCR_PASSWORD}" | docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+docker push "${PROD_IMAGE}"
+echo "✓ Published ${PROD_IMAGE}"

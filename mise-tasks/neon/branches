@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#MISE description="List prod db branches"
+set -euo pipefail
+
+NEON_PROJECT_ID="${NEON_PROJECT_ID:?must be set}"
+
+neonctl branches list --project-id="${NEON_PROJECT_ID}"

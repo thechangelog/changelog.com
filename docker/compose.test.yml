@@ -1,0 +1,30 @@
+name: changelog-test
+
+services:
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.test
+      args:
+        RUNTIME_IMAGE: ${RUNTIME_IMAGE}
+    environment:
+      MIX_ENV: test
+      DB_HOST: db
+      DB_NAME: changelog_test
+      DB_USER: postgres
+      DB_PASS: postgres
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:${POSTGRES_VERSION:-16.8}
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: changelog_test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 10

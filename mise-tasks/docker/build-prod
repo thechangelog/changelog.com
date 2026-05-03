@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#MISE description="Build the production Docker image"
+#MISE depends=["docker:build-runtime"]
+set -euo pipefail
+
+source tmp/mise-runtime-image.env
+
+GIT_SHA="${GITHUB_SHA:-$(git rev-parse HEAD 2>/dev/null || echo "unknown").dev}"
+BUILD_URL="${GITHUB_SERVER_URL:-$(hostname)}/${GITHUB_REPOSITORY:-}/actions/runs/${GITHUB_RUN_ID:-}"
+COMMIT_USER="${GITHUB_ACTOR:-${USER}}"
+IMAGE_OWNER="${IMAGE_OWNER:-thechangelog}"
+PROD_IMAGE="ghcr.io/${IMAGE_OWNER}/changelog-prod:${GIT_SHA}"
+
+echo "Building production image: ${PROD_IMAGE}"
+
+docker buildx build \
+    --file docker/Dockerfile.prod \
+    --build-arg RUNTIME_IMAGE="${RUNTIME_IMAGE}" \
+    --build-arg COMMIT_USER="${COMMIT_USER}" \
+    --build-arg GIT_SHA="${GIT_SHA}" \
+    --build-arg BUILD_URL="${BUILD_URL}" \
+    ${BUILDX_CACHE_FROM:+--cache-from "${BUILDX_CACHE_FROM}"} \
+    ${BUILDX_CACHE_TO:+--cache-to "${BUILDX_CACHE_TO}"} \
+    --tag "${PROD_IMAGE}" \
+    --load \
+    .
+
+mkdir -p tmp
+echo "PROD_IMAGE=${PROD_IMAGE}" > tmp/mise-prod-image.env
+echo "✓ Built ${PROD_IMAGE}"

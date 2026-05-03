@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#MISE description="Start Postgres server"
+set -euo pipefail
+
+if ! command -v docker &>/dev/null; then
+    echo "Docker is not installed."
+    exit 127
+fi
+
+docker compose up -d db --wait

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#MISE description="Deploy to Fly.io"
+set -euo pipefail
+
+REPO="${GITHUB_REPOSITORY:-}"
+REF="${GITHUB_REF_NAME:-}"
+
+if [[ "${REPO}" != "thechangelog/changelog.com" ]]; then
+    echo "👮 Deploys only run on thechangelog/changelog.com (got: ${REPO})"
+    exit 0
+fi
+
+if [[ "${REF}" != "master" ]]; then
+    echo "👮 Deploys only run on master branch (got: ${REF})"
+    exit 0
+fi
+
+source tmp/mise-prod-image.env
+
+APP_PROD_INSTANCE="${APP_PROD_INSTANCE:?must be set}"
+
+echo "Deploying ${PROD_IMAGE} to ${APP_PROD_INSTANCE}..."
+cd "fly.io/${APP_PROD_INSTANCE}"
+flyctl status
+flyctl deploy --image "${PROD_IMAGE}"

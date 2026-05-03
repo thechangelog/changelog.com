@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#MISE description="Get app dependencies"
+set -euo pipefail
+
+mix local.hex --force
+mix deps.get --only dev
+mix deps.get --only test

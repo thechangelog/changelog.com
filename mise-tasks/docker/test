@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Run tests in Docker with PostgreSQL"
+#MISE depends=["docker:build-runtime"]
+set -euo pipefail
+
+source tmp/mise-runtime-image.env
+
+POSTGRES_VERSION=$(mise current postgres)
+
+RUNTIME_IMAGE="${RUNTIME_IMAGE}" \
+POSTGRES_VERSION="${POSTGRES_VERSION}" \
+docker compose -f docker/compose.test.yml run --rm --build test

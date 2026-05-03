@@ -1,6 +1,8 @@
+name: changelog-devcontainer
+
 services:
   devcontainer:
-    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.18.3-erlang-v27.3.3-nodejs-v22.15.0
+    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.18.3-erlang-v27.3.3-nodejs-v23.8.0
     volumes:
       - ../:/workspace
     network_mode: service:db
@@ -21,7 +23,7 @@ services:
       - "5432:5432"
     restart: unless-stopped
     volumes:
-      - postgres-data:/var/lib/postgressql/data
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres

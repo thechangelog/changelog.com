@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#MISE description="Show Neon branch connection details"
+#USAGE arg "<branch>" help="The Neon branch name"
+set -euo pipefail
+
+NEON_PROJECT_ID="${NEON_PROJECT_ID:?must be set}"
+DB_PROD_USERNAME="${DB_PROD_USERNAME:?must be set}"
+DB_PROD_DBNAME="${DB_PROD_DBNAME:?must be set}"
+
+neonctl connection-string "${usage_branch}" \
+    --project-id="${NEON_PROJECT_ID}" \
+    --role-name="${DB_PROD_USERNAME}" \
+    --database-name="${DB_PROD_DBNAME}" \
+    --extended --output=yaml

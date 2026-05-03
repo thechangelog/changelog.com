@@ -1,0 +1,40 @@
+name: "Namespace"
+
+on:
+  workflow_call:
+
+env:
+  MISE_LOCKED: "1"
+
+jobs:
+  run:
+    runs-on: namespace-profile-changelog
+    steps:
+      - name: "Checkout code..."
+        uses: namespacelabs/nscloud-checkout-action@v8
+
+      - name: "Cache mise & Go..."
+        uses: namespacelabs/nscloud-cache-action@v1
+        with:
+          path: |
+            /home/runner/.cache/mise
+            /home/runner/.local/share/mise
+
+      - uses: jdx/mise-action@v4
+        with:
+          cache: false
+
+      # NOTE: do NOT add docker/setup-buildx-action here.
+      # Namespace.so runners have buildx pre-configured with remote builders.
+      # Adding the action would override their optimized setup.
+
+      - name: "Build, test & publish..."
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
+        run: fnox exec --profile ci -- mise run ci
+
+      - name: "Deploy..."
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
+        run: fnox exec --profile ci -- mise run cd

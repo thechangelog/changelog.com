@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#MISE description="Tag Kaizen release with episode & discussion at commit"
+#USAGE arg "<version>" help="Kaizen version number"
+#USAGE arg "<episode>" help="Episode number"
+#USAGE arg "<discussion>" help="GitHub discussion number"
+#USAGE arg "<commit>" help="Git commit SHA (recording date)"
+set -euo pipefail
+
+git tag --force --sign \
+    --message="Recorded as ▶️ <https://changelog.com/friends/${usage_episode}>" \
+    --message="Discussed in https://github.com/thechangelog/changelog.com/discussions/${usage_discussion}" \
+    "kaizen.${usage_version}" "${usage_commit}"
+
+git push --force origin "kaizen.${usage_version}"

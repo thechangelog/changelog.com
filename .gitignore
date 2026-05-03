@@ -43,8 +43,11 @@ npm-debug.log*
 
 # User-specific environment variables
 .env.user
-# Secret variables
+# Secret variables (legacy)
 .envrc.secrets
+
+# mise local state
+.mise/local.toml
 
 # Local config files, host-specific
 .config

@@ -1,0 +1,34 @@
+name: "GitHub"
+
+on:
+  workflow_call:
+
+env:
+  MISE_LOCKED: "1"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code..."
+        uses: actions/checkout@v6
+
+      - uses: jdx/mise-action@v4
+        with:
+          cache: false
+
+      - name: "Set up Docker Buildx"
+        uses: docker/setup-buildx-action@v4
+
+      - name: "Build, test & publish..."
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
+          BUILDX_CACHE_FROM: "type=gha"
+          BUILDX_CACHE_TO: "type=gha,mode=max"
+        run: fnox exec --profile ci -- mise run ci
+
+      - name: "Deploy..."
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
+        run: fnox exec --profile ci -- mise run cd

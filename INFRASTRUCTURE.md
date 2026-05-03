@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Oct.%2005%2C%202025-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Apr.%2012%2C%202026-success?style=for-the-badge)](https://shipit.show/80)
 
 This diagram shows the current changelog.com setup:
 
@@ -21,8 +21,8 @@ graph TD
         cicd[/ fa:fa-circle-check GitHub Action - Ship It \]:::link
         click cicd "https://github.com/thechangelog/changelog.com/actions/workflows/ship_it.yml"
 
-        automation[\ fab:fa-golang Dagger Go SDK /]:::link
-        click automation "https://github.com/thechangelog/changelog.com/blob/master/magefiles/magefiles.go"
+        automation[\ fab:fa-docker Docker buildx + mise /]:::link
+        click automation "https://github.com/thechangelog/changelog.com/tree/master/docker"
 
         registry(( fab:fa-github ghcr.io )):::link
         click registry "https://github.com/orgs/thechangelog/packages"
@@ -31,7 +31,7 @@ graph TD
         click chat "https://changelog.zulipchat.com/#narrow/channel/455097-kaizen/topic/Code.20deploys"
 
         repo -.-> |.github/workflows/ship_it.yml| cicd
-        cicd --> |magefiles/magefiles.go| automation
+        cicd --> |mise run ci| automation
 
         cicd --> |success #kaizen code| chat
     end
@@ -75,8 +75,7 @@ graph TD
         click runner "https://cloud.namespace.so/9s8hfvousnlae/ghrunners"
 
         automation --> |runs-on: namespace-profile-changelog| runner
-        runner --> |ghcr.io/changelog/changelog-runtime| registry
-        runner --> |ghcr.io/changelog/changelog-prod| registry
+        runner --> |docker buildx build + push| registry
 
     end
 
@@ -188,8 +187,8 @@ workflow](.github/workflows/ship_it.yml) is responsible for this. From the
 workflow jobs perspective, it is fairly standard:
 
 - **1/2. CI/CD**
-  - Uses Dagger Go SDK so that it works exactly the same locally as it does in
-    GitHub Actions
+  - Uses Docker buildx + mise tasks so that it works exactly the same locally
+    (`mise run ci`) as it does in GitHub Actions
   - [Uses a Namespace.so GitHub
     Runner](https://github.com/thechangelog/changelog.com/pull/522) so that
     caching is reliable & persistent across workflow runs
@@ -206,16 +205,13 @@ workflow jobs perspective, it is fairly standard:
 ## Secrets
 
 All our secrets are stored in [1Password](https://changelog.1password.com/), in
-the **changelog** vault. We are declaring a single secret in Fly.io,
-`OP_SERVICE_ACCOUNT_TOKEN`, and then loading all other secrets into memory part
-of app boot via `op` & `env.op`.
+the **changelog** vault. We use [fnox](https://fnox.jdx.dev/) as a unified
+secrets interface backed by 1Password. The `fnox.toml` file (safe to commit)
+contains only references to 1Password items, not secret values.
 
-In [GitHub Actions
-secrets](https://github.com/thechangelog/changelog.com/settings/secrets/actions),
-we are still pasting them manually.
-
-> [!NOTE]
-> We should use `op` here too.
+The only secret manually configured anywhere is `OP_SERVICE_ACCOUNT_TOKEN`:
+- In Fly.io: for loading secrets at app boot via `fnox exec --profile production`
+- In GitHub Actions: for resolving CI/CD secrets via `fnox exec --profile ci`
 
 
 ## Metrics & observability
@@ -243,8 +239,8 @@ We use Typesense for search. It's near-instant & it just works.
 
 The above is what we have so far. While we like to keep things simple, our
 setup is a constant work in progress. We keep making small improvements all the
-time, and we talk about them every few months in the context of our [Ship It!
-Kaizen episodes](https://changelog.com/topic/kaizen).
+time, and we talk about them every few months in the context of our
+[Kaizen episodes](https://changelog.com/topic/kaizen).
 
 For example, this diagram and document were created in the context of [🎧
 Kaizen 8: 24 improvements & a lot more](https://shipit.show/80). If you would
@@ -276,14 +272,14 @@ you very much!
 
 ## How to promote a new app instance to production?
 
-1. Update `APP_PROD_INSTANCE` in `.envrc` to match the newly created app name, e.g. `changelog-2025-05-05`
+1. Update `APP_PROD_INSTANCE` in `mise.toml` `[env]` to match the newly created app name, e.g. `changelog-2025-05-05`
 
-        direnv allow
+        mise trust
         env | rg APP_PROD_INSTANCE
 
 2. Ensure that the app is scaled across multiple regions & is resilient to a single region failure:
 
-        just prod-region-resilient
+        mise run prod-region-resilient
 
 3. Set `APP_INSTANCE=production` env var in `fly.toml`
   - Remove any env variables that should not be there (e.g. `URL_HOST`, `STATIC_URL_HOST`, etc.)

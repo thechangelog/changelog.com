@@ -1,0 +1,27 @@
+[settings]
+lockfile = true
+
+[tools]
+erlang = "27.3.3"
+elixir = "1.18.3-otp-27"
+node = "23.8.0"
+yarn = "1.22.22"
+go = "1.22.12"
+flyctl = "0.3.114"
+"1password-cli" = "2.30.3"
+fnox = "1"
+# npm:neonctl depends on node — if you see a warning about it before
+# running `mise install`, that's expected and will go away after install.
+"npm:neonctl" = "2"
+
+[env]
+APP_PROD_INSTANCE = "changelog-2025-05-05"
+OP_ACCOUNT = "changelog.1password.com"
+IMAGE_OWNER = "thechangelog"
+GHCR_USERNAME = "{{env.USER}}"
+PGUSER = "postgres"
+DB_USER = "postgres"
+CHANGELOG_DEV_DB = "changelog_dev"
+# TODO: enable fnox-env plugin once configured
+# Requires: mise plugin install fnox-env https://github.com/jdx/mise-env-fnox
+# _.fnox-env = { tools = true }

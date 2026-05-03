@@ -1,0 +1,47 @@
+# check=skip=InvalidDefaultArgInFrom
+# Runtime image: base for dev, test & production
+# Published as ghcr.io/thechangelog/changelog-runtime
+#
+# Versions injected via --build-arg from mise.toml
+ARG ELIXIR_VERSION
+ARG ERLANG_VERSION
+ARG NODEJS_VERSION
+ARG YARN_VERSION
+ARG UBUNTU_VERSION=noble-20250404
+
+FROM hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-ubuntu-${UBUNTU_VERSION}
+
+ARG NODEJS_VERSION
+ARG YARN_VERSION
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TERM=xterm-256color
+
+# System packages
+RUN apt-get update && apt-get install --yes \
+    ca-certificates \
+    git-core \
+    imagemagick \
+    build-essential \
+    inotify-tools \
+    postgresql-client \
+    curl \
+    xz-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Elixir build tools
+RUN mix local.rebar --force && mix local.hex --force
+
+# Node.js binary
+RUN curl -fsSL -o /tmp/node.tar.xz \
+    "https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.xz" \
+    && tar -xJf /tmp/node.tar.xz -C /opt \
+    && rm /tmp/node.tar.xz
+
+ENV PATH="/opt/node-v${NODEJS_VERSION}-linux-x64/bin:${PATH}"
+
+# Yarn
+RUN npm install --global yarn@${YARN_VERSION}
+
+# Verify all tools are available
+RUN elixir --version && node --version && yarn --version
