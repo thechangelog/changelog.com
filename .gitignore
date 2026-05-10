@@ -52,3 +52,6 @@ npm-debug.log*
 # Postgres DB dump
 /db-*
 *.sql
+
+# Temporary directory for files that should not be tracked by git
+/tmp

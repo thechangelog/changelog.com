@@ -33,6 +33,11 @@ imagemagick: brew
     @[ -d $(brew --prefix)/opt/imagemagick ] \
     || brew install imagemagick
 
+[private]
+op: brew
+    @command -v op &>/dev/null \
+    || brew install 1password-cli
+
 # Create .envrc.secrets with credentials from 1Password
 [group('team')]
 envrc-secrets:
@@ -47,6 +52,10 @@ gpg: brew
 icu4c: brew
     @[ -d "$(brew --prefix icu4c)/lib/pkgconfig" ] \
     || brew install icu4c pkg-config
+    @if [ "$(uname)" = "Linux" ] && ! ldconfig -p | grep -q libicuuc.so.78; then \
+        echo "$(brew --prefix icu4c)/lib" | sudo tee /etc/ld.so.conf.d/homebrew-icu4c.conf > /dev/null \
+        && sudo ldconfig; \
+    fi
 
 # https://tldp.org/LDP/abs/html/exitcodes.html
 [private]
@@ -64,9 +73,23 @@ MACOS_MAJOR_MINOR_VERSION := if os() == "macos" { "$(sw_vers -productVersion | c
 
 # Install all system dependencies
 [group('contributor')]
-install: asdf brew imagemagick gpg icu4c
+install: asdf brew imagemagick gpg icu4c op
+    @gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys \
+        72ECF46A56B4AD39C907BBB71646B01B86E50310 2>/dev/null; \
+        gpg --batch --yes --tofu-policy good \
+        72ECF46A56B4AD39C907BBB71646B01B86E50310 2>/dev/null; true
     @awk '{ system("asdf plugin add " $1) }' < .tool-versions
-    @PKG_CONFIG_PATH="$(brew --prefix)/bin/pkg-config:$(brew --prefix icu4c)/lib/pkgconfig:$(brew --prefix curl)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig" MACOSX_DEPLOYMENT_TARGET="{{ MACOS_MAJOR_MINOR_VERSION }}" asdf install
+    @while read -r tool version; do \
+        if [ "$tool" = "1password-cli" ]; then continue; fi; \
+        if [ -d "$HOME/.asdf/installs/$tool/$version" ]; then \
+            echo "$tool $version already installed"; \
+        else \
+            rm -rf "$HOME/.asdf/downloads/$tool/$version"; \
+            PKG_CONFIG_PATH="$(brew --prefix icu4c)/lib/pkgconfig:$(brew --prefix curl)/lib/pkgconfig:$(brew --prefix zlib)/lib/pkgconfig" \
+            MACOSX_DEPLOYMENT_TARGET="{{ MACOS_MAJOR_MINOR_VERSION }}" \
+            asdf install "$tool" "$version"; \
+        fi; \
+    done < .tool-versions
 
 export ELIXIR_ERL_OPTIONS := if os() == "linux" { "+fnu" } else { "" }
 
@@ -223,6 +246,114 @@ yarn:
 [private]
 assets: yarn
     cd assets && yarn install
+
+# Install Incus and configure macvlan networking, e.g. just incus enp97s0
+[linux]
+[group('contributor')]
+incus interface:
+    #!/usr/bin/env bash
+    if ! command -v incus &>/dev/null
+    then
+        sudo mkdir -p /etc/apt/keyrings/
+        curl -fsSL https://pkgs.zabbly.com/key.asc | sudo tee /etc/apt/keyrings/zabbly.asc > /dev/null
+        printf '%s\n' \
+            "Enabled: yes" \
+            "Types: deb" \
+            "URIs: https://pkgs.zabbly.com/incus/stable" \
+            "Suites: $(. /etc/os-release && echo ${VERSION_CODENAME})" \
+            "Components: main" \
+            "Architectures: $(dpkg --print-architecture)" \
+            "Signed-By: /etc/apt/keyrings/zabbly.asc" \
+            | sudo tee /etc/apt/sources.list.d/zabbly-incus-stable.sources > /dev/null
+        sudo apt update
+        sudo apt install -y incus
+    fi
+    id -nG | grep -q incus-admin \
+    || sudo usermod -aG incus-admin "$USER"
+    if ! id -nG | grep -q incus-admin
+    then
+        echo "Added $USER to incus-admin. Log out, log back in, then re-run this recipe."
+        exit 1
+    fi
+    incus admin init --minimal 2>/dev/null \
+    || true
+    if ! incus profile show macvlan &>/dev/null
+    then
+        incus profile create macvlan
+        incus profile device add macvlan eth0 nic nictype=macvlan parent="{{ interface }}"
+        incus profile device add macvlan root disk path=/ pool=default
+    fi
+
+# Create a VM to build the base image from, e.g. just image $HOME/github.com/thechangelog/changelog.com
+[linux]
+[group('contributor')]
+image truth:
+    #!/usr/bin/env bash
+    if ! incus info changelog &>/dev/null
+    then
+        incus launch images:ubuntu/24.04 changelog --vm \
+            -p macvlan \
+            -c limits.cpu=8 \
+            -c limits.memory=16GiB \
+            -d root,size=100GiB
+        until incus exec changelog -- true 2>/dev/null; do sleep 1; done
+    fi
+    incus config device show changelog | grep -q truth \
+    || incus config device add changelog truth disk source="{{ truth }}" path=/truth
+    incus exec changelog -- su - ubuntu
+
+# Freeze the VM into a reusable image
+[linux]
+[group('contributor')]
+blueprint:
+    incus exec changelog -- su -c 'builtin history clear; rm -f ~/.local/share/fish/fish_history' - ubuntu
+    incus stop changelog
+    incus publish changelog --alias changelog --reuse
+    incus delete changelog
+
+# Launch a development session, e.g. just launch $HOME/github.com/thechangelog/changelog.com
+[linux]
+[group('contributor')]
+launch truth:
+    #!/usr/bin/env bash
+    VM_NAME="$(basename "{{ truth }}" | tr '.' '-')"
+    incus launch changelog "$VM_NAME" --vm \
+        -p macvlan \
+        -c limits.cpu=8 \
+        -c limits.memory=16GiB \
+        -d root,size=100GiB
+    until incus exec "$VM_NAME" -- true 2>/dev/null; do sleep 1; done
+    incus config device add "$VM_NAME" truth disk \
+        source="{{ truth }}" \
+        path=/truth
+    incus exec "$VM_NAME" -- su - ubuntu
+
+# Save changes from ~/workspace back to /truth
+[linux]
+[group('contributor')]
+keep:
+    @[ -d ~/workspace ] || (echo "{{ _REDB }}{{ _WHITE }}~/workspace does not exist.{{ _RESET }}" && exit 1)
+    @[ -d /truth ] || (echo "{{ _REDB }}{{ _WHITE }}/truth does not exist.{{ _RESET }}" && exit 1)
+    rsync -a --delete \
+        --exclude='.git/' \
+        --exclude='_build/' \
+        --exclude='deps/' \
+        --exclude='db/' \
+        --exclude='.claude/' \
+        --exclude='.elixir_ls/' \
+        --exclude='assets/node_modules/' \
+        --exclude='priv/static/' \
+        --exclude='tmp/' \
+        ~/workspace/ /truth/
+
+# Stop and delete a development session, e.g. just destroy $HOME/github.com/thechangelog/changelog.com
+[linux]
+[group('contributor')]
+destroy truth:
+    #!/usr/bin/env bash
+    VM_NAME="$(basename "{{ truth }}" | tr '.' '-')"
+    incus stop "$VM_NAME"
+    incus delete "$VM_NAME"
 
 # Run app in dev mode
 [group('contributor')]
