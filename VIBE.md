@@ -221,11 +221,15 @@ echo 'direnv hook fish | source' >> ~/.config/fish/config.fish
 
 mise use -g neovim@0.11
 mise use -g just
+mise use -g dust
+mise use -g fd
 mise use -g ripgrep
 mise use -g tree-sitter
 
 mise use -g zoxide
 echo 'zoxide init fish | source' >> ~/.config/fish/config.fish
+
+brew install tig
 
 brew install claude-code
 mkdir -p ~/.claude
@@ -277,16 +281,19 @@ Configure shell abbreviations:
 ```fish
 echo 'abbr -a a apt
 abbr -a b brew
-abbr -a c claude --model \'claude-opus-4-6[1m]\' --effort high --dangerously-skip-permissions --remote-control $(hostname)
+abbr -a c claude --model \'claude-opus-4-6[1m]\' --effort high --dangerously-skip-permissions
+abbr -a cr claude --model \'claude-opus-4-6[1m]\' --effort high --dangerously-skip-permissions --remote-control $(hostname)_$(date +%Y-%m-%d_%H-%M)
 abbr -a d dagger
 abbr -a f flyctl
 abbr -a j just
+abbr -a m mise
 abbr -a mx mix
 abbr -a mp mix phx.server
 abbr -a mt mix test
 abbr -a mc mix compile
 abbr -a n nvim
-abbr -a p psql' > ~/.config/fish/conf.d/abbreviations.fish
+abbr -a p psql
+abbr -a t tig' > ~/.config/fish/conf.d/abbreviations.fish
 
 source ~/.config/fish/conf.d/abbreviations.fish
 ```
@@ -297,6 +304,12 @@ source ~/.config/fish/conf.d/abbreviations.fish
 > fresh one from the same image, just like "Bring yourself back
 > online."
 
+Wider tmux session names (default truncates at 10 characters):
+
+```fish
+echo 'set -g status-left-length 22' > ~/.tmux.conf
+```
+
 Shell completions and SSH agent:
 
 ```fish
@@ -304,11 +317,60 @@ brew completions link
 mkdir -p ~/.config/fish/completions
 starship completions fish > ~/.config/fish/completions/starship.fish
 just --completions fish > ~/.config/fish/completions/just.fish
+mise use -g usage
+mise completions fish > ~/.config/fish/completions/mise.fish
 
 echo 'if not set -q SSH_AUTH_SOCK
   eval (ssh-agent -c) > /dev/null
 end' >> ~/.config/fish/config.fish
 ```
+
+Fish functions for the VM lifecycle:
+
+```fish
+function workspace
+    if not test -d ~/workspace
+        echo "Copying /truth → ~/workspace..."
+        cp -r /truth ~/workspace
+        echo "Done."
+    end
+    cd ~/workspace
+end
+funcsave workspace
+
+function clean
+    cd ~/workspace && mise truth
+    brew autoremove
+    mise prune
+    rm -rf ~/workspace ~/.claude/sessions ~/.claude/session-env ~/.claude/file-history ~/.claude/backups ~/.claude/shell-snapshots ~/.claude/cache ~/.claude/plans ~/.claude/history.jsonl ~/.claude/mcp-needs-auth-cache.json
+    builtin history clear
+    rm -f ~/.local/share/fish/fish_history
+end
+funcsave clean
+
+function work
+    workspace
+    set -l ts (date +%Y-%m-%d_%H-%M)
+    set -l cmd "claude --model 'claude-opus-4-6[1m]' --effort high --dangerously-skip-permissions"
+    echo "Starting tmux session $ts..."
+    tmux new-session -s $ts "$cmd $argv"
+end
+funcsave work
+
+function workr
+    work --remote-control (hostname)_(date +%Y-%m-%d_%H-%M)
+end
+funcsave workr
+```
+
+`workspace` copies `/truth` into `~/workspace` on first use so `claude` works
+on its own copy, not the host mount. `clean` reclaims space (`brew autoremove`,
+`mise prune`) and wipes all session state before publishing the image — no
+stale Claude sessions, no shell history, no leftover workspace baked into the
+snapshot. `work` ties them together: set up the workspace, start a named tmux
+session, and launch Claude inside it — one command from SSH to vibing. `workr`
+does the same but adds `--remote-control` so you can drive the session from
+another client.
 
 ### 6/7. Everything changelog needs ⏱️ `6-12mins`
 
@@ -332,16 +394,11 @@ just install
 > repo checked out in my local `changelog.com` repo instance, as
 > `tmp/transcripts`.
 
-Exit out of the VM, then remove the truth mount:
-
-```bash
-incus config device remove changelog truth
-```
-
 ### 7/7. Freeze it, reuse it ⏱️ `4-5mins`
 
 ```bash
-incus exec changelog -- su -c 'builtin history clear; rm -f ~/.local/share/fish/fish_history' - ubuntu
+incus config device remove changelog truth || true
+incus exec changelog -- su -c 'fish -c clean' - ubuntu
 incus stop changelog
 incus publish changelog --alias changelog --reuse
 incus delete changelog
@@ -374,10 +431,11 @@ until incus exec changelog -- true 2>/dev/null; do sleep 1; done
 incus exec changelog -- su - ubuntu
 ```
 
-Make changes, then:
+Make changes, then detach truth and freeze:
 
 ```bash
-incus exec changelog -- su -c 'builtin history clear; rm -f ~/.local/share/fish/fish_history' - ubuntu
+incus config device remove changelog truth || true
+incus exec changelog -- su -c 'fish -c clean' - ubuntu
 incus stop changelog
 incus publish changelog --alias changelog --reuse
 incus delete changelog
