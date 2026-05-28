@@ -2,7 +2,7 @@ name: changelog
 
 services:
   db:
-    image: postgres:16.8
+    image: postgres:16.12
     ports:
       - "5432:5432"
     restart: unless-stopped

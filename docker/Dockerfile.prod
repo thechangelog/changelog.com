@@ -5,7 +5,8 @@
 # Stage 2 (legacy): extract legacy WordPress assets
 # Stage 3 (final): clean production image with compiled app
 ARG RUNTIME_IMAGE
-ARG ONEPASSWORD_VERSION=2.30.3
+# Injected via --build-arg from mise.toml
+ARG ONEPASSWORD_VERSION
 ARG LEGACY_ASSETS_IMAGE=ghcr.io/thechangelog/changelog-legacy-assets@sha256:4f1d2aa7036836bd59ff3af74bfd054c33a1ed558514a8dd91062a14804d7153
 
 # ---------------------------------------------------------------------------
@@ -27,18 +28,27 @@ COPY lib/ lib/
 COPY priv/repo/ priv/repo/
 COPY mix.exs mix.lock ./
 
-# Compile
-RUN mix deps.get --only prod \
+# Warm layer from cache, compile, sync back to cache
+RUN --mount=type=cache,target=/tmp/deps-cache,id=app-deps \
+    --mount=type=cache,target=/tmp/build-cache,id=app-build \
+    rsync -a /tmp/deps-cache/ /app/deps/ \
+    && rsync -a /tmp/build-cache/ /app/_build/ \
+    && mix deps.get --only prod \
     && mix deps.compile \
-    && mix compile
+    && mix compile \
+    && rsync -a /app/deps/ /tmp/deps-cache/ \
+    && rsync -a /app/_build/ /tmp/build-cache/
 
 # Static assets
 COPY assets/ assets/
-RUN cd assets \
+RUN --mount=type=cache,target=/tmp/node-modules-cache,id=app-node-modules \
+    rsync -a /tmp/node-modules-cache/ /app/assets/node_modules/ \
+    && cd assets \
     && yarn install --frozen-lockfile \
     && yarn run compile \
     && cd .. \
-    && mix phx.digest --no-vsn
+    && mix phx.digest --no-vsn \
+    && rsync -a /app/assets/node_modules/ /tmp/node-modules-cache/
 
 # Build metadata
 ARG COMMIT_USER

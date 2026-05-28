@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+#MISE description="Bump Erlang / Elixir / Node.js versions"
+#MISE raw=true
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ $# -eq 0 ]]
+then
+  echo "Usage: mise deps:bump <tool> [<tool>...]"
+  echo "Example: mise deps:bump erlang elixir node"
+  exit 1
+fi
+
+for tool in "$@"
+do
+  CURRENT=$(mise current "${tool}" 2>/dev/null)
+  if [[ -z "${CURRENT}" ]]
+  then
+    echo "⚠️  ${tool}: not installed, skipping"
+    continue
+  fi
+
+  CURRENT_MAJOR="${CURRENT%%.*}"
+
+  if [[ "${tool}" == "elixir" ]]
+  then
+    ERLANG_MAJOR=$(mise current erlang 2>/dev/null | cut -d. -f1)
+    CURRENT_MINOR=$(echo "${CURRENT}" | cut -d. -f2)
+    CANDIDATES=$(mise ls-remote elixir 2>/dev/null \
+      | grep -v '\-rc\|-beta\|-alpha\|-dev' \
+      | grep "\-otp-${ERLANG_MAJOR}$" \
+      | awk -F. -v cur_minor="${CURRENT_MINOR}" \
+          '{ if ($2 >= cur_minor) latest[$2] = $0 } END { for (m in latest) print latest[m] }' \
+      | sort -t. -k2,2n)
+  elif [[ "${tool}" == "erlang" ]]
+  then
+    ELIXIR_OTP_MAJORS=$(mise ls-remote elixir 2>/dev/null \
+      | grep -v '\-rc\|-beta\|-alpha\|-dev' \
+      | grep -o '\-otp-[0-9]*$' \
+      | sort -t- -k3,3n -u \
+      | sed 's/-otp-//')
+    CANDIDATES=$(curl -fsSL https://builds.hex.pm/builds/otp/ubuntu-24.04/builds.txt \
+      | awk '{print $1}' \
+      | sed 's/^OTP-//' \
+      | grep -v '\-rc\|-beta\|-alpha\|-dev\|^maint\|^master' \
+      | awk -F. -v cur="${CURRENT_MAJOR}" -v otp_majors="${ELIXIR_OTP_MAJORS}" \
+          'BEGIN { split(otp_majors, a, "\n"); for (i in a) has_elixir[a[i]] = 1 }
+          { if ($1 >= cur && ($1 == cur || has_elixir[$1])) latest[$1] = $0 }
+          END { for (m in latest) print latest[m] }' \
+      | sort -t. -k1,1n)
+  elif [[ "${tool}" == "node" ]]
+  then
+    CANDIDATES=$(mise ls-remote node 2>/dev/null \
+      | grep -v '\-rc\|-beta\|-alpha\|-dev' \
+      | awk -F. -v cur="${CURRENT_MAJOR}" \
+          '{ if ($1 >= cur && $1 % 2 == 0) latest[$1] = $0 } END { for (m in latest) print latest[m] }' \
+      | sort -t. -k1,1n)
+  else
+    CANDIDATES=$(mise ls-remote "${tool}" 2>/dev/null \
+      | grep -v '\-rc\|-beta\|-alpha\|-dev' \
+      | awk -F. -v cur="${CURRENT_MAJOR}" \
+          '{ if ($1 >= cur && NF <= 3) latest[$1] = $0 } END { for (m in latest) print latest[m] }' \
+      | sort -t. -k1,1n)
+  fi
+
+  CANDIDATES=$(echo "${CANDIDATES}" | grep -vxF "${CURRENT}" || true)
+
+  if [[ -z "${CANDIDATES}" ]]
+  then
+    if [[ "${tool}" == "elixir" ]]
+    then
+      ERLANG_MAJOR=$(mise current erlang 2>/dev/null | cut -d. -f1)
+      echo "⚠️  No elixir builds available for OTP ${ERLANG_MAJOR} yet"
+    else
+      echo "✅ ${tool} ${CURRENT} is already the latest"
+    fi
+    continue
+  fi
+
+  echo ""
+  echo "Running ${tool}@${CURRENT}"
+  echo ""
+  echo "Newer versions available:"
+  i=1
+  OPTIONS=()
+  while IFS= read -r version
+  do
+    echo "  ${i}) ${version}"
+    OPTIONS+=("${version}")
+    i=$((i + 1))
+  done <<< "${CANDIDATES}"
+  echo "  0) skip"
+
+  read -rp "Which version? [0-$((i - 1))]: " choice
+
+  if [[ "${choice}" == "0" || -z "${choice}" ]]
+  then
+    echo "Skipped ${tool}"
+    continue
+  fi
+
+  if ! [[ "${choice}" =~ ^[0-9]+$ ]] || [[ $((10#${choice})) -lt 1 || $((10#${choice})) -ge "${i}" ]]
+  then
+    echo "Invalid choice, skipping ${tool} bump"
+    continue
+  fi
+  choice=$((10#${choice}))
+
+  SELECTED="${OPTIONS[$((choice - 1))]}"
+  echo "Upgrading ${tool} to ${SELECTED}..."
+  mise use "${tool}@${SELECTED}"
+
+  if [[ "${tool}" == "erlang" ]]
+  then
+    NEW_ERLANG_MAJOR="${SELECTED%%.*}"
+    if [[ "${NEW_ERLANG_MAJOR}" != "${CURRENT_MAJOR}" ]]
+    then
+      ELIXIR_IN_ARGS=""
+      for arg in "$@"
+      do
+        if [[ "${arg}" == "elixir" ]]
+        then
+          ELIXIR_IN_ARGS=1
+          break
+        fi
+      done
+      if [[ -z "${ELIXIR_IN_ARGS}" ]]
+      then
+        echo ""
+        echo "⚠️  Erlang major changed ${CURRENT_MAJOR} → ${NEW_ERLANG_MAJOR}, elixir needs a matching -otp-${NEW_ERLANG_MAJOR} build"
+        exec "$0" elixir
+      fi
+    fi
+  fi
+done

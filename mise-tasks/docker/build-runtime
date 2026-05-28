@@ -1,30 +1,42 @@
 #!/usr/bin/env bash
-#MISE description="Build the runtime Docker image"
+#MISE description="Build the runtime container image"
 set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
 
 ELIXIR_VERSION=$(mise current elixir | sed 's/-otp-.*//')
 ERLANG_VERSION=$(mise current erlang)
 NODEJS_VERSION=$(mise current node)
 YARN_VERSION=$(mise current yarn)
+FNOX_VERSION=$(mise current fnox)
 
-IMAGE_OWNER="${IMAGE_OWNER:-thechangelog}"
 RUNTIME_TAG="elixir-v${ELIXIR_VERSION}-erlang-v${ERLANG_VERSION}-nodejs-v${NODEJS_VERSION}"
 RUNTIME_IMAGE="ghcr.io/${IMAGE_OWNER}/changelog-runtime:${RUNTIME_TAG}"
+
+if [ -n "${GITHUB_RUN_ID:-}" ]
+then
+  BUILD_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+else
+  BUILD_URL="$(hostname):$(pwd)"
+fi
+DESCRIPTION="💜 Elixir v${ELIXIR_VERSION} | 🚜 Erlang v${ERLANG_VERSION} | ⬢ Node.js v${NODEJS_VERSION} | 🗃️ Ubuntu 24.04 LTS (Noble Numbat) | ${BUILD_URL}"
 
 echo "Building runtime image: ${RUNTIME_IMAGE}"
 
 docker buildx build \
-    --file docker/Dockerfile.runtime \
-    --build-arg ELIXIR_VERSION="${ELIXIR_VERSION}" \
-    --build-arg ERLANG_VERSION="${ERLANG_VERSION}" \
-    --build-arg NODEJS_VERSION="${NODEJS_VERSION}" \
-    --build-arg YARN_VERSION="${YARN_VERSION}" \
-    ${BUILDX_CACHE_FROM:+--cache-from "${BUILDX_CACHE_FROM}"} \
-    ${BUILDX_CACHE_TO:+--cache-to "${BUILDX_CACHE_TO}"} \
-    --tag "${RUNTIME_IMAGE}" \
-    --load \
-    .
+  --file docker/Dockerfile.runtime \
+  --build-arg ELIXIR_VERSION="${ELIXIR_VERSION}" \
+  --build-arg ERLANG_VERSION="${ERLANG_VERSION}" \
+  --build-arg NODEJS_VERSION="${NODEJS_VERSION}" \
+  --build-arg YARN_VERSION="${YARN_VERSION}" \
+  --build-arg FNOX_VERSION="${FNOX_VERSION}" \
+  --label "org.opencontainers.image.description=${DESCRIPTION}" \
+  --label "org.opencontainers.image.source=https://github.com/${IMAGE_OWNER}/changelog.com" \
+  ${BUILDX_CACHE_FROM:+--cache-from "${BUILDX_CACHE_FROM}"} \
+  ${BUILDX_CACHE_TO:+--cache-to "${BUILDX_CACHE_TO}"} \
+  --tag "${RUNTIME_IMAGE}" \
+  --load \
+  .
 
 mkdir -p tmp
 echo "RUNTIME_IMAGE=${RUNTIME_IMAGE}" > tmp/mise-runtime-image.env
-echo "✓ Built ${RUNTIME_IMAGE}"
+echo "✅ Built ${RUNTIME_IMAGE}"

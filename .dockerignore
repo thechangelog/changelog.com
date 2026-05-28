@@ -1,0 +1,6 @@
+_build/
+deps/
+node_modules/
+tmp/
+.git/
+*.txt

@@ -82,14 +82,14 @@ You will need to have the following system dependencies installed:
 - [PostgreSQL](https://www.postgresql.org/download/) v16
 - [Elixir](https://elixir-lang.org/install.html) v1.18
 - [Erlang/OTP](https://www.erlang.org/downloads) v27 - usually installed as an Elixir dependency
-- [Node.js](https://nodejs.org/en/download/) v23 - [latest-v23.x](https://nodejs.org/download/release/latest-v23.x/)
+- [Node.js](https://nodejs.org/en/download/) v22 LTS - [latest-v22.x](https://nodejs.org/download/release/latest-v22.x/)
 - [Yarn](https://yarnpkg.com/getting-started/install) v1.22
 
-All of the above are managed by [`mise`](https://mise.jdx.dev/), our single tool for managing tool versions, environment variables, and tasks. Secrets are managed by [`fnox`](https://fnox.jdx.dev/) backed by [1Password](https://changelog.1password.com/).
+All of the above are managed by [`mise`](https://mise.en.dev/), our single tool for managing tool versions, environment variables, and tasks. Secrets are managed by [`fnox`](https://fnox.jdx.dev/) backed by [1Password](https://changelog.1password.com/).
 
-Once you have [`mise` installed](https://mise.jdx.dev/getting-started.html), running `mise tasks` in the root of this repository will list all available tasks.
+Once you have [`mise` installed](https://mise.en.dev/getting-started.html), running `mise tasks` in the root of this repository will list all available tasks.
 
-The only command that you need to run is `mise run contribute`.
+The only command that you need to run is `mise contribute`.
 As per the description, this will setup everything needed for your first contribution:
 - installs all system dependencies (Postgres, Elixir, etc.)
 - downloads app (Elixir) dependencies
@@ -98,51 +98,44 @@ As per the description, this will setup everything needed for your first contrib
 - runs app in dev mode
 
 > [!TIP]
-> 1. All the above works equally well on a Debian-based Linux distribution (tested on Ubuntu 22.04 & 24.04).
+> 1. All the above works equally well on a Debian-based Linux distribution (tested on Ubuntu 24.04).
 > 2. `mise` automatically installs all tool versions defined in `mise.toml` when you `cd` into the project directory.
 
 ## How do I configure secrets? (team members only)
 
 Secrets are managed by [`fnox`](https://fnox.jdx.dev/) backed by [1Password](https://changelog.1password.com/). The `fnox.toml` file in the repo root contains only references to 1Password items — no secret values. It is safe to commit.
 
-To load secrets automatically when you enter the project directory, install the fnox-env mise plugin:
+Sign in to 1Password, then enable fnox-env:
 
 ```console
-mise plugin install fnox-env https://github.com/jdx/mise-env-fnox
+op account add        # one-time: changelog.1password.com, your email, secret key
+eval $(op signin)     # per-session
+mise team:secrets:load   # enables fnox-env secrets via mise.local.toml (git-ignored)
 ```
-
-Then uncomment the `_.fnox-env` line in `mise.toml`:
-
-```toml
-[env]
-_.fnox-env = { tools = true }
-```
-
-This requires `OP_SERVICE_ACCOUNT_TOKEN` to be set in your environment. Ask a team member for access.
 
 > [!NOTE]
-> External contributors do not need secrets to run the app locally. `mise run contribute` works without any 1Password access.
+> External contributors do not need secrets to run the app locally. `mise contribute` works without any 1Password access.
 
 ## How to run CI locally?
 
-The CI pipeline uses Docker buildx to build container images. It runs the same `mise run ci` command that GitHub Actions uses:
+The CI pipeline uses Docker buildx to build container images. It runs the same `mise ci` command that GitHub Actions uses:
 
 ```console
 # Run the full CI pipeline (build runtime image, test, build prod image)
-mise run ci
+mise ci
 
 # Or run individual steps:
-mise run docker:build-runtime   # Build the base runtime image
-mise run docker:test            # Run tests in Docker with PostgreSQL
-mise run docker:build-prod      # Build the production image
+mise docker:build-runtime   # Build the base runtime image
+mise docker:test            # Run tests in Docker with PostgreSQL
+mise docker:build-prod      # Build the production image
 ```
 
 ## How to upgrade 💜 Elixir, 🚜 Erlang/OTP & ⬢ Node.js?
 
-1. Run `mise upgrade --bump erlang elixir node`
-    - You can also upgrade one at a time, e.g. `mise upgrade --bump erlang`
+1. Run `mise deps:bump erlang elixir node`
+    - You can also upgrade one at a time, e.g. `mise deps:bump erlang`
     - This updates the versions in `mise.toml` automatically
-2. Ensure the runtime image builds locally: `mise run docker:build-runtime`
+2. Ensure the runtime image builds locally: `mise docker:build-runtime`
 3. Commit & push to check that image builds successfully in GitHub Actions
 
 After you confirm that the image builds successfully:

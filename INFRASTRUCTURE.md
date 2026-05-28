@@ -1,4 +1,4 @@
-[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Apr.%2012%2C%202026-success?style=for-the-badge)](https://shipit.show/80)
+[![shields.io](https://img.shields.io/badge/Last%20updated%20on-Jun.%2014%2C%202026-success?style=for-the-badge)](https://github.com/thechangelog/changelog.com/discussions/555)
 
 This diagram shows the current changelog.com setup:
 
@@ -255,9 +255,9 @@ you very much!
 
 ## How to create a new app instance?
 
-1. Start by creating a new app, e.g. `flyctl apps create changelog-2025-05-05 --org changelog`
-2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2024-01-12,2025-05-05}`
-3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2025-05-05`
+1. Start by creating a new app, e.g. `flyctl apps create changelog-2026-05-30 --org changelog`
+2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2025-05-05,2026-05-30}`
+3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2026-05-30`
 4. Update the app name in e.g. `fly.toml` to match the newly created app
 5. Set `APP_INSTANCE=experimental` env var in `fly.toml`
   - Otherwise Oban and other production components will treat this app as current production
@@ -272,24 +272,27 @@ you very much!
 
 ## How to promote a new app instance to production?
 
-1. Update `APP_PROD_INSTANCE` in `mise.toml` `[env]` to match the newly created app name, e.g. `changelog-2025-05-05`
+1. Update `APP_PROD_INSTANCE` in `mise.toml` `[env]` to match the newly created app name, e.g. `changelog-2026-05-30`
 
         mise trust
         env | rg APP_PROD_INSTANCE
 
 2. Ensure that the app is scaled across multiple regions & is resilient to a single region failure:
 
-        mise run prod-region-resilient
+        mise run team:prod:multi-region
 
 3. Set `APP_INSTANCE=production` env var in `fly.toml`
   - Remove any env variables that should not be there (e.g. `URL_HOST`, `STATIC_URL_HOST`, etc.)
 
-4. Update the app origin in the CDN with the new app instance URL, e.g. `https://changelog-2025-05-05.fly.dev`
+4. Update the app origin in the CDN with the new app instance URL, e.g. `https://changelog-2026-05-30.fly.dev`
 
 5. Update the previous app instance reference everywhere in this repository - starting with the diagrams in this file.
 
 6. Update [`APP_PROD_INSTANCE` in GitHub Actions](https://github.com/thechangelog/changelog.com/settings/variables/actions/APP_PROD_INSTANCE)
 
+7. Update the origin in [pipely](https://github.com/thechangelog/pipely), then release a new Pipely version.
+
 ## How to branch the production db instance?
 
-See [Enable changelog.com devs to create prod db forks with a single command](https://github.com/thechangelog/changelog.com/pull/508).
+Run `mise team:neon:branch-create` then `mise team:db:neon-use-remote-branch`. Alternatively: `mise team:db:neon-import-main-locally`.
+

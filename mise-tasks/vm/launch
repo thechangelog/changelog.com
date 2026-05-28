@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+#MISE description="Launch (or resume) a development session VM"
+#USAGE arg "[image]" help="Image alias to launch from" default="changelog"
+#USAGE arg "[src]" help="Host project path to mount (default: $PWD)"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ "$(uname)" != "Linux" ]]
+then
+  echo "Incus VMs are only supported on Linux"
+  exit 1
+fi
+
+IMAGE="${usage_image:-changelog}"
+SRC="$(realpath "${usage_src:-$PWD}")"
+VM="$(basename "${SRC//[._]/-}")"
+
+if incus info "${VM}" &>/dev/null
+then
+  # Same name can come from a different path (two projects named "app"):
+  # never silently resume a VM that mounts someone else's source
+  MOUNTED="$(incus config device get "${VM}" src source 2>/dev/null || true)"
+  if [ -n "${MOUNTED}" ] && [ "${MOUNTED}" != "${SRC}" ]
+  then
+    echo "❌ VM ${VM} exists but mounts ${MOUNTED}, not ${SRC}"
+    exit 1
+  fi
+  if [[ "$(incus info "${VM}" | awk '/^Status:/ {print $2}')" != "RUNNING" ]]
+  then
+    echo "Starting ${VM}"
+    incus start "${VM}"
+    until incus exec "${VM}" -- true 2>/dev/null; do sleep 1; done
+  fi
+  incus exec "${VM}" -- su - ubuntu
+  exit 0
+fi
+
+incus launch "${IMAGE}" "${VM}" --vm \
+  -p macvlan \
+  -c limits.cpu=8 \
+  -c limits.memory=16GiB \
+  -d root,size=100GiB
+echo "Waiting for ${VM} to boot"
+until incus exec "${VM}" -- true 2>/dev/null; do sleep 1; done
+
+# Path-mirroring: the host path is the VM path, /host/repo is the stable handle
+incus config device add "${VM}" src disk \
+  source="${SRC}" \
+  path="${SRC}"
+incus exec "${VM}" -- sh -c "mkdir -p /host && ln -sfn '${SRC}' /host/repo"
+
+if [ -f "${SRC}/.git" ]
+then
+  # Linked worktree: .git is a FILE pointing into the main repo's .git.
+  # Mount that common dir READ-ONLY: git status/log/diff work in the VM,
+  # but nothing in the VM can touch the host's objects, refs, or hooks —
+  # commits happen on the host, after vm:keep.
+  # (A normal repo needs nothing here: the ~/workspace copy includes a
+  # full, independent .git. Submodules also have a .git file, but a
+  # relative gitdir — the /worktrees/ guard keeps them out.)
+  GITDIR="$(sed -n 's/^gitdir: //p' "${SRC}/.git")"
+  case "${GITDIR}" in
+    */.git/worktrees/*)
+      COMMONDIR="${GITDIR%/worktrees/*}"
+      incus config device add "${VM}" gitdir disk \
+        source="${COMMONDIR}" \
+        path="${COMMONDIR}" \
+        readonly=true
+      echo "🔒 Mounted ${COMMONDIR} read-only: git history visible, host repo untouchable"
+      ;;
+    *)
+      echo "⚠️ ${SRC}/.git points at '${GITDIR}' — not a linked worktree, skipping git dir mount"
+      ;;
+  esac
+fi
+
+incus exec "${VM}" -- su - ubuntu

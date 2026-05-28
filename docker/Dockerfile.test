@@ -1,4 +1,4 @@
-# Test image: runs mix test with app source compiled for test
+# Test image: just the runtime, everything else is mounted
 ARG RUNTIME_IMAGE
 
 FROM ${RUNTIME_IMAGE}
@@ -6,14 +6,4 @@ FROM ${RUNTIME_IMAGE}
 ENV MIX_ENV=test
 WORKDIR /app
 
-COPY config/ config/
-COPY lib/ lib/
-COPY priv/repo/ priv/repo/
-COPY test/ test/
-COPY mix.exs mix.lock ./
-
-RUN mix deps.get --only test \
-    && mix deps.compile \
-    && mix compile
-
-CMD ["mix", "test"]
+CMD ["mise-tasks/docker/test-cmd"]

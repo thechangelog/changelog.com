@@ -1,19 +1,28 @@
 #!/usr/bin/env bash
 #MISE description="Run app in dev mode"
-#MISE depends=["deps", "postgres:up"]
+#MISE raw=true
+#MISE depends=["deps:get", "db:start"]
 set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
 
-if [[ "$(uname)" == "Linux" ]]; then
-    export ELIXIR_ERL_OPTIONS="+fnu"
+export DB_HOST=localhost
+export DB_USER=postgres
+export DB_PASS=postgres
+export DB_NAME="${CHANGELOG_DEV_DB:-changelog_dev}"
+
+if [[ "$(uname)" == "Linux" ]]
+then
+  export ELIXIR_ERL_OPTIONS="+fnu"
+  export HOST="${HOST:-$(hostname -I | awk '{print $1}')}"
 fi
 
-# Ensure dev database exists
 docker compose exec db psql -U postgres --list --quiet --tuples-only | grep -q "${CHANGELOG_DEV_DB}" \
-    || docker compose exec db createdb -U postgres "${CHANGELOG_DEV_DB}"
+|| docker compose exec db createdb -U postgres "${CHANGELOG_DEV_DB}"
 
 mix ecto.setup
 
-# Install frontend assets
-cd assets && yarn install && cd ..
+pushd assets
+  yarn install
+popd
 
 mix phx.server

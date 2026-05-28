@@ -5,22 +5,29 @@ on:
 
 env:
   MISE_LOCKED: "1"
+  # Forward the repo variables so a fork can target its own GHCR namespace and
+  # Fly app. Left empty when unset — mise.toml owns the defaults, not the workflow.
+  IMAGE_OWNER: ${{ vars.IMAGE_OWNER }}
+  APP_PROD_INSTANCE: ${{ vars.APP_PROD_INSTANCE }}
 
 jobs:
   run:
     runs-on: namespace-profile-changelog
     steps:
       - name: "Checkout code..."
-        uses: namespacelabs/nscloud-checkout-action@v8
+        # https://github.com/namespacelabs/nscloud-checkout-action/releases/tag/v8
+        uses: namespacelabs/nscloud-checkout-action@def520b6c21233362f09c9ceda4352c51cceca26
 
-      - name: "Cache mise & Go..."
-        uses: namespacelabs/nscloud-cache-action@v1
+      - name: "Cache mise..."
+        # https://github.com/namespacelabs/nscloud-cache-action/releases/tag/v1
+        uses: namespacelabs/nscloud-cache-action@15799a6b54e5765f85b2aac25b3f0df43ed571c0
         with:
           path: |
             /home/runner/.cache/mise
             /home/runner/.local/share/mise
 
-      - uses: jdx/mise-action@v4
+      # https://github.com/jdx/mise-action/releases/tag/v4
+      - uses: jdx/mise-action@dba19683ed58901619b14f395a24841710cb4925
         with:
           cache: false
 
@@ -28,13 +35,23 @@ jobs:
       # Namespace.so runners have buildx pre-configured with remote builders.
       # Adding the action would override their optimized setup.
 
-      - name: "Build, test & publish..."
+      # Build & test need no secrets: prod config reads env at runtime with
+      # defaults, and the test suite runs against a local Postgres. So this
+      # runs unauthenticated on every push, fork, and PR.
+      - name: "Build & test..."
+        run: mise run ci
+
+      # Publish & deploy need credentials (GHCR, Fly) from 1Password via fnox,
+      # so they only run on the canonical repo's master — never on forks/PRs,
+      # which don't have OP_SERVICE_ACCOUNT_TOKEN.
+      - name: "Publish..."
+        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         env:
           OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
-        run: fnox exec --profile ci -- mise run ci
+        run: fnox exec --profile ci -- mise run team:ghcr:publish-runtime ::: team:ghcr:publish-prod
 
       - name: "Deploy..."
         if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
         env:
           OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
-        run: fnox exec --profile ci -- mise run cd
+        run: fnox exec --profile ci -- mise run team:cd

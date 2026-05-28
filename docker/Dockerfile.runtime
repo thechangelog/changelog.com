@@ -7,12 +7,14 @@ ARG ELIXIR_VERSION
 ARG ERLANG_VERSION
 ARG NODEJS_VERSION
 ARG YARN_VERSION
+ARG FNOX_VERSION
 ARG UBUNTU_VERSION=noble-20250404
 
 FROM hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-ubuntu-${UBUNTU_VERSION}
 
 ARG NODEJS_VERSION
 ARG YARN_VERSION
+ARG FNOX_VERSION
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TERM=xterm-256color
@@ -26,6 +28,7 @@ RUN apt-get update && apt-get install --yes \
     inotify-tools \
     postgresql-client \
     curl \
+    rsync \
     xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
@@ -43,5 +46,11 @@ ENV PATH="/opt/node-v${NODEJS_VERSION}-linux-x64/bin:${PATH}"
 # Yarn
 RUN npm install --global yarn@${YARN_VERSION}
 
+# fnox binary (secret resolution via fnox.toml, used by app.start & on.deploy)
+RUN curl -fsSL -o /tmp/fnox.tar.gz \
+    "https://github.com/jdx/fnox/releases/download/v${FNOX_VERSION}/fnox-x86_64-unknown-linux-gnu.tar.gz" \
+    && tar -xzf /tmp/fnox.tar.gz -C /usr/local/bin fnox \
+    && rm /tmp/fnox.tar.gz
+
 # Verify all tools are available
-RUN elixir --version && node --version && yarn --version
+RUN elixir --version && node --version && yarn --version && fnox --version

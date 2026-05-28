@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#MISE description="Create a VM to build the base image from"
+#USAGE arg "[src]" help="Host project path to mount (default: $PWD)"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ "$(uname)" != "Linux" ]]
+then
+  echo "Incus VMs are only supported on Linux"
+  exit 1
+fi
+
+SRC="$(realpath "${usage_src:-$PWD}")"
+VM="$(basename "${SRC//[._]/-}")"
+
+if ! incus info "${VM}" &>/dev/null
+then
+  incus launch images:ubuntu/24.04 "${VM}" --vm \
+    -p macvlan \
+    -c limits.cpu=8 \
+    -c limits.memory=16GiB \
+    -d root,size=100GiB
+  until incus exec "${VM}" -- true 2>/dev/null; do sleep 1; done
+fi
+
+# Path-mirroring: the host path is the VM path, /host/repo is the stable handle
+incus config device show "${VM}" \
+| grep -q '^src:' \
+|| incus config device add "${VM}" src disk source="${SRC}" path="${SRC}"
+incus exec "${VM}" -- sh -c "mkdir -p /host && ln -sfn '${SRC}' /host/repo"
+
+incus exec "${VM}" -- su - ubuntu

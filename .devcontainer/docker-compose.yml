@@ -2,7 +2,7 @@ name: changelog-devcontainer
 
 services:
   devcontainer:
-    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.18.3-erlang-v27.3.3-nodejs-v23.8.0
+    image: ghcr.io/thechangelog/changelog-runtime:elixir-v1.18.3-erlang-v27.3.3-nodejs-v22.22.3
     volumes:
       - ../:/workspace
     network_mode: service:db
@@ -17,7 +17,7 @@ services:
 
   db:
     # https://hub.docker.com/_/postgres
-    image: postgres:16.8
+    image: postgres:16.12
     ports:
       - "4000:4000"
       - "5432:5432"

@@ -4,24 +4,28 @@ lockfile = true
 [tools]
 erlang = "27.3.3"
 elixir = "1.18.3-otp-27"
-node = "23.8.0"
-yarn = "1.22.22"
-go = "1.22.12"
-flyctl = "0.3.114"
-"1password-cli" = "2.30.3"
+node = "22.22.3"
+yarn = "1"
+flyctl = "0.3"
+gh = "2"
+1password-cli = "2"
 fnox = "1"
 # npm:neonctl depends on node — if you see a warning about it before
 # running `mise install`, that's expected and will go away after install.
 "npm:neonctl" = "2"
 
 [env]
-APP_PROD_INSTANCE = "changelog-2025-05-05"
+# IMAGE_OWNER and APP_PROD_INSTANCE are the single source for their defaults.
+# CI forwards vars.* unconditionally, so an unset variable arrives as "" — the
+# {% if %} coalesces empty *and* unset back to the default. A fork overrides by
+# setting the repo variable; nothing else defaults these.
+APP_PROD_INSTANCE = "{% set v = get_env(name='APP_PROD_INSTANCE', default='') %}{% if v %}{{ v }}{% else %}changelog-2025-05-05{% endif %}"
 OP_ACCOUNT = "changelog.1password.com"
-IMAGE_OWNER = "thechangelog"
-GHCR_USERNAME = "{{env.USER}}"
+IMAGE_OWNER = "{% set v = get_env(name='IMAGE_OWNER', default='') %}{% if v %}{{ v }}{% else %}thechangelog{% endif %}"
+GHCR_USERNAME = "{{ get_env(name='GITHUB_ACTOR', default=get_env(name='USER', default='')) }}"
 PGUSER = "postgres"
 DB_USER = "postgres"
 CHANGELOG_DEV_DB = "changelog_dev"
-# TODO: enable fnox-env plugin once configured
-# Requires: mise plugin install fnox-env https://github.com/jdx/mise-env-fnox
-# _.fnox-env = { tools = true }
+# The prod db name is not a secret; defaulting here keeps it out of
+# fnox/1Password (its value "changelog" was being redacted from output)
+DB_PROD_DBNAME = "changelog"

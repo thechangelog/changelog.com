@@ -1,6 +1,8 @@
 name: "Ship It!"
 
 concurrency:
+  # There should only be able one running job per repository / branch combo.
+  # We do not want multiple deploys running in parallel.
   group: ${{ github.repository }}-${{ github.ref_name }}
 
 on:
@@ -10,6 +12,7 @@ on:
   pull_request:
   workflow_dispatch:
 
+# All jobs have the same outcome. We define multiple for resiliency reasons.
 jobs:
   # In thechangelog/changelog repository (a.k.a. upstream),
   # this is the preferred default:
@@ -19,6 +22,7 @@ jobs:
     secrets: inherit
 
   # Just in case Namespace.so misbehaves, we want a fallback:
+  # a.k.a. "Always run 2 of everything"
   ci-on-namespace-fallback:
     needs: ci-on-namespace
     if: ${{ failure() }}

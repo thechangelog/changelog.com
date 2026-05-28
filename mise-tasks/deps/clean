@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#MISE description="Clean app dependencies"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+rm -rf _build deps
+echo "✅ Cleaned _build and deps"

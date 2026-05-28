@@ -2,6 +2,7 @@ name: changelog-test
 
 services:
   test:
+    image: changelog-test
     build:
       context: ..
       dockerfile: docker/Dockerfile.test
@@ -13,12 +14,16 @@ services:
       DB_NAME: changelog_test
       DB_USER: postgres
       DB_PASS: postgres
+    volumes:
+      - ..:/app
+      - app-deps:/app/deps
+      - app-build:/app/_build
     depends_on:
       db:
         condition: service_healthy
 
   db:
-    image: postgres:${POSTGRES_VERSION:-16.8}
+    image: postgres:${POSTGRES_VERSION:-16.12}
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -28,3 +33,7 @@ services:
       interval: 2s
       timeout: 5s
       retries: 10
+
+volumes:
+  app-deps:
+  app-build:

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#MISE description="Run app in dev mode connected to a prod db branch"
+#MISE raw=true
+#MISE depends=["deps:get"]
+#USAGE arg "<branch>" help="The Neon branch name to connect to"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ "$(uname)" == "Linux" ]]
+then
+  export ELIXIR_ERL_OPTIONS="+fnu"
+  export HOST="${HOST:-$(hostname -I | awk '{print $1}')}"
+  export DB_CACERTFILE="/etc/ssl/certs/ca-certificates.crt"
+fi
+
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+require_env NEON_PROJECT_ID DB_PROD_USERNAME DB_PROD_DBNAME
+
+BRANCH="${usage_branch}"
+
+# Get connection details and convert to env vars
+eval "$(neonctl connection-string "${BRANCH}" \
+  --project-id="${NEON_PROJECT_ID}" \
+  --role-name="${DB_PROD_USERNAME}" \
+  --database-name="${DB_PROD_DBNAME}" \
+  --extended --output=yaml \
+  | awk '
+      /^host:/ {gsub(/^host: /, ""); print "export DB_HOST=" $0}
+      /^role:/ {gsub(/^role: /, ""); print "export DB_USER=" $0}
+      /^password:/ {gsub(/^password: /, ""); print "export DB_PASS=" $0}
+      /^database:/ {gsub(/^database: /, ""); print "export DB_NAME=" $0}
+  ')"
+
+# Install frontend assets
+pushd assets
+  yarn install
+popd
+
+mix phx.server

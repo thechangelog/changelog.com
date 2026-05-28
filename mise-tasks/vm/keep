@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#MISE description="Keep the good changes: sync ~/workspace back to the host mount"
+#USAGE arg "[dest]" help="Destination directory (default: /host/repo)"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+dest="${usage_dest:-${1:-/host/repo}}"
+
+# The destination MUST be the host mount (virtiofs/9p), never a local dir.
+# A stale VM, a missing /host/repo symlink, or a typo would otherwise rsync into
+# a throwaway directory inside the VM — the changes look "kept" but vanish
+# when the VM is destroyed. Fail loudly instead of losing work silently.
+if ! findmnt -t virtiofs,9p --target "${dest}" &>/dev/null
+then
+  echo "❌ ${dest} is not on the host mount — changes synced here would be"
+  echo "   lost when the VM is destroyed. Not syncing."
+  echo ""
+  host_mount="$(findmnt -t virtiofs,9p -n -o TARGET | head -1 || true)"
+  if [ -n "${host_mount}" ]
+  then
+    echo "   The host project is mounted at: ${host_mount}"
+    echo "   Run: mise vm:keep ${host_mount}"
+  else
+    echo "   No host mount found — was this VM launched with mise vm:launch?"
+  fi
+  exit 1
+fi
+
+rsync -av --delete \
+  --exclude='.git/' \
+  --filter=':- .gitignore' \
+  ./ "${dest}/"
+
+echo "Kept in ${dest}"

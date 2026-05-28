@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 #MISE description="Run app tests"
-#MISE depends=["deps", "postgres:up"]
+#MISE raw=true
+#MISE depends=["deps:get", "db:start"]
 set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
 
-if [[ "$(uname)" == "Linux" ]]; then
-    export ELIXIR_ERL_OPTIONS="+fnu"
+if [[ "$(uname)" == "Linux" ]]
+then
+  export ELIXIR_ERL_OPTIONS="+fnu"
 fi
 
-# Ensure test database exists
-docker compose exec db psql -U postgres --list --quiet --tuples-only | grep -q changelog_test \
-    || docker compose exec db createdb -U postgres changelog_test
+docker compose exec db psql -U postgres --list --quiet --tuples-only \
+| grep -q changelog_test \
+|| docker compose exec db createdb -U postgres changelog_test
 
 mix test

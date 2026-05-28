@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#MISE description="Publish runtime container image"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+
+require_env_file tmp/mise-runtime-image.env "mise docker:build-runtime"
+require_env GHCR_USERNAME GHCR_PASSWORD
+
+echo "${GHCR_PASSWORD}" | docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+docker push "${RUNTIME_IMAGE}"
+
+DESCRIPTION=$(docker inspect "${RUNTIME_IMAGE}" --format '{{index .Config.Labels "org.opencontainers.image.description"}}')
+SOURCE=$(docker inspect "${RUNTIME_IMAGE}" --format '{{index .Config.Labels "org.opencontainers.image.source"}}')
+docker buildx imagetools create \
+  --annotation "index:org.opencontainers.image.description=${DESCRIPTION}" \
+  --annotation "index:org.opencontainers.image.source=${SOURCE}" \
+  --tag "${RUNTIME_IMAGE}" \
+  "${RUNTIME_IMAGE}"
+
+echo "✅ Published ${RUNTIME_IMAGE}"

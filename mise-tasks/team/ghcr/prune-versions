@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#MISE description="Delete untagged container images from ghcr.io"
+#USAGE arg "<package>" help="Package to prune" {
+#USAGE   choices "changelog-runtime" "changelog-prod"
+#USAGE }
+#USAGE flag "-m --months" help="Only delete versions older than this many months (default: 12)" {
+#USAGE   arg "<months>" default="12"
+#USAGE }
+#USAGE flag "-a --all" help="Include tagged versions (default: untagged only)"
+#USAGE flag "-o --owner" help="GitHub org or user (default: thechangelog)" default="thechangelog" {
+#USAGE   arg "<owner>"
+#USAGE }
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+PACKAGE="${usage_package}"
+OWNER="${usage_owner}"
+ALL="${usage_all:-}"
+MONTHS="${usage_months:-}"
+
+if [ "${ALL}" = "true" ]
+then
+  jq_filter='.[]'
+  scope="all"
+else
+  jq_filter='.[] | select(.metadata.container.tags | length == 0)'
+  scope="untagged"
+fi
+
+if [ -n "${MONTHS}" ]
+then
+  cutoff=$(date -u -d "${MONTHS} months ago" +%Y-%m-%dT%H:%M:%SZ)
+  jq_filter="${jq_filter} | select(.created_at < \"${cutoff}\")"
+  echo "🫧 Deleting ${scope} image versions older than ${MONTHS} month(s) from ${PACKAGE} (before ${cutoff})"
+else
+  echo "🫧 Deleting ${scope} image versions from ${PACKAGE}"
+fi
+
+deleted=0
+while read -r id
+do
+  gh api \
+      --method DELETE \
+      "orgs/${OWNER}/packages/container/${PACKAGE}/versions/${id}" \
+      --silent
+  deleted=$((deleted + 1))
+  printf "."
+done < <(gh api \
+    "orgs/${OWNER}/packages/container/${PACKAGE}/versions" \
+    --paginate \
+    --jq "${jq_filter} | .id")
+
+echo ""
+echo "✨ Deleted ${deleted} image versions from ${PACKAGE}"
