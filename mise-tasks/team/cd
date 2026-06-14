@@ -3,12 +3,26 @@
 set -euo pipefail
 [ -z "${DEBUG:-}" ] || set -x
 
-REPO="${GITHUB_REPOSITORY:-}"
 REF="${GITHUB_REF_NAME:-}"
+DEPLOY_FROM_REPO="${DEPLOY_FROM_REPO:-}"
 
-if [[ "${REPO}" != "thechangelog/changelog.com" ]]
+# DEPLOY_FROM_REPO is an opt-in gate set as a repo variable, in the form
+# "github.com/owner/repo" (e.g. github.com/thechangelog/changelog.com, or a
+# fork's own github.com/<owner>/changelog.com). It has no default, so an unset
+# value means "nobody deploys" — which also keeps local runs safe.
+if [[ -z "${DEPLOY_FROM_REPO}" ]]
 then
-  echo "👮 Deploys only run on thechangelog/changelog.com (got: ${REPO})"
+  echo "👮 DEPLOY_FROM_REPO is not set — deploys are opt-in; skipping"
+  exit 0
+fi
+
+# Build "github.com/owner/repo" from the Actions context to match the variable.
+# GITHUB_SERVER_URL is e.g. https://github.com; strip the scheme to match.
+CURRENT_REPO="${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY:-}"
+
+if [[ "${CURRENT_REPO}" != "${DEPLOY_FROM_REPO}" ]]
+then
+  echo "👮 Deploys only run on ${DEPLOY_FROM_REPO} (got: ${CURRENT_REPO})"
   exit 0
 fi
 
@@ -25,4 +39,7 @@ require_env APP_PROD_INSTANCE
 echo "Deploying ${PROD_IMAGE} to ${APP_PROD_INSTANCE}..."
 cd "fly.io/${APP_PROD_INSTANCE}"
 flyctl status
-flyctl deploy --image "${PROD_IMAGE}"
+# --ha=false: a fresh app comes up as a single machine in the primary region.
+# `mise team:prod:multi-region` is what deliberately scales out to 2 regions.
+# On an already-scaled app this just updates the existing machines in place.
+flyctl deploy --ha=false --image "${PROD_IMAGE}"

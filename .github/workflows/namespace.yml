@@ -4,14 +4,28 @@ on:
   workflow_call:
 
 env:
-  MISE_LOCKED: "1"
-  # Forward the repo variables so a fork can target its own GHCR namespace and
-  # Fly app. Left empty when unset — mise.toml owns the defaults, not the workflow.
+  # The runner builds erlang/elixir/node/yarn only inside Docker and never runs
+  # gh/neonctl, so don't let `mise run` auto-install them. (MISE_LOCKED is NOT
+  # global — it's on the install step only; under --locked, later steps can't even
+  # read erlang's version since it has no lockfile URL.)
+  MISE_TASK_RUN_AUTO_INSTALL: "0"
+  # Forward repo variables so a fork can target its own GHCR namespace and Fly
+  # app. IMAGE_OWNER/APP_PROD_INSTANCE are empty when unset — mise.toml owns
+  # those defaults. DEPLOY_FROM_REPO has no default: it is an explicit opt-in
+  # gate — publish & deploy run only on the repo that sets it to its own
+  # "github.com/owner/repo" (see the Publish/Deploy `if:` below).
   IMAGE_OWNER: ${{ vars.IMAGE_OWNER }}
   APP_PROD_INSTANCE: ${{ vars.APP_PROD_INSTANCE }}
+  DEPLOY_FROM_REPO: ${{ vars.DEPLOY_FROM_REPO }}
 
 jobs:
   run:
+    # namespace-profile-changelog (configured at cloud.namespace.so) sets the
+    # machine shape AND the cache volume (container images, git checkouts,
+    # toolchain & action downloads). A shape label can't be combined with a
+    # profile, and the container-image/toolchain caches are profile-only — so the
+    # shape (2x4 is plenty; docker offloads to remote builders) and the cache size
+    # cap are set in the profile, not here.
     runs-on: namespace-profile-changelog
     steps:
       - name: "Checkout code..."
@@ -28,6 +42,15 @@ jobs:
 
       # https://github.com/jdx/mise-action/releases/tag/v4
       - uses: jdx/mise-action@dba19683ed58901619b14f395a24841710cb4925
+        # Install only the tools the CI path RUNS on the runner (flyctl, fnox,
+        # 1password-cli), with the lockfile enforced. Skip the rest: erlang/elixir/
+        # node/yarn are built inside the Docker image (build-runtime reads their
+        # versions via `mise ls`) and erlang can't be --locked; gh/neonctl are only
+        # used by maintenance/db tasks. MISE_LOCKED lives here, not in the global
+        # env, so later steps can still read erlang's version (--locked rejects it).
+        env:
+          MISE_LOCKED: "1"
+          MISE_DISABLE_TOOLS: erlang,elixir,node,yarn,gh,npm:neonctl
         with:
           cache: false
 
@@ -41,17 +64,19 @@ jobs:
       - name: "Build & test..."
         run: mise run ci
 
-      # Publish & deploy need credentials (GHCR, Fly) from 1Password via fnox,
-      # so they only run on the canonical repo's master — never on forks/PRs,
-      # which don't have OP_SERVICE_ACCOUNT_TOKEN.
+      # Publish & deploy need credentials (GHCR, Fly) from 1Password via fnox.
+      # They run only on the repo named by DEPLOY_FROM_REPO, on master — i.e.
+      # the canonical repo, or a fork that opts in by setting DEPLOY_FROM_REPO
+      # to its own "github.com/owner/repo" and providing OP_SERVICE_ACCOUNT_TOKEN.
+      # When the variable is unset, both steps skip and only build & test run.
       - name: "Publish..."
-        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        if: "${{ format('github.com/{0}', github.repository) == env.DEPLOY_FROM_REPO && github.ref_name == 'master' }}"
         env:
           OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
-        run: fnox exec --profile ci -- mise run team:ghcr:publish-runtime ::: team:ghcr:publish-prod
+        run: "fnox exec --profile ci -- mise run team:ghcr:publish-runtime ::: team:ghcr:publish-prod"
 
       - name: "Deploy..."
-        if: ${{ github.repository == 'thechangelog/changelog.com' && github.ref_name == 'master' }}
+        if: "${{ format('github.com/{0}', github.repository) == env.DEPLOY_FROM_REPO && github.ref_name == 'master' }}"
         env:
           OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
         run: fnox exec --profile ci -- mise run team:cd

@@ -12,26 +12,19 @@ on:
   pull_request:
   workflow_dispatch:
 
-# All jobs have the same outcome. We define multiple for resiliency reasons.
+# Exactly one of the two jobs runs — the `if:` conditions are exact complements:
+#   - Namespace.so runner when the RUNS_ON variable contains 'namespace'. This is
+#     the preferred default on any repo with Namespace access — the canonical
+#     repo or a fork that has it (e.g. gerhard/changelog.com).
+#   - GitHub-hosted runner otherwise, i.e. when RUNS_ON is unset — the case for
+#     forks without Namespace access.
 jobs:
-  # In thechangelog/changelog repository (a.k.a. upstream),
-  # this is the preferred default:
-  ci-on-namespace:
+  namespace:
     if: ${{ contains(vars.RUNS_ON, 'namespace') }}
     uses: ./.github/workflows/namespace.yml
     secrets: inherit
 
-  # Just in case Namespace.so misbehaves, we want a fallback:
-  # a.k.a. "Always run 2 of everything"
-  ci-on-namespace-fallback:
-    needs: ci-on-namespace
-    if: ${{ failure() }}
-    uses: ./.github/workflows/github.yml
-    secrets: inherit
-
-  # As forks will not have access to our Namespace.so,
-  # we fallback to GitHub default:
-  ci-on-github:
+  github:
     if: ${{ !contains(vars.RUNS_ON, 'namespace') }}
     uses: ./.github/workflows/github.yml
     secrets: inherit

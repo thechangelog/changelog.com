@@ -4,6 +4,9 @@
 set -euo pipefail
 [ -z "${DEBUG:-}" ] || set -x
 
+# build-runtime publishes the runtime to a registry the builder can reach (nscr.io
+# on Namespace, the local daemon on GitHub), so docker:test and docker:build-prod
+# can both `FROM` it here — no GHCR auth needed in build & test.
 mise run docker:build-runtime
 
 mise run docker:test ::: docker:build-prod

@@ -253,44 +253,12 @@ you very much!
 
 ---
 
-## How to create a new app instance?
+## How to create or promote a new app instance?
 
-1. Start by creating a new app, e.g. `flyctl apps create changelog-2026-05-30 --org changelog`
-2. Copy the existing app instance config, e.g. `cp -r fly.io/changelog-{2025-05-05,2026-05-30}`
-3. Run all following commands in the app directory, e.g. `cd fly.io/changelog-2026-05-30`
-4. Update the app name in e.g. `fly.toml` to match the newly created app
-5. Set `APP_INSTANCE=experimental` env var in `fly.toml`
-  - Otherwise Oban and other production components will treat this app as current production
-5. Set the one secret required by the app to be able to access all other secrets
-
-        flyctl secrets set --stage \
-            OP_SERVICE_ACCOUNT_TOKEN="$(op read op://changelog/op/credential --account changelog.1password.com --cache)"
-
-6. Deploy the latest app image from <https://github.com/thechangelog/changelog.com/pkgs/container/changelog-prod>
-
-        flyctl deploy --ha=false --image=ghcr.io/thechangelog/changelog-prod:<LATEST_IMAGE_SHA>
-
-## How to promote a new app instance to production?
-
-1. Update `APP_PROD_INSTANCE` in `mise.toml` `[env]` to match the newly created app name, e.g. `changelog-2026-05-30`
-
-        mise trust
-        env | rg APP_PROD_INSTANCE
-
-2. Ensure that the app is scaled across multiple regions & is resilient to a single region failure:
-
-        mise run team:prod:multi-region
-
-3. Set `APP_INSTANCE=production` env var in `fly.toml`
-  - Remove any env variables that should not be there (e.g. `URL_HOST`, `STATIC_URL_HOST`, etc.)
-
-4. Update the app origin in the CDN with the new app instance URL, e.g. `https://changelog-2026-05-30.fly.dev`
-
-5. Update the previous app instance reference everywhere in this repository - starting with the diagrams in this file.
-
-6. Update [`APP_PROD_INSTANCE` in GitHub Actions](https://github.com/thechangelog/changelog.com/settings/variables/actions/APP_PROD_INSTANCE)
-
-7. Update the origin in [pipely](https://github.com/thechangelog/pipely), then release a new Pipely version.
+See the [`new-fly-app-instance`](.claude/skills/new-fly-app-instance/SKILL.md)
+skill — a human-in-the-loop runbook that creates a dated `changelog-YYYY-MM-DD`
+instance, validates the whole CI/CD pipeline from a fork, and promotes it to
+production.
 
 ## How to branch the production db instance?
 
