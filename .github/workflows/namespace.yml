@@ -62,6 +62,9 @@ jobs:
           MISE_LOCKED: "1"
           MISE_DISABLE_TOOLS: erlang,elixir,node,yarn,gh,npm:neonctl
         with:
+          # >= 2026.6.10 for the ${VAR:-default} empty-coalescing fix (jdx/mise#10445)
+          # that mise.toml [env] relies on; runners may preinstall an older mise.
+          version: 2026.6.10
           cache: false
 
       # NOTE: do NOT add docker/setup-buildx-action here.

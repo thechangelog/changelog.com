@@ -1,5 +1,13 @@
+# env_shell_expand below relies on the jdx/mise#10445 fix; enforce the minimum so
+# an older mise fails fast instead of silently leaving ${VAR:-default} as a
+# literal string in [env].
+min_version = "2026.6.10"
+
 [settings]
 lockfile = true
+# Expand $VAR / ${VAR:-default} in [env] values with POSIX semantics: empty AND
+# unset both coalesce to the default. Requires mise >= 2026.6.10 (jdx/mise#10445).
+env_shell_expand = true
 
 [tools]
 erlang = "27.3.3"
@@ -17,15 +25,15 @@ fnox = "1"
 [env]
 # IMAGE_OWNER and APP_PROD_INSTANCE are the single source for their defaults.
 # CI forwards vars.* unconditionally, so an unset variable arrives as "" — the
-# {% if %} coalesces empty *and* unset back to the default. A fork overrides by
-# setting the repo variable; nothing else defaults these.
-APP_PROD_INSTANCE = "{% set v = get_env(name='APP_PROD_INSTANCE', default='') %}{% if v %}{{ v }}{% else %}changelog-2025-05-05{% endif %}"
-OP_ACCOUNT = "changelog.1password.com"
-IMAGE_OWNER = "{% set v = get_env(name='IMAGE_OWNER', default='') %}{% if v %}{{ v }}{% else %}thechangelog{% endif %}"
-GHCR_USERNAME = "{{ get_env(name='GITHUB_ACTOR', default=get_env(name='USER', default='')) }}"
-PGUSER = "postgres"
-DB_USER = "postgres"
-CHANGELOG_DEV_DB = "changelog_dev"
+# POSIX ${VAR:-default} coalesces empty *and* unset back to the default. A fork
+# overrides by setting the repo variable; nothing else defaults these.
+APP_PROD_INSTANCE = "${APP_PROD_INSTANCE:-changelog-2025-05-05}"
+OP_ACCOUNT        = "changelog.1password.com"
+IMAGE_OWNER       = "${IMAGE_OWNER:-thechangelog}"
+GHCR_USERNAME     = "${GITHUB_ACTOR:-$USER}"
+PGUSER            = "postgres"
+DB_USER           = "postgres"
+CHANGELOG_DEV_DB  = "changelog_dev"
 # The prod db name is not a secret; defaulting here keeps it out of
 # fnox/1Password (its value "changelog" was being redacted from output)
 DB_PROD_DBNAME = "changelog"
