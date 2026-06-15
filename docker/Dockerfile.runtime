@@ -15,12 +15,15 @@ FROM hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-ubuntu-${UBUNTU_VER
 ARG NODEJS_VERSION
 ARG YARN_VERSION
 ARG FNOX_VERSION
+# sha256 of the fnox linux-x64 gnu tarball, sourced from mise.lock and passed by
+# docker:build-runtime. No default: the build fails closed if it's not supplied.
+ARG FNOX_SHA256
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TERM=xterm-256color
 
 # System packages
-RUN apt-get update && apt-get install --yes \
+RUN apt-get update && apt-get install --yes --no-install-recommends \
     ca-certificates \
     git-core \
     imagemagick \
@@ -35,20 +38,36 @@ RUN apt-get update && apt-get install --yes \
 # Elixir build tools
 RUN mix local.rebar --force && mix local.hex --force
 
-# Node.js binary
-RUN curl -fsSL -o /tmp/node.tar.xz \
-    "https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.xz" \
-    && tar -xJf /tmp/node.tar.xz -C /opt \
-    && rm /tmp/node.tar.xz
+# Node.js binary, verified against the official per-version SHASUMS256.txt
+# (covers the .tar.xz artifact; mise.lock only tracks the .tar.gz, so we can't
+# reuse it here). Fails closed if the hash line is absent or doesn't match.
+RUN cd /tmp \
+    && curl -fsSL -O "https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-x64.tar.xz" \
+    && curl -fsSL -O "https://nodejs.org/dist/v${NODEJS_VERSION}/SHASUMS256.txt" \
+    && grep " node-v${NODEJS_VERSION}-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+    && tar -xJf "node-v${NODEJS_VERSION}-linux-x64.tar.xz" -C /opt \
+    && rm "node-v${NODEJS_VERSION}-linux-x64.tar.xz" SHASUMS256.txt
 
 ENV PATH="/opt/node-v${NODEJS_VERSION}-linux-x64/bin:${PATH}"
 
-# Yarn
-RUN npm install --global yarn@${YARN_VERSION}
+# Yarn (classic), verified against a pinned sha256. mise.lock tracks yarn via the
+# vfox backend, which records the download URL but no checksum — and yarn classic
+# publishes no SHASUMS file — so, unlike node/fnox, the hash can't be sourced
+# automatically. This is the sha256 of yarn-v${YARN_VERSION}.tar.gz, cross-checked
+# against Yarn's GPG release signature; update it when bumping the yarn version.
+RUN cd /tmp \
+    && curl -fsSL -O "https://classic.yarnpkg.com/downloads/${YARN_VERSION}/yarn-v${YARN_VERSION}.tar.gz" \
+    && echo "88268464199d1611fcf73ce9c0a6c4d44c7d5363682720d8506f6508addf36a0  yarn-v${YARN_VERSION}.tar.gz" | sha256sum -c - \
+    && tar -xzf "yarn-v${YARN_VERSION}.tar.gz" -C /opt \
+    && rm "yarn-v${YARN_VERSION}.tar.gz"
 
-# fnox binary (secret resolution via fnox.toml, used by app.start & on.deploy)
+ENV PATH="/opt/yarn-v${YARN_VERSION}/bin:${PATH}"
+
+# fnox binary (secret resolution via fnox.toml, used by app.start & on.deploy),
+# verified against the checksum from mise.lock (no upstream SHASUMS file exists).
 RUN curl -fsSL -o /tmp/fnox.tar.gz \
     "https://github.com/jdx/fnox/releases/download/v${FNOX_VERSION}/fnox-x86_64-unknown-linux-gnu.tar.gz" \
+    && echo "${FNOX_SHA256}  /tmp/fnox.tar.gz" | sha256sum -c - \
     && tar -xzf /tmp/fnox.tar.gz -C /usr/local/bin fnox \
     && rm /tmp/fnox.tar.gz
 

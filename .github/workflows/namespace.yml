@@ -2,6 +2,11 @@ name: "Namespace"
 
 on:
   workflow_call:
+    secrets:
+      # Optional: forks without it still run build & test; publish/deploy
+      # (the only consumers) are gated on DEPLOY_FROM_REPO and just skip.
+      OP_SERVICE_ACCOUNT_TOKEN:
+        required: false
 
 env:
   # The runner builds erlang/elixir/node/yarn only inside Docker and never runs
@@ -31,6 +36,11 @@ jobs:
       - name: "Checkout code..."
         # https://github.com/namespacelabs/nscloud-checkout-action/releases/tag/v8
         uses: namespacelabs/nscloud-checkout-action@def520b6c21233362f09c9ceda4352c51cceca26
+        # Don't persist GITHUB_TOKEN in .git/config — the next step runs untrusted
+        # build/test code (incl. fork PRs) and nothing here needs git auth (no push;
+        # publish/deploy authenticate via the OP token, not git).
+        with:
+          persist-credentials: false
 
       - name: "Cache mise..."
         # https://github.com/namespacelabs/nscloud-cache-action/releases/tag/v1

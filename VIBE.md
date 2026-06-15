@@ -175,7 +175,7 @@ exit
 Re-enter to get fish shell + docker group:
 
 ```bash
-incus exec changelog -- su - ubuntu
+incus exec changelog-com -- su - ubuntu
 ```
 
 Integrate Homebrew into fish:

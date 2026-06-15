@@ -88,5 +88,15 @@ RUN rm -rf _build/test assets/ test/
 # Legacy WordPress assets
 COPY --from=legacy /var/www/wp-content priv/static/wp-content
 
-# Verify
+# Run as a non-root user. Give it a writable HOME (the BEAM writes
+# ~/.erlang.cookie when distribution starts; mix uses ~/.mix), carry over the
+# root-installed hex/rebar so mix works as this user, and hand it /app. Done
+# after the COPYs so the chown covers every runtime file.
+RUN useradd --system --create-home --home-dir /home/app --shell /usr/sbin/nologin app \
+    && cp -a /root/.mix /home/app/.mix \
+    && chown -R app:app /app /home/app
+ENV HOME=/home/app
+USER app
+
+# Verify (as the app user: confirms it can read the release and run op)
 RUN ls -lahd _build/prod/lib/*/ebin && op --version

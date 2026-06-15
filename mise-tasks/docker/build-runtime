@@ -14,6 +14,19 @@ ERLANG_VERSION=$(mise ls --current erlang | awk 'END{print $2}')
 NODEJS_VERSION=$(mise ls --current node | awk 'END{print $2}')
 YARN_VERSION=$(mise ls --current yarn | awk 'END{print $2}')
 FNOX_VERSION=$(mise current fnox)
+# fnox publishes no checksums file, so verify the download in-image against the
+# sha256 mise already recorded in mise.lock (the linux-x64 gnu tarball, which is
+# the exact artifact Dockerfile.runtime pulls).
+FNOX_SHA256=$(awk '
+  /^\[tools\.fnox\."platforms\.linux-x64"\]$/ { f=1; next }
+  /^\[/ { f=0 }
+  f && /^checksum =/ { sub(/^checksum = "sha256:/, ""); sub(/"$/, ""); print; exit }
+' mise.lock)
+if [ -z "${FNOX_SHA256}" ]
+then
+  echo "ERROR: could not read fnox linux-x64 checksum from mise.lock" >&2
+  exit 1
+fi
 
 RUNTIME_TAG="elixir-v${ELIXIR_VERSION}-erlang-v${ERLANG_VERSION}-nodejs-v${NODEJS_VERSION}"
 
@@ -50,6 +63,7 @@ docker buildx build \
   --build-arg NODEJS_VERSION="${NODEJS_VERSION}" \
   --build-arg YARN_VERSION="${YARN_VERSION}" \
   --build-arg FNOX_VERSION="${FNOX_VERSION}" \
+  --build-arg FNOX_SHA256="${FNOX_SHA256}" \
   --label "org.opencontainers.image.description=${DESCRIPTION}" \
   --label "org.opencontainers.image.source=${SOURCE}" \
   ${BUILDX_CACHE_FROM:+--cache-from "${BUILDX_CACHE_FROM}"} \

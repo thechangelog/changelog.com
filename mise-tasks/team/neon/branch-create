@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 #MISE description="Branch off the prod db"
+# The query-planner warm-up shells into the local db container for a psql client
+# (to reach the remote Neon branch), so that container must be running.
+#MISE depends=["db:start"]
 set -euo pipefail
 [ -z "${DEBUG:-}" ] || set -x
 source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"

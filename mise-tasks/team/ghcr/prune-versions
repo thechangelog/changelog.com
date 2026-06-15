@@ -18,6 +18,15 @@ OWNER="${usage_owner}"
 ALL="${usage_all:-}"
 MONTHS="${usage_months:-}"
 
+# The GHCR package API is routed under /orgs/<name> for organizations but
+# /users/<name> for user accounts. /users/<name> reports either via .type.
+if [ "$(gh api "users/${OWNER}" --jq '.type')" = "Organization" ]
+then
+  OWNER_PATH="orgs/${OWNER}"
+else
+  OWNER_PATH="users/${OWNER}"
+fi
+
 if [ "${ALL}" = "true" ]
 then
   jq_filter='.[]'
@@ -41,12 +50,12 @@ while read -r id
 do
   gh api \
       --method DELETE \
-      "orgs/${OWNER}/packages/container/${PACKAGE}/versions/${id}" \
+      "${OWNER_PATH}/packages/container/${PACKAGE}/versions/${id}" \
       --silent
   deleted=$((deleted + 1))
   printf "."
 done < <(gh api \
-    "orgs/${OWNER}/packages/container/${PACKAGE}/versions" \
+    "${OWNER_PATH}/packages/container/${PACKAGE}/versions" \
     --paginate \
     --jq "${jq_filter} | .id")
 

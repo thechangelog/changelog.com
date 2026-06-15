@@ -23,10 +23,19 @@ then
   until incus exec "${VM}" -- true 2>/dev/null; do sleep 1; done
 fi
 
-# Path-mirroring: the host path is the VM path, /host/repo is the stable handle
-incus config device show "${VM}" \
-| grep -q '^src:' \
-|| incus config device add "${VM}" src disk source="${SRC}" path="${SRC}"
+# Path-mirroring: the host path is the VM path, /host/repo is the stable handle.
+# VM names derive from the path basename, so two different host paths can collide
+# on one VM — make sure the src device actually mounts *this* ${SRC}, not a stale
+# one from a previous checkout. Re-add only when it differs (no-op otherwise).
+CURRENT_SRC="$(incus config device get "${VM}" src source 2>/dev/null || true)"
+if [ "${CURRENT_SRC}" != "${SRC}" ]
+then
+  if [ -n "${CURRENT_SRC}" ]
+  then
+    incus config device remove "${VM}" src
+  fi
+  incus config device add "${VM}" src disk source="${SRC}" path="${SRC}"
+fi
 incus exec "${VM}" -- sh -c "mkdir -p /host && ln -sfn '${SRC}' /host/repo"
 
 incus exec "${VM}" -- su - ubuntu

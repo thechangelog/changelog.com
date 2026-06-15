@@ -11,7 +11,7 @@ then
 fi
 
 docker compose exec db psql -U postgres --list --quiet --tuples-only \
-| grep -q changelog_test \
+| grep -qw changelog_test \
 || docker compose exec db createdb -U postgres changelog_test
 
 mix test

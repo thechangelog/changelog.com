@@ -26,6 +26,18 @@ then
   exit 1
 fi
 
+# Source preflight: the sync source is ./ (cwd). rsync --delete from the wrong
+# directory could wipe files on the host mount, so refuse unless cwd is the
+# project root mise detected.
+root="$(realpath "${MISE_PROJECT_ROOT:-/nonexistent}" 2>/dev/null || true)"
+if [ -z "${root}" ] || [ "$(realpath .)" != "${root}" ]
+then
+  echo "❌ $(pwd) is not the project root (${MISE_PROJECT_ROOT:-unknown})."
+  echo "   rsync --delete from the wrong directory could wipe the host mount."
+  echo "   cd to the project root and retry. Not syncing."
+  exit 1
+fi
+
 rsync -av --delete \
   --exclude='.git/' \
   --filter=':- .gitignore' \

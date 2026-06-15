@@ -12,6 +12,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Least-privilege GITHUB_TOKEN: checkout only needs read. Publish (GHCR) and
+# deploy (Fly) authenticate via 1Password tokens, not GITHUB_TOKEN, so no
+# packages:write etc. A reusable workflow can only downgrade what the caller
+# grants, so setting this here is enough for both jobs below.
+permissions:
+  contents: read
+
 # Exactly one of the two jobs runs — the `if:` conditions are exact complements:
 #   - Namespace.so runner when the RUNS_ON variable contains 'namespace'. This is
 #     the preferred default on any repo with Namespace access — the canonical
@@ -22,9 +29,12 @@ jobs:
   namespace:
     if: ${{ contains(vars.RUNS_ON, 'namespace') }}
     uses: ./.github/workflows/namespace.yml
-    secrets: inherit
+    # Pass only the one secret the reusable workflow uses, not inherit-all.
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
 
   github:
     if: ${{ !contains(vars.RUNS_ON, 'namespace') }}
     uses: ./.github/workflows/github.yml
-    secrets: inherit
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}

@@ -25,7 +25,7 @@ DB="docker compose exec db"
 echo -e "\n🛬 Dumping prod db..."
 if [[ ! -s "${DUMPFILE}" ]]
 then
-  time docker compose exec \
+  time docker compose exec -T \
     -e PGSSLMODE=require \
     -e PGPASSWORD="$(op read op://changelog/neon/password)" \
     db pg_dump \

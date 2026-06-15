@@ -128,7 +128,8 @@ do
       then
         echo ""
         echo "⚠️  Erlang major changed ${CURRENT_MAJOR} → ${NEW_ERLANG_MAJOR}, elixir needs a matching -otp-${NEW_ERLANG_MAJOR} build"
-        exec "$0" elixir
+        # Not exec: run as a subprocess so the loop keeps bumping any remaining tools.
+        "$0" elixir
       fi
     fi
   fi
