@@ -1,0 +1,39 @@
+# env_shell_expand below relies on the jdx/mise#10445 fix; enforce the minimum so
+# an older mise fails fast instead of silently leaving ${VAR:-default} as a
+# literal string in [env].
+min_version = "2026.6.10"
+
+[settings]
+lockfile = true
+# Expand $VAR / ${VAR:-default} in [env] values with POSIX semantics: empty AND
+# unset both coalesce to the default. Requires mise >= 2026.6.10 (jdx/mise#10445).
+env_shell_expand = true
+
+[tools]
+erlang = "27.3.3"
+elixir = "1.18.3-otp-27"
+node = "22.22.3"
+yarn = "1"
+flyctl = "0.3"
+gh = "2"
+1password-cli = "2"
+fnox = "1"
+# npm:neonctl depends on node — if you see a warning about it before
+# running `mise install`, that's expected and will go away after install.
+"npm:neonctl" = "2"
+
+[env]
+# IMAGE_OWNER and APP_PROD_INSTANCE are the single source for their defaults.
+# CI forwards vars.* unconditionally, so an unset variable arrives as "" — the
+# POSIX ${VAR:-default} coalesces empty *and* unset back to the default. A fork
+# overrides by setting the repo variable; nothing else defaults these.
+APP_PROD_INSTANCE = "${APP_PROD_INSTANCE:-changelog-2025-05-05}"
+OP_ACCOUNT        = "changelog.1password.com"
+IMAGE_OWNER       = "${IMAGE_OWNER:-thechangelog}"
+GHCR_USERNAME     = "${GITHUB_ACTOR:-$USER}"
+PGUSER            = "postgres"
+DB_USER           = "postgres"
+CHANGELOG_DEV_DB  = "changelog_dev"
+# The prod db name is not a secret; defaulting here keeps it out of
+# fnox/1Password (its value "changelog" was being redacted from output)
+DB_PROD_DBNAME = "changelog"

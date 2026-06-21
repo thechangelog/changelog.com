@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#MISE description="Stop and delete a development session VM"
+#USAGE arg "<src>" help="Host path used to derive VM name"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ "$(uname)" != "Linux" ]]
+then
+  echo "Incus VMs are only supported on Linux"
+  exit 1
+fi
+
+SRC="$(realpath "${usage_src}")"
+VM="$(basename "${SRC//[._]/-}")"
+
+# --force stops the VM first if it's running; no-op-safe if already stopped
+incus delete --force "${VM}"

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#MISE description="Install Incus and configure macvlan networking"
+#USAGE arg "<interface>" help="Physical network interface for macvlan (e.g. enp97s0)"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ "$(uname)" != "Linux" ]]
+then
+  echo "Incus VMs are only supported on Linux"
+  exit 1
+fi
+
+if ! command -v incus &>/dev/null
+then
+  sudo mkdir -p /etc/apt/keyrings/
+
+  curl -fsSL https://pkgs.zabbly.com/key.asc \
+  | sudo tee /etc/apt/keyrings/zabbly.asc > /dev/null
+
+  printf '%s\n' \
+    "Enabled: yes" \
+    "Types: deb" \
+    "URIs: https://pkgs.zabbly.com/incus/stable" \
+    "Suites: $(. /etc/os-release && echo "${VERSION_CODENAME}")" \
+    "Components: main" \
+    "Architectures: $(dpkg --print-architecture)" \
+    "Signed-By: /etc/apt/keyrings/zabbly.asc" \
+  | sudo tee /etc/apt/sources.list.d/zabbly-incus-stable.sources > /dev/null
+
+  sudo apt update
+  sudo apt install -y incus
+fi
+
+if ! id -nG | grep -q incus-admin
+then
+  sudo usermod -aG incus-admin "$USER"
+  echo "Added $USER to incus-admin. Log out, log back in, then re-run this task."
+  exit 1
+fi
+
+incus admin init --minimal 2>/dev/null \
+|| true
+
+if ! incus profile show macvlan &>/dev/null
+then
+  incus profile create macvlan
+  incus profile device add macvlan eth0 nic nictype=macvlan parent="${usage_interface}"
+  incus profile device add macvlan root disk path=/ pool=default
+fi

@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+#MISE description="Build the runtime container image"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+# erlang, elixir, node and yarn are built only inside this image and are NOT
+# installed on the runner (erlang can't be checksum-locked; the rest the runner
+# never runs — see the CI workflows / MISE_DISABLE_TOOLS). `mise ls` prints the
+# resolved version in column 2 even when a tool isn't installed and for loose
+# specs (yarn = "1" → 1.22.22), and it never installs anything. fnox IS installed
+# on the runner, so `mise current` is fine.
+ELIXIR_VERSION=$(mise ls --current elixir | awk 'END{print $2}' | sed 's/-otp-.*//')
+ERLANG_VERSION=$(mise ls --current erlang | awk 'END{print $2}')
+NODEJS_VERSION=$(mise ls --current node | awk 'END{print $2}')
+YARN_VERSION=$(mise ls --current yarn | awk 'END{print $2}')
+FNOX_VERSION=$(mise current fnox)
+# fnox publishes no checksums file, so verify the download in-image against the
+# sha256 mise already recorded in mise.lock (the linux-x64 gnu tarball, which is
+# the exact artifact Dockerfile.runtime pulls).
+FNOX_SHA256=$(awk '
+  /^\[tools\.fnox\."platforms\.linux-x64"\]$/ { f=1; next }
+  /^\[/ { f=0 }
+  f && /^checksum =/ { sub(/^checksum = "sha256:/, ""); sub(/"$/, ""); print; exit }
+' mise.lock)
+if [ -z "${FNOX_SHA256}" ]
+then
+  echo "ERROR: could not read fnox linux-x64 checksum from mise.lock" >&2
+  exit 1
+fi
+
+# Ubuntu release of the hexpm/elixir base image (Dockerfile.runtime FROM). Not a
+# mise tool, so it's pinned here as the single source: injected as a build-arg
+# and shown in the image description. Bump the snapshot date when the base moves.
+UBUNTU_VERSION="noble-20250404"
+
+RUNTIME_TAG="elixir-v${ELIXIR_VERSION}-erlang-v${ERLANG_VERSION}-nodejs-v${NODEJS_VERSION}"
+
+# docker:test and docker:build-prod build FROM this runtime. A remote builder
+# (Namespace) can't use a locally-loaded image, so on Namespace push the runtime
+# to the zero-auth nscr.io registry and FROM that; on a plain runner (GitHub)
+# --load it into the local daemon and FROM that. GHCR is where it's *published*
+# as a reusable artifact (team:ghcr:publish-runtime), regardless of the above.
+RUNTIME_GHCR="ghcr.io/${IMAGE_OWNER}/changelog-runtime:${RUNTIME_TAG}"
+if [ -n "${NSC_CONTAINER_REGISTRY:-}" ]
+then
+  RUNTIME_IMAGE="${NSC_CONTAINER_REGISTRY}/changelog-runtime:${RUNTIME_TAG}"
+  OUTPUT=--push
+else
+  RUNTIME_IMAGE="${RUNTIME_GHCR}"
+  OUTPUT=--load
+fi
+
+if [ -n "${GITHUB_RUN_ID:-}" ]
+then
+  BUILD_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+else
+  BUILD_URL="$(hostname):$(pwd)"
+fi
+DESCRIPTION="💜 Elixir v${ELIXIR_VERSION} | 🚜 Erlang v${ERLANG_VERSION} | ⬢ Node.js v${NODEJS_VERSION} | 🗃️ Ubuntu ${UBUNTU_VERSION} | ${BUILD_URL}"
+SOURCE="https://github.com/${IMAGE_OWNER}/changelog.com"
+
+echo "Building runtime image: ${RUNTIME_IMAGE}"
+
+docker buildx build \
+  --file docker/Dockerfile.runtime \
+  --build-arg ELIXIR_VERSION="${ELIXIR_VERSION}" \
+  --build-arg ERLANG_VERSION="${ERLANG_VERSION}" \
+  --build-arg NODEJS_VERSION="${NODEJS_VERSION}" \
+  --build-arg YARN_VERSION="${YARN_VERSION}" \
+  --build-arg UBUNTU_VERSION="${UBUNTU_VERSION}" \
+  --build-arg FNOX_VERSION="${FNOX_VERSION}" \
+  --build-arg FNOX_SHA256="${FNOX_SHA256}" \
+  --label "org.opencontainers.image.description=${DESCRIPTION}" \
+  --label "org.opencontainers.image.source=${SOURCE}" \
+  ${BUILDX_CACHE_FROM:+--cache-from "${BUILDX_CACHE_FROM}"} \
+  ${BUILDX_CACHE_TO:+--cache-to "${BUILDX_CACHE_TO}"} \
+  --tag "${RUNTIME_IMAGE}" \
+  "${OUTPUT}" \
+  .
+
+mkdir -p tmp
+{
+  echo "RUNTIME_IMAGE=${RUNTIME_IMAGE}"
+  echo "RUNTIME_GHCR=${RUNTIME_GHCR}"
+  printf 'RUNTIME_DESCRIPTION=%q\n' "${DESCRIPTION}"
+  printf 'RUNTIME_SOURCE=%q\n' "${SOURCE}"
+} > tmp/mise-runtime-image.env
+echo "✅ Built ${RUNTIME_IMAGE}"

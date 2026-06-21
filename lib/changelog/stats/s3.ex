@@ -3,7 +3,8 @@ defmodule Changelog.Stats.S3 do
     [
       access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
       secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
-      host: System.get_env("AWS_API_HOST")
+      host: System.get_env("AWS_API_HOST"),
+      region: System.get_env("AWS_REGION", "us-east-1")
     ]
   end
 

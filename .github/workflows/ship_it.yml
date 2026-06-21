@@ -12,33 +12,29 @@ on:
   pull_request:
   workflow_dispatch:
 
-# All jobs have the same outcome. We define multiple for resiliency reasons.
+# Least-privilege GITHUB_TOKEN: checkout only needs read. Publish (GHCR) and
+# deploy (Fly) authenticate via 1Password tokens, not GITHUB_TOKEN, so no
+# packages:write etc. A reusable workflow can only downgrade what the caller
+# grants, so setting this here is enough for both jobs below.
+permissions:
+  contents: read
+
+# Exactly one of the two jobs runs — the `if:` conditions are exact complements:
+#   - Namespace.so runner when the RUNS_ON variable contains 'namespace'. This is
+#     the preferred default on any repo with Namespace access — the canonical
+#     repo or a fork that has it (e.g. gerhard/changelog.com).
+#   - GitHub-hosted runner otherwise, i.e. when RUNS_ON is unset — the case for
+#     forks without Namespace access.
 jobs:
-  # In thechangelog/changelog repository (a.k.a. upstream),
-  # this is the preferred default:
-  dagger-on-namespace:
+  namespace:
     if: ${{ contains(vars.RUNS_ON, 'namespace') }}
-    uses: ./.github/workflows/dagger_on_namespace.yml
-    secrets: inherit
+    uses: ./.github/workflows/namespace.yml
+    # Pass only the one secret the reusable workflow uses, not inherit-all.
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
 
-  # Just in case Namespace.so misbehaves, we want a fallback:
-  # a.k.a. "Always run 2 of everything"
-  dagger-on-github-fallback:
-    needs: dagger-on-namespace
-    if: ${{ failure() }}
-    uses: ./.github/workflows/dagger_on_github.yml
-    secrets: inherit
-
-  # This is an experimental job which only runs the CI part of our pipeline.
-  # In other words, this does not run CD, it does not deploy our app.
-  dagger-on-k8s:
-    if: ${{ contains(vars.RUNS_ON, 'k8s') }}
-    uses: ./.github/workflows/dagger_on_k8s.yml
-    secrets: inherit
-
-  # As forks will not have access to our Namespace.so,
-  # we fallback to GitHub default:
-  dagger-on-github:
+  github:
     if: ${{ !contains(vars.RUNS_ON, 'namespace') }}
-    uses: ./.github/workflows/dagger_on_github.yml
-    secrets: inherit
+    uses: ./.github/workflows/github.yml
+    secrets:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}

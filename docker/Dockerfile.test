@@ -1,0 +1,9 @@
+# Test image: just the runtime, everything else is mounted
+ARG RUNTIME_IMAGE
+
+FROM ${RUNTIME_IMAGE}
+
+ENV MIX_ENV=test
+WORKDIR /app
+
+CMD ["mise-tasks/docker/test-cmd"]

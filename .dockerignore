@@ -1,0 +1,13 @@
+# Dependencies & build artifacts, at any depth (e.g. assets/node_modules, which
+# COPY assets/ would otherwise pull in)
+**/node_modules/
+**/_build/
+**/deps/
+tmp/
+
+# VCS, editor & local tooling — not needed in the image or the build context
+.git/
+.elixir_ls/
+.claude/
+fly.io/
+*.txt

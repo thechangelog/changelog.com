@@ -1,0 +1,80 @@
+[providers]
+op = { type = "1password", vault = "changelog", account = "changelog.1password.com" }
+op-employee = { type = "1password", vault = "Employee", account = "changelog.1password.com" }
+
+# Secrets shared across all profiles (dev, ci, production)
+[secrets]
+AWS_ACCESS_KEY_ID = { provider = "op", value = "aws.stats/access_key_id" }
+AWS_SECRET_ACCESS_KEY = { provider = "op", value = "aws.stats/secret_access_key" }
+AWS_API_HOST = { provider = "op", value = "aws.stats/api_host" }
+
+BSKY_USER = { provider = "op", value = "bsky/username" }
+BSKY_PASS = { provider = "op", value = "bsky/credential" }
+
+CM_API_TOKEN = { provider = "op", value = "campaign.monitor/api_token" }
+CM_SMTP_TOKEN = { provider = "op", value = "campaign.monitor/smtp_token" }
+
+DB_HOST = { provider = "op", value = "neon/server" }
+DB_USER = { provider = "op", value = "neon/username" }
+DB_PASS = { provider = "op", value = "neon/password" }
+DB_ENDPOINT_AND_PASS = { provider = "op", value = "neon/endpoint_and_password" }
+
+FASTLY_TOKEN = { provider = "op", value = "fastly/credential" }
+
+GITHUB_API_TOKEN = { provider = "op", value = "github/api_token" }
+GITHUB_CLIENT_ID = { provider = "op", value = "github/client_id" }
+GITHUB_CLIENT_SECRET = { provider = "op", value = "github/client_secret" }
+
+HONEYCOMB_API_KEY = { provider = "op", value = "honeycomb/credential" }
+
+MASTODON_API_TOKEN = { provider = "op", value = "mastodon/api_token" }
+MASTODON_CLIENT_ID = { provider = "op", value = "mastodon/client_id" }
+MASTODON_CLIENT_SECRET = { provider = "op", value = "mastodon/client_secret" }
+
+PIPEDREAM_PURGE_TOKEN = { provider = "op", value = "pipedream/purge_token" }
+PLUSPLUS_SLUG = { provider = "op", value = "plusplus/credential" }
+
+R2_API_HOST = { provider = "op", value = "r2/api_host" }
+R2_ACCESS_KEY_ID = { provider = "op", value = "r2/access_key_id" }
+R2_SECRET_ACCESS_KEY = { provider = "op", value = "r2/secret_access_key" }
+R2_ASSETS_BUCKET = { provider = "op", value = "r2/assets_bucket" }
+R2_FEEDS_BUCKET = { provider = "op", value = "r2/feeds_bucket" }
+
+SECRET_KEY_BASE = { provider = "op", value = "phoenix/secret_key_base" }
+SIGNING_SALT = { provider = "op", value = "phoenix/signing_salt" }
+
+SHOPIFY_API_KEY = { provider = "op", value = "shopify/api_key" }
+SHOPIFY_API_PASSWORD = { provider = "op", value = "shopify/api_password" }
+
+SLACK_APP_API_TOKEN = { provider = "op", value = "slack/app_api_token" }
+SLACK_INVITE_API_TOKEN = { provider = "op", value = "slack/invite_api_token" }
+
+SNAP_TOKEN = { provider = "op", value = "snap/credential" }
+TURNSTILE_SECRET_KEY = { provider = "op", value = "turnstile/credential" }
+
+TYPESENSE_API_KEY = { provider = "op", value = "typesense/credential" }
+TYPESENSE_URL = { provider = "op", value = "typesense/url" }
+
+STRIPE_SECRET = { provider = "op", value = "stripe/api_secret" }
+STRIPE_WEBHOOK_SECRET = { provider = "op", value = "stripe/webhook_secret" }
+
+ZULIP_ADMIN_USER = { provider = "op", value = "zulip/admin_user" }
+ZULIP_ADMIN_API_KEY = { provider = "op", value = "zulip/admin_api_key" }
+ZULIP_USER = { provider = "op", value = "zulip/user" }
+ZULIP_API_KEY = { provider = "op", value = "zulip/user_api_key" }
+ZULIP_BOT_USER = { provider = "op", value = "zulip/bot_user" }
+ZULIP_BOT_API_KEY = { provider = "op", value = "zulip/bot_api_key" }
+
+# CI-specific secrets (image publishing, deploy)
+[profiles.ci.secrets]
+GHCR_PASSWORD = { provider = "op", value = "ghcr/credential" }
+FLY_API_TOKEN = { provider = "op", value = "fly/credential" }
+
+# Dev-only secrets (local DB restore, local deploys)
+[profiles.dev.secrets]
+FLY_API_TOKEN = { provider = "op", value = "fly/credential" }
+DB_PROD_HOST = { provider = "op", value = "neon/server" }
+DB_PROD_USERNAME = { provider = "op", value = "neon/username" }
+NEON_PROJECT_ID = { provider = "op", value = "neon/project" }
+NEON_API_KEY = { provider = "op-employee", value = "NEON_API_KEY/credential" }
+GHCR_PASSWORD = { provider = "op", value = "ghcr/credential" }

@@ -1,0 +1,83 @@
+name: "GitHub"
+
+on:
+  workflow_call:
+    secrets:
+      # Optional: forks without it still run build & test; publish/deploy
+      # (the only consumers) are gated on DEPLOY_FROM_REPO and just skip.
+      OP_SERVICE_ACCOUNT_TOKEN:
+        required: false
+
+env:
+  # The runner builds erlang/elixir/node/yarn only inside Docker and never runs
+  # gh/neonctl, so don't let `mise run` auto-install them. (MISE_LOCKED is NOT
+  # global — it's on the install step only; under --locked, later steps can't even
+  # read erlang's version since it has no lockfile URL.)
+  MISE_TASK_RUN_AUTO_INSTALL: "0"
+  # Forward repo variables so a fork can target its own GHCR namespace and Fly
+  # app. IMAGE_OWNER/APP_PROD_INSTANCE are empty when unset — mise.toml owns
+  # those defaults. DEPLOY_FROM_REPO has no default: it is an explicit opt-in
+  # gate — publish & deploy run only on the repo that sets it to its own
+  # "github.com/owner/repo" (see the Publish/Deploy `if:` below).
+  IMAGE_OWNER: ${{ vars.IMAGE_OWNER }}
+  APP_PROD_INSTANCE: ${{ vars.APP_PROD_INSTANCE }}
+  DEPLOY_FROM_REPO: ${{ vars.DEPLOY_FROM_REPO }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code..."
+        # https://github.com/actions/checkout/releases/tag/v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        # Don't persist GITHUB_TOKEN in .git/config — the next step runs untrusted
+        # build/test code (incl. fork PRs) and nothing here needs git auth (no push;
+        # publish/deploy authenticate via the OP token, not git).
+        with:
+          persist-credentials: false
+
+      # https://github.com/jdx/mise-action/releases/tag/v4
+      - uses: jdx/mise-action@dba19683ed58901619b14f395a24841710cb4925
+        # Install only the tools the CI path RUNS on the runner (flyctl, fnox,
+        # 1password-cli), with the lockfile enforced. Skip the rest: erlang/elixir/
+        # node/yarn are built inside the Docker image (build-runtime reads their
+        # versions via `mise ls`) and erlang can't be --locked; gh/neonctl are only
+        # used by maintenance/db tasks. MISE_LOCKED lives here, not in the global
+        # env, so later steps can still read erlang's version (--locked rejects it).
+        env:
+          MISE_LOCKED: "1"
+          MISE_DISABLE_TOOLS: erlang,elixir,node,yarn,gh,npm:neonctl
+        with:
+          # >= 2026.6.10 for the ${VAR:-default} empty-coalescing fix (jdx/mise#10445)
+          # that mise.toml [env] relies on; runners may preinstall an older mise.
+          version: 2026.6.10
+          cache: false
+
+      # No docker/setup-buildx-action on purpose: it creates an isolated container
+      # builder that can't `FROM` a locally-built image. The default docker driver
+      # builds on the local daemon, where build-runtime's --load'ed runtime IS
+      # visible to docker:test / docker:build-prod. (Cost: no gha layer cache — the
+      # docker driver can't export type=gha.)
+
+      # Build & test need no secrets: prod config reads env at runtime with
+      # defaults, and the test suite runs against a local Postgres. So this
+      # runs unauthenticated on every push, fork, and PR.
+      - name: "Build & test..."
+        run: mise run ci
+
+      # Publish & deploy need credentials (GHCR, Fly) from 1Password via fnox.
+      # They run only on the repo named by DEPLOY_FROM_REPO, on master — i.e.
+      # the canonical repo, or a fork that opts in by setting DEPLOY_FROM_REPO
+      # to its own "github.com/owner/repo" and providing OP_SERVICE_ACCOUNT_TOKEN.
+      # When the variable is unset, both steps skip and only build & test run.
+      - name: "Publish..."
+        if: "${{ format('github.com/{0}', github.repository) == env.DEPLOY_FROM_REPO && github.ref_name == 'master' }}"
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
+        run: "fnox exec --profile ci -- mise run team:ghcr:publish-runtime ::: team:ghcr:publish-prod"
+
+      - name: "Deploy..."
+        if: "${{ format('github.com/{0}', github.repository) == env.DEPLOY_FROM_REPO && github.ref_name == 'master' }}"
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: "${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}"
+        run: fnox exec --profile ci -- mise run team:cd

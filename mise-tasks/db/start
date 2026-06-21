@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Start Postgres server"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+docker compose up -d db --wait

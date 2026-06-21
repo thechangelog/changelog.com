@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#MISE description="Publish runtime container image to GHCR"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+
+# Sources RUNTIME_IMAGE (build ref: nscr.io on a remote builder, else the GHCR
+# ref loaded locally), RUNTIME_GHCR (the published GHCR ref), and the
+# RUNTIME_DESCRIPTION / RUNTIME_SOURCE labels.
+require_env_file tmp/mise-runtime-image.env "mise docker:build-runtime"
+require_env GHCR_USERNAME GHCR_PASSWORD
+
+echo "${GHCR_PASSWORD}" | docker login ghcr.io -u "${GHCR_USERNAME}" --password-stdin
+
+if [ "${RUNTIME_IMAGE}" != "${RUNTIME_GHCR}" ]
+then
+  # Built on a remote builder → the runtime lives in nscr.io; copy it to GHCR
+  # (registry-to-registry, no local image needed).
+  SOURCE_REF="${RUNTIME_IMAGE}"
+else
+  # Built locally (--load) and already GHCR-tagged → push it to GHCR first.
+  docker push "${RUNTIME_IMAGE}"
+  SOURCE_REF="${RUNTIME_GHCR}"
+fi
+
+# Re-apply description/source as index annotations so the GHCR package page shows
+# them (matching Dagger's metadata); this also performs the nscr.io → GHCR copy.
+docker buildx imagetools create \
+  --annotation "index:org.opencontainers.image.description=${RUNTIME_DESCRIPTION}" \
+  --annotation "index:org.opencontainers.image.source=${RUNTIME_SOURCE}" \
+  --tag "${RUNTIME_GHCR}" \
+  "${SOURCE_REF}"
+
+echo "✅ Published ${RUNTIME_GHCR}"

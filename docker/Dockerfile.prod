@@ -1,0 +1,102 @@
+# check=skip=InvalidDefaultArgInFrom
+# Production image: multi-stage build
+# Stage 0 (op): 1Password CLI binary
+# Stage 1 (builder): compile app + build static assets
+# Stage 2 (legacy): extract legacy WordPress assets
+# Stage 3 (final): clean production image with compiled app
+ARG RUNTIME_IMAGE
+# Injected via --build-arg from mise.toml
+ARG ONEPASSWORD_VERSION
+ARG LEGACY_ASSETS_IMAGE=ghcr.io/thechangelog/changelog-legacy-assets@sha256:4f1d2aa7036836bd59ff3af74bfd054c33a1ed558514a8dd91062a14804d7153
+
+# ---------------------------------------------------------------------------
+# Stage 0: 1Password CLI
+# ---------------------------------------------------------------------------
+FROM 1password/op:${ONEPASSWORD_VERSION} AS op
+
+# ---------------------------------------------------------------------------
+# Stage 1: Build
+# ---------------------------------------------------------------------------
+FROM ${RUNTIME_IMAGE} AS builder
+
+ENV MIX_ENV=prod
+WORKDIR /app
+
+# App source
+COPY config/ config/
+COPY lib/ lib/
+COPY priv/repo/ priv/repo/
+COPY mix.exs mix.lock ./
+
+# Warm layer from cache, compile, sync back to cache
+RUN --mount=type=cache,target=/tmp/deps-cache,id=app-deps \
+    --mount=type=cache,target=/tmp/build-cache,id=app-build \
+    rsync -a /tmp/deps-cache/ /app/deps/ \
+    && rsync -a /tmp/build-cache/ /app/_build/ \
+    && mix deps.get --only prod \
+    && mix deps.compile \
+    && mix compile \
+    && rsync -a /app/deps/ /tmp/deps-cache/ \
+    && rsync -a /app/_build/ /tmp/build-cache/
+
+# Static assets
+COPY assets/ assets/
+RUN --mount=type=cache,target=/tmp/node-modules-cache,id=app-node-modules \
+    rsync -a /tmp/node-modules-cache/ /app/assets/node_modules/ \
+    && cd assets \
+    && yarn install --frozen-lockfile \
+    && yarn run compile \
+    && cd .. \
+    && mix phx.digest --no-vsn \
+    && rsync -a /app/assets/node_modules/ /tmp/node-modules-cache/
+
+# Build metadata
+ARG COMMIT_USER
+ARG GIT_SHA
+ARG BUILD_URL
+RUN echo -n "${COMMIT_USER}" > COMMIT_USER \
+    && echo -n "${GIT_SHA}" > priv/static/version.txt \
+    && echo -n "${BUILD_URL}" > priv/static/build.txt
+
+# ---------------------------------------------------------------------------
+# Stage 2: Legacy assets
+# ---------------------------------------------------------------------------
+FROM ${LEGACY_ASSETS_IMAGE} AS legacy
+
+# ---------------------------------------------------------------------------
+# Stage 3: Clean production image
+# ---------------------------------------------------------------------------
+FROM ${RUNTIME_IMAGE}
+
+ENV MIX_ENV=prod
+WORKDIR /app
+
+# 1Password CLI for secret resolution at runtime
+COPY --from=op /usr/local/bin/op /usr/local/bin/op
+
+# Deploy & start scripts
+COPY docker/scripts/on.deploy /usr/local/bin/on.deploy
+COPY docker/scripts/app.start /usr/local/bin/app.start
+
+# fnox config (references only, no secret values)
+COPY fnox.toml /app/fnox.toml
+
+# Compiled app from builder (exclude test artifacts, raw assets, test code)
+COPY --from=builder /app /app
+RUN rm -rf _build/test assets/ test/
+
+# Legacy WordPress assets
+COPY --from=legacy /var/www/wp-content priv/static/wp-content
+
+# Run as a non-root user. Give it a writable HOME (the BEAM writes
+# ~/.erlang.cookie when distribution starts; mix uses ~/.mix), carry over the
+# root-installed hex/rebar so mix works as this user, and hand it /app. Done
+# after the COPYs so the chown covers every runtime file.
+RUN useradd --system --create-home --home-dir /home/app --shell /usr/sbin/nologin app \
+    && cp -a /root/.mix /home/app/.mix \
+    && chown -R app:app /app /home/app
+ENV HOME=/home/app
+USER app
+
+# Verify (as the app user: confirms it can read the release and run op)
+RUN ls -lahd _build/prod/lib/*/ebin && op --version

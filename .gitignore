@@ -5,7 +5,11 @@
 /*.ez
 .DS_Store
 /.elixir_ls
-/.claude
+# Track shared skills under .claude; ignore only local Claude settings.
+# NB: an explicit file ignore, NOT `/.claude/*` + `!/.claude/skills/` — rsync's
+# gitignore filter in `mise vm:keep` doesn't honor git's `!` re-include, so a
+# negation silently drops .claude/skills from the host sync.
+/.claude/settings.local.json
 
 # Generate on crash by the VM
 erl_crash.dump
@@ -43,8 +47,11 @@ npm-debug.log*
 
 # User-specific environment variables
 .env.user
-# Secret variables
+# Secret variables (legacy)
 .envrc.secrets
+
+# mise local state
+mise.local.toml
 
 # Local config files, host-specific
 .config

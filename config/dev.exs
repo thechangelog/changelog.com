@@ -78,10 +78,7 @@ if String.contains?(System.get_env("DB_HOST", "localhost"), "neon.tech") do
   config :changelog, Changelog.Repo,
     ssl: true,
     ssl_opts: [
-      # The cacertfile value implies macOS - tested on macOS 12.7.3 by @gerhard - March 28, 2024
-      cacertfile: "/etc/ssl/cert.pem",
-      # The followin also works on macOS ARM + brew install openssl@3
-      # cacertfile: "/opt/homebrew/etc/openssl@3/cert.pem",
+      cacertfile: System.get_env("DB_CACERTFILE", "/etc/ssl/cert.pem"),
       verify: :verify_peer,
       server_name_indication: String.to_charlist(System.get_env("DB_HOST", "db")),
       customize_hostname_check: [

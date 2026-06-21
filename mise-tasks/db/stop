@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Stop Postgres server"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if docker compose ps db --status running --quiet 2>/dev/null \
+    | grep -q .
+then
+  docker compose down db
+else
+  echo "Postgres is not running"
+fi

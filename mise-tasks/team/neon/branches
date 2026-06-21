@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="List prod db branches"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+
+require_env NEON_PROJECT_ID
+
+neonctl branches list --project-id="${NEON_PROJECT_ID}"

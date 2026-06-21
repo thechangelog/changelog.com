@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#MISE description="Delete a prod db branch"
+#MISE raw=true
+#USAGE arg "<branch>" help="The Neon branch name to delete"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+
+require_env NEON_PROJECT_ID
+BRANCH="${usage_branch}"
+
+echo ""
+read -rp "This DELETES the Neon branch ${BRANCH}. Continue? [y/N] " confirm
+if [[ "${confirm}" != "y" && "${confirm}" != "Y" ]]
+then
+  echo "Aborted."
+  exit 0
+fi
+
+echo -e "\n🔥 Deleting Neon db branch ${BRANCH}..."
+neonctl branches delete --project-id="${NEON_PROJECT_ID}" "${BRANCH}"

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#MISE description="Run app tests in Docker"
+#MISE depends=["docker:build-runtime"]
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [ -f tmp/mise-runtime-image.env ]
+then
+  source tmp/mise-runtime-image.env
+fi
+
+RUNTIME_IMAGE="${RUNTIME_IMAGE:?run 'mise docker:build-runtime' first}" \
+docker compose -f docker/compose.test.yml run --rm --build test

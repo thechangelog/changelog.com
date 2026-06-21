@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#MISE hide=true
+# Runs inside the test container via compose CMD.
+# Rebar3 deps (cowboy, hackney, etc.) recompile on every `mix deps.compile`
+# because mix regenerates mix.rebar.config with a fresh timestamp, and rebar3
+# treats it as a source change. Skip deps.compile when _build already has
+# compiled deps — mix compile handles app code changes on its own.
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+mix deps.get --only test
+
+if [ ! -d _build/test/lib/phoenix ]
+then
+  mix deps.compile
+fi
+
+mix compile
+mix test

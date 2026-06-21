@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#MISE description="Build the production container image"
+#MISE depends=["docker:build-runtime"]
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+source tmp/mise-runtime-image.env
+
+ONEPASSWORD_VERSION=$(mise current 1password-cli)
+GIT_SHA="${GITHUB_SHA:-$(git rev-parse HEAD 2>/dev/null || echo "unknown").dev}"
+COMMIT_USER="${GITHUB_ACTOR:-${USER}}"
+PROD_IMAGE="ghcr.io/${IMAGE_OWNER}/changelog-prod:${GIT_SHA}"
+
+if [ -n "${GITHUB_RUN_ID:-}" ]
+then
+  BUILD_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+else
+  BUILD_URL="$(hostname):$(pwd)"
+fi
+DESCRIPTION="🖥 ${BUILD_URL}"
+
+echo "Building production image: ${PROD_IMAGE}"
+
+docker buildx build \
+  --file docker/Dockerfile.prod \
+  --build-arg RUNTIME_IMAGE="${RUNTIME_IMAGE}" \
+  --build-arg ONEPASSWORD_VERSION="${ONEPASSWORD_VERSION}" \
+  --build-arg COMMIT_USER="${COMMIT_USER}" \
+  --build-arg GIT_SHA="${GIT_SHA}" \
+  --build-arg BUILD_URL="${BUILD_URL}" \
+  --label "org.opencontainers.image.description=${DESCRIPTION}" \
+  --label "org.opencontainers.image.source=https://github.com/${IMAGE_OWNER}/changelog.com" \
+  --label "org.opencontainers.image.revision=${GIT_SHA}" \
+  ${BUILDX_CACHE_FROM:+--cache-from "${BUILDX_CACHE_FROM}"} \
+  ${BUILDX_CACHE_TO:+--cache-to "${BUILDX_CACHE_TO}"} \
+  --tag "${PROD_IMAGE}" \
+  --load \
+  .
+
+mkdir -p tmp
+echo "PROD_IMAGE=${PROD_IMAGE}" > tmp/mise-prod-image.env
+echo "✅ Built ${PROD_IMAGE}"

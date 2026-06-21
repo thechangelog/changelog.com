@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#MISE description="Freeze the VM into a reusable image"
+#USAGE arg "[src]" help="Host path used to derive VM name (default: $PWD)"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+if [[ "$(uname)" != "Linux" ]]
+then
+    echo "Incus VMs are only supported on Linux"
+    exit 1
+fi
+
+SRC="$(realpath "${usage_src:-$PWD}")"
+VM="$(basename "${SRC//[._]/-}")"
+
+incus exec "${VM}" -- su -c 'fish -c clean' - ubuntu
+incus exec "${VM}" -- rm -rf /host
+incus exec "${VM}" -- fstrim -av
+incus config device remove "${VM}" src || true
+incus config device remove "${VM}" gitdir || true
+incus stop "${VM}"
+incus publish "${VM}" --alias changelog --reuse

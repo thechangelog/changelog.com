@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#MISE description="Branch off the prod db"
+# The query-planner warm-up shells into the local db container for a psql client
+# (to reach the remote Neon branch), so that container must be running.
+#MISE depends=["db:start"]
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+
+require_env NEON_PROJECT_ID DB_PROD_USERNAME DB_PROD_DBNAME
+NEON_USER=$(neonctl me --output yaml | awk '/^login:/ {print $2}')
+NEON_DB_BRANCH="${NEON_USER}-$(date +%Y-%m-%d)"
+
+echo -e "\n🔒 Checking Neon auth..."
+neonctl projects get "${NEON_PROJECT_ID}" \
+|| neonctl auth
+
+echo -e "\n🌲 Creating Neon prod db branch..."
+neonctl branches get --project-id="${NEON_PROJECT_ID}" "${NEON_DB_BRANCH}" \
+|| neonctl branches create --project-id="${NEON_PROJECT_ID}" --name="${NEON_DB_BRANCH}"
+
+CONN_STRING=$(neonctl connection-string "${NEON_DB_BRANCH}" \
+  --project-id="${NEON_PROJECT_ID}" \
+  --role-name="${DB_PROD_USERNAME}" \
+  --database-name="${DB_PROD_DBNAME}" \
+  --extended --output=yaml \
+| awk '/connection_string:/ { print $2 }')
+
+echo -e "\n⚡️ Warm up the query planner..."
+time docker compose exec db psql "${CONN_STRING}" --command "ANALYZE VERBOSE;"
+
+echo -e "\n💡 To use this Neon db branch with your local dev app, run:"
+echo "   mise team:db:neon-use-remote-branch ${NEON_DB_BRANCH}"
+echo "   Delete it when you're done with:"
+echo "   mise team:neon:branch-delete ${NEON_DB_BRANCH}"

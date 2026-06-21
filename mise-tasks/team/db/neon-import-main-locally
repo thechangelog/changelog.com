@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#MISE description="Delete & replace changelog_dev with the latest prod db dump"
+#MISE raw=true
+#MISE depends=["db:start"]
+#USAGE flag "-f --format <format>" help="Dump format" default="c"
+set -euo pipefail
+[ -z "${DEBUG:-}" ] || set -x
+
+source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
+require_env CHANGELOG_DEV_DB DB_PROD_HOST DB_PROD_USERNAME DB_PROD_DBNAME
+
+FORMAT="${usage_format:-c}"
+
+echo ""
+read -rp "This DELETES and REPLACES ${CHANGELOG_DEV_DB} with the prod db dump. Continue? [y/N] " confirm
+if [[ "${confirm}" != "y" && "${confirm}" != "Y" ]]
+then
+  echo "Aborted."
+  exit 0
+fi
+
+DUMPFILE="${DB_PROD_DBNAME}.${FORMAT}.sql"
+DB="docker compose exec db"
+
+echo -e "\n🛬 Dumping prod db..."
+if [[ ! -s "${DUMPFILE}" ]]
+then
+  time docker compose exec -T \
+    -e PGSSLMODE=require \
+    -e PGPASSWORD="$(op read op://changelog/neon/password)" \
+    db pg_dump \
+    --format="${FORMAT}" --verbose \
+    --host="${DB_PROD_HOST}" \
+    --username="${DB_PROD_USERNAME}" \
+    --dbname="${DB_PROD_DBNAME}" > "${DUMPFILE}"
+fi
+
+echo -e "\n🛫 Recreating ${CHANGELOG_DEV_DB} from prod dump..."
+${DB} dropdb -U postgres --if-exists "${CHANGELOG_DEV_DB}"
+${DB} createdb -U postgres "${CHANGELOG_DEV_DB}"
+time docker compose exec -T db pg_restore \
+  --format="${FORMAT}" --verbose \
+  -U postgres \
+  --dbname="${CHANGELOG_DEV_DB}" \
+  --exit-on-error \
+  --no-owner \
+  --no-privileges < "${DUMPFILE}"
+
+echo -e "\n⚡️ Warm up the query planner..."
+time ${DB} psql -U postgres --dbname="${CHANGELOG_DEV_DB}" --command "ANALYZE VERBOSE;"

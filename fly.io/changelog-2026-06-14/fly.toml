@@ -1,0 +1,43 @@
+# Inspired by https://github.com/fly-apps/live_beats/blob/master/fly.toml
+# Full app config reference: https://fly.io/docs/reference/configuration/
+app = "changelog-2026-06-14"
+primary_region = "iad"
+
+kill_signal = "SIGTERM"
+kill_timeout = "30s"
+
+[env]
+PIPEDREAM_HOST = "cdn-2025-12-06.internal"
+APP_INSTANCE = "experimental"
+
+# https://fly.io/docs/about/pricing/
+[[vm]]
+size = "performance-1x"
+
+[processes]
+app = "app.start"
+
+[deploy]
+strategy = "bluegreen"
+release_command = "on.deploy"
+
+[http_service]
+internal_port = 4000
+force_https = true
+processes = ["app"]
+# Always-on: the proxy must never stop/suspend machines. Prod runs 2, one per
+# region (see `mise team:prod:multi-region`). Keep auto_start/stop in lockstep.
+auto_stop_machines = "off"
+auto_start_machines = false
+
+[[http_service.checks]]
+grace_period = "30s"
+interval = "15s"
+method = "get"
+path = "/health"
+timeout = "10s"
+
+[http_service.concurrency]
+type = "connections"
+hard_limit = 2500
+soft_limit = 2000

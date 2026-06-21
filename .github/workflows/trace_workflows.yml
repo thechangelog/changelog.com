@@ -17,6 +17,7 @@ jobs:
     if: ${{ github.repository == 'thechangelog/changelog.com' }}
     steps:
       - name: Export Workflow Trace
+        # https://github.com/corentinmusard/otel-cicd-action/releases/tag/v4
         uses: corentinmusard/otel-cicd-action@9d13430746676ba690999657315ec3f162269f49
         with:
           otlpEndpoint: grpc://api.honeycomb.io:443/
