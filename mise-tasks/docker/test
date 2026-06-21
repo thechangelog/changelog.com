@@ -9,5 +9,5 @@ then
   source tmp/mise-runtime-image.env
 fi
 
-RUNTIME_IMAGE="${RUNTIME_IMAGE}" \
+RUNTIME_IMAGE="${RUNTIME_IMAGE:?run 'mise docker:build-runtime' first}" \
 docker compose -f docker/compose.test.yml run --rm --build test

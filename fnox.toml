@@ -68,11 +68,11 @@ ZULIP_BOT_API_KEY = { provider = "op", value = "zulip/bot_api_key" }
 # CI-specific secrets (image publishing, deploy)
 [profiles.ci.secrets]
 GHCR_PASSWORD = { provider = "op", value = "ghcr/credential" }
-FLY_API_TOKEN = { provider = "op", value = "op://changelog/fly/credential" }
+FLY_API_TOKEN = { provider = "op", value = "fly/credential" }
 
 # Dev-only secrets (local DB restore, local deploys)
 [profiles.dev.secrets]
-FLY_API_TOKEN = { provider = "op", value = "op://changelog/fly/credential" }
+FLY_API_TOKEN = { provider = "op", value = "fly/credential" }
 DB_PROD_HOST = { provider = "op", value = "neon/server" }
 DB_PROD_USERNAME = { provider = "op", value = "neon/username" }
 NEON_PROJECT_ID = { provider = "op", value = "neon/project" }

@@ -35,6 +35,7 @@ fi
 source "${MISE_PROJECT_ROOT}/mise-tasks/team/_lib.sh"
 require_env_file tmp/mise-prod-image.env "mise docker:build-prod"
 require_env APP_PROD_INSTANCE
+require_env FLY_API_TOKEN
 
 echo "Deploying ${PROD_IMAGE} to ${APP_PROD_INSTANCE}..."
 cd "fly.io/${APP_PROD_INSTANCE}"

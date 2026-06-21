@@ -1,5 +1,5 @@
 #!/bin/bash
-OP_SERVICE_ACCOUNT_TOKEN="${OP_SERVICE_ACCOUNT_TOKEN:?must be set}"
+export OP_SERVICE_ACCOUNT_TOKEN="${OP_SERVICE_ACCOUNT_TOKEN:?must be set}"
 # exec so the app replaces this shell as PID 1 and receives signals directly
 # (graceful shutdown on Fly's SIGTERM instead of waiting out kill_timeout).
 exec fnox exec --profile production -- mix phx.server

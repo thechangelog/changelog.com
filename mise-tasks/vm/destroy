@@ -13,5 +13,5 @@ fi
 SRC="$(realpath "${usage_src}")"
 VM="$(basename "${SRC//[._]/-}")"
 
-incus stop "${VM}"
-incus delete "${VM}"
+# --force stops the VM first if it's running; no-op-safe if already stopped
+incus delete --force "${VM}"
