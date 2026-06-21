@@ -2,13 +2,14 @@
 # Runtime image: base for dev, test & production
 # Published as ghcr.io/thechangelog/changelog-runtime
 #
-# Versions injected via --build-arg from mise.toml
+# Versions injected via --build-arg by the docker:build-runtime task: the tool
+# versions resolved from mise.toml, UBUNTU_VERSION pinned in the task itself.
 ARG ELIXIR_VERSION
 ARG ERLANG_VERSION
 ARG NODEJS_VERSION
 ARG YARN_VERSION
 ARG FNOX_VERSION
-ARG UBUNTU_VERSION=noble-20250404
+ARG UBUNTU_VERSION
 
 FROM hexpm/elixir:${ELIXIR_VERSION}-erlang-${ERLANG_VERSION}-ubuntu-${UBUNTU_VERSION}
 

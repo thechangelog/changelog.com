@@ -37,19 +37,5 @@ do
   fi
 done
 
-if ! brew list icu4c &>/dev/null
-then
-  echo "📦 Installing icu4c..."
-  brew install icu4c pkg-config
-fi
-
-if [[ "$(uname)" == "Linux" ]] && ! ldconfig -p | grep -q libicuuc.so.78
-then
-  echo "📦 Linking icu4c for Linux..."
-  echo "$(brew --prefix icu4c)/lib" \
-      | sudo tee /etc/ld.so.conf.d/homebrew-icu4c.conf > /dev/null
-  sudo ldconfig
-fi
-
 echo "📦 Installing tools from mise.toml..."
 mise install

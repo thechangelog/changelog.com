@@ -28,6 +28,11 @@ then
   exit 1
 fi
 
+# Ubuntu release of the hexpm/elixir base image (Dockerfile.runtime FROM). Not a
+# mise tool, so it's pinned here as the single source: injected as a build-arg
+# and shown in the image description. Bump the snapshot date when the base moves.
+UBUNTU_VERSION="noble-20250404"
+
 RUNTIME_TAG="elixir-v${ELIXIR_VERSION}-erlang-v${ERLANG_VERSION}-nodejs-v${NODEJS_VERSION}"
 
 # docker:test and docker:build-prod build FROM this runtime. A remote builder
@@ -51,7 +56,7 @@ then
 else
   BUILD_URL="$(hostname):$(pwd)"
 fi
-DESCRIPTION="💜 Elixir v${ELIXIR_VERSION} | 🚜 Erlang v${ERLANG_VERSION} | ⬢ Node.js v${NODEJS_VERSION} | 🗃️ Ubuntu 24.04 LTS (Noble Numbat) | ${BUILD_URL}"
+DESCRIPTION="💜 Elixir v${ELIXIR_VERSION} | 🚜 Erlang v${ERLANG_VERSION} | ⬢ Node.js v${NODEJS_VERSION} | 🗃️ Ubuntu ${UBUNTU_VERSION} | ${BUILD_URL}"
 SOURCE="https://github.com/${IMAGE_OWNER}/changelog.com"
 
 echo "Building runtime image: ${RUNTIME_IMAGE}"
@@ -62,6 +67,7 @@ docker buildx build \
   --build-arg ERLANG_VERSION="${ERLANG_VERSION}" \
   --build-arg NODEJS_VERSION="${NODEJS_VERSION}" \
   --build-arg YARN_VERSION="${YARN_VERSION}" \
+  --build-arg UBUNTU_VERSION="${UBUNTU_VERSION}" \
   --build-arg FNOX_VERSION="${FNOX_VERSION}" \
   --build-arg FNOX_SHA256="${FNOX_SHA256}" \
   --label "org.opencontainers.image.description=${DESCRIPTION}" \
