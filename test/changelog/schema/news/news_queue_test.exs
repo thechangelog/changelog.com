@@ -33,6 +33,21 @@ defmodule Changelog.NewsQueueTest do
     end
   end
 
+  describe "append_once/1" do
+    test "does not create a duplicate queue entry for the same item" do
+      item = insert(:news_item, status: :queued)
+
+      insert(:news_queue, item: item, position: 1.0)
+
+      NewsQueue.append_once(item)
+
+      entries = Repo.all(NewsQueue.queued())
+
+      assert length(entries) == 1
+      assert Enum.map(entries, & &1.item_id) == [item.id]
+    end
+  end
+
   describe "move/2" do
     setup do
       i1 = insert(:news_item)
@@ -124,7 +139,8 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Typesense.Client, [], [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
+        {Typesense.Client, [],
+         [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
         {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
@@ -160,7 +176,8 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Typesense.Client, [], [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
+        {Typesense.Client, [],
+         [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
         {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
@@ -186,7 +203,8 @@ defmodule Changelog.NewsQueueTest do
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
         {Notifier, [], [notify: fn _ -> true end]},
-        {Typesense.Client, [], [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
+        {Typesense.Client, [],
+         [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
         {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
@@ -210,7 +228,8 @@ defmodule Changelog.NewsQueueTest do
 
       with_mocks([
         {Buffer, [], [queue: fn _ -> true end]},
-        {Typesense.Client, [], [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
+        {Typesense.Client, [],
+         [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
         {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do

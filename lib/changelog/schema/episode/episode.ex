@@ -240,6 +240,7 @@ defmodule Changelog.Episode do
   def get_news_item(episode) do
     episode
     |> NewsItem.with_episode()
+    |> from(order_by: [asc: :inserted_at, asc: :id], limit: 1)
     |> Repo.one()
   end
 

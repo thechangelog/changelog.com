@@ -11,6 +11,8 @@ config :logger, level: :warning
 
 config :changelog, Changelog.Mailer, adapter: Swoosh.Adapters.Test
 
+config :changelog, :sync_episode_news_item_search, true
+
 # Configure your database
 config :changelog, Changelog.Repo,
   adapter: Ecto.Adapters.Postgres,

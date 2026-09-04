@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeTest do
 
   import Mock
 
-  alias Changelog.{Episode}
+  alias Changelog.{Episode, NewsItem}
 
   describe "admin_changeset/2" do
     test "with valid attributes" do
@@ -17,33 +17,51 @@ defmodule Changelog.EpisodeTest do
     end
 
     test "purges audio-related attrs whenever slug changes" do
-      episode = build(:episode,
-        audio_file: %{file_name: "test.mp3"},
-        audio_bytes: 42,
-        audio_duration: 2600,
-        plusplus_file: %{file_name: "test++.mp3"},
-        plusplus_bytes: 43,
-        plusplus_duration: 600)
+      episode =
+        build(:episode,
+          audio_file: %{file_name: "test.mp3"},
+          audio_bytes: 42,
+          audio_duration: 2600,
+          plusplus_file: %{file_name: "test++.mp3"},
+          plusplus_bytes: 43,
+          plusplus_duration: 600
+        )
 
       changeset = Episode.admin_changeset(episode, %{slug: "newslug"})
 
-      for attr <- [:audio_file, :audio_bytes, :audio_duration, :plusplus_file, :plusplus_bytes, :plusplus_duration] do
+      for attr <- [
+            :audio_file,
+            :audio_bytes,
+            :audio_duration,
+            :plusplus_file,
+            :plusplus_bytes,
+            :plusplus_duration
+          ] do
         assert Map.has_key?(changeset.changes, attr)
       end
     end
 
     test "doesn't purge audio-related attrs whenever slug doesn't change" do
-      episode = build(:episode,
-        audio_file: %{file_name: "test.mp3"},
-        audio_bytes: 42,
-        audio_duration: 2600,
-        plusplus_file: %{file_name: "test++.mp3"},
-        plusplus_bytes: 43,
-        plusplus_duration: 600)
+      episode =
+        build(:episode,
+          audio_file: %{file_name: "test.mp3"},
+          audio_bytes: 42,
+          audio_duration: 2600,
+          plusplus_file: %{file_name: "test++.mp3"},
+          plusplus_bytes: 43,
+          plusplus_duration: 600
+        )
 
       changeset = Episode.admin_changeset(episode, %{title: "new title"})
 
-      for attr <- [:audio_file, :audio_bytes, :audio_duration, :plusplus_file, :plusplus_bytes, :plusplus_duration] do
+      for attr <- [
+            :audio_file,
+            :audio_bytes,
+            :audio_duration,
+            :plusplus_file,
+            :plusplus_bytes,
+            :plusplus_duration
+          ] do
         refute Map.has_key?(changeset.changes, attr)
       end
     end
@@ -61,6 +79,30 @@ defmodule Changelog.EpisodeTest do
       |> Enum.map(& &1.title)
 
     assert found_titles == [yes1.title, yes2.title]
+  end
+
+  describe "get_news_item/1" do
+    test "returns the canonical item when duplicate episode news items exist" do
+      episode = insert(:published_episode)
+
+      canonical =
+        insert(:news_item,
+          type: :audio,
+          object_id: Episode.object_id(episode),
+          headline: "Canonical",
+          inserted_at: ~N[2026-01-01 00:00:00]
+        )
+
+      insert(:news_item,
+        type: :audio,
+        object_id: Episode.object_id(episode),
+        headline: "Duplicate",
+        inserted_at: ~N[2026-01-01 00:01:00]
+      )
+
+      assert %NewsItem{id: id} = Episode.get_news_item(episode)
+      assert id == canonical.id
+    end
   end
 
   describe "update_stat_counts" do
