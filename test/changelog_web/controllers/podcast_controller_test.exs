@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.PodcastControllerTest do
   use ChangelogWeb.ConnCase
 
+  alias Changelog.PodcastHost
+
   test "getting the podcasts index", %{conn: conn} do
     p1 = insert(:podcast, slug: "news")
     p2 = insert(:podcast, slug: "friends")
@@ -47,6 +49,27 @@ defmodule ChangelogWeb.PodcastControllerTest do
     conn = get(conn, Routes.podcast_path(conn, :show, p.slug))
     assert html_response(conn, 200) =~ p.name
     assert String.contains?(conn.resp_body, i.headline)
+  end
+
+  test "getting the changelog meta podcast page uses persisted active hosts", %{conn: conn} do
+    podcast = insert(:podcast, slug: "podcast")
+    active = insert(:person, name: "Active Meta Host")
+    retired = insert(:person, name: "Retired Meta Host")
+
+    Repo.insert!(%PodcastHost{podcast_id: podcast.id, person_id: active.id, position: 1})
+
+    Repo.insert!(%PodcastHost{
+      podcast_id: podcast.id,
+      person_id: retired.id,
+      position: 2,
+      retired: true
+    })
+
+    conn = get(conn, Routes.podcast_path(conn, :show, "podcast"))
+
+    body = html_response(conn, 200)
+    assert body =~ active.name
+    refute body =~ retired.name
   end
 
   test "getting a podcast page that doesn't exist", %{conn: conn} do
