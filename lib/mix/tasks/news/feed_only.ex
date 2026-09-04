@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Changelog.News.FeedOnly do
   use Mix.Task
 
-  alias Changelog.{Episode, EpisodeNewsItem, NewsItem, Person, Repo}
+  alias Changelog.{Episode, EpisodeNewsItem, Person, Repo}
 
   @shortdoc "Generates news items for historic feed-only episodes"
 
@@ -20,9 +20,7 @@ defmodule Mix.Tasks.Changelog.News.FeedOnly do
 
     for episode <- episodes do
       if !Episode.has_news_item(episode) do
-        episode
-        |> EpisodeNewsItem.insert(logbot, true)
-        |> NewsItem.publish!()
+        EpisodeNewsItem.insert_published_feed_only_once(episode, logbot)
       end
     end
   end

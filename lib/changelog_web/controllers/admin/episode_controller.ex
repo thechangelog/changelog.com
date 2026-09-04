@@ -351,26 +351,45 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   end
 
   def publish(conn, params = %{"id" => slug}, podcast) do
-    episode =
-      assoc(podcast, :episodes)
-      |> Repo.get_by!(slug: slug)
+    case Repo.transaction(fn ->
+           episode = lock_episode_for_publish(podcast, slug)
+           newly_published? = !Episode.is_published(episode)
+           changeset = Ecto.Changeset.change(episode, %{published: true})
 
-    changeset = Ecto.Changeset.change(episode, %{published: true})
+           case Repo.update(changeset) do
+             {:ok, episode} ->
+               news_item_result = handle_news_item(conn, episode)
+               if newly_published?, do: handle_notes_push_to_github!(episode)
+               %{episode: episode, news_item_result: news_item_result}
 
-    case Repo.update(changeset) do
-      {:ok, episode} ->
+             {:error, changeset} ->
+               Repo.rollback(changeset)
+           end
+         end) do
+      {:ok, %{episode: episode, news_item_result: news_item_result}} ->
+        EpisodeNewsItem.refresh_search(news_item_result)
         handle_guest_thanks(params, episode)
-        handle_news_item(conn, episode)
-        handle_notes_push_to_github(episode)
 
         conn
         |> put_flash(:result, "success")
         |> redirect(to: ~p"/admin/podcasts/#{podcast.slug}/episodes")
 
-      {:error, changeset} ->
+      {:error, error} ->
+        episode =
+          assoc(podcast, :episodes)
+          |> Repo.get_by!(slug: slug)
+          |> Episode.preload_all()
+
+        changeset = publish_error_changeset(episode, error)
+
         conn
         |> put_flash(:result, "failure")
-        |> render(:edit, episode: episode, changeset: changeset)
+        |> render(:edit,
+          episode: episode,
+          changeset: changeset,
+          last_slug: Podcast.last_published_numbered_slug(podcast),
+          episode_requests: episode_requests(episode)
+        )
     end
   end
 
@@ -433,28 +452,36 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     |> Repo.all()
   end
 
-  # if the "news" param exists, it's a regular news item.
-  defp handle_news_item(conn = %{params: %{"news" => _}}, episode) do
-    logger = conn.assigns.current_user
-
-    episode
-    |> EpisodeNewsItem.insert(logger)
-    |> NewsQueue.append()
-  end
-
-  # Otherwise we want a feed-only news item
   defp handle_news_item(conn, episode) do
     logger = conn.assigns.current_user
+    feed_only = !Map.has_key?(conn.params, "news")
 
-    episode
-    |> EpisodeNewsItem.insert(logger, true)
-    |> NewsQueue.append()
+    result = EpisodeNewsItem.insert_with_result(episode, logger, feed_only)
+    item = maybe_queue_news_item(result.item)
+
+    %{result | item: item}
   end
 
   defp handle_notes_push_to_github(episode) do
     if Episode.is_published(episode) do
       NotesPusher.queue(episode)
     end
+  end
+
+  defp handle_notes_push_to_github!(episode) do
+    case handle_notes_push_to_github(episode) do
+      :ok -> :ok
+      {:ok, _job} -> :ok
+      {:error, reason} -> Repo.rollback({:notes_push_failed, reason})
+    end
+  end
+
+  defp publish_error_changeset(_episode, changeset = %Ecto.Changeset{}), do: changeset
+
+  defp publish_error_changeset(episode, {:notes_push_failed, _reason}) do
+    episode
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.add_error(:base, "Unable to queue notes push")
   end
 
   defp handle_feed_updates(episode) do
@@ -485,6 +512,22 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         then_90: EpisodeStat.date_range_downloads(podcast, :then_90)
       }
     end)
+  end
+
+  defp lock_episode_for_publish(podcast, slug) do
+    from(e in assoc(podcast, :episodes),
+      where: e.slug == ^slug,
+      lock: "FOR UPDATE"
+    )
+    |> Repo.one!()
+  end
+
+  defp maybe_queue_news_item(item) do
+    if NewsItem.is_published(item) do
+      item
+    else
+      NewsQueue.append_once(item)
+    end
   end
 
   defp set_guest_thanks(episode, true), do: set_guest_thanks(episode, &EpisodeGuest.thanks/1)

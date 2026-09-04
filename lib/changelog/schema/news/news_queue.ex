@@ -54,6 +54,20 @@ defmodule Changelog.NewsQueue do
     NewsItem.queue!(item)
   end
 
+  def append_once(item) do
+    case Repo.get_by(NewsQueue, item_id: item.id) do
+      nil ->
+        append(item)
+
+      _entry ->
+        if NewsItem.is_queued(item) || NewsItem.is_published(item) do
+          item
+        else
+          NewsItem.queue!(item)
+        end
+    end
+  end
+
   def move(item = %NewsItem{}, to_index) do
     entry = Repo.get_by(NewsQueue, item_id: item.id)
     move(entry, to_index)
