@@ -7,7 +7,6 @@ defmodule Changelog.Podcast do
     EpisodeStat,
     FeedStat,
     Files,
-    Person,
     PodcastTopic,
     PodcastHost,
     Regexp,
@@ -121,7 +120,7 @@ defmodule Changelog.Podcast do
       clips_url: "https://www.youtube.com/playlist?list=PLCzseuA9sYreumc6MQV7C8FiRuaMczhjK",
       zulip_url: Application.get_env(:changelog, :zulip_url),
       cover: true,
-      active_hosts: Person.with_ids([1, 2]) |> Person.newest_first() |> Repo.all()
+      active_hosts: active_hosts_for_slug("podcast")
     }
   end
 
@@ -142,6 +141,17 @@ defmodule Changelog.Podcast do
     from(q in __MODULE__, where: q.slug in ~w(news podcast friends), select: [:id])
     |> Repo.all()
     |> Enum.map(& &1.id)
+  end
+
+  defp active_hosts_for_slug(slug) do
+    from(podcast in public(),
+      join: host in assoc(podcast, :active_podcast_hosts),
+      join: person in assoc(host, :person),
+      where: podcast.slug == ^slug,
+      order_by: [asc: host.position, asc: host.id],
+      select: person
+    )
+    |> Repo.all()
   end
 
   def file_changeset(podcast, attrs \\ %{}), do: cast_attachments(podcast, attrs, [:cover])

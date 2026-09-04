@@ -1,7 +1,7 @@
 defmodule Changelog.PodcastTest do
   use Changelog.SchemaCase
 
-  alias Changelog.Podcast
+  alias Changelog.{Podcast, PodcastHost}
 
   describe "insert_changeset" do
     test "with valid attributes" do
@@ -37,6 +37,36 @@ defmodule Changelog.PodcastTest do
     assert Podcast.published_episode_count(podcast) == 1
   end
 
+  describe "changelog/0" do
+    test "uses the persisted podcast row active host association" do
+      podcast = insert(:podcast, slug: "podcast")
+      adam = insert(:person, name: "Adam Active")
+      future_host = insert(:person, name: "Future Active")
+      retired = insert(:person, name: "Retired Host")
+
+      Repo.insert!(%PodcastHost{
+        podcast_id: podcast.id,
+        person_id: retired.id,
+        position: 1,
+        retired: true
+      })
+
+      Repo.insert!(%PodcastHost{podcast_id: podcast.id, person_id: future_host.id, position: 2})
+      Repo.insert!(%PodcastHost{podcast_id: podcast.id, person_id: adam.id, position: 1})
+
+      meta = Podcast.changelog()
+
+      assert meta.name == "The Changelog"
+      assert meta.slug == "podcast"
+      assert meta.is_meta
+      assert Enum.map(meta.active_hosts, & &1.id) == [adam.id, future_host.id]
+    end
+
+    test "uses no active hosts when the persisted metadata row is absent" do
+      assert Podcast.changelog().active_hosts == []
+    end
+  end
+
   describe "update_stat_counts/1" do
     setup do
       {:ok, podcast: insert(:podcast)}
@@ -65,20 +95,26 @@ defmodule Changelog.PodcastTest do
     end
 
     test "it uses the most recent feed stats, ignoring < 5 subs", %{podcast: podcast} do
-      insert(:feed_stat, date: ~D[2024-01-01], podcast: podcast, agents: %{
-        "Overcast" => %{
-          "raw" => "Overcast/1.0 Podcast Sync (993 subscribers; feed-id=554901; +http://overcast.fm/)"
-        },
-        "Player FM" => %{
-          "raw" => "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
-        },
-        "Castro" => %{
-          "raw" => "Castro 2 Episode Download (1000 subscribers)"
-        },
-        "Fake Castro" => %{
-          "raw" => "Fake Castro 2 Episode Download (3 subscribers)"
+      insert(:feed_stat,
+        date: ~D[2024-01-01],
+        podcast: podcast,
+        agents: %{
+          "Overcast" => %{
+            "raw" =>
+              "Overcast/1.0 Podcast Sync (993 subscribers; feed-id=554901; +http://overcast.fm/)"
+          },
+          "Player FM" => %{
+            "raw" =>
+              "PlayerFM/1.0 Podcast Sync (5033 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+          },
+          "Castro" => %{
+            "raw" => "Castro 2 Episode Download (1000 subscribers)"
+          },
+          "Fake Castro" => %{
+            "raw" => "Fake Castro 2 Episode Download (3 subscribers)"
+          }
         }
-      })
+      )
 
       podcast = Podcast.update_subscribers(podcast)
 
@@ -87,14 +123,20 @@ defmodule Changelog.PodcastTest do
       assert podcast.subscribers["Castro"] == 1000
       assert podcast.subscribers["Fake Castro"] == nil
 
-      insert(:feed_stat, date: ~D[2024-01-02], podcast: podcast, agents: %{
-        "Overcast" => %{
-          "raw" => "Overcast/1.0 Podcast Sync (994 subscribers; feed-id=554901; +http://overcast.fm/)"
-        },
-        "Player FM" => %{
-          "raw" => "PlayerFM/1.0 Podcast Sync (5133 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+      insert(:feed_stat,
+        date: ~D[2024-01-02],
+        podcast: podcast,
+        agents: %{
+          "Overcast" => %{
+            "raw" =>
+              "Overcast/1.0 Podcast Sync (994 subscribers; feed-id=554901; +http://overcast.fm/)"
+          },
+          "Player FM" => %{
+            "raw" =>
+              "PlayerFM/1.0 Podcast Sync (5133 subscribers; url=https://player.fm/series/the-changelog-1282967)"
+          }
         }
-      })
+      )
 
       podcast = Podcast.update_subscribers(podcast)
 
