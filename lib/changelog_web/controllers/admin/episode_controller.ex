@@ -353,6 +353,7 @@ defmodule ChangelogWeb.Admin.EpisodeController do
   def publish(conn, params = %{"id" => slug}, podcast) do
     case Repo.transaction(fn ->
            episode = lock_episode_for_publish(podcast, slug)
+           validate_guest_thanks!(params, episode)
            newly_published? = !Episode.is_published(episode)
            changeset = Ecto.Changeset.change(episode, %{published: true})
 
@@ -482,7 +483,20 @@ defmodule ChangelogWeb.Admin.EpisodeController do
     episode
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.add_error(:base, "Unable to queue notes push")
+    |> publish_error_action()
   end
+
+  defp publish_error_changeset(episode, :guest_thanks_missing_person) do
+    episode
+    |> Ecto.Changeset.change()
+    |> Ecto.Changeset.add_error(
+      :episode_guests,
+      "Every guest needs a person before thanks can be sent"
+    )
+    |> publish_error_action()
+  end
+
+  defp publish_error_action(changeset), do: %{changeset | action: :validate}
 
   defp handle_feed_updates(episode) do
     if Episode.is_published(episode) do
@@ -512,6 +526,21 @@ defmodule ChangelogWeb.Admin.EpisodeController do
         then_90: EpisodeStat.date_range_downloads(podcast, :then_90)
       }
     end)
+  end
+
+  defp validate_guest_thanks!(%{"thanks" => _}, episode) do
+    if guest_thanks_missing_person?(episode) do
+      Repo.rollback(:guest_thanks_missing_person)
+    end
+  end
+
+  defp validate_guest_thanks!(_params, _episode), do: :ok
+
+  defp guest_thanks_missing_person?(episode) do
+    episode
+    |> assoc(:episode_guests)
+    |> where([episode_guest], is_nil(episode_guest.person_id))
+    |> Repo.exists?()
   end
 
   defp lock_episode_for_publish(podcast, slug) do

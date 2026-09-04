@@ -3,7 +3,7 @@ defmodule Changelog.EpisodeNewsItemTest do
 
   import Mock
 
-  alias Changelog.{EpisodeNewsItem, EpisodeTopic, NewsItem, Repo, TypesenseSearch}
+  alias Changelog.{Episode, EpisodeNewsItem, EpisodeTopic, NewsItem, Repo, TypesenseSearch}
 
   setup_with_mocks([{TypesenseSearch, [], [update_item: fn _ -> :ok end]}], _context) do
     :ok
@@ -68,6 +68,52 @@ defmodule Changelog.EpisodeNewsItemTest do
     assert Repo.aggregate(NewsItem.with_episode(episode), :count) == 1
     assert retried_item.id == item.id
     assert retried_item.feed_only == false
+  end
+
+  test "update/1 preserves nil published_at on queued canonical items" do
+    episode = insert(:published_episode, title: "Updated", summary: "Fresh")
+    logger = insert(:person)
+
+    item =
+      insert(:news_item,
+        type: :audio,
+        status: :queued,
+        object_id: Episode.object_id(episode),
+        url: "https://changelog.com/#{episode.podcast.slug}/#{episode.slug}",
+        headline: "Old",
+        story: "Stale",
+        logger: logger,
+        published_at: nil
+      )
+
+    updated_item = EpisodeNewsItem.update(episode)
+
+    assert updated_item.id == item.id
+    assert updated_item.status == :queued
+    assert updated_item.published_at == nil
+    assert updated_item.headline == "Updated"
+    assert updated_item.story == "Fresh"
+  end
+
+  test "update/1 syncs published_at on published canonical items" do
+    episode = insert(:published_episode)
+    logger = insert(:person)
+    old_published_at = Timex.shift(episode.published_at, days: -1)
+
+    item =
+      insert(:news_item,
+        type: :audio,
+        status: :published,
+        object_id: Episode.object_id(episode),
+        logger: logger,
+        published_at: old_published_at
+      )
+
+    updated_item = EpisodeNewsItem.update(episode)
+
+    assert updated_item.id == item.id
+    assert updated_item.status == :published
+    assert updated_item.published_at == episode.published_at
   end
 
   test "insert_published_feed_only_once/2 does not mutate an existing canonical item" do

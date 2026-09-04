@@ -270,6 +270,31 @@ defmodule ChangelogWeb.Admin.EpisodeControllerTest do
   end
 
   @tag :as_inserted_admin
+  test "does not publish when guest thanks is requested for a guest without a person", %{
+    conn: conn
+  } do
+    p = insert(:podcast)
+    e = insert(:publishable_episode, podcast: p)
+    eg = insert(:episode_guest, episode: e, person: nil, person_id: nil, thanks: false)
+
+    conn =
+      post(conn, Routes.admin_podcast_episode_path(conn, :publish, p.slug, e.slug), %{
+        "thanks" => "true"
+      })
+
+    response = html_response(conn, 200)
+
+    assert response =~ "Every guest needs a person before thanks can be sent"
+    assert response =~ "Missing guest person"
+    refute Repo.get!(Episode, e.id).published
+    refute Repo.get!(EpisodeGuest, eg.id).thanks
+    assert Repo.aggregate(NewsItem.with_episode(e), :count) == 0
+    assert count(NewsQueue) == 0
+    refute called(ObanWorkers.NotesPusher.queue(:_))
+    refute called(Changelog.Merch.create_discount(:_, :_))
+  end
+
+  @tag :as_inserted_admin
   test "schedules an episode for publishing", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:publishable_episode, podcast: p, published_at: Timex.end_of_week(Timex.now()))

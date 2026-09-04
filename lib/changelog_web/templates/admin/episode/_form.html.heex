@@ -129,8 +129,9 @@
     </div>
   </div>
 
-  <div class="field">
+  <div class={"field #{AdminHelpers.error_class(f, :episode_guests)}"}>
     <%= label(f, :guests) %>
+    <%= AdminHelpers.error_message(f, :episode_guests) %>
 
     <div class="ui middle aligned selection list js-episode_guests">
       <%= inputs_for f, :episode_guests, fn i -> %>
@@ -138,11 +139,19 @@
         <div class={if AdminHelpers.is_persisted(i.data), do: "item persisted", else: "item"}>
           <%= hidden_input(i, :person_id) %>
           <%= hidden_input(i, :position, class: "js-position") %>
-          <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(guest)}>
 
-          <div class="content">
-            <div class="header"><%= guest.name %> (@<%= guest.handle %>)</div>
-          </div>
+          <%= if guest do %>
+            <img class="ui avatar image" src={ChangelogWeb.PersonView.avatar_url(guest)}>
+
+            <div class="content">
+              <div class="header"><%= guest.name %> (@<%= guest.handle %>)</div>
+            </div>
+          <% else %>
+            <div class="content">
+              <div class="header">Missing guest person</div>
+              <div class="description">Remove this guest or select a person before thanking guests.</div>
+            </div>
+          <% end %>
 
           <div class="right floated content">
             <div class="ui tiny icon button js-remove">

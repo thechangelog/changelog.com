@@ -110,17 +110,27 @@ defmodule Changelog.EpisodeNewsItem do
     |> NewsItem.preload_topics()
     |> change(
       Map.merge(
-        %{
-          url: EpisodeView.episode_url(episode, :show),
-          headline: episode.title,
-          story: episode.summary,
-          published_at: episode.published_at,
-          news_item_topics: episode_topics(episode)
-        },
+        reconcile_attrs(item, episode),
         attrs
       )
     )
   end
+
+  defp reconcile_attrs(item, episode) do
+    %{
+      url: EpisodeView.episode_url(episode, :show),
+      headline: episode.title,
+      story: episode.summary,
+      news_item_topics: episode_topics(episode)
+    }
+    |> Map.merge(reconciled_published_at(item, episode))
+  end
+
+  defp reconciled_published_at(%NewsItem{status: :published}, episode) do
+    %{published_at: episode.published_at}
+  end
+
+  defp reconciled_published_at(_item, _episode), do: %{}
 
   defp reconciled_feed_only(_item, false), do: false
   defp reconciled_feed_only(item, true), do: item.feed_only
