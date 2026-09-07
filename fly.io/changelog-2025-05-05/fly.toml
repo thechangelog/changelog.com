@@ -8,7 +8,7 @@ kill_timeout = 30
 
 [env]
 PIPEDREAM_HOST = "cdn-2025-12-06.internal"
-APP_INSTANCE = "production"
+APP_INSTANCE = "experimental"
 
 # https://fly.io/docs/about/pricing/
 [[vm]]
