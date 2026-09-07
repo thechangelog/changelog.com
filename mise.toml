@@ -27,7 +27,7 @@ fnox = "1"
 # CI forwards vars.* unconditionally, so an unset variable arrives as "" — the
 # POSIX ${VAR:-default} coalesces empty *and* unset back to the default. A fork
 # overrides by setting the repo variable; nothing else defaults these.
-APP_PROD_INSTANCE = "${APP_PROD_INSTANCE:-changelog-2025-05-05}"
+APP_PROD_INSTANCE = "${APP_PROD_INSTANCE:-changelog-2026-06-14}"
 OP_ACCOUNT        = "changelog.1password.com"
 IMAGE_OWNER       = "${IMAGE_OWNER:-thechangelog}"
 GHCR_USERNAME     = "${GITHUB_ACTOR:-$USER}"
