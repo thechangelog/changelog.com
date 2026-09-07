@@ -6,6 +6,8 @@ defmodule Changelog.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    release_task? = System.get_env("CHANGELOG_RELEASE_TASK") == "1"
+
     children = [
       ChangelogWeb.Endpoint,
       {Phoenix.PubSub, [name: Changelog.PubSub, adapter: Phoenix.PubSub.PG2]},
@@ -14,20 +16,25 @@ defmodule Changelog.Application do
         :app_cache,
         ttl_check_interval: :timer.seconds(1),
         global_ttl: :timer.seconds(60)
-      ),
-      {Oban, oban_config()}
+      )
     ]
 
-    # Only attach the telemetry logger when we aren't in an IEx shell
-    unless Code.ensure_loaded?(IEx) && IEx.started?() do
-      Oban.Telemetry.attach_default_logger(:info)
+    # Release tasks need application dependencies, but must not acquire background work.
+    children = if release_task?, do: children, else: children ++ [{Oban, oban_config()}]
 
-      Changelog.ObanReporter.attach()
+    unless release_task? do
+      # Only attach the telemetry logger when we aren't in an IEx shell
+      unless Code.ensure_loaded?(IEx) && IEx.started?() do
+        Oban.Telemetry.attach_default_logger(:info)
+
+        Changelog.ObanReporter.attach()
+      end
+
+      OpentelemetryOban.setup(trace: [:jobs])
     end
 
     :opentelemetry_cowboy.setup()
     OpentelemetryEcto.setup([:changelog, :repo])
-    OpentelemetryOban.setup(trace: [:jobs])
     OpentelemetryPhoenix.setup(adapter: :cowboy2)
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Changelog.Supervisor)
