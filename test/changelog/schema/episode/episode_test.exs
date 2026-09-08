@@ -83,6 +83,10 @@ defmodule Changelog.EpisodeTest do
 
   describe "get_news_item/1" do
     test "returns the canonical item when duplicate episode news items exist" do
+      # Simulate pre-migration data. This non-async sandbox transaction restores
+      # the index on rollback, retaining fallback coverage without weakening other tests.
+      Ecto.Adapters.SQL.query!(Repo, "DROP INDEX news_items_episode_object_id_unique")
+
       episode = insert(:published_episode)
 
       canonical =
