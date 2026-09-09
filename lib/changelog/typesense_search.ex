@@ -28,17 +28,6 @@ defmodule Changelog.TypesenseSearch do
     })
   end
 
-  def search(opts \\ []) do
-    case Typesense.Client.search(namespace(), opts) do
-      {:ok, response} ->
-        results_from(response)
-
-      response ->
-        Logger.error("Error during search: #{inspect(opts)}. Response: #{inspect(response)}")
-        results_from(%{})
-    end
-  end
-
   def search_with_highlights(opts \\ []) do
     case Typesense.Client.search(namespace(), opts) do
       {:ok, response} ->
@@ -166,29 +155,6 @@ defmodule Changelog.TypesenseSearch do
       |> add_to_record("fragment", text, :cuttable)
 
     [record]
-  end
-
-  defp results_from(response) do
-    hits = hits_from_response(response)
-
-    item_ids =
-      hits
-      |> Enum.map(fn x -> Map.get(x, "document") end)
-      |> Enum.map(fn x -> Map.get(x, "item_id") end)
-
-    items =
-      NewsItem
-      |> NewsItem.by_ids(item_ids)
-      |> NewsItem.preload_all()
-      |> Repo.all()
-      |> Enum.map(&NewsItem.load_object/1)
-
-    %Page{
-      entries: items,
-      total_pages: Map.get(response, "found", 0) / get_in(response, [Access.key("request_params", %{}), Access.key("per_page", 1)]) |> Float.ceil(),
-      total_entries: Map.get(response, "found", 0),
-      page_number: Map.get(response, "page", 1)
-    }
   end
 
   defp results_with_highlights_from(response) do
