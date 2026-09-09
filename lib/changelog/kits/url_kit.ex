@@ -78,9 +78,6 @@ defmodule Changelog.UrlKit do
     end
   end
 
-  def is_youtube(nil), do: false
-  def is_youtube(url), do: Enum.any?(youtube_regexes(), &String.match?(url, &1))
-
   def is_self_hosted(url) do
     URI.parse(url).host == "changelog.com"
   end

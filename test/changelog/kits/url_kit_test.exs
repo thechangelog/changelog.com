@@ -16,18 +16,6 @@ defmodule Changelog.UrlKitTest do
     end
   end
 
-  describe "is_youtube/1" do
-    test "is true for youtube URLS" do
-      assert UrlKit.is_youtube("https://youtu.be/7msERxu7ivg")
-      assert UrlKit.is_youtube("https://www.youtube.com/watch?v=7msERxu7ivg")
-    end
-
-    test "is false for non-youtube URLS" do
-      refute UrlKit.is_youtube("https://vimeo.com/239702317")
-      refute UrlKit.is_youtube("https://www.twitch.tv/skacle")
-    end
-  end
-
   describe "get_object_id/2" do
     test "defaults to nil" do
       assert is_nil(UrlKit.get_object_id(:link, nil))
