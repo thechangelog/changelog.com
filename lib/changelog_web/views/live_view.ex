@@ -4,21 +4,6 @@ defmodule ChangelogWeb.LiveView do
   alias Changelog.UrlKit
   alias ChangelogWeb.{EpisodeView, PersonView, PodcastView, TimeView}
 
-  def render("ical.ics", %{episodes: episodes}) do
-    events =
-      Enum.map(episodes, fn episode ->
-        %ICalendar.Event{
-          summary: "#{episode.podcast.name} Live",
-          description: episode_title_with_subtitle(episode),
-          url: live_url(episode),
-          dtstart: episode.recorded_at,
-          dtend: Timex.shift(episode.recorded_at, minutes: 90)
-        }
-      end)
-
-    %ICalendar{events: events}
-  end
-
   def episode_title_with_subtitle(episode) do
     if episode.subtitle do
       "#{episode.title} (#{episode.subtitle})"

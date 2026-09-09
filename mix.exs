@@ -70,7 +70,6 @@ defmodule Changelog.Mixfile do
       {:sentry, "~> 11.0"},
       {:html_entities, "~> 0.3"},
       {:tzdata, "~> 1.1.0"},
-      {:icalendar, "~> 1.0"},
       # TODO: find replacement for dead https://github.com/nsweeting/shopify
       {:shopify, "~> 0.4", github: "ankhers/shopify", branch: "otp24_upgrade"},
       {:stripity_stripe, "~> 3.2"},

@@ -70,8 +70,6 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
-config :phoenix, :format_encoders, ics: ICalendar
-
 config :phoenix, :generators,
   migration: true,
   binary_id: false
@@ -98,8 +96,7 @@ config :waffle,
 
 config :ueberauth, Ueberauth,
   providers: [
-    github: {Ueberauth.Strategy.Github, [default_scope: "user:email", send_redirect_uri: false]},
-    twitter: {Ueberauth.Strategy.Twitter, []}
+    github: {Ueberauth.Strategy.Github, [default_scope: "user:email", send_redirect_uri: false]}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
