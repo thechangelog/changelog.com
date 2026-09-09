@@ -80,7 +80,7 @@ Naming convention: a new instance is `changelog-YYYY-MM-DD` using the date it's
 created — the date part is significant (it's how instances are told apart, and
 it threads through the Fly app name, the `fly.io/<name>/` dir, and
 `APP_PROD_INSTANCE`). Throughout, `${OLD}` is the current production app
-(`mise env | rg APP_PROD_INSTANCE`, currently `changelog-2025-05-05`) and
+(`mise env | rg APP_PROD_INSTANCE`, currently `changelog-2026-06-14`) and
 `${NEW}` is the one being created.
 
 ---

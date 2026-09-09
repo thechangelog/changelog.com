@@ -36,7 +36,7 @@ graph TD
         cicd --> |success #kaizen code| chat
     end
 
-    repo -.- |fly.io/changelog-2025-05-05| app
+    repo -.- |fly.io/changelog-2026-06-14| app
 
     registry ---> |ghcr.io/changelog/changelog-prod| app
     runner --> |flyctl deploy| app
@@ -51,9 +51,9 @@ graph TD
         pipedream[ fa:fa-bolt changelog.com cdn.changelog.com ]:::link
         click pipedream "https://changelog.com"
 
-        app(( fab:fa-phoenix-framework IAD & EWR changelog-2025-05-05.fly.dev )):::link
+        app(( fab:fa-phoenix-framework IAD & EWR changelog-2026-06-14.fly.dev )):::link
         style app fill:#488969;
-        click app "https://fly.io/apps/changelog-2025-05-05"
+        click app "https://fly.io/apps/changelog-2026-06-14"
 
         pghero([ fa:fa-gem PgHero 2024-03-27 ]):::link
         click pghero "https://fly.io/apps/pghero-2024-03-27"
@@ -162,7 +162,7 @@ Fly.io Proxy
 ↓
 Pipedream (changelog.com)
 ↓
-Application (changelog-2025-05-05.fly.dev)
+Application (changelog-2026-06-14.fly.dev)
 ```
 
 The production database - PostgreSQL - is running on Neon.tech. It is
@@ -171,7 +171,7 @@ using the replica, and since Neon.tech scales down to 0, this doesn't cost
 anything.
 
 ```
-Application (changelog-2025-05-05.fly.dev)
+Application (changelog-2026-06-14.fly.dev)
 ↓
 PostgreSQL Leader (RW)
 ↓
