@@ -3,7 +3,7 @@ defmodule Changelog.NewsQueueTest do
 
   import Mock
 
-  alias Changelog.{Buffer, HN, NewsItem, NewsQueue, Notifier, Social, Typesense}
+  alias Changelog.{Buffer, NewsItem, NewsQueue, Notifier, Social, Typesense}
 
   describe "append/1" do
     test "when queue is empty" do
@@ -141,7 +141,6 @@ defmodule Changelog.NewsQueueTest do
         {Buffer, [], [queue: fn _ -> true end]},
         {Typesense.Client, [],
          [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
-        {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish_next()
@@ -178,7 +177,6 @@ defmodule Changelog.NewsQueueTest do
         {Buffer, [], [queue: fn _ -> true end]},
         {Typesense.Client, [],
          [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
-        {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish_scheduled()
@@ -205,7 +203,6 @@ defmodule Changelog.NewsQueueTest do
         {Notifier, [], [notify: fn _ -> true end]},
         {Typesense.Client, [],
          [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
-        {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish(item)
@@ -230,7 +227,6 @@ defmodule Changelog.NewsQueueTest do
         {Buffer, [], [queue: fn _ -> true end]},
         {Typesense.Client, [],
          [upsert_documents: fn _, _ -> {:ok, %HTTPoison.Response{body: "{}"}} end]},
-        {HN, [], [submit: fn _ -> true end]},
         {Social, [], [post: fn _ -> true end]}
       ]) do
         NewsQueue.publish(i2)
