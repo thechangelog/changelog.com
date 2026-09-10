@@ -83,7 +83,8 @@ defmodule ChangelogWeb.Xml.Plusplus do
     %{url: url, length: bytes, type: "audio/mpeg"}
   end
 
-  defp chapters(%{audio_chapters: []}), do: nil
+  defp chapters(%{audio_chapters: [], plusplus_chapters: []}), do: nil
+  defp chapters(%{audio_chapters: [], plusplus_file: nil}), do: nil
 
   defp chapters(episode) do
     {chapters, url} =

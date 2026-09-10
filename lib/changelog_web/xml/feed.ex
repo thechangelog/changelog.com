@@ -85,7 +85,8 @@ defmodule ChangelogWeb.Xml.Feed do
     %{url: url, length: bytes, type: "audio/mpeg"}
   end
 
-  defp chapters(_feed, %{audio_chapters: []}), do: nil
+  defp chapters(%{plusplus: true}, %{audio_chapters: [], plusplus_chapters: []}), do: nil
+  defp chapters(%{plusplus: false}, %{audio_chapters: []}), do: nil
 
   defp chapters(feed, episode) do
     {chapters, url} =
