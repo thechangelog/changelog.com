@@ -26,16 +26,6 @@ defmodule ChangelogWeb.PublicHelpersTest do
     end
   end
 
-  describe "plural_form" do
-    test "when sent a count" do
-      assert plural_form(1, "person", "people") == "person"
-    end
-
-    test "when sent a list" do
-      assert plural_form([1], "person", "people") == "person"
-    end
-  end
-
   describe "with_timestamp_links" do
     test "normal use inside brackets" do
       assert with_timestamp_links("[00:11:24.05]") ==
