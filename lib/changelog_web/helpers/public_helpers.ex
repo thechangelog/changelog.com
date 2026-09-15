@@ -47,12 +47,6 @@ defmodule ChangelogWeb.Helpers.PublicHelpers do
     end
   end
 
-  def plural_form(list, singular, plural) when is_list(list),
-    do: plural_form(length(list), singular, plural)
-
-  def plural_form(1, singular, _plural), do: singular
-  def plural_form(_count, _singular, plural), do: plural
-
   def tweet_url(text, url, via \\ "changelog")
   def tweet_url(text, url, nil), do: tweet_url(text, url)
 
