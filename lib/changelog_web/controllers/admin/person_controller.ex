@@ -10,7 +10,6 @@ defmodule ChangelogWeb.Admin.PersonController do
     Newsletters,
     Person,
     Podcast,
-    Slack,
     Zulip,
     Subscription
   }
@@ -18,7 +17,7 @@ defmodule ChangelogWeb.Admin.PersonController do
   alias Changelog.ObanWorkers.{ContentPurger, MailDeliverer}
 
   plug :assign_person
-       when action in [:show, :edit, :update, :delete, :slack, :zulip, :news, :comments, :masq]
+       when action in [:show, :edit, :update, :delete, :zulip, :news, :comments, :masq]
 
   plug Authorize, [Policies.Admin.Person, :person]
   plug :scrub_params, "person" when action in [:create, :update]
@@ -217,24 +216,6 @@ defmodule ChangelogWeb.Admin.PersonController do
     |> assign(:published, page.entries)
     |> assign(:page, page)
     |> render(:news)
-  end
-
-  def slack(conn = %{assigns: %{person: person}}, params) do
-    flash =
-      case Slack.Client.invite(person.email) do
-        %{"ok" => true} ->
-          "success"
-
-        %{"ok" => false, "error" => "already_in_team"} ->
-          "success"
-
-        _else ->
-          "failure"
-      end
-
-    conn
-    |> put_flash(:result, flash)
-    |> redirect_next(params, ~p"/admin/people")
   end
 
   def zulip(conn = %{assigns: %{person: person}}, params) do
