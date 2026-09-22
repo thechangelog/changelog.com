@@ -31,26 +31,11 @@ let common = {
           "postcss-loader",
           "sass-loader"
         ]
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg)$/i,
-        exclude: "/fonts/",
-        type: "asset/resource"
-      },
-      {
-        test: /\.(woff|woff2|ttf|eot|otf)$/,
-        exclude: "/images/",
-        type: "asset/resource"
       }
     ]
   },
   optimization: {
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin({})]
-  },
-  devServer: {
-    watchOptions: {
-      ignored: /node_modules/
-    }
   }
 };
 
