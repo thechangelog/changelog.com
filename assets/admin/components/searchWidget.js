@@ -2,7 +2,6 @@ import Sortable from "sortablejs";
 import autosize from "autosize";
 
 import personItem from "templates/personItem.hbs";
-import podcastItem from "templates/podcastItem.hbs";
 import topicItem from "templates/topicItem.hbs";
 import sponsorItem from "templates/sponsorItem.hbs";
 
@@ -26,9 +25,6 @@ export default class SearchWidget {
       switch (type) {
         case "person":
           return "<a href='/admin/people/new' target='_blank'>Add a Person</a>";
-          break;
-        case "podcast":
-          return "<a href='/admin/podcast/new' target='_blank'>Add a Podcast</a>";
           break;
         case "sponsor":
           return "<a href='/admin/sponsors/new' target='_blank'>Add a Sponsor</a>";
@@ -67,9 +63,6 @@ export default class SearchWidget {
           case "person":
             context.parentIsPodcast = (parentType == "podcast");
             $list.append(personItem(context));
-            break;
-          case "podcast":
-            $list.append(podcastItem(context));
             break;
           case "sponsor":
             $list.append(sponsorItem(context));
