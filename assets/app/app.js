@@ -51,12 +51,6 @@ window.App = {
     });
   },
 
-  detachFlash() {
-    u(".js-flash").each((el) => {
-      el.flash.remove();
-    });
-  },
-
   deepLink(href) {
     let linkTime = parseTime(gup("t", href || location.href, "#"));
     if (!linkTime) return false;
@@ -171,17 +165,6 @@ u(document).on(
     }
   }
 );
-
-u(document).handle("click", ".js-toggle_element", function (event) {
-  const href = u(event.target).attr("href");
-  u(href).toggleClass("is-hidden");
-});
-
-u(document).handle("click", ".podcast-summary-widget_toggle", function (event) {
-  u(event.target)
-    .siblings(".podcast-summary-widget_menu")
-    .toggleClass("podcast-summary-widget_menu--is-open");
-});
 
 u(document).on("click", "[data-play]", function (event) {
   if (App.player.canPlay()) {
