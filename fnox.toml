@@ -65,9 +65,8 @@ ZULIP_API_KEY = { provider = "op", value = "zulip/user_api_key" }
 ZULIP_BOT_USER = { provider = "op", value = "zulip/bot_user" }
 ZULIP_BOT_API_KEY = { provider = "op", value = "zulip/bot_api_key" }
 
-# CI-specific secrets (image publishing, deploy)
+# CI deployment secret (image publishing uses the GitHub workflow token)
 [profiles.ci.secrets]
-GHCR_PASSWORD = { provider = "op", value = "ghcr/credential" }
 FLY_API_TOKEN = { provider = "op", value = "fly/credential" }
 
 # Dev-only secrets (local DB restore, local deploys)
