@@ -3,6 +3,8 @@ defmodule ChangelogWeb.PostController do
 
   alias Changelog.{Post, NewsItem, NewsItemComment}
 
+  plug ChangelogWeb.Plug.RequireAdminPreview when action in [:preview]
+
   def index(conn, params) do
     page =
       Post.published()

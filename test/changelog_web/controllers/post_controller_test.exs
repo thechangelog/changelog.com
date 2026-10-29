@@ -46,6 +46,7 @@ defmodule ChangelogWeb.PostControllerTest do
     end
   end
 
+  @tag :as_inserted_admin
   test "previewing a post", %{conn: conn} do
     p = insert(:post)
 

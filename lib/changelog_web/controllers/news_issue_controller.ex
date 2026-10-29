@@ -1,6 +1,8 @@
 defmodule ChangelogWeb.NewsIssueController do
   use ChangelogWeb, :controller
 
+  plug ChangelogWeb.Plug.RequireAdminPreview when action in [:preview]
+
   alias Changelog.{NewsIssue, NewsItem}
 
   plug :put_layout, false

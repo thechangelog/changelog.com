@@ -3,8 +3,11 @@ defmodule ChangelogWeb.EpisodeController do
 
   alias Changelog.{Episode, NewsItem, Podcast, Subscription}
   alias ChangelogWeb.{Email, EpisodeView, LiveView, TimeView, Xml}
+  alias ChangelogWeb.Plug.RequireAdminPreview
 
+  plug RequireAdminPreview when action in [:preview]
   plug :assign_podcast
+  plug :assign_asset_episode when action in [:play, :img]
 
   def action(conn, _) do
     arg_list = [conn, conn.params, conn.assigns.podcast]
@@ -27,12 +30,8 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:show)
   end
 
-  def img(conn, params = %{"slug" => slug}, podcast = %{slug: "news"}) do
-    episode =
-      assoc(podcast, :episodes)
-      |> Episode.preload_all()
-      |> Repo.get_by!(slug: slug)
-
+  def img(conn, params, %{slug: "news"}) do
+    episode = Episode.preload_all(conn.assigns.episode)
     shape = Map.get(params, "shape", "rectangle")
 
     conn
@@ -42,11 +41,8 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:img_news, layout: false)
   end
 
-  def img(conn, %{"slug" => slug}, podcast) do
-    episode =
-      assoc(podcast, :episodes)
-      |> Episode.preload_all()
-      |> Repo.get_by!(slug: slug)
+  def img(conn, _params, _podcast) do
+    episode = Episode.preload_all(conn.assigns.episode)
 
     conn
     |> assign(:episode, episode)
@@ -86,11 +82,8 @@ defmodule ChangelogWeb.EpisodeController do
     |> render(:show)
   end
 
-  def play(conn, %{"slug" => slug}, podcast) do
-    episode =
-      assoc(podcast, :episodes)
-      |> Episode.preload_podcast()
-      |> Repo.get_by!(slug: slug)
+  def play(conn, _params, podcast) do
+    episode = Episode.preload_podcast(conn.assigns.episode)
 
     conn
     |> assign(:podcast, podcast)
@@ -263,5 +256,24 @@ defmodule ChangelogWeb.EpisodeController do
   defp assign_podcast(conn, _) do
     podcast = Repo.get_by!(Podcast, slug: conn.params["podcast"])
     assign(conn, :podcast, podcast)
+  end
+
+  defp assign_asset_episode(conn, _) do
+    query = assoc(conn.assigns.podcast, :episodes)
+    slug = conn.params["slug"]
+
+    case query |> Episode.published() |> Repo.get_by(slug: slug) do
+      nil ->
+        conn = RequireAdminPreview.call(conn, [])
+
+        if conn.halted do
+          conn
+        else
+          assign(conn, :episode, Repo.get_by!(query, slug: slug))
+        end
+
+      episode ->
+        assign(conn, :episode, episode)
+    end
   end
 end

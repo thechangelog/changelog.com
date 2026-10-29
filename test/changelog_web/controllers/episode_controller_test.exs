@@ -62,6 +62,7 @@ defmodule ChangelogWeb.EpisodeControllerTest do
     end
   end
 
+  @tag :as_inserted_admin
   test "previewing a podcast episode", %{conn: conn} do
     p = insert(:podcast)
     e = insert(:episode, podcast: p)

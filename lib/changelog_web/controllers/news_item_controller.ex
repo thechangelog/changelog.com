@@ -4,6 +4,7 @@ defmodule ChangelogWeb.NewsItemController do
   alias Changelog.{Episode, NewsItem, NewsItemComment, Podcast, Subscription}
   alias ChangelogWeb.{EpisodeView, NewsItemView, PersonView}
 
+  plug ChangelogWeb.Plug.RequireAdminPreview when action in [:preview]
   plug RequireUser, "before submitting" when action in [:create]
   plug RequireUser, "before subscribing" when action in [:subscribe, :unsubscribe]
 
@@ -141,38 +142,38 @@ defmodule ChangelogWeb.NewsItemController do
 
   # if this is a Changelog News episode, preview that instead
   def preview(conn, %{"id" => id}) do
-    try do
-      podcast = Podcast.get_by_slug!("news")
+    episode =
+      from(e in Episode,
+        join: p in assoc(e, :podcast),
+        where: p.slug == "news" and e.slug == ^id
+      )
+      |> Episode.preload_all()
+      |> Repo.one()
 
-      episode =
-        assoc(podcast, :episodes)
-        |> Episode.preload_all()
-        |> Repo.get_by!(slug: id)
-        |> Episode.load_news_item()
+    if episode do
+      episode = Episode.load_news_item(episode)
 
       conn
-      |> assign(:podcast, podcast)
+      |> assign(:podcast, episode.podcast)
       |> assign(:episode, episode)
       |> assign(:item, episode.news_item)
       |> put_view(EpisodeView)
       |> render(:show)
-    rescue
-      _e -> false
+    else
+      item =
+        NewsItem
+        |> Repo.get_by!(id: id)
+        |> NewsItem.preload_all()
+        |> NewsItem.load_object()
+
+      changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
+
+      conn
+      |> assign(:item, item)
+      |> assign(:comments, [])
+      |> assign(:changeset, changeset)
+      |> render(:show)
     end
-
-    item =
-      NewsItem
-      |> Repo.get_by!(id: id)
-      |> NewsItem.preload_all()
-      |> NewsItem.load_object()
-
-    changeset = item |> build_assoc(:comments) |> NewsItemComment.insert_changeset()
-
-    conn
-    |> assign(:item, item)
-    |> assign(:comments, [])
-    |> assign(:changeset, changeset)
-    |> render(:show)
   end
 
   def subscribe(conn = %{assigns: %{current_user: user}}, %{"id" => hashid}) do
